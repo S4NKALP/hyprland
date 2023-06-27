@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+rofi_command="rofi -markup -markup-rows -theme $HOME/.config/rofi/recorder/screenrecord.rasi -steal-focus"
+
+datetime=$(date +"%Y-%m-%d %I-%M-%S")
+dir="/home/$USER/Videos/Screen-Recordings"
+#file="Screen Recording from ${date} ${time}.png"
+
+# Icons
+icon1="/home/$USER/.config/rofi/recorder/camera-movie.svg"
+icon2="/home/$USER/.config/rofi/recorder/timer.svg"
+
+# Buttons
+layout=`cat ~/.config/rofi/config/recorder/screenshot.rasi | grep BUTTON | cut -d'=' -f2 | tr -d '[:blank:],*/'`
+if [[ $layout == "TRUE" ]]; then
+	screen=" <span font='Font Awesome 6 Pro Bold 16' rise='-3pt'> </span>	Record Screen"
+	area=" <span font='Font Awesome 6 Pro Bold 16' rise='-3pt'> </span>	Record Area"
+	window=" <span font='Font Awesome 6 Pro Bold 16' rise='-3pt'> </span>	Record Window"
+	infivearea=" <span font='Font Awesome 6 Pro Bold 16' rise='-3pt'> </span>	Record Area in 5s"
+	infive=" <span font='Font Awesome 6 Pro Bold 16' rise='-3pt'> </span>	Record in 5s"
+
+else
+	screen="  Capture Desktop"
+	area="  Capture Area"
+	window="  Capture Window"
+	infivearea="  Capture Area in 5s"
+	infive="  Capture in 5s"
+fi
+
+# Notify and view screenshot
+notify_view () {
+	dunstify -u low --replace=699 -i $icon1 "Copied to clipboard."
+	if [[ -e "$dir/Screen Recording from ${datetime}.mkv" ]]; then
+		dunstify -u low --replace=699 -i $icon1 "Screen Recording Saved."
+	else
+		dunstify -u low --replace=699 -i $icon1 "Screen Recording Deleted."
+	fi
+}
+
+# countdown
+countdown () {
+	for sec in `seq $1 -1 1`; do
+		dunstify -t 1000 --replace=699 -i $icon2 "Recording in : $sec"
+		sleep 1
+	done
+}
+
+# take shots
+recordnow () {
+	sleep 0.5 && wf-recorder -g "0,0 1920x1080" -f $dir/"Screen Recording from ${datetime}".mkv
+	wl-copy < $dir/"Screen Recording from ${datetime}".mkv
+	notify_view
+}
+
+record5 () {
+	countdown '5'
+	sleep 1 &&  wf-recorder -g "0,0 1920x1080" -f $dir/"Screen Recording from ${datetime}".mkv
+	wl-copy < $dir/"Screen Recording from ${datetime}".mkv
+	notify_view
+}
+
+record5area () {
+	countdown '5'
+	sleep 1 &&  wf-recorder -g "$(slurp -b#1e1e1e55 -c#b4befe -w4)" -f $dir/"Screen Recording from ${datetime}".mkv
+	wl-copy < $dir/"Screen Recording from ${datetime}".mkv
+	notify_view
+}
+
+recordwin () {
+	wf-recorder -g "$(hyprctl activewindow -j | jq -r ".at,.size" | jq -s "add" | jq '_nwise(4)' | jq -r '"\(.[0]),\(.[1]) \(.[2])x\(.[3])"')" -f $dir/"Screen Recording from ${datetime}".mkv
+	wl-copy < $dir/"Screen Recording from ${datetime}".mkv
+	notify_view
+}
+
+recordarea () {
+	wf-recorder -g "$(slurp -b#1e1e1e55 -c#b4befe -w4)" -f $dir/"Screen Recording from ${datetime}".mkv
+	wl-copy < $dir/"Screen Recording from ${datetime}".mkv
+	notify_view
+}
+
+if [[ ! -d "$dir/" ]]; then
+	mkdir -p "$dir/"
+fi
+
+# Variable passed to rofi
+options="$screen\n$area\n$window\n$infivearea\n$infive"
+
+chosen="$(echo -e "$options"| $rofi_command -p 'Screen Recording' -dmenu -selected-row 0)"
+case $chosen in
+    $screen)
+		recordnow
+        ;;
+    $area)
+		recordarea
+        ;;
+    $window)
+		recordwin
+		;;
+    $infive)
+		record5
+		;;
+    $infivearea)
+		record5area
+        ;;
+esac
+
