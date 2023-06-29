@@ -136,36 +136,10 @@
     	"scroll-step": 5,
         "smooth-scrolling-threshold": 1,
     },
-    "custom/playerctl": {
-      "format": "{icon}",
-      "return-type": "json",
-      "max-length": 64,
-      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
-      "on-click-middle": "playerctl play-pause",
-      "on-click": "playerctl previous",
-      "on-click-right": "playerctl next",
-      "format-icons": {
-        "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
-        "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
-      },
-    },
-
-    "custom/playerlabel": {
-      "format": "<span>{}</span>",
-      "return-type": "json",
-      "max-length": 48,
-      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
-      "on-click-middle": "playerctl play-pause",
-      "on-click": "playerctl previous",
-      "on-click-right": "playerctl next",
-      "format-icons": {
-        "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
-        "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
-      },
-    },
     "custom/power-menu": {
         "format": " ⏻ ",
-        "on-click": "sh -c '(sleep 0.5s; wlogout --protocol layer-shell)' & disown",
+        "on-click-right": "sh -c '(sleep 0.5s; wlogout --protocol layer-shell)' & disown",
+	"on-click": "systemctl poweroff",
 	"tooltip" : false,
     }, 
     "hyprland/language": {
@@ -198,7 +172,8 @@
         "on-click": "~/.config/hypr/scripts/launcher &",
      	"tooltip": false,
     },
-"custom/launch_firefox": {
+
+    "custom/launch_firefox": {
         "format": "",
         "on-click": "firefox",
         "tooltip": false
@@ -223,7 +198,7 @@
     },
     
     "custom/launch_code": {
-        "format": "󰗀 ",
+        "format": " ",
         "on-click": "exec vscodium",
         "tooltip": false
     },
@@ -232,6 +207,48 @@
         "format": "󰓇",
         "on-click": "exec spotify",
         "tooltip": false
+    },
+
+    "mpd": {
+        "tooltip": true,
+        "tooltip-format": "{artist} - {album} - {title} - Total Time : {totalTime:%M:%S}",
+        "format": " {elapsedTime:%M:%S}",
+        "format-disconnected": "⚠  Disconnected",
+        "format-stopped": " Not Playing",
+        "on-click": "mpc toggle",
+        "state-icons": {
+            "playing": "",
+                "paused": ""
+        }
+    },
+    "mpd#2": {
+        "format": "",
+        "format-disconnected": "",
+        "format-paused": "",
+        "format-stopped": "",
+        // Commands to execute on events
+        "on-click": "mpc -q pause && mpc -q prev && mpc -q start",
+    },
+    "mpd#3": {
+        "interval": 1,
+        "format": "{stateIcon}",
+        "format-disconnected": "",
+        "format-paused": "{stateIcon}",
+        "format-stopped": "",
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        // Commands to execute on events
+        "on-click": "mpc toggle",
+    },
+    "mpd#4": {
+        "format": "",
+        "format-disconnected": "",
+        "format-paused": "",
+        "format-stopped": "",
+        // Commands to execute on events
+        "on-click": "mpc -q pause && mpc -q next && mpc -q start",
     },
 
     "wlr/taskbar": {

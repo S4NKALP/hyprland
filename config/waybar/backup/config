@@ -1,0 +1,56 @@
+[{
+    "include": "~/.config/waybar/modules",
+    "layer": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "position": "top",
+    "fixed-center": true,
+    "ipc": true,
+    "gtk-layer-shell": true,
+    "modules-left": [
+	"custom/launcher", 
+	"cpu", 
+	"custom/CpuTemp", 
+	"memory", 
+	"disk",
+	"wlr/workspaces", 
+        "custom/updates",
+	"hyprland/language"
+    ],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", 
+	"network", 
+	"pulseaudio", 
+	"pulseaudio#microphone", 
+	"backlight", 
+	"battery", 
+	"custom/power-menu"
+    ],
+
+   
+},
+
+
+{
+    "include": "~/.config/waybar/modules",
+    "layer": "top",
+    "position": "bottom",
+    "mod": "dock",
+    "fixed-center": true,
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "modules-left": [
+        "custom/launch_firefox",
+        "custom/launch_telegram",
+        "custom/launch_foot",
+        "custom/launch_thunar",
+	"custom/launch_code",
+	"custom/launch_spotify"
+    ],
+    "modules-center": ["wlr/taskbar"],
+    "modules-right": ["custom/weather"],
+
+    
+
+}]

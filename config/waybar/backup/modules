@@ -1,0 +1,250 @@
+{
+
+    "wlr/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "on-click": "activate",
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": [],
+            "6": [],
+            "7": [],
+            "8": [],
+            "9": [],
+            "10": []
+        }
+    },
+    "hyprland/window": {
+        "format": "{}"
+    },
+
+    "tray": {
+	"icon-size": 15,
+	"spacing": 5
+   },
+   "clock": {
+    	"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+    	"format": "{:%a %d, %b \n %I:%M %p }",
+    	"format-alt": "{:%Y-%m-%d}"
+   },
+   "memory": {
+    	"format": "󰍛 {}%",
+    	"format-alt": "󰍛 {used}/{total} GiB",
+    	"interval": 5
+   },
+   "disk": {
+  	"interval": 30,
+  	//"format": "󰋊",
+  	"path": "/",
+  	//"format-alt-click": "click",
+  	"format": "󰋊 {percentage_used}%",
+  	//"tooltip": true,
+  	"tooltip-format": "{used} used out of {total} on {path} ({percentage_used}%)",
+   },
+   "cpu": {
+    	"format": "󰻠 {usage}%",
+    	"format-alt": "󰻠 {avg_frequency} GHz",
+    	"interval": 5
+    },
+    "backlight": {
+        "device": "eDP-1",
+        "format": "{icon}",
+        "tooltip-format": "{percent}%",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+    	"on-scroll-up": "~/.config/hypr/scripts/brightness --inc",
+    	"on-scroll-down": "~/.config/hypr/scripts/brightness --dec",
+        "smooth-scrolling-threshold": 1,
+    },
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": " ",
+        "format-disconnected": "󰤭",
+        "tooltip-format": "{essid}",
+        "on-click": "~/.config/hypr/scripts/rofi_network",
+        "format-icons": ["󰤯","󰤟","󰤢","󰤥","󰤨"],
+    },
+
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "tooltip-format": "{volume}%",
+    	"scroll-step": 5,
+    	"on-click": "~/.config/hypr/scripts/volume --toggle",
+    	"on-click-right": "pavucontrol",
+    	"on-scroll-up": "~/.config/hypr/scripts/volume --inc",
+    	"on-scroll-down": "~/.config/hypr/scripts/volume --dec",
+    	"smooth-scrolling-threshold": 1,
+    },
+
+	"battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format":"{icon} ",
+        "format-charging": "",
+        "format-plugged": " ",
+        "format-alt": "{icon}  {time}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""],
+      	"on-click-right": "~/.config/hypr/scripts/ChangeBlur.sh"
+	},
+
+    "custom/weather": {
+    	"exec": "python3 $HOME/.config/hypr/scripts/weather.py",
+    	"return-type": "json",
+    	"format": "{}",
+    	"tooltip": true,
+    	"interval": 300
+   },
+   "custom/lock": {
+        "tooltip" : false,
+        "on-click": "~/.config/hypr/scripts/lockscreen",
+        "format" : "",
+    },  
+    "idle_inhibitor": {
+  	"format": "{icon}",
+  	"format-icons": {
+    	"activated": " ",
+    	"deactivated": " ",
+        }
+    },      
+        
+    "pulseaudio#microphone": {
+        "format": "{format_source}",
+        "format-source": "󰍬",
+        "format-source-muted": "󰍭",
+        "tooltip": false,
+    	"on-click": "~/.config/hypr/scripts/volume --toggle-mic",
+    	"on-click-right": "pavucontrol",
+    	"on-scroll-up": "~/.config/hypr/scripts/volume --mic-inc",
+    	"on-scroll-down": "~/.config/hypr/scripts/volume --mic-dec",
+    	"scroll-step": 5,
+        "smooth-scrolling-threshold": 1,
+    },
+    "custom/playerctl": {
+      "format": "{icon}",
+      "return-type": "json",
+      "max-length": 64,
+      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+      "on-click-middle": "playerctl play-pause",
+      "on-click": "playerctl previous",
+      "on-click-right": "playerctl next",
+      "format-icons": {
+        "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
+        "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
+      },
+    },
+
+    "custom/playerlabel": {
+      "format": "<span>{}</span>",
+      "return-type": "json",
+      "max-length": 48,
+      "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+      "on-click-middle": "playerctl play-pause",
+      "on-click": "playerctl previous",
+      "on-click-right": "playerctl next",
+      "format-icons": {
+        "Playing": "<span foreground='#E5B9C6'>󰒮 󰐌 󰒭</span>",
+        "Paused": "<span foreground='#928374'>󰒮 󰏥 󰒭</span>"
+      },
+    },
+    "custom/power-menu": {
+        "format": " ⏻ ",
+        "on-click": "sh -c '(sleep 0.5s; wlogout --protocol layer-shell)' & disown",
+	"tooltip" : false,
+    }, 
+    "hyprland/language": {
+     	"format": "{}",
+      	"format-en": "US",
+      	"format-np": "NP",
+      	"tooltip": "false",
+    },
+    "custom/title": {
+     	"format": "<b>{}</b>",
+     	"interval": 1,
+     	"exec": "hyprctl activewindow | grep class | awk '{print $2}'",
+     	"tooltip": false,
+    },
+    "custom/CpuTemp":{
+  	"exec": "~/.config/hypr/scripts/heatSensors",
+  	"interval": 10,
+  	"format": "{}",
+	"tooltip": false,  
+    },
+    "custom/updates": {
+        "format": "󰮯 {}",
+        "exec": "~/.config/hypr/scripts/systemupdate.sh",
+        "on-click": "~/.config/hypr/scripts/systemupdate.sh up",
+        "interval": 5, // once every day
+        "tooltip": true
+    },
+    "custom/launcher": {
+        "format": "",
+        "on-click": "~/.config/hypr/scripts/launcher &",
+     	"tooltip": false,
+    },
+"custom/launch_firefox": {
+        "format": "",
+        "on-click": "firefox",
+        "tooltip": false
+    },
+
+    "custom/launch_telegram": {
+        "format": "",
+        "on-click": "telegram-desktop",
+        "tooltip": false
+    },
+
+    "custom/launch_thunar": {
+        "format": "",
+        "on-click": "exec thunar",
+        "tooltip": false
+    },
+
+    "custom/launch_foot": {
+        "format": "",
+        "on-click": "exec foot",
+        "tooltip": false
+    },
+    
+    "custom/launch_code": {
+        "format": "󰗀 ",
+        "on-click": "exec vscodium",
+        "tooltip": false
+    },
+
+    "custom/launch_spotify": {
+        "format": "󰓇",
+        "on-click": "exec spotify",
+        "tooltip": false
+    },
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "icon-size": 24,
+        "all-outputs": true,
+        "tooltip-format": "{name} - {title}",
+        "on-click": "activate",
+        "on-click-middle": "close",
+        "ignore-list": [
+            "wofi"
+        ],
+     },
+
+}
+

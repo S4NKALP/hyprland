@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Neon Knights Green
+Comment=Neon Dark Theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+Name=Neon Knights Green
+GtkTheme=Neon_Knights_Green
+MetacityTheme=Neon_Knights_Green
+IconTheme=Neon-Knights-Green-Folders
+CursorTheme=DMZ-White
+ButtonLayout=:minimize,maximize,close
+

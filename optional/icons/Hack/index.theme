@@ -1,0 +1,105 @@
+[Icon Theme]
+Name=Hack
+
+Comment=Hack Icon Theme
+
+DisplayDepth=32
+
+Inherits=Archcraft-Dark
+
+Example=folder
+
+FollowsColorScheme=true
+
+DesktopDefault=48
+DesktopSizes=16,22,32,48,64,128,256
+ToolbarDefault=22
+ToolbarSizes=16,22,32,48
+MainToolbarDefault=22
+MainToolbarSizes=16,22,32,48
+SmallDefault=16
+SmallSizes=16,22,32,48
+PanelDefault=48
+PanelSizes=16,22,32,48,64,128,256
+DialogDefault=32
+DialogSizes=16,22,32,48,64,128,256
+
+KDE-Extensions=.svg
+
+########## Directories
+########## ordered by category and alphabetically
+
+Directories=places/16,places/22,places/24,places/32,places/48,places/64,places/96
+ScaledDirectories=places/16@2x,places/16@3x,places/22@2x,places/22@3x,places/24@2x,places/24@3x
+
+########## Places
+########## ordered by size
+
+#16x16 - Fixed size - For small folder icons >!!!ONLY!!!< - DO_NOT_USE_ANYWHERE_ELSE - Monochrome
+[places/16]
+Size=16
+Context=Places
+Type=Fixed
+MinSize=16
+
+#16x16@2x - Fixed size - For small folder icons >!!!ONLY!!!< - DO_NOT_USE_ANYWHERE_ELSE - Monochrome
+[places/16@2x]
+Size=16
+Scale=2
+Context=Places
+Type=Fixed
+MinSize=16
+
+#16x16@3x - Fixed size - For small folder icons >!!!ONLY!!!< - DO_NOT_USE_ANYWHERE_ELSE - Monochrome
+[places/16@3x]
+Size=16
+Scale=3
+Context=Places
+Type=Fixed
+MinSize=16
+
+#22x22 - Fixed size - Workaround icon(s) for toolbar(s) button(s) e.g. KMail trash icon - WRONG_ICON_USAGE_BY_APP - Monochrome
+[places/22]
+Size=22
+Context=Places
+Type=Fixed
+
+#22x22@2x - Fixed size - Workaround icon(s) for toolbar(s) button(s) e.g. KMail trash icon - WRONG_ICON_USAGE_BY_APP - Monochrome
+[places/22@2x]
+Size=22
+Scale=2
+Context=Places
+Type=Fixed
+
+#22x22@3x - Fixed size - Workaround icon(s) for toolbar(s) button(s) e.g. KMail trash icon - WRONG_ICON_USAGE_BY_APP - Monochrome
+[places/22@3x]
+Size=22
+Scale=3
+Context=Places
+Type=Fixed
+
+#32x32 - Fixed size - For folder icons >!!!ONLY!!!< - DO_NOT_USE_ANYWHERE_ELSE - Color
+[places/32]
+Size=32
+Context=Places
+Type=Fixed
+
+#48x48 - Fixed size - For folder icons >!!!ONLY!!!< - DO_NOT_USE_ANYWHERE_ELSE - Color
+[places/48]
+Size=48
+Context=Places
+Type=Fixed
+
+#64x64 - Fixed size - For folder icons >!!!ONLY!!!< - DO_NOT_USE_ANYWHERE_ELSE - Color
+[places/64]
+Size=64
+Context=Places
+Type=Fixed
+
+#96x96 - Scalable - For folder icons >!!!ONLY!!!< - Scalable to the following sizes: 96x96 (default), 128x128, 256x256 - DO_NOT_USE_ANYWHERE_ELSE - Color
+[places/96]
+Size=96
+Context=Places
+Type=Scalable
+MinSize=96
+MaxSize=256

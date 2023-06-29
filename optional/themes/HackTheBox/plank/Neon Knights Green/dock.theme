@@ -1,0 +1,36 @@
+# Neon Knights Green theme for Plank
+# Author: ju1464
+
+[PlankTheme]
+TopRoundness=2
+BottomRoundness=0
+LineWidth=1
+OuterStrokeColor=119;;224;;17;;255
+FillStartColor=26;;30;;36;;220
+FillEndColor=26;;30;;36;;220
+InnerStrokeColor=26;;30;;36;;0
+
+[PlankDockTheme]
+HorizPadding=1
+TopPadding=-6
+BottomPadding=1
+ItemPadding=2
+IndicatorSize=3
+IconShadowSize=0
+UrgentBounceHeight=1.6666666666666667
+LaunchBounceHeight=0.625
+FadeOpacity=1
+ClickTime=300
+UrgentBounceTime=600
+LaunchBounceTime=600
+ActiveTime=300
+SlideTime=300
+FadeTime=250
+HideTime=150
+GlowSize=30
+GlowTime=10000
+GlowPulseTime=2000
+UrgentHueShift=150
+ItemMoveTime=450
+CascadeHide=true
+BadgeColor=0;;0;;0;;0

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   version="1.1"
+   height="32"
+   viewBox="0 0 32 32"
+   id="svg15"
+   sodipodi:docname="folder-cyan.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     id="namedview17"
+     showgrid="false"
+     inkscape:zoom="9.8125"
+     inkscape:cx="-20.96214"
+     inkscape:cy="5.5494221"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs5455">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4172-5-0">
+      <stop
+         style="stop-color:#21bbd7"
+         id="stop4174-6-9" />
+      <stop
+         offset="1"
+         style="stop-color:#3dc8e1"
+         id="stop4176-6-4" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4172-5-0"
+       id="linearGradient854"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.35224515,0,0,0.37139693,382.95791,513.22917)"
+       x1="6"
+       y1="50.000134"
+       x2="94.005508"
+       y2="50.000134" />
+  </defs>
+  <metadata
+     id="metadata5458">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-384.57143,-515.798)">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:Sans;-inkscape-font-specification:Sans;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;display:inline;overflow:visible;visibility:visible;opacity:1;fill:url(#linearGradient854);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.44685;marker:none;enable-background:accumulate"
+       d="m 387.73522,518.80013 c -1.43648,0 -2.66379,1.06222 -2.66379,2.47208 v 20.80445 c 0,0.87834 0.30129,1.44269 0.88615,1.95475 0.58486,0.512 1.19179,0.76647 1.96635,0.76647 h 24.62249 c 0.59118,0.0116 0.57428,-0.82622 1.4e-4,-0.8352 l -24.65687,-0.0137 c -0.76204,0 -1.39508,-0.55453 -1.39508,-0.55453 0,0 -0.58351,-0.45171 -0.58351,-1.31684 v -20.8046 c 0,-0.97163 0.64073,-1.59494 1.75991,-1.58231 l 8.66717,-0.006 4.133,3.79984 c 0.12481,0.11612 0.28475,0.28174 0.45137,0.28564 l 12.01765,-0.006 c 0.61275,-0.005 0.59342,-0.87063 -0.0183,-0.8808 h -11.74532 l -4.3811,-3.91133 c -0.12642,-0.11203 -0.2863,-0.17354 -0.45128,-0.17405 z m 13.97977,1.07938 c -0.55923,-0.003 -0.56028,0.99201 0.0145,1.00045 l 10.71845,-0.0145 c 1.08614,-0.003 1.55669,0.36141 1.91821,0.70929 0.3617,0.34791 0.91127,1.19973 0.91127,2.07736 v 20.40368 c 0.005,0.69035 0.79169,0.71305 0.79404,0.0229 l -0.003,-20.42756 c -1.4e-4,-1.19236 -0.37811,-2.19066 -1.05674,-2.84358 -0.67865,-0.65287 -1.60244,-0.92845 -2.56479,-0.92845 h -10.66624 c -0.0211,-0.002 -0.0439,-0.002 -0.0652,0 z"
+       id="path2-3"
+       sodipodi:nodetypes="sssssccscsssccccccccsccsssccssscc" />
+  </g>
+</svg>

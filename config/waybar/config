@@ -8,23 +8,26 @@
     "ipc": true,
     "gtk-layer-shell": true,
     "modules-left": [
-	"custom/launcher", 
+	"custom/launcher",
+	"custom/left", 
 	"cpu", 
 	"custom/CpuTemp", 
 	"memory", 
 	"disk",
-	"wlr/workspaces", 
-        "custom/updates",
-	"hyprland/language"
+	"custom/right", 
+	"mpd#2", 
+	"mpd#3", 
+	"mpd#4",
+	"hyprland/language",
     ],
-    "modules-center": ["clock"],
+    "modules-center": ["wlr/workspaces"],
     "modules-right": ["tray", 
 	"network", 
 	"pulseaudio", 
 	"pulseaudio#microphone", 
 	"backlight", 
-	"battery", 
-	"custom/power-menu"
+	"battery",
+	"clock"
     ],
 
    
@@ -49,7 +52,7 @@
 	"custom/launch_spotify"
     ],
     "modules-center": ["wlr/taskbar"],
-    "modules-right": ["custom/weather"],
+    "modules-right": ["custom/weather", "custom/power-menu"],
 
     
 
