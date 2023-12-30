@@ -1,0 +1,6 @@
+vsync = true
+maximized = false
+srgb = true
+idle = false
+neovim_bin = "/home/matt/.local/share/bob/nvim-bin/nvim"
+frame = "full"
