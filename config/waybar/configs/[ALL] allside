@@ -1,0 +1,125 @@
+// ### ALL SIDES ### //
+
+[{
+// ### TOP PANEL ##
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "top",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"margin-left": 8,
+"margin-right": 8,
+"margin-top": 2,
+
+"modules-left": [
+	"cpu",
+	"custom/CpuTemp",
+	"memory",
+        "custom/weather",
+	],
+
+"modules-center": [
+	"custom/cava_mviz",
+	],
+
+"modules-right": [
+	"battery",
+	"backlight",
+	"network",
+        "custom/swaync"
+	],
+},
+
+// ### LEFT PANEL ### //
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "left",
+"margin-top": 8,
+"margin-bottom": 8,
+"margin-left": 3,
+//"margin-right": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+//"gtk-layer-shell": true,
+
+"modules-left": [
+	"custom/menu",
+	],
+
+"modules-center": [
+	"hyprland/workspaces#4",
+	],
+
+"modules-right": [
+	"idle_inhibitor",
+	],
+},
+
+// ### RIGHT PANEL ### //
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"position": "right",
+"margin-top": 8,
+"margin-bottom": 8,
+//"margin-left": 3,
+"margin-right": 3,
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"gtk-layer-shell": true,
+
+"modules-left": [
+	"custom/lock",
+	],
+
+"modules-center": [
+	"clock#vertical",
+	],
+
+"modules-right": [
+	"custom/power_vertical",
+	],
+},
+
+// ### BOTTOM PANEL ### //
+{
+"include": "~/.config/waybar/modules",
+"layer": "top",
+"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 3,
+"fixed-center": true,
+"ipc": true,
+"margin-left": 8,
+"margin-right": 8,
+"margin-bottom": 2,
+
+"modules-left": [
+	"wlr/taskbar",
+	 ],
+
+"modules-center": [
+	"hyprland/window",
+	],
+
+"modules-right": [
+        "mpris",
+	"tray",
+        "custom/keyboard",
+	//"keyboard-state",
+	"pulseaudio",
+	//"wireplumber",
+	"pulseaudio#microphone",
+	],
+
+}]
