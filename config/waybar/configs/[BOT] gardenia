@@ -1,0 +1,95 @@
+
+{
+
+
+"include": "~/.config/waybar/modules",
+"layer": "top",
+//"mode": "dock",
+"exclusive": true,
+"passthrough": false,
+"position": "bottom",
+"spacing": 5,
+"fixed-center": false,
+"ipc": true,
+//"margin-top": 5,
+"margin-bottom": 5,
+"width": 768,
+
+"modules-left": ["clock#gar", "mpris", "custom/swaync", "tray"],
+
+"modules-center": ["hyprland/workspaces#4"],
+
+"modules-right": ["pulseaudio#gar","backlight#gar", "battery#gar"],
+
+
+// M O D U L E S //
+
+"clock#gar": {
+        "format": "{:%A, %I:%M %p}",
+	//"format": "{:%a %d | %H:%M}",
+	"format-alt": "{:%A, %d %B, %Y (%R)}"
+},
+
+"hyprland/window#gar": {
+  "format": "{}",
+  "max-length": 60
+},
+
+"tray#gar": {
+  "icon-size": 15,
+  "spacing": 10
+},
+
+"pulseaudio#gar": {
+  "format": "{icon}",
+  "format-bluetooth": "{icon} 󰂰 {volume}%",
+  "format-bluetooth-muted": " {icon}",
+  "format-muted": "󰸈",
+  "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+  "on-click": "pamixer --toggle-mute",
+  "on-click-right": "pavucontrol",
+  "tooltip": false
+},
+
+"backlight#gar": {
+  "device": "intel_backlight",
+  "format": "{icon}",
+  "format-icons": ["󰛩", "󱩎", "󱩏", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󰛨"],
+  "tooltip-format": "{percent}%"
+},
+
+"battery#gar": {
+  "interval": 1,
+  "align": 0,
+  "rotate": 0,
+  //"bat": "BAT1",
+  //"adapter": "ACAD",
+  "full-at": 100,
+  "design-capacity": false,
+  "states": {
+    "good": 100,
+    "warning": 30,
+    "critical": 15
+       },
+  "format": "{icon}",
+  "format-charging": "",
+  "format-plugged": "󱘖 ",
+  "format-full": "{icon}",
+  "format-alt": "{icon} {time}",
+  "format-icons": [" ", " ", " ", " ", " "],
+  "format-time": "{H}h {M}min",
+  "tooltip": true,
+  "tooltip-format": "{capacity}%",
+  "on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+  "on-click-right": "~/.config/hypr/scripts/RofiPower.sh",
+},
+
+}
