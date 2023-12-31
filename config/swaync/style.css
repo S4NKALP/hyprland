@@ -213,7 +213,7 @@
 .widget-dnd>switch {
     border-radius: 10px;
     /* border: 1px solid #7aa2f7; */
-    background: @noti-border-color;
+    background: white;
 }
 
 .widget-dnd>switch:checked {

@@ -24,20 +24,24 @@ wallpaper="$WALLPAPERS_DIR/$choice"
 set_wallpaper_kde() {
     qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript \
         "var allDesktops = desktops(); for (i=0;i<allDesktops.length;i++) {d = allDesktops[i];d.wallpaperPlugin = \"org.kde.image\";d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");d.writeConfig(\"Image\", \"file:$1\")}"
+    notify-send "Wallpaper Changed" -i "$1"
 }
 
 set_wallpaper_gnome() {
     gsettings set org.gnome.desktop.background picture-uri "file://$1"
     gsettings set org.gnome.desktop.background picture-uri-dark "file://$1"
+    notify-send "Wallpaper Changed" -i "$1"
 }
 
 set_wallpaper_sway() {
     swaymsg output "*" bg "$1" "stretch"
+    notify-send "Wallpaper Changed" -i "$1"
 }
 
 set_wallpaper_default() {
     swww img -t any --transition-bezier 0,.53,1,.48 --transition-duration 1 --transition-fps 60 "$1" &&
     ln -sf "$1" "$HOME/.config/hypr/.current_wallpaper"
+    notify-send "Wallpaper Changed" -i "$1"
 }
 
 if [ -n "$choice" ]; then
@@ -51,5 +55,3 @@ if [ -n "$choice" ]; then
 fi
 
 exit 1
-
-
