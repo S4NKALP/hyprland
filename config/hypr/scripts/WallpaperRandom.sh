@@ -28,8 +28,5 @@ while true; do
     # Set the new wallpaper
     swww img "$HOME/.config/hypr/.current_wallpaper"
 
-    # Notify that wallpaper has changed
-    notify-send "Wallpaper Changed" -i "$RANDOMPICS"
-
     sleep $INTERVAL
 done

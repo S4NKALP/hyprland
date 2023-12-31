@@ -1,4 +1,3 @@
-
 # :herb: ‎ <samp>About</samp>
 
 <!--toc:start-->
@@ -57,30 +56,47 @@
 <details>
 <summary><b>🎨 Colorscheme</b></summary>
 
+- [rockerBOO/boo-colorscheme-nvim](https://dotfyle.com/plugins/rockerBOO/boo-colorscheme-nvim)
+- [shaunsingh/moonlight.nvim](https://dotfyle.com/plugins/shaunsingh/moonlight.nvim)
 - [savq/melange-nvim](https://dotfyle.com/plugins/savq/melange-nvim)
 - [projekt0n/github-nvim-theme](https://dotfyle.com/plugins/projekt0n/github-nvim-theme)
 - [marko-cerovac/material.nvim](https://dotfyle.com/plugins/marko-cerovac/material.nvim)
+- [mhartington/oceanic-next](https://dotfyle.com/plugins/mhartington/oceanic-next)
+- [sainnhe/gruvbox-material](https://dotfyle.com/plugins/sainnhe/gruvbox-material)
+- [ribru17/bamboo.nvim](https://dotfyle.com/plugins/ribru17/bamboo.nvim)
 - [shaunsingh/nord.nvim](https://dotfyle.com/plugins/shaunsingh/nord.nvim)
 - [kaiuri/nvim-juliana](https://dotfyle.com/plugins/kaiuri/nvim-juliana)
 - [Tsuzat/NeoSolarized.nvim](https://dotfyle.com/plugins/Tsuzat/NeoSolarized.nvim)
+- [nyngwang/nvimgelion](https://dotfyle.com/plugins/nyngwang/nvimgelion)
 - [sainnhe/everforest](https://dotfyle.com/plugins/sainnhe/everforest)
+- [miikanissi/modus-themes.nvim](https://dotfyle.com/plugins/miikanissi/modus-themes.nvim)
+- [sainnhe/edge](https://dotfyle.com/plugins/sainnhe/edge)
 - [folke/tokyonight.nvim](https://dotfyle.com/plugins/folke/tokyonight.nvim)
+- [ellisonleao/gruvbox.nvim](https://dotfyle.com/plugins/ellisonleao/gruvbox.nvim)
+- [echasnovski/mini.base16](https://dotfyle.com/plugins/echasnovski/mini.base16)
+- [xero/miasma.nvim](https://dotfyle.com/plugins/xero/miasma.nvim)
+- [scottmckendry/cyberdream.nvim](https://dotfyle.com/plugins/scottmckendry/cyberdream.nvim)
 - [NTBBloodbath/doom-one.nvim](https://dotfyle.com/plugins/NTBBloodbath/doom-one.nvim)
 - [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
-- [ellisonleao/gruvbox.nvim](https://dotfyle.com/plugins/ellisonleao/gruvbox.nvim)
 - [nyoom-engineering/oxocarbon.nvim](https://dotfyle.com/plugins/nyoom-engineering/oxocarbon.nvim)
+- [lewpoly/sherbet.nvim](https://dotfyle.com/plugins/lewpoly/sherbet.nvim)
 - [olimorris/onedarkpro.nvim](https://dotfyle.com/plugins/olimorris/onedarkpro.nvim)
 - [sainnhe/sonokai](https://dotfyle.com/plugins/sainnhe/sonokai)
 - [rebelot/kanagawa.nvim](https://dotfyle.com/plugins/rebelot/kanagawa.nvim)
 - [rose-pine/neovim](https://dotfyle.com/plugins/rose-pine/neovim)
+- [mcchrish/zenbones.nvim](https://dotfyle.com/plugins/mcchrish/zenbones.nvim)
 - [navarasu/onedark.nvim](https://dotfyle.com/plugins/navarasu/onedark.nvim)
 - [Mofiqul/dracula.nvim](https://dotfyle.com/plugins/Mofiqul/dracula.nvim)
 - [AlexvZyl/nordic.nvim](https://dotfyle.com/plugins/AlexvZyl/nordic.nvim)
 - [olivercederborg/poimandres.nvim](https://dotfyle.com/plugins/olivercederborg/poimandres.nvim)
 - [bluz71/vim-nightfly-colors](https://dotfyle.com/plugins/bluz71/vim-nightfly-colors)
+- [ramojus/mellifluous.nvim](https://dotfyle.com/plugins/ramojus/mellifluous.nvim)
 - [EdenEast/nightfox.nvim](https://dotfyle.com/plugins/EdenEast/nightfox.nvim)
+- [kvrohit/rasmus.nvim](https://dotfyle.com/plugins/kvrohit/rasmus.nvim)
+- [rmehri01/onenord.nvim](https://dotfyle.com/plugins/rmehri01/onenord.nvim)
+- [titanzero/zephyrium](https://dotfyle.com/plugins/titanzero/zephyrium)
 - [Mofiqul/vscode.nvim](https://dotfyle.com/plugins/Mofiqul/vscode.nvim)
-- [echasnovski/mini.base16](https://dotfyle.com/plugins/echasnovski/mini.base16)
+- [bluz71/vim-moonfly-colors](https://dotfyle.com/plugins/bluz71/vim-moonfly-colors)
 
 </details>
 
@@ -204,6 +220,7 @@
 - [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
 - [akinsho/git-conflict.nvim](https://dotfyle.com/plugins/akinsho/git-conflict.nvim)
 - [sindrets/diffview.nvim](https://dotfyle.com/plugins/sindrets/diffview.nvim)
+- [NeogitOrg/neogit](https://dotfyle.com/plugins/NeogitOrg/neogit)
 
 </details>
 
@@ -265,6 +282,7 @@
 
 - [Zeioth/markmap.nvim](https://dotfyle.com/plugins/Zeioth/markmap.nvim)
 - [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
+- [toppair/peek.nvim](https://dotfyle.com/plugins/toppair/peek.nvim)
 
 </details>
 
@@ -288,9 +306,11 @@
 <summary><b>🚶 Motion</b></summary>
 
 - [folke/flash.nvim](https://dotfyle.com/plugins/folke/flash.nvim)
+- [edluffy/specs.nvim](https://dotfyle.com/plugins/edluffy/specs.nvim)
 - [chrisgrieser/nvim-spider](https://dotfyle.com/plugins/chrisgrieser/nvim-spider)
 - [ggandor/leap.nvim](https://dotfyle.com/plugins/ggandor/leap.nvim)
 - [ggandor/flit.nvim](https://dotfyle.com/plugins/ggandor/flit.nvim)
+- [ggandor/leap-spooky.nvim](https://dotfyle.com/plugins/ggandor/leap-spooky.nvim)
 
 </details>
 
@@ -330,6 +350,8 @@
 <summary><b>📂 Project</b></summary>
 
 - [ahmedkhalf/project.nvim](https://dotfyle.com/plugins/ahmedkhalf/project.nvim)
+- [natecraddock/workspaces.nvim](https://dotfyle.com/plugins/natecraddock/workspaces.nvim)
+- [cljoly/telescope-repo.nvim](https://github.com/cljoly/telescope-repo.nvim)
 
 </details>
 
@@ -426,6 +448,7 @@
 <summary><b>🔧 Utility</b></summary>
 
 - [zbirenbaum/neodim](https://dotfyle.com/plugins/zbirenbaum/neodim)
+- [jghauser/mkdir.nvim](https://dotfyle.com/plugins/jghauser/mkdir.nvim)
 - [backdround/tabscope](https://dotfyle.com/plugins/backdround/tabscope.nvim)
 - [echasnovski/mini.animate](https://dotfyle.com/plugins/echasnovski/mini.animate)
 - [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
