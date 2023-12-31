@@ -35,7 +35,7 @@ run_cmd() {
             swaylock &
             ;;
         "")
-            systemctl suspend
+            swaylock -f && systemctl suspend
             ;;
         "󰿅")
             hyprctl dispatch exit 0
@@ -47,7 +47,7 @@ run_cmd() {
             systemctl poweroff
             ;;
         "󰒲")
-            systemctl hibernate
+            swaylock -f && systemctl hibernate
             ;;
         *)
             echo "choose: $1"
