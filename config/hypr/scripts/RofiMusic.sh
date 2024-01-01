@@ -36,19 +36,19 @@ function music() {
 
     if [[ "$chosen" == "$play_bhajan" ]]; then
         notify "Playing Bhajan"
-        exec -a "rofi-music" mpv --no-video $BHAJAN
+        exec -a "rofi-music" mpv --no-video "$BHAJAN" --shuffle --no-resume-playback
     elif [[ "$chosen" == "$play_lofi" ]]; then
         notify "🎹 Playing lofi girl"
-        exec -a "rofi-music" mpv --no-video $LOFI_STREAM
+        exec -a "rofi-music" mpv --no-video "$LOFI_STREAM" --no-resume-playback
     elif [[ "$chosen" == "$play_chill_hits" ]]; then
         notify "🎹 Playing all time chill hits"
-        exec -a "rofi-music" mpv --no-video "$ALL_TIME_CHILL_HITS" --shuffle
+        exec -a "rofi-music" mpv --no-video "$ALL_TIME_CHILL_HITS" --shuffle --no-resume-playback
     elif [[ "$chosen" == "$play_malayalam_hits" ]]; then
         notify "🎹 Playing malayalam hits"
-        exec -a "rofi-music" mpv --no-video "$ALL_TIME_MALAYALAM_HITS" --shuffle
+        exec -a "rofi-music" mpv --no-video "$ALL_TIME_MALAYALAM_HITS" --shuffle --no-resume-playback
     elif [[ "$chosen" == "$play_hand_picked_hits" ]]; then
         notify "🎹 Playing hand picked hits"
-        exec -a "rofi-music" mpv --no-video "$HAND_PICKED_HITS" --shuffle
+        exec -a "rofi-music" mpv --no-video "$HAND_PICKED_HITS" --shuffle --no-resume-playback
     fi
 }
 

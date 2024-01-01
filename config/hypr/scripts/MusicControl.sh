@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 
-# Control moosic using keyboard
+# Control music using keyboard
 
-# SUPER + M should open a submap
+
 # M should open the rofi-music menu
 # i should increase volume
 # u should decrease volume

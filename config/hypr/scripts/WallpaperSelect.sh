@@ -1,57 +1,86 @@
 #!/bin/bash
 
-WALLPAPERS_DIR="$HOME/Pictures/wallpapers/"
+SCRIPTSDIR="$HOME/.config/hypr/scripts"
 
-# find image size to display (very slow)
-#echo $(identify -format '%[fx:w]x%[fx:h]\' $HOME/Pictures/wallpapers/$A 2>/dev/null)
+# WALLPAPERS PATH
+DIR="$HOME/Pictures/wallpapers"
 
-build_theme() {
-    rows=$1
-    cols=$2
-    icon_size=$3
+# Transition config
+FPS=30
+TYPE="wipe"
+DURATION=1
+BEZIER=".43,1.19,1,.4"
+SWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration $DURATION"
 
-    echo "element{orientation:vertical;}element-text{horizontal-align:0.5;}element-icon{size:$icon_size.0000em;}listview{lines:$rows;columns:$cols;}"
-}
-
-theme="$HOME/.config/rofi/config-wallpaper.rasi"
-
-ROFI_CMD="rofi -dmenu -i -show-icons -theme-str $(build_theme 3 5 6) -theme ${theme}"
-
-choice=$(ls --escape "$WALLPAPERS_DIR" | xargs -I {} printf "{}\x00icon\x1f$WALLPAPERS_DIR/{}\n" | $ROFI_CMD -p "󰸉  Wallpaper")
-
-wallpaper="$WALLPAPERS_DIR/$choice"
-
-set_wallpaper_kde() {
-    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript \
-        "var allDesktops = desktops(); for (i=0;i<allDesktops.length;i++) {d = allDesktops[i];d.wallpaperPlugin = \"org.kde.image\";d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");d.writeConfig(\"Image\", \"file:$1\")}"
-    notify-send "Wallpaper Changed" -i "$1"
-}
-
-set_wallpaper_gnome() {
-    gsettings set org.gnome.desktop.background picture-uri "file://$1"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file://$1"
-    notify-send "Wallpaper Changed" -i "$1"
-}
-
-set_wallpaper_sway() {
-    swaymsg output "*" bg "$1" "stretch"
-    notify-send "Wallpaper Changed" -i "$1"
-}
-
-set_wallpaper_default() {
-    swww img -t any --transition-bezier 0,.53,1,.48 --transition-duration 1 --transition-fps 60 "$1" &&
-    ln -sf "$1" "$HOME/.config/hypr/.current_wallpaper"
-    notify-send "Wallpaper Changed" -i "$1"
-}
-
-if [ -n "$choice" ]; then
-    case "$XDG_CURRENT_DESKTOP" in
-        "KDE") set_wallpaper_kde "$wallpaper" ;;
-        "GNOME") set_wallpaper_gnome "$wallpaper" ;;
-        "sway") set_wallpaper_sway "$wallpaper" ;;
-        *) set_wallpaper_default "$wallpaper" ;;
-    esac
-    exit 0
+# Check if swaybg is running
+if pidof swaybg > /dev/null; then
+  pkill swaybg
 fi
 
-exit 1
+# Retrieve image files
+PICS=($(ls "${DIR}" | grep -E ".jpg$|.jpeg$|.png$|.gif$"))
+RANDOM_PIC="${PICS[$((RANDOM % ${#PICS[@]}))]}"
+RANDOM_PIC_NAME="${#PICS[@]}. random"
+
+# Rofi command
+rofi_command="rofi -show -dmenu -config ~/.config/rofi/config-wallpaper.rasi"
+
+menu() {
+  for i in "${!PICS[@]}"; do
+    # Displaying .gif to indicate animated images
+    if [[ -z $(echo "${PICS[$i]}" | grep .gif$) ]]; then
+      printf "$(echo "${PICS[$i]}" | cut -d. -f1)\x00icon\x1f${DIR}/${PICS[$i]}\n"
+    else
+      printf "${PICS[$i]}\n"
+    fi
+  done
+
+  printf "$RANDOM_PIC_NAME\n"
+}
+
+swww query || swww init
+
+main() {
+  choice=$(menu | ${rofi_command})
+
+  # No choice case
+  if [[ -z $choice ]]; then
+    exit 0
+  fi
+
+  # Random choice case
+  if [ "$choice" = "$RANDOM_PIC_NAME" ]; then
+    swww img "${DIR}/${RANDOM_PIC}" $SWWW_PARAMS
+
+   # Create symbolic link
+   ln -sf "${DIR}/${RANDOM_PIC}" "$HOME/.config/hypr/.current_wallpaper"
+
+   notify-send "Wallpaper Changed" -i "${DIR}/${RANDOM_PIC}"
+    exit 0
+  fi
+
+  # Find the index of the selected file
+  pic_index=-1
+  for i in "${!PICS[@]}"; do
+    filename=$(basename "${PICS[$i]}")
+    if [[ "$filename" == "$choice"* ]]; then
+      pic_index=$i
+      break
+    fi
+  done
+
+  if [[ $pic_index -ne -1 ]]; then
+    swww img "${DIR}/${PICS[$pic_index]}" $SWWW_PARAMS
+
+    # Create symbolic link
+    ln -sf "${DIR}/${PICS[$pic_index]}" "$HOME/.config/hypr/.current_wallpaper"
+
+    notify-send "Wallpaper Changed" -i "${DIR}/${PICS[$pic_index]}"
+  else
+    notify-send "Wallpaper Changed" -i "Image not found."
+
+    exit 1
+  fi
+}
+main
+
