@@ -464,7 +464,7 @@
   "exec": "echo ; echo  Key Hints SUPER F1",
   "interval": 86400, // once every day
   "tooltip": false,
-  "on-click": "~/.config/hypr/UserScripts/KeyBinds.sh",
+  "on-click": "~/.config/hypr/scripts/KeyBinds.sh",
 },
 
 "custom/keyboard": {
@@ -477,7 +477,7 @@
 
 // This is a custom cava visualizer
 "custom/cava_mviz": {
-    "exec": "~/.config/hypr/UserScripts/WaybarCava.sh",
+    "exec": "~/.config/hypr/scripts/WaybarCava.sh",
     "format": "{}"
 },
 
@@ -495,7 +495,7 @@
   "interval" : 86400, // once every day
   "tooltip": false,
   "on-click": "pkill rofi || rofi -show drun -modi run,drun,filebrowser,window",
-  "on-click-right": "~/.config/hypr/UserScripts/WaybarLayout.sh",
+  "on-click-right": "~/.config/hypr/scripts/WaybarLayout.sh",
 },
 
 
@@ -523,7 +523,7 @@
   "format-alt-click": "click",
   "interval": 1,
   "return-type": "json",
-  "exec": "~/.config/hypr/UserScripts/Weather.py",
+  "exec": "~/.config/hypr/scripts/Weather.py",
   "exec-if": "ping wttr.in -c1",
   "tooltip" : true,
 },
