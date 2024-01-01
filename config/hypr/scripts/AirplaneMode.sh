@@ -1,4 +1,5 @@
 #!/bin/bash
+# Airplane Mode. Turning on or off all wifi using rfkill.
 
 notif="$HOME/.config/swaync/images/bell.png"
 

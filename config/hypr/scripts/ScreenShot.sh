@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Screenshots scripts
+
 iDIR="$HOME/.config/swaync/icons"
 notify_cmd_shot="notify-send -h string:x-canonical-private-synchronous:shot-notify -u low -i ${iDIR}/picture.png"
 
@@ -51,7 +53,7 @@ shot5() {
 	sleep 1 && cd ${dir} && grim - | tee "$file" | wl-copy
 	sleep 1
 	notify_view
-	
+
 }
 
 shot10() {
@@ -79,7 +81,7 @@ shotactive() {
 
     hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -g - "${active_window_path}"
 	sleep 1
-    notify_view "active"  
+    notify_view "active"
 }
 
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# For disabling touchpad.
+
 notif="$HOME/.config/swaync/images/bell.png"
 
 # NOTE: find the right device using hyprctl devices

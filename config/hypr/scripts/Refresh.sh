@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Scripts for refreshing waybar, rofi, swaync
 
 SCRIPTSDIR=$HOME/.config/hypr/scripts
 UserSCRIPTSDIR=$HOME/.config/hypr/UserScripts

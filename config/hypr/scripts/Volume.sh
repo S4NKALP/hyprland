@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Scripts for volume controls for audio and mic
+
 iDIR="$HOME/.config/swaync/icons"
 
 # Get Volume

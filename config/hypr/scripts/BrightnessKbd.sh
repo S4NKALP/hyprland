@@ -1,4 +1,5 @@
 #!/bin/bash
+# Script for keyboard backlights (if supported) using b
 
 iDIR="$HOME/.config/swaync/icons"
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script for waybar layout or configs
+
 set -euo pipefail
 IFS=$'\n\t'
 

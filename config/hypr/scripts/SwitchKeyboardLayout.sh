@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This is for changing kb_layouts. Set kb_layouts in $settings_file
+
 layout_f="$HOME/.cache/kb_layout"
 settings_file="$HOME/.config/hypr/configs/Settings.conf"
 notif="$HOME/.config/swaync/images/bell.png"
