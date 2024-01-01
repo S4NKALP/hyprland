@@ -1,4 +1,5 @@
 #!/bin/bash
+# Rofi menu for Quick Edit / View of Settings (ALT E)
 
 userDir="$HOME/.config/hypr/configs"
 

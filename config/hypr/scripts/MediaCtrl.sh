@@ -1,4 +1,5 @@
 #!/bin/bash
+#playerctl
 
 music_icon="$HOME/.config/swaync/icons/music.png"
 

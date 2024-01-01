@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Powermenu using rofi (Power, Screen Lock, Suspend, etc)
 
 # CMDs
 uptime_info=$(uptime -p | sed -e 's/up //g')

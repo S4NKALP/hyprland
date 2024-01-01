@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+# Control Tmux Session using rofi
+
 TERMINAL="kitty"
 
 function tmux_sessions() {

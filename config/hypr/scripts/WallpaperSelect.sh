@@ -1,4 +1,5 @@
 #!/bin/bash
+# This script for selecting wallpapers (SUPER W)
 
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
 
