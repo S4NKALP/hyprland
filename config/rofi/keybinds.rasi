@@ -3,10 +3,10 @@
 configuration {
 	modi:                       "file-browser-extended";
     show-icons:                 true;
-    display-drun:               "";
-	display-run:                "";
-    display-window:             "󱂬";
-    display-file-browser-extended: "";
+    display-drun:               "🐧";
+    display-run:                "📦";
+    display-filebrowser:        "📂";
+    display-file-browser-extended: "🗄️";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c} · {t}";
 }
