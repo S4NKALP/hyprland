@@ -59,7 +59,7 @@ After this Press SUPER + SHIFT + W and choose wallpaper And Restart Your System 
 ```
 
 # Credits:
-- These dotfiles are highly inspired by ~~shamefully copied from~[JaKooLit](https://github.com/JaKooLit/Hyprland-Dots)** dots.
+- These dotfiles are highly inspired by ~~shamefully copied from~~[JaKooLit](https://github.com/JaKooLit/Hyprland-Dots)** dots.
 
 <details>
 <summary><i>
