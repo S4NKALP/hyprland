@@ -15,10 +15,10 @@
 configuration {
     modi:                       "drun,window,run";
     show-icons:                 true;
-    display-drun:               "";
-	display-run:                "";
-    display-filebrowser:        "";
-    display-window:             "󱂬";
+    display-drun:               "🐧";
+    display-run:                "📦";
+    display-filebrowser:        "📂";
+    display-window:             "🗄️";
     drun-display-format:        "{name}";
     window-format:              "{w}{c}";
     show-icons:                 true;

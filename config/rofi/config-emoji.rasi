@@ -4,10 +4,10 @@ configuration {
     modi:                       "drun,run,filebrowser";
     font:                       "Fira Code SemiBold 12";
     show-icons:                 true;
-    display-drun:               "";
-	display-run:                "";
-    display-filebrowser:        "";
-    display-window:             "󱂬";
+    display-drun:               "🐧";
+    display-run:                "📦";
+    display-filebrowser:        "📂";
+    display-window:             "🗄️";
 	drun-display-format:        "{name}";
     hover-select:               true;
     me-select-entry:            "MouseSecondary";
