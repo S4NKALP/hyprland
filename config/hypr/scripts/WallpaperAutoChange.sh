@@ -28,8 +28,9 @@ while true; do
 		done \
 		| sort -n | cut -d':' -f2- \
 		| while read -r img; do
+			# Create symbolic link to the current image
+			ln -sf "$img" $HOME/.config/hypr/.current_wallpaper
 			swww img "$img"
 			sleep $INTERVAL
-
 		done
 done

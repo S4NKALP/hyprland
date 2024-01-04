@@ -40,8 +40,8 @@ window {
     enabled:                     true;
     margin:                      0px;
     padding:                     0px;
-    border:                      2px solid;
-    border-radius:               15px;
+    border:                      2px;
+    border-radius:               12px;
     border-color:                @foreground;
     cursor:                      "default";
     background-color:            transparent;
@@ -51,13 +51,13 @@ mainbox {
     enabled:                     true;
     spacing:                     0px;
     margin:                      0px;
-    padding:                     10px;
-    border:                      0px solid;
-    border-radius:               0px 0px 0px 0px;
+    padding:                     8px;
+    border:                      0px;
+    border-radius:               12px;
     border-color:                @foreground;
     background-color:            transparent;
     children:                    ["inputbar","mode-switcher", "listview"];
-    background-image:           url("~/.config/hypr/.current_wallpaper", height);
+    background-image:            url("~/.config/hypr/.current_wallpaper", height);
 }
 
 inputbar {
@@ -65,7 +65,7 @@ inputbar {
     spacing:                     10px;
     margin:                      0px 0px 10px 0px;
     padding:                     5px 10px;
-    border:                      1.5px solid;
+    border:                      1px;
     border-radius:               10px;
     border-color:                @foreground;
     background-color:            transparent;
@@ -80,7 +80,7 @@ prompt {
 }
 textbox-prompt-colon {
     enabled:                     true;
-    padding:                     5px 0px;
+    padding:                     6px 0px 6px 10px;
     expand:                      false;
     str:                         "🐧";
     background-color:            inherit;
@@ -88,36 +88,12 @@ textbox-prompt-colon {
 }
 entry {
     enabled:                     true;
-    padding:                     5px 0px;
-    background-color:            inherit;
+    padding:                     6px 0px 0px 0px;
+    background-color:            transparent;
     text-color:                  inherit;
     cursor:                      text;
     placeholder:                 "Search...(ctrl+tab to select windows)";
     placeholder-color:           inherit;
-}
-num-filtered-rows {
-    enabled:                     true;
-    expand:                      false;
-    background-color:            inherit;
-    text-color:                  inherit;
-}
-textbox-num-sep {
-    enabled:                     true;
-    expand:                      false;
-    str:                         "/";
-    background-color:            inherit;
-    text-color:                  inherit;
-}
-num-rows {
-    enabled:                     true;
-    expand:                      false;
-    background-color:            inherit;
-    text-color:                  inherit;
-}
-case-indicator {
-    enabled:                     true;
-    background-color:            inherit;
-    text-color:                  inherit;
 }
 
 listview {
@@ -132,9 +108,8 @@ listview {
     fixed-height:                true;
     fixed-columns:               true;
 
-    spacing:                     5px;
-    margin:                      0px;
-    padding:                     10px;
+    spacing:                     2px;
+    padding:                     6px;
     border:                      0px 1.5px 1.5px 1.5px ;
     border-radius:               0px 0px 10px 10px;
     border-color:                @foreground;
@@ -225,7 +200,7 @@ mode-switcher{
     spacing:                     0px;
     margin:                      0px;
     padding:                     0px;
-    border:                      0px solid;
+    border:                      0px;
     border-radius:               0px;
     border-color:                @foreground;
     background-color:            transparent;
