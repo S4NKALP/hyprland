@@ -66,10 +66,11 @@ map("n", "<C-c>", ":%y+<CR>", { desc = "Copy whole text to clipboard", silent = 
 -- Select all text
 map("n", "<C-a>", "gg<S-V>G", { desc = "Select all text", silent = true, noremap = true })
 
--- Better paste
--- remap "p" in visual mode to delete the highlighted text without overwriting your yanked/copied text, and then paste the content from the unnamed register.
-map("v", "p", '"_dP')
+-- Paste options
+map("i", "<C-v>", '<C-r>"', { desc = "Paste on insert mode" })
+map("v", "p", '"_dP', { desc = "Paste without overwriting" })
 
+-- Deleting without yanking empty line
 map("n", "dd", function()
   local is_empty_line = vim.api.nvim_get_current_line():match("^%s*$")
   if is_empty_line then

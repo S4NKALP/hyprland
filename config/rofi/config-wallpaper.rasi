@@ -1,23 +1,22 @@
 
-
-/*****----- Configuration -----*****/
+/* ---- Configuration ---- */
 configuration {
-    modi:                       "drun,run,filebrowser";
-    font:                       "Fira Code SemiBold 12";
-    show-icons:                 true;
-    display-drun:               "";
-	display-run:                "";
-    display-filebrowser:        "";
-    display-window:             "󱂬";
-	drun-display-format:        "{name}";
-    hover-select:               true;
-    me-select-entry:            "MouseSecondary";
-    me-accept-entry:            "MousePrimary";
-    window-format:              "{w} · {c} · {t}";
-	dpi:						1;
+    modi:                   "drun,run,filebrowser";
+    font:                   "Fira Code SemiBold 12";
+    show-icons:             true;
+    display-drun:           "";
+	display-run:            "";
+    display-filebrowser:   	"";
+    display-window:        	"";
+	drun-display-format: 	"{name}";
+    hover-select:           true;
+    me-select-entry:        "MouseSecondary";
+    me-accept-entry:        "MousePrimary";
+    window-format:          "{w} · {c} · {t}";
+	dpi:					1;
+
 }
 
-/*****----- Global Properties -----*****/
 * {
     background:     #1E1D2FFF;
     background-alt: #282839FF;
@@ -25,249 +24,201 @@ configuration {
     selected:       #7AA2F7FF;
     active:         #ABE9B3FF;
     urgent:         #F28FADFF;
-
-    border-colour:               var(selected);
-    handle-colour:               var(selected);
-    background-colour:           var(background);
-    foreground-colour:           var(foreground);
-    alternate-background:        var(background-alt);
-    normal-background:           var(background);
-    normal-foreground:           var(foreground);
-    urgent-background:           var(urgent);
-    urgent-foreground:           var(background);
-    active-background:           var(active);
-    active-foreground:           var(background);
-    selected-normal-background:  var(selected);
-    selected-normal-foreground:  var(background);
-    selected-urgent-background:  var(active);
-    selected-urgent-foreground:  var(background);
-    selected-active-background:  var(urgent);
-    selected-active-foreground:  var(background);
-    alternate-normal-background: var(background);
-    alternate-normal-foreground: var(foreground);
-    alternate-urgent-background: var(urgent);
-    alternate-urgent-foreground: var(background);
-    alternate-active-background: var(active);
-    alternate-active-foreground: var(background);
 }
 
-/*****----- Main Window -----*****/
+/* ---- Window ---- */
 window {
-    /* properties for window widget */
-    transparency:                "real";
-    location:                    center;
-    anchor:                      center;
-    fullscreen:                  false;
-    width:                       800px;
-    x-offset:                    0px;
-    y-offset:                    0px;
-
-    /* properties for all widgets */
-    enabled:                     true;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      2px solid;
-    border-radius:               10px;
-    border-color:                @border-colour;
-    cursor:                      "default";
+    width:					700px;
+	/*height:				 450px;*/
+    x-offset:               0px;
+    y-offset:               0px;
+    spacing:                0px;
+    padding:                2px;
+    margin:                 0px;
+    border:                 2px;
+    border-color:           @foreground;
+    cursor:                 "default";
+    location:               center;
+    anchor:                 center;
+    fullscreen:             false;
+    enabled:                true;
+    border-radius:          12px;
+    border-radius:          12px;
+ 	background-color:     	transparent;
+	background-image:   	url("~/.config/hypr/.current_wallpaper", height);
 }
 
-/*****----- Main Box -----*****/
+/* ---- Mainbox ---- */
 mainbox {
-    enabled:                     true;
-    spacing:                     10px;
-    margin:                      0px;
-    padding:                     30px;
-    border:                      0px solid;
-    border-radius:               0px 0px 0px 0px;
-    border-color:                @border-colour;
-    background-color:            transparent;
-    children:                    [ "inputbar", "listview", "mode-switcher" ];
-     background-image:           url("~/.config/hypr/.current_wallpaper", height);
+    enabled:                true;
+    orientation:            horizontal;
+	padding:				8px;
+    children:               [ "imagebox"];
+    border-radius:          12px;
+    background-color:       transparent;
 }
 
-/*****----- Inputbar -----*****/
+/* ---- Imagebox ---- */
+imagebox {
+    background-color:       transparent;
+    orientation:            vertical;
+    children:               [ "inputbar", "listbox"];
+}
+
+/* ---- Listbox ---- */
+listbox {
+    spacing:                4px;
+    orientation:            vertical;
+    children:               [ "listview" ];
+    border-radius:          10px;
+    border:                 1px;
+    border-color:           @foreground;
+	background-color:		transparent;
+}
+
+/* ---- Dummy ---- */
+dummy {
+    background-color:       transparent;
+}
+
+/* ---- Inputbar ---- */
 inputbar {
-    enabled:                     true;
-    spacing:                     10px;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @border-colour;
-    background-color:            transparent;
-    text-color:                  @foreground-colour;
-    children:                    [ "textbox-prompt-colon", "entry" ];
+    enabled:                true;
+    text-color:             @foreground;
+    spacing:                10px;
+    padding:                8px;
+    border-radius:          10px;
+    border-color:           @foreground;
+	background-color:		transparent;
+    children:               [ "textbox-prompt-colon", "entry" ];
+    border:                 1px;
+    border-color:           @foreground;
 }
 
-prompt {
-    enabled:                     true;
-    background-color:            inherit;
-    text-color:                  inherit;
-}
 textbox-prompt-colon {
-    enabled:                     true;
-    expand:                      false;
-    str:                         "󰸉 ";
-    background-color:            transparent;
-    text-color:                  inherit;
+    enabled:                true;
+    expand:                 false;
+    str:                    "󰸉 ";
+    text-color:             inherit;
+	background-color:		transparent;
 }
+
 entry {
-    enabled:                     true;
-    background-color:            inherit;
-    text-color:                  inherit;
-    cursor:                      text;
-    placeholder:                 "Choose Wallpaper";
-    placeholder-color:           inherit;
+    enabled:                true;
+    text-color:             inherit;
+    cursor:                 text;
+    placeholder:            "Choose Wallpaper";
+    placeholder-color:      inherit;
+	background-color:		transparent;
 }
 
-/*****----- Listview -----*****/
+/* ---- Listview ---- */
 listview {
-    enabled:                     true;
-    columns:                     4;
-    lines:                       3;
-    spacing:                     4px;
-    cycle:                       true;
-    dynamic:                     true;
-    scrollbar:                   true;
-    layout:                      vertical;
-    fixed-height:                true;
-    fixed-columns:               true;
-    border-radius:               10px;
-    background-color:            transparent;
-    text-color:                  @foreground-colour;
-    cursor:                      "default";
+	enabled:				true;
+	columns:				4;
+	lines:					3;
+	spacing:                4px;
+	dynamic:                true;
+	cycle:                  true;
+	scrollbar:              true;
+	layout:                 vertical;
+	reverse:                false;
+	fixed-height:           true;
+	fixed-columns:          false;
+	background-color:       transparent;
+	border-radius:          10px;
 }
-
 
 /* ---- Element ---- */
 element {
-    enabled:                    true;
-    padding:                    5px;
-    margin:                     2px;
-    orientation:                vertical;
-    cursor:                     pointer;
-    background-color:           transparent;
-    border-radius:              10px;
-    border:                     0px;
+    enabled:                true;
+    padding:                5px;
+    margin:                 2px;
+    cursor:                 pointer;
+	orientation: 			vertical;
+    background-color:       transparent;
+    border-radius:          10px;
+    border:                 0px;
 }
 
 element normal.normal {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element normal.urgent {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element normal.active {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element selected.normal {
-    background-color:           @selected;
-    text-color:                 @foreground;
+    background-color:       @selected;
+    text-color:             @foreground;
 }
 
 element selected.urgent {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element selected.active {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element alternate.normal {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element alternate.urgent {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element alternate.active {
-    background-color:           inherit;
-    text-color:                 @foreground;
+    background-color:       inherit;
+    text-color:             @foreground;
 }
 
 element-icon {
-    background-color:           transparent;
-    text-color:                 inherit;
-    size:                       150px;
-    cursor:                     inherit;
+    background-color:       transparent;
+    text-color:             inherit;
+    size:                   130px;
+    cursor:                 inherit;
 }
+
 
 element-text {
-    background-color:           transparent;
-    text-color:                 inherit;
-    cursor:                     inherit;
-    horizontal-align:           0.5;
-    vertical-align:             0.5;
-}
-
-/*****----- Mode Switcher -----*****/
-mode-switcher{
-    enabled:                     true;
-    spacing:                     10px;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @border-colour;
-    background-color:            transparent;
-    text-color:                  @foreground-colour;
-}
-button {
-    padding:                     5px 10px;
-    border:                      0px solid;
-    border-radius:               5px;
-    border-color:                @border-colour;
-    background-color:            @alternate-background;
-    text-color:                  inherit;
-    cursor:                      pointer;
-}
-button selected {
-    background-color:            var(active);
-    text-color:                  var(selected-normal-foreground);
+	font:                   "Fira Code SemiBold 8";
+    background-color:       transparent;
+    text-color:             inherit;
+    cursor:                 inherit;
+    vertical-align:         0.5;
+    horizontal-align:       0.5;
 }
 
 /*****----- Message -----*****/
 message {
-    enabled:                     true;
-    margin:                      0px;
-    padding:                     0px;
-    border:                      0px solid;
-    border-radius:               0px 0px 0px 0px;
-    border-color:                @border-colour;
-    background-color:            transparent;
-    text-color:                  @foreground-colour;
+    background-color:       transparent;
+    margin:					20px 0px 0px 0px;
+    border-radius: 			10px;
 }
+
 textbox {
-    padding:                     5px 10px;
-    border:                      0px solid;
-    border-radius:               20px;
-    border-color:                @border-colour;
-    background-color:            @alternate-background;
-    text-color:                  @foreground-colour;
-    vertical-align:              0.5;
-    horizontal-align:            0.0;
-    highlight:                   none;
-    placeholder-color:           @foreground-colour;
-    blink:                       true;
-    markup:                      true;
+    padding:                15px;
+    background-color:       transparent;
+    text-color:             @foreground;
 }
+
 error-message {
-    padding:                     10px;
-    border:                      2px solid;
-    border-radius:               20px;
-    border-color:                @border-colour;
-    background-color:            @background-colour;
-    text-color:                  @foreground-colour;
+    padding:                15px;
+    border-radius:          20px;
+    background-color:       transparent;
+    text-color:             @foreground;
 }

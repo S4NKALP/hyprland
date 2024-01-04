@@ -1,3 +1,4 @@
+
 # :herb: ‎ <samp>About</samp>
 
 <!--toc:start-->
@@ -339,7 +340,7 @@
 <summary><b>🔡 Programming Language Support</b></summary>
 
 - [gennaro-tedesco/nvim-jqx](https://dotfyle.com/plugins/gennaro-tedesco/nvim-jqx)
-- [simrat39/rust-tools.nvim](https://dotfyle.com/plugins/simrat39/rust-tools.nvim)
+- [mrcjkb/rustaceanvim](https://dotfyle.com/plugins/mrcjkb/rustaceanvim)
 - [dmmulroy/tsc.nvim](https://dotfyle.com/plugins/dmmulroy/tsc.nvim)
 - [mfussenegger/nvim-jdtls](https://dotfyle.com/plugins/mfussenegger/nvim-jdtls)
 - [ray-x/go.nvim](https://dotfyle.com/plugins/ray-x/go.nvim)
@@ -439,6 +440,7 @@
 - [nvim-neotest/neotest](https://dotfyle.com/plugins/nvim-neotest/neotest)
 - [haydenmeade/neotest-jest](https://github.com/nvim-neotest/neotest-jest)
 - [adrigzr/neotest-mocha](https://github.com/adrigzr/neotest-mocha)
+- [rcasia/neotest-java](https://github.com/rcasia/neotest-java)
 - [marilari88/neotest-vitest](https://github.com/marilari88/neotest-vitest)
 - [rcasia/neotest-bash](https://github.com/rcasia/neotest-bash)
 - [mrcjkb/neotest-haskell](https://github.com/mrcjkb/neotest-haskell)
