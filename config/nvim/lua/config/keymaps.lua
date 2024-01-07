@@ -2,11 +2,12 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local map = vim.keymap.set
+
 local Util = require("lazyvim.util")
 
 -- Search current word
-local searching_brave =
-  [[:lua vim.fn.system({'xdg-open', 'https://search.brave.com/search?q=' .. vim.fn.expand("<cword>")})<CR>]]
+-- stylua: ignore
+local searching_brave = [[:lua vim.fn.system({'xdg-open', 'https://search.brave.com/search?q=' .. vim.fn.expand("<cword>")})<CR>]]
 map("n", "<leader>?", searching_brave, { noremap = true, silent = true, desc = "Search current word on brave search" })
 
 -- Toggle background
@@ -27,6 +28,15 @@ map("n", "-", "<C-x>")
 -- Tabs
 map("n", "]<tab>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "[<tab>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+map("n", "<leader><tab>1", "<cmd>tabn 1<cr>", { desc = "Tab 1" })
+map("n", "<leader><tab>2", "<cmd>tabn 2<cr>", { desc = "Tab 2" })
+map("n", "<leader><tab>3", "<cmd>tabn 3<cr>", { desc = "Tab 3" })
+map("n", "<leader><tab>4", "<cmd>tabn 4<cr>", { desc = "Tab 4" })
+map("n", "<leader><tab>5", "<cmd>tabn 5<cr>", { desc = "Tab 5" })
+map("n", "<leader><tab>6", "<cmd>tabn 6<cr>", { desc = "Tab 6" })
+map("n", "<leader><tab>7", "<cmd>tabn 7<cr>", { desc = "Tab 7" })
+map("n", "<leader><tab>8", "<cmd>tabn 8<cr>", { desc = "Tab 8" })
+map("n", "<leader><tab>9", "<cmd>tabn 9<cr>", { desc = "Tab 9" })
 
 -- Buffers
 map("n", "<leader>bf", "<cmd>bfirst<cr>", { desc = "First Buffer" })
@@ -63,12 +73,21 @@ map("n", "<a-l>", "$", { desc = "Last character of Line" })
 -- Copy whole text to clipboard
 map("n", "<C-c>", ":%y+<CR>", { desc = "Copy whole text to clipboard", silent = true })
 
+-- Motion
+map("c", "<C-a>", "<C-b>", { desc = "Start Of Line" })
+map("i", "<C-a>", "<Home>", { desc = "Start Of Line" })
+map("i", "<C-e>", "<End>", { desc = "End Of Line" })
+
 -- Select all text
 map("n", "<C-a>", "gg<S-V>G", { desc = "Select all text", silent = true, noremap = true })
 
 -- Paste options
 map("i", "<C-v>", '<C-r>"', { desc = "Paste on insert mode" })
 map("v", "p", '"_dP', { desc = "Paste without overwriting" })
+
+-- Delete and change without yanking
+map({ "n", "x" }, "<A-d>", '"_d', { desc = "Delete without yanking" })
+map({ "n", "x" }, "<A-c>", '"_c', { desc = "Change without yanking" })
 
 -- Deleting without yanking empty line
 map("n", "dd", function()
@@ -161,12 +180,4 @@ if package.loaded["cinnamon"] then
   map({ "n", "x" }, "l", "<Cmd>lua Scroll('l', 0, 1)<CR>")
   map({ "n", "x" }, "<Left>", "<Cmd>lua Scroll('h', 0, 1)<CR>")
   map({ "n", "x" }, "<Right>", "<Cmd>lua Scroll('l', 0, 1)<CR>")
-
-  -- LSP_KEYMAPS:
-
-  -- LSP go-to-definition:
-  map("n", "gd", "<Cmd>lua Scroll('definition')<CR>")
-
-  -- LSP go-to-declaration:
-  map("n", "gD", "<Cmd>lua Scroll('declaration')<CR>")
 end

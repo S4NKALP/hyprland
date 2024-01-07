@@ -1,0 +1,43 @@
+---
+output: 
+  pdf_document: 
+    latex_engine: xelatex
+header-includes:
+   - \usepackage{bbm}   
+   - \usepackage[T1]{fontenc}
+   - \usepackage{fontspec}
+   - \usepackage[onehalfspacing]{setspace}
+   - \usepackage{xcolor}
+   - \usepackage{cite}
+   - \usepackage{booktabs}
+   - \usepackage{lipsum}
+   - \usepackage{multicol}
+   - \usepackage{lastpage}
+   - \usepackage{hyperref}
+   - \usepackage{fancyhdr}
+---
+\setlength{\headheight}{52pt}
+\definecolor{Blue}{RGB}{5, 88, 255}
+\setmainfont{Source Code Pro}
+
+\title{\textbf{{\color{Blue}TITLE}}}
+\author{\textit{}}
+\date{}
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+\clearpage
+\maketitle
+\thispagestyle{empty}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\thepage}
+\rhead{}
+\renewcommand{\plainheadrulewidth}{0pt}
+\rule{\textwidth}{1pt}
+\tableofcontents
+\rule{\textwidth}{1pt}
+\pagebreak
+
+\section{Introduction}
+

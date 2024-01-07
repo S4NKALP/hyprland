@@ -378,6 +378,7 @@
 
 - [TobinPalmer/rayso.nvim](https://dotfyle.com/plugins/TobinPalmer/rayso.nvim)
 - [L3MON4D3/LuaSnip](https://dotfyle.com/plugins/L3MON4D3/LuaSnip)
+- [chrisgrieser/nvim-scissors](https://dotfyle.com/plugins/chrisgrieser/nvim-scissors)
 - [mrcjkb/haskell-snippets.nvim](https://dotfyle.com/plugins/mrcjkb/haskell-snippets.nvim)
 - [cvigilv/esqueleto.nvim](https://dotfyle.com/plugins/cvigilv/esqueleto.nvim)
 - [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
@@ -457,6 +458,7 @@
 <summary><b>🔧 Utility</b></summary>
 
 - [zbirenbaum/neodim](https://dotfyle.com/plugins/zbirenbaum/neodim)
+- [chrisgrieser/nvim-origami](https://dotfyle.com/plugins/chrisgrieser/nvim-origami)
 - [jghauser/mkdir.nvim](https://dotfyle.com/plugins/jghauser/mkdir.nvim)
 - [backdround/tabscope](https://dotfyle.com/plugins/backdround/tabscope.nvim)
 - [echasnovski/mini.animate](https://dotfyle.com/plugins/echasnovski/mini.animate)

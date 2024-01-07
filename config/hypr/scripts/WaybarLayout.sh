@@ -9,7 +9,7 @@ IFS=$'\n\t'
 config_dir="$HOME/.config/waybar/configs"
 waybar_config="$HOME/.config/waybar/config"
 scripts_dir="$HOME/.config/hypr/scripts"
-rofi_config="$HOME/.config/rofi/config-waybar-layout.rasi"
+rofi_config="$HOME/.config/rofi/config.rasi"
 
 # Function to display menu options
 menu() {
@@ -38,7 +38,7 @@ restart_waybar_if_needed() {
 
 # Main function
 main() {
-    choice=$(menu | rofi -dmenu -config "$rofi_config")
+    choice=$(menu | rofi -dmenu -p " Choose Waybar Layout" -config "$rofi_config")
 
     if [[ -z "$choice" ]]; then
         echo "No option selected. Exiting."

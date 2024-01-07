@@ -33,12 +33,17 @@ paru -S fnm hyprland wlsunset keyb rofi-file-browser-extended-git imv brightness
 ```
 cd Downloads
 git clone https://github.com/S4NKALP/hyprland.git
+
 cd hyprland
 cp -r wallpapers ~/Pictures
 cp -r config/* ~/.config
+
 cd misc
 cp -r fonts ~/.local/
 cp .zshenv ~/
+cp notes ~/.local/bin
+cp -r Notes ~/Documents
+
 chmod +x ~/.config/hypr/scripts/*
 chmod +x ~/.config/hypr/UserScripts/*
 ```
