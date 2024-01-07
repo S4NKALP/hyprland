@@ -1,0 +1,140 @@
+#!/bin/sh
+
+# <<--------- Settings --------->> #
+
+# Set the directory where the notes are stored
+NOTES_DIR="$HOME/Documents/Notes"
+# Set the editor to use
+EDITOR="nvim"
+# Set the file extension for the notes
+EXTENSION="*"
+
+# <<--------- Choosing Templates --------->> #
+Basic() {
+
+    notify-send "Basic Document Created!"
+    cd $NOTES_DIR
+    cp $NOTES_DIR/Templates/SimpleNote.md $NOTES_DIR/"$note_name.md"
+    nvim $NOTES_DIR/"$note_name.md"
+}
+
+LaTeX() {
+
+    notify-send "LaTeX Document Created!"
+    cd $NOTES_DIR
+    cp $NOTES_DIR/Templates/LaTeX.tex $NOTES_DIR/"$note_name.tex"
+    nvim $NOTES_DIR/"$note_name.tex"
+}
+
+Presentation() {
+
+    notify-send "Beamer Presentation Created!"
+    cd $NOTES_DIR
+    cp $NOTES_DIR/Templates/Presentation.tex $NOTES_DIR/"$note_name.tex"
+    nvim $NOTES_DIR/"$note_name.tex"
+}
+
+RMark() {
+
+    notify-send "R Markdown Document Created!"
+    cd $NOTES_DIR
+    cp $NOTES_DIR/Templates/RMarkdown.rmd $NOTES_DIR/"$note_name.rmd"
+    nvim $NOTES_DIR/"$note_name.rmd"
+}
+
+template() {
+
+    echo "1. Basic"
+    echo "2. LaTeX"
+    echo "3. R Markdown"
+    echo "4. Presentation"
+    read -p "Enter your choice: " TYPE
+    case $TYPE in
+        1) Basic ;;
+        2) LaTeX ;;
+        3) RMark ;;
+        4) Presentation ;;
+        *) echo "Invalid!" ;;
+    esac
+}
+
+# <<--------- Functions --------->> #
+create_note() {
+
+    read -p "Enter the name of the note: " "note_name"
+    if [ -f $NOTES_DIR/$note_name.$EXTENSION ]; then
+        echo "Note already exists"
+        echo "1. Overwrite"
+        echo "2. Cancel"
+        read -p "Enter your choice: " choice
+        case $choice in
+            1) notify-send "New Note Created!" &&
+            nvim $NOTES_DIR/$note_name.$EXTENSION ;;
+            2) main ;;
+            *) echo "Invalid choice" ;;
+        esac
+    else
+        template
+    fi
+}
+
+view_note() {
+
+    note=$(find $NOTES_DIR -type f -name "*.$EXTENSION" | fzf --preview 'bat --color=always {}')
+    if [ -z "$note" ]; then
+        exit
+    else
+        nvim "$note"
+        view_note
+    fi
+}
+
+delete_note() {
+
+    note=$(find $NOTES_DIR -type f -name "*.$EXTENSION" | fzf --preview 'bat --color=always {}')
+    if [ -z "$note" ]; then
+        main
+    else
+        rm $note
+        echo "Note Removed!"
+    fi
+}
+
+# <<--------- Main --------->> #
+
+main() {
+
+    # Check if the note directory exists
+    if [ ! -d $NOTES_DIR ]; then
+        mkdir $NOTES_DIR
+    fi
+
+    # Check if the note directory is empty
+    if [ ! "$(ls -A $NOTES_DIR)" ]; then
+        echo "No notes found"
+        echo "Creating a new note"
+        create_note
+    else
+        echo "Notes found"
+        echo "1. Create a new note"
+        echo "2. View a note"
+        echo "3. Delete a note"
+        echo "4. Exit"
+        read -p "Enter your choice: " choice
+
+        case $choice in
+            1) create_note ;;
+            2) view_note ;;
+            3) delete_note ;;
+            4) exit 0 ;;
+            *) echo "Invalid choice" ;;
+        esac
+    fi
+}
+
+# <<--------- Arguments --------->> #
+if [ "$1" = "view" ]; then
+    view_note
+else
+    main
+fi
