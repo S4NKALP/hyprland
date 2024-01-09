@@ -35,7 +35,6 @@
     "plugins.extras.editor.outline",
     "plugins.extras.editor.package-info",
     "plugins.extras.editor.search-replace",
-    "plugins.extras.editor.smart-splits",
     "plugins.extras.editor.suda",
     "plugins.extras.editor.telescope.all-recent",
     "plugins.extras.editor.telescope.import",
@@ -45,7 +44,7 @@
     "plugins.extras.editor.telescope.zoxide",
     "plugins.extras.editor.terminal.floaterm",
     "plugins.extras.formatting.isort",
-    "plugins.extras.formatting.prettier",
+    "plugins.extras.formatting.prettier-extended",
     "plugins.extras.formatting.rustfmt",
     "plugins.extras.formatting.trim_newlines",
     "plugins.extras.formatting.trim_whitespace",
@@ -58,6 +57,7 @@
     "plugins.extras.lang.sql",
     "plugins.extras.lang.web.html-css",
     "plugins.extras.lang.web.typescript-extended",
+    "plugins.extras.linting.biome",
     "plugins.extras.linting.cspell",
     "plugins.extras.linting.eslint-extended",
     "plugins.extras.linting.shellcheck",
@@ -85,6 +85,7 @@
     "plugins.extras.util.dot-extended",
     "plugins.extras.util.icon-picker",
     "plugins.extras.util.kitty-scrollback",
+    "plugins.extras.util.smart-splits",
     "plugins.extras.util.vscode",
     "plugins.extras.util.wakatime"
   ],
@@ -93,3 +94,4 @@
   },
   "version": 2
 }
+

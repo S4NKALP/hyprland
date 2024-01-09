@@ -8,8 +8,8 @@ notif="$HOME/.config/swaync/images/bell.png"
 
 HYPRLAND_DEVICE="dll07a7:01-044e:120b"
 
-XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)}
-STATUS_FILE="$XDG_RUNTIME_DIR/touchpad.status"
+DIR=$HOME/.cache
+STATUS_FILE="$DIR/touchpad.status"
 
 toggle_touchpad() {
   if [ ! -f "$STATUS_FILE" ] || [ "$(cat "$STATUS_FILE")" = "false" ]; then

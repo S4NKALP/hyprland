@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # A rofi mode script that allows calculations to be done
+# by Adnan Shameem (adnan360). License: MIT (Expat)
 #
 # Usage:
 # - Download this into a dir
