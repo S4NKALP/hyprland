@@ -7,7 +7,7 @@
 
 # Variables
 scriptsDir=$HOME/.config/hypr/scripts
-wallpaper=$HOME/.config/hypr/.current_wallpaper
+wallpaper=$HOME/.config/Pictures/wallpapers/3.jpg
 kvantum_theme="Tokyo-Night"
 
 swww="swww img"
@@ -32,6 +32,9 @@ if [ ! -f $HOME/cache/.initial_startup_done ]; then
 
     # initiate kvantum theme
     kvantummanager --set "$kvantum_theme" > /dev/null 2>&1 &
+
+    # delete sm-link
+    rm ~/.config/hypr/.current_wallpaper
 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done
