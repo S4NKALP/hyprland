@@ -1,4 +1,3 @@
-
 # :herb: ‎ <samp>About</samp>
 
 <!--toc:start-->
@@ -391,6 +390,7 @@
 - [folke/edgy.nvim](https://dotfyle.com/plugins/folke/edgy.nvim)
 - [anuvyklack/windows.nvim](https://dotfyle.com/plugins/anuvyklack/windows.nvim)
 - [mrjones2014/smart-splits.nvim](https://dotfyle.com/plugins/mrjones2014/smart-splits.nvim)
+- [aserowy/tmux.nvim](https://dotfyle.com/plugins/aserowy/tmux.nvim)
 - [sindrets/winshift.nvim](https://dotfyle.com/plugins/sindrets/winshift.nvim)
 - [echasnovski/mini.bufremove](https://dotfyle.com/plugins/echasnovski/mini.bufremove)
 
@@ -567,18 +567,22 @@
 - biome
 - cmakelint
 - credo
+- cspell
 - eslint
 - fish
+- golangcil-lint
 - hadolint
 - markdownlint
 - pylint
 - shellcheck
 - stylelint
 - terraform_validate
+- typos
 - vale
 
 ### Formatters
 
+- biome
 - black
 - csharpier
 - fish_indent
@@ -591,6 +595,8 @@
 - shfmt
 - stylua
 - terraform_fmt
+- trim_newlines
+- trim_whitespace
 
 # :gear: ‎ <samp>Config</samp>
 
