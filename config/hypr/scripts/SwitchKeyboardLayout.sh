@@ -3,7 +3,7 @@
 # This is for changing kb_layouts. Set kb_layouts in $settings_file
 
 layout_f="$HOME/.cache/kb_layout"
-settings_file="$HOME/.config/hypr/configs/Settings.conf"
+settings_file="$HOME/.config/hypr/UserConfigs/UserSettings.conf"
 notif="$HOME/.config/swaync/images/bell.png"
 
 # Check if ~/.cache/kb_layout exists and create it with a default layout from Settings.conf if not found
