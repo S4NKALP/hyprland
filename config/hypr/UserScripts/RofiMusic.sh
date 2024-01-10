@@ -5,9 +5,9 @@ iDIR="$HOME/.config/swaync/icons"
 
 
 LOFI_STREAM="https://www.youtube.com/watch?v=jfKfPfyJRdk"
-ALL_TIME_CHILL_HITS="https://www.youtube.com/playlist?list=PL1FPWPLPHKhysG2trm9RKV8FG3eQ7J4VN"
-ALL_TIME_MALAYALAM_HITS="https://www.youtube.com/playlist?list=PL1FPWPLPHKhyZeoBv-Ws_eRiWiUYKkuDz"
-HAND_PICKED_HITS="https://music.youtube.com/playlist?list=PLAj6caR1_EYHevz9nP5CzbE-z8viVAyI3&feature=share"
+NEPALI_OLD_SONG="https://youtube.com/playlist?list=PLXuVG9D9JQ8RAhpH2TyISgBgEmXONIhGY&si=SLyxb2vxaE0XuXsz"
+BOLLYWOOD_LOVE_SONG="https://youtube.com/playlist?list=PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK&si=J0gPvKL4R4fIlPz9"
+TOP_50_BOLLYWOOD="https://youtube.com/playlist?list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI&si=-TBeeNJ28NqVcnKu"
 BHAJAN="https://youtube.com/playlist?list=PLwIh-QEhrDJDM8IF3gLUgnEyZm6dBgr_n&si=_RDHngYobHlcxaJW"
 
 # Player menu controls
@@ -22,16 +22,16 @@ decrease_volume="󰝞  Decrease volume"
 # Music menu controls
 play_bhajan="󰥳 Play Bhajan"
 play_lofi="  Play lofi girl"
-play_chill_hits="1.   Play All time chill hits"
-play_malayalam_hits="2.   Play All time malayalam hits"
-play_hand_picked_hits="3.   Play hand picked hits"
+play_old_nepali="1.   Play Nepali Old Song"
+play_bollywood_love="2.   Play BollyWood Love"
+play_TOP_50_BOLLYWOOD="3.   Play Top 50 BollyWood"
 
 function notify() {
     notify-send -u normal -i "$iDIR/music.png" "$1"
 }
 
 function music() {
-    local chosen=$(printf "%s\n%s\n%s\n%s\n" "$play_bhajan" "$play_lofi" "$play_chill_hits" "$play_malayalam_hits" "$play_hand_picked_hits" | rofi -dmenu -i -l 6 -p "Music Time:" -config ~/.config/rofi/config.rasi)
+    local chosen=$(printf "%s\n%s\n%s\n%s\n" "$play_bhajan" "$play_lofi" "$play_old_nepali" "$play_bollywood_love" "$play_TOP_50_BOLLYWOOD" | rofi -dmenu -i -l 5 -p "Music Time:" -config ~/.config/rofi/config.rasi)
 
 
     if [[ "$chosen" == "$play_bhajan" ]]; then
@@ -40,15 +40,15 @@ function music() {
     elif [[ "$chosen" == "$play_lofi" ]]; then
         notify "🎹 Playing lofi girl"
         exec -a "rofi-music" mpv --no-video "$LOFI_STREAM" --no-resume-playback
-    elif [[ "$chosen" == "$play_chill_hits" ]]; then
-        notify "🎹 Playing all time chill hits"
-        exec -a "rofi-music" mpv --no-video "$ALL_TIME_CHILL_HITS" --shuffle --no-resume-playback
-    elif [[ "$chosen" == "$play_malayalam_hits" ]]; then
-        notify "🎹 Playing malayalam hits"
-        exec -a "rofi-music" mpv --no-video "$ALL_TIME_MALAYALAM_HITS" --shuffle --no-resume-playback
-    elif [[ "$chosen" == "$play_hand_picked_hits" ]]; then
-        notify "🎹 Playing hand picked hits"
-        exec -a "rofi-music" mpv --no-video "$HAND_PICKED_HITS" --shuffle --no-resume-playback
+    elif [[ "$chosen" == "$play_old_nepali" ]]; then
+        notify "🎹 Playing nepali old song"
+        exec -a "rofi-music" mpv --no-video "$NEPALI_OLD_SONG" --shuffle --no-resume-playback
+    elif [[ "$chosen" == "$play_bollywood_love" ]]; then
+        notify "🎹 Playing bollywood love"
+        exec -a "rofi-music" mpv --no-video "$BOLLYWOOD_LOVE_SONG" --shuffle --no-resume-playback
+    elif [[ "$chosen" == "$play_TOP_50_BOLLYWOOD" ]]; then
+        notify "🎹 Playing top 50 bollywood"
+        exec -a "rofi-music" mpv --no-video "$TOP_50_BOLLYWOOD" --shuffle --no-resume-playback
     fi
 }
 
