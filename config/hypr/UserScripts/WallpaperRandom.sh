@@ -32,5 +32,4 @@ SWWW_PARAMS="--transition-fps ${FPS} --transition-type ${TYPE} --transition-dura
 # Set the randomly selected wallpaper
 swww img "${RANDOMPICS}" ${SWWW_PARAMS}
 
-# Create symbolic link to the selected wallpaper
-ln -sf "${RANDOMPICS}" "${hyprConfigDir}/.current_wallpaper"
+${scriptsDir}/Linker.sh

@@ -16,12 +16,11 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
 # Check if a marker file exists.
 if [ ! -f $HOME/cache/.initial_startup_done ]; then
 
-
-    # Initial scripts to load in order to have a proper wallpaper waybar
+    # Initial scripts to load in order to have a proper wallpaper
     swww init || swww query && $swww "$wallpaper" $effect
 
-    # Refreshing waybar, dunst, rofi etc.
-    "$scriptsDir/Refresh.sh" > /dev/null 2>&1 &
+    # For Symbolic Link
+    "$scriptsDir/Linker.sh" > /dev/null 2>&1
 
     # initiate GTK dark mode and apply icon and cursor theme
     gsettings set org.gnome.desktop.interface gtk-theme Tokyonight-Dark-BL-LB > /dev/null 2>&1 &
@@ -33,8 +32,11 @@ if [ ! -f $HOME/cache/.initial_startup_done ]; then
     # initiate kvantum theme
     kvantummanager --set "$kvantum_theme" > /dev/null 2>&1 &
 
-    # delete sm-link
-    rm ~/.config/hypr/.current_wallpaper
+    #initiate the kb_layout
+    grep 'kb_layout=' "$HOME/.config/hypr/UserConfigs/UserSettings.conf" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null > $HOME/.cache/kb_layout
+
+    # Refreshing waybar, dunst, rofi etc.
+    "$scriptsDir/Refresh.sh" > /dev/null 2>&1 &
 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done
