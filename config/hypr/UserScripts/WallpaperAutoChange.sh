@@ -6,7 +6,7 @@
 # up as the wallpaper at regular intervals
 #
 # NOTE: this script uses bash (not POSIX shell) for the RANDOM variable
-
+linker=$HOME/.config/hypr/scripts/Linker.sh
 
 if [[ $# -lt 1 ]] || [[ ! -d $1   ]]; then
 	echo "Usage:
@@ -29,8 +29,8 @@ while true; do
 		| sort -n | cut -d':' -f2- \
 		| while read -r img; do
 			# Create symbolic link to the current image
-			ln -sf "$img" $HOME/.config/hypr/.current_wallpaper
 			swww img "$img"
+                        $linker
 			sleep $INTERVAL
 		done
 done

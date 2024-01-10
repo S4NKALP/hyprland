@@ -83,5 +83,14 @@ main() {
     exit 1
   fi
 }
+
+# Check if rofi is already running
+if pidof rofi > /dev/null; then
+  pkill rofi
+  exit 0
+fi
+
 main
 
+sleep 0.5
+${SCRIPTSDIR}/Linker.sh

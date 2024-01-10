@@ -1,6 +1,5 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.formatting.black",
     "lazyvim.plugins.extras.lang.python-semshi",
     "lazyvim.plugins.extras.lang.yaml",
     "lazyvim.plugins.extras.ui.edgy",
@@ -43,8 +42,8 @@
     "plugins.extras.editor.telescope.undotree",
     "plugins.extras.editor.telescope.zoxide",
     "plugins.extras.editor.terminal.floaterm",
-    "plugins.extras.formatting.isort",
     "plugins.extras.formatting.prettier-extended",
+    "plugins.extras.formatting.ruff",
     "plugins.extras.formatting.rustfmt",
     "plugins.extras.formatting.trim_newlines",
     "plugins.extras.formatting.trim_whitespace",
