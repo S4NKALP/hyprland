@@ -41,7 +41,7 @@ cp -r config/* ~/.config
 cd misc
 cp -r fonts ~/.local/
 cp .zshenv ~/
-cp notes ~/.local/bin
+cp -r bin ~/.local/
 cp -r Notes ~/Documents
 
 chmod +x ~/.config/hypr/scripts/*
