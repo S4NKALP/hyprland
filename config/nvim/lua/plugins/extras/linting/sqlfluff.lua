@@ -3,7 +3,7 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "golangcil-lint" })
+      vim.list_extend(opts.ensure_installed, { "sqlfluff" })
     end,
   },
   {
@@ -20,9 +20,9 @@ return {
       end
 
       add_linters({
-        ["go"] = { "golangcilint" },
-        ["gomod"] = { "golangcilint" },
-        ["gowork"] = { "golangcilint" },
+        ["sql"] = { "sqlfluff" },
+        ["plsql"] = { "sqlfluff" },
+        ["mysql"] = { "sqlfluff" },
       })
 
       return opts

@@ -1,4 +1,5 @@
 
+
 # :herb: ‎ <samp>About</samp>
 
 <!--toc:start-->
@@ -452,6 +453,7 @@
 - [nvim-neotest/neotest-python](https://github.com/nvim-neotest/neotest-python)
 - [olimorris/neotest-rspec](https://github.com/olimorris/neotest-rspec)
 - [rouge8/neotest-rust](https://github.com/rouge8/neotest-rust)
+- [lawrence-laz/neotest-zig](https://github.com/lawrence-laz/neotest-zig)
 
 </details>
 
@@ -523,6 +525,7 @@
 - vue
 - xml
 - yaml
+- zig
 
 ### Language Servers
 
@@ -532,6 +535,7 @@
 - clangd
 - css
 - cssmodules
+- deno
 - docker
 - elixir
 - emmet
@@ -560,8 +564,9 @@
 - terraform
 - texlab
 - tsserver
-- vue
+- volar
 - yaml
+- zig
 
 ### Linters
 
@@ -577,6 +582,7 @@
 - pylint
 - ruff
 - shellcheck
+- sqlfluff
 - stylelint
 - terraform_validate
 - typos
@@ -598,6 +604,7 @@
 - terraform_fmt
 - trim_newlines
 - trim_whitespace
+- zigfmt
 
 # :gear: ‎ <samp>Config</samp>
 
