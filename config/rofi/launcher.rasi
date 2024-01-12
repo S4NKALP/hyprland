@@ -58,7 +58,7 @@ mainbox {
     border-color:                @foreground;
     background-color:            transparent;
     children:                    ["inputbar","mode-switcher", "listview"];
-    background-image:            url("~/.config/hypr/.current_wallpaper", height);
+    background-image:            url("~/.config/rofi/.current_wallpaper", height);
 }
 
 inputbar {

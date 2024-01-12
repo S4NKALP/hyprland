@@ -66,7 +66,7 @@ mainbox {
     border-color:                @border-colour;
     background-color:            transparent;
     children:                    [ "inputbar", "listbox"];
-    background-image:            url("~/.config/hypr/.current_wallpaper", height);
+    background-image:            url("~/.config/rofi/.current_wallpaper", height);
 }
 
 /*****----- Inputbar -----*****/
