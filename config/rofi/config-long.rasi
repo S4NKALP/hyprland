@@ -54,7 +54,7 @@ mainbox {
     enabled:                    true;
     orientation:                vertical;
 	padding:					8px;
-    background-image:    		url("~/.config/hypr/.current_wallpaper", height);
+    background-image:    		url("~/.config/rofi/.current_wallpaper", height);
     children:                   [ "imagebox" ];
     border-radius:              12px;
     background-color:      		transparent;

@@ -52,11 +52,6 @@ main() {
   # Random choice case
   if [ "$choice" = "$RANDOM_PIC_NAME" ]; then
     swww img "${DIR}/${RANDOM_PIC}" $SWWW_PARAMS
-
-   # Create symbolic link
-   ln -sf "${DIR}/${RANDOM_PIC}" "$HOME/.config/hypr/.current_wallpaper"
-
-   notify-send "Wallpaper Changed" -i "${DIR}/${RANDOM_PIC}"
     exit 0
   fi
 
@@ -72,14 +67,7 @@ main() {
 
   if [[ $pic_index -ne -1 ]]; then
     swww img "${DIR}/${PICS[$pic_index]}" $SWWW_PARAMS
-
-    # Create symbolic link
-    ln -sf "${DIR}/${PICS[$pic_index]}" "$HOME/.config/hypr/.current_wallpaper"
-
-    notify-send "Wallpaper Changed" -i "${DIR}/${PICS[$pic_index]}"
   else
-    notify-send "Wallpaper Changed" -i "Image not found."
-
     exit 1
   fi
 }
@@ -92,5 +80,4 @@ fi
 
 main
 
-sleep 0.5
 ${SCRIPTSDIR}/Linker.sh
