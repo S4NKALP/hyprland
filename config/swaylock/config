@@ -1,41 +1,59 @@
-show-failed-attempts
-ignore-empty-password
 daemonize
-fade-in=0.25
-indicator
+show-failed-attempts
 clock
-datestr=%d/%m/%Y
-timestr=%I:%M:%p
-image=$HOME/.config/hypr/.current_wallpaper
-show-keyboard-layout
-indicator-caps-lock
-bs-hl-color=DB4740CC
-caps-lock-bs-hl-color=DB4740CC
-caps-lock-key-hl-color=D3869BCC
-font=Inter
-font-size=15
-indicator-idle-visible
+
+# AM/PM formats (American Format)
+datestr=%a, %B %e
+timestr=%I:%M %p
+
+#24 HRS clock format and standard Europe Date Format
+#timestr=%H:%M:%S
+#datestr=%d %B, %a
+
+# Add current display as background
+#screenshots
+
+# Add an image as a background. You need to disable screenshots above
+image=$HOME/.config/rofi/.current_wallpaper
+
+# Effect for background
+# NOTE: if you choose image as wallpaper, you may want to comment (#) these effects
+# effect-blur=10x5
+# effect-vignette=0.5:0.5
+effect-greyscale
+#effect-pixelate=5
+
+color=1f1d2e80
+font="Fira Code Medium"
+indicator
 indicator-radius=100
 indicator-thickness=7
-inside-color=000000BF
-inside-clear-color=8EC07C66
-inside-caps-lock-color=FE801966
-inside-ver-color=619A9666
-inside-wrong-color=F9373CBC
-key-hl-color=B1B946CC
-layout-bg-color=50494500
-layout-text-color=E0CDA5
-line-color=00000000
-ring-color=000000CC
-ring-clear-color=8EC07CCC
-ring-caps-lock-color=FE8019CC
-ring-ver-color=80AA9ECC
-ring-wrong-color=F9373CCC
+
+text-color=e0def4
+text-caps-lock-color=ffffff
+inside-color=000000
+line-color=1f1d2e
+ring-color=191724
 separator-color=00000000
-text-color=E0CDA5
-text-clear-color=E0CDA5
-text-caps-lock-color=E0CDA5
-text-ver-color=E0CDA5
-text-wrong-color=E0CDA5
-effect-vignette=0.5:0.5
-effect-blur=10x5
+text-ver-color=ffffff
+inside-ver-color=000000
+line-ver-color=0000ff
+ring-ver-color=2777ff
+text-wrong-color=ff0000
+inside-wrong-color=000000
+line-wrong-color=000000
+ring-wrong-color=ff8000
+text-clear-color=000000
+inside-clear-color=ffffff
+line-clear-color=00ff00
+ring-clear-color=0ffff0
+key-hl-color=ff0000
+bs-hl-color=ffffff
+
+grace=1
+grace-no-mouse
+grace-no-touch
+fade-in=0.25
+ignore-empty-password
+
+
