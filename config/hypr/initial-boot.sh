@@ -7,7 +7,7 @@
 
 # Variables
 scriptsDir=$HOME/.config/hypr/scripts
-wallpaper=$HOME/Pictures/wallpapers/3.jpg
+wallpaper=$HOME/Pictures/wallpapers/62.jpg
 kvantum_theme="Tokyo-Night"
 
 swww="swww img"
