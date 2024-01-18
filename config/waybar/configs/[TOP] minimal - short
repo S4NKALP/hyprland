@@ -12,6 +12,7 @@
 "modules-left": [
 	"clock",
 	"custom/weather",
+        "custom/music",
 	],
 
 "modules-center": [

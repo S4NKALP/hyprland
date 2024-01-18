@@ -18,7 +18,7 @@
 "modules-left": [
     "custom/menu",
     "cpu",
-    "temperature",
+    "custom/CpuTemp",
     "memory",
     "disk",
     ],

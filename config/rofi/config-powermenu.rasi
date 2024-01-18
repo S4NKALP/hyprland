@@ -63,7 +63,7 @@ prompt {
 	border-radius:					15px;
     border-color:                   @foreground;
     background-color:               transparent;
-    text-color:                     @foreground;
+    text-color:                     #FFFF00;
     cursor:                         text;
 
 }
@@ -94,7 +94,7 @@ element {
     padding:                        20px;
     border-radius:                  30px;
     background-color:               transparent;
-    text-color:                     @foreground;
+    text-color:                     #FFFF00;
     cursor:                         pointer;
 }
 element-text {

@@ -17,7 +17,7 @@ menu(){
 }
 
 main() {
-    choice=$(menu | rofi -dmenu -i -l 7 -p " View / Edit Hyprland Configs:" -config ~/.config/rofi/config-compact.rasi | cut -d. -f1)
+    choice=$(menu | rofi -dmenu -i -l 9 -p " View / Edit Hyprland Configs:" -config ~/.config/rofi/config.rasi | cut -d. -f1)
     case $choice in
         1)
             kitty -e nano "$UserConfigs/ENVariables.conf"

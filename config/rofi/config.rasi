@@ -78,7 +78,7 @@ inputbar {
     border:                      1px;
     border-color:                @foreground;
     background-color:            transparent;
-    text-color:                  @foreground;
+    text-color:                  #FFFF00;
     children:                    [ "prompt", "textbox-prompt-colon", "entry" ];
 }
 
@@ -156,12 +156,12 @@ element {
 
 element normal.normal {
     background-color:           inherit;
-    text-color:                 @foreground;
+    text-color:                 #1e1e2e;
 }
 
 element normal.urgent {
     background-color:           inherit;
-    text-color:                 @foreground;
+    text-color:                 #1e1e2e;
 }
 
 element normal.active {
@@ -208,7 +208,7 @@ element-icon {
 
 element-text {
     background-color:           transparent;
-    text-color:                 inherit;
+    text-color:                 #FFFF00;
     cursor:                     inherit;
     vertical-align:             0.5;
     horizontal-align:           0.0;
