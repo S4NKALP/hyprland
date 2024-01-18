@@ -84,7 +84,7 @@ dummy {
 /* ---- Inputbar ---- */
 inputbar {
     enabled:                true;
-    text-color:             @foreground;
+    text-color:             #FFFF00;
     spacing:                10px;
     padding:                8px;
     border-radius:          10px;
@@ -99,7 +99,7 @@ textbox-prompt-colon {
     enabled:                true;
     expand:                 false;
     str:                    "󰸉 ";
-    text-color:             inherit;
+    text-color:             #FFFF00;
 	background-color:		transparent;
 }
 
@@ -197,7 +197,7 @@ element-icon {
 element-text {
 	font:                   "Fira Code SemiBold 8";
     background-color:       transparent;
-    text-color:             inherit;
+    text-color:             #FFFF00;
     cursor:                 inherit;
     vertical-align:         0.5;
     horizontal-align:       0.5;

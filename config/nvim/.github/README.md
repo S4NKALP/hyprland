@@ -1,3 +1,4 @@
+
 # :herb: ‎ <samp>About</samp>
 
 <!--toc:start-->
@@ -19,6 +20,7 @@
 - [tzachar/cmp-tabnine](https://github.com/tzachar/cmp-tabnine)
 - [jackMort/ChatGPT.nvim](https://dotfyle.com/plugins/jackMort/ChatGPT.nvim)
 - [zbirenbaum/copilot.lua](https://dotfyle.com/plugins/zbirenbaum/copilot.lua)
+- [David-Kunz/gen.nvim](https://dotfyle.com/plugins/David-Kunz/gen.nvim)
 
 </details>
 
@@ -301,6 +303,7 @@
 
 - [andweeb/presence.nvim](https://dotfyle.com/plugins/andweeb/presence.nvim)
 - [edluffy/hologram.nvim](https://dotfyle.com/plugins/edluffy/hologram.nvim)
+- [ellisonleao/carbon-now.nvim](https://dotfyle.com/plugins/ellisonleao/carbon-now.nvim)
 
 </details>
 
@@ -358,6 +361,13 @@
 </details>
 
 <details>
+<summary><b>🏠 Remote-development</b>></summary>
+
+- [esensar/nvim-dev-container](https://dotfyle.com/plugins/esensar/nvim-dev-container)
+
+</details>
+
+<details>
 <summary><b>📜 Scrollbar-Scrolling</b></summary>
 
 - [lewis6991/satellite.nvim](https://dotfyle.com/plugins/lewis6991/satellite.nvim)
@@ -377,7 +387,6 @@
 <details>
 <summary><b>🐌 Snippet</b></summary>
 
-- [TobinPalmer/rayso.nvim](https://dotfyle.com/plugins/TobinPalmer/rayso.nvim)
 - [L3MON4D3/LuaSnip](https://dotfyle.com/plugins/L3MON4D3/LuaSnip)
 - [chrisgrieser/nvim-scissors](https://dotfyle.com/plugins/chrisgrieser/nvim-scissors)
 - [mrcjkb/haskell-snippets.nvim](https://dotfyle.com/plugins/mrcjkb/haskell-snippets.nvim)
@@ -618,17 +627,9 @@
 | ----------------------------------------------- |
 | ![find-files](./overview-images/find-files.png) |
 
-<div style="display: flex;">
-
-| **Neo-tree**                                |
-| ------------------------------------------- |
-| ![neo-tree](./overview-images/neo-tree.png) |
-
-| **Symbols Outline**                       |
-| ----------------------------------------- |
-| ![outline](./overview-images/outline.png) |
-
-</div>
+| **Neo-tree**                                | **Symbols Outline**                       |
+| ------------------------------------------- | ----------------------------------------- |
+| ![neo-tree](./overview-images/neo-tree.png) | ![outline](./overview-images/outline.png) |
 
 | **Bufferline**                                  |
 | ----------------------------------------------- |

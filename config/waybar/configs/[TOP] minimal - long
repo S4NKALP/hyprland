@@ -24,6 +24,7 @@
         "mpris",
         "custom/swaync",
 	"tray",
+        "custom/music"
 	],
 "modules-center": [
 	"clock",

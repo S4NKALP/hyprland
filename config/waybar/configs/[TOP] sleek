@@ -22,6 +22,7 @@
 ],
 
 "modules-right": [
+        "custom/music",
 	"custom/swaync",
 	"custom/separator#blank",
 	"tray",

@@ -70,7 +70,7 @@ inputbar {
     border-radius:               10px;
     border-color:                @foreground;
     background-color:            transparent;
-    text-color:                  white;
+    text-color:                  #FFFF00;
     children:                    ["textbox-prompt-colon", "entry"];
 }
 
@@ -189,7 +189,7 @@ element-icon {
 
 element-text {
     background-color:           transparent;
-    text-color:                 inherit;
+    text-color:                 #FFFF00;
     cursor:                     inherit;
     vertical-align:             0.5;
     horizontal-align:           0.0;
