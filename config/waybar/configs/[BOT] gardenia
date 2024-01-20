@@ -88,8 +88,8 @@
   "format-time": "{H}h {M}min",
   "tooltip": true,
   "tooltip-format": "{capacity}%",
-  "on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
-  "on-click-right": "~/.config/hypr/scripts/RofiPower.sh",
+  "on-click-middle": "~/.config/hypr/scripts/RunCMD.sh blur",
+  "on-click-right": "~/.config/hypr/scripts/RunCMD.sh powermenu",
 },
 
 }

@@ -72,7 +72,7 @@
                 },
                 {
                     "label": "󰌾",
-                    "command": "swaylock"
+                    "command": "~/.config/hypr/scripts/RunCMD.sh lockscreen"
                 },
                 {
                     "label": "󰍃",

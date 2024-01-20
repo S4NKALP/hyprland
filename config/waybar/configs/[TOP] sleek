@@ -42,7 +42,7 @@
 "custom/power": {
 	"format": " ",
 	"icon-size": 20,
-        "on-click": "~/.config/hypr/scripts/RofiPower.sh",
+        "on-click": "~/.config/hypr/scripts/RunCMD.sh powermenu",
 	"tooltip": false,
 },
 

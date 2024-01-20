@@ -1,8 +1,3 @@
-//* ----------- 💫 https://github.com/JaKooLit 💫 -------- */
-//* ............................................*/
-//* .............CAMELLIA.......................*/
-//* ............................................*/
-//* --- 👍 designed by https://github.com/Krautt  👍 --- */
 
 {
 
@@ -99,9 +94,9 @@
 	"states": {
 	  "critical": 15
 			 },
-	"format": "{capacity}% {icon}",
-	"format-charging": " {capacity}%",
-	"format-plugged": "󱘖 {capacity}%",
+	"format": "{icon}",
+	"format-charging": "",
+	"format-plugged": "󱘖 ",
 	"format-full": "{icon} Full",
 	"format-alt": "{icon} {time}",
 	"format-icons": [" ", " ", " ", " ", " "],

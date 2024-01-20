@@ -59,6 +59,7 @@
 <summary><b>🎨 Colorscheme</b></summary>
 
 - [rockerBOO/boo-colorscheme-nvim](https://dotfyle.com/plugins/rockerBOO/boo-colorscheme-nvim)
+- [HoNamDuong/hybrid.nvim](https://dotfyle.com/plugins/HoNamDuong/hybrid.nvim)
 - [craftzdog/solarized-osaka.nvim](https://dotfyle.com/plugins/craftzdog/solarized-osaka.nvim)
 - [shaunsingh/moonlight.nvim](https://dotfyle.com/plugins/shaunsingh/moonlight.nvim)
 - [savq/melange-nvim](https://dotfyle.com/plugins/savq/melange-nvim)
@@ -119,6 +120,18 @@
 <summary><b>🔥 Completion</b></summary>
 
 - [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
+- [hrsh7th/cmp-buffer](https://github.com/hrsh7th/cmp-buffer)
+- [hrsh7th/cmp-nvim-lsp](https://github.com/hrsh7th/cmp-nvim-lsp)
+- [hrsh7th/cmp-path](https://github.com/hrsh7th/cmp-path)
+- [saadparwaiz1/cmp_luasnip](https://github.com/saadparwaiz1/cmp_luasnip)
+- [lukas-reineke/cmp-rg](https://dotfyle.com/plugins/lukas-reineke/cmp-rg)
+- [lukas-reineke/cmp-under-comparator](https://dotfyle.com/plugins/lukas-reineke/cmp-under-comparator)
+- [petertriho/cmp-git](https://github.com/petertriho/cmp-git)
+- [amarakon/nvim-cmp-fonts](https://github.com/amarakon/nvim-cmp-fonts)
+- [hrsh7th/cmp-emoji](https://github.com/hrsh7th/cmp-emoji)
+- [chrisgrieser/cmp_yanky](https://github.com/chrisgrieser/cmp_yanky)
+- [chrisgrieser/cmp-nerdfont](https://github.com/chrisgrieser/cmp-nerdfont)
+- [SergioRibera/cmp-dotenv](https://github.com/SergioRibera/cmp-dotenv)
 - [roobert/tailwindcss-colorizer-cmp.nvim](https://dotfyle.com/plugins/roobert/tailwindcss-colorizer-cmp.nvim)
 
 </details>
@@ -287,6 +300,7 @@
 - [Zeioth/markmap.nvim](https://dotfyle.com/plugins/Zeioth/markmap.nvim)
 - [iamcco/markdown-preview.nvim](https://dotfyle.com/plugins/iamcco/markdown-preview.nvim)
 - [toppair/peek.nvim](https://dotfyle.com/plugins/toppair/peek.nvim)
+- [lukas-reineke/headlines.nvim](https://dotfyle.com/plugins/lukas-reineke/headlines.nvim)
 
 </details>
 
@@ -639,6 +653,10 @@
 | ----------------------------------------- |
 | ![lualine](./overview-images/lualine.png) |
 
+| **Notify Info**                            | **Notify Warning**                               | **Notify Error**                             |
+| ------------------------------------------ | ------------------------------------------------ | -------------------------------------------- |
+| ![info](./overview-images/notify-info.png) | ![warning](./overview-images/notify-warning.png) | ![error](./overview-images/notify-error.png) |
+
 | **Which-key**                                 |
 | --------------------------------------------- |
 | ![which-key](./overview-images/which-key.png) |
@@ -647,9 +665,18 @@
 | --------------------------------------------- |
 | ![live-grep](./overview-images/live-grep.png) |
 
+| **Cmp**                               |
+| ------------------------------------- |
+| ![cmp](./overview-images/cmp.png)     |
+| ![cmp-2](./overview-images/cmp-2.png) |
+
 | **Breadcrumbs**                                   |
 | ------------------------------------------------- |
 | ![breadcrumbs](./overview-images/breadcrumbs.png) |
+
+| **Actions Preview**                                       |
+| --------------------------------------------------------- |
+| ![actions-preview](./overview-images/actions-preview.png) |
 
 | **Trouble**                               |
 | ----------------------------------------- |
@@ -658,5 +685,13 @@
 | **Diff-History**                                    |
 | --------------------------------------------------- |
 | ![diff-history](./overview-images/diff-history.png) |
+
+| **Floaterm**                                      |
+| ------------------------------------------------- |
+| ![floating](./overview-images/floaterm-float.png) |
+
+| **Dressing Menu**                           |
+| ------------------------------------------- |
+| ![dressing](./overview-images/dressing.png) |
 
 # :keyboard: ‎ <samp>Binds</samp>
