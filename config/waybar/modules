@@ -200,7 +200,7 @@
   "tooltip": true,
   //"tooltip-format": "{timeTo} {power}w",
   "tooltip-format": "{capacity}%",
-  "on-click-middle": "~/.config/hypr/scripts/ChangeBlur.sh",
+  "on-click-middle": "~/.config/hypr/scripts/RunCMD.sh toggle_blur",
 },
 
 "bluetooth": {
@@ -274,11 +274,14 @@
             "${USER}@${set_sysname}:(.*)": "$1 ",
             "(.*) — Mozilla Firefox": "$1 󰈹",
             "(.*)Mozilla Firefox": "Firefox 󰈹",
-            "(.*) - Visual Studio Code": "$1 󰨞",
-            "(.*)Visual Studio Code": "Code 󰨞",
+            //"(.*) - Visual Studio Code": "$1 󰨞",
+            //"(.*)Visual Studio Code": "Code 󰨞",
+            "(.*) - codium": "$1 󰨞",
+            "(.*)codium": "Code 󰨞",
             "(.*)Thunar": "$1 󰉋",
+            "(.*)yazi": "$1 󰉋",
             "(.*)Spotify": "Spotify 󰓇",
-            "(.*)Steam": "Steam 󰓓"
+            "(.*)nvim": "$1 ",
 	},
 },
 
@@ -479,8 +482,8 @@
 "custom/cycle_wall":{
     "format":" ",
     "exec": "echo ; echo 󰸉 wallpaper select",
-    "on-click": "~/.config/hypr/UserScripts/WallpaperSelect.sh",
-    "on-click-right": "~/.config/hypr/UserScripts/WallpaperAutoChange.sh",
+    "on-click": "~/.config/hypr/scripts/RunCMD.sh selectwall",
+    "on-click-right": "~/.config/hypr/scripts/RunCMD.sh randomwall",
     "interval" : 86400, // once every day
     "tooltip": true,
 },
@@ -490,14 +493,14 @@
   "exec": "echo ; echo  Key Hints SUPER F1",
   "interval": 86400, // once every day
   "tooltip": false,
-  "on-click": "~/.config/hypr/UserScripts/KeyBinds.sh",
+  "on-click": "~/.config/hypr/scripts/RunCMD.sh keybind",
 },
 
 "custom/keyboard": {
   "exec": "cat ~/.cache/kb_layout",
 	"interval": 1,
 	"format": " {}",
-	"on-click": "~/.config/hypr/scripts/SwitchKeyboardLayout.sh",
+	"on-click": "~/.config/hypr/scripts/RunCMD.sh kb",
 	"tooltip": false,
 },
 
@@ -515,7 +518,7 @@
   "interval" : 86400, // once every day
   "tooltip": false,
   "on-click": "pkill rofi || rofi -show drun -modi drun,filebrowser,run,window -config ~/.config/rofi/launcher.rasi",
-  "on-click-right": "~/.config/hypr/scripts/WaybarLayout.sh",
+  "on-click-right": "~/.config/hypr/scripts/RunCMD.sh waybarl",
 },
 
 
@@ -524,8 +527,8 @@
   "exec": "echo ; echo 󰟡 power // blur",
   "interval": 86400,
   "tooltip": false,
-  "on-click": "~/.config/hypr/scripts/RofiPower.sh",
-  "on-click-right": "~/.config/hypr/scripts/ChangeBlur.sh",
+  "on-click": "~/.config/hypr/scripts/RunCMD.sh powermenu",
+  "on-click-right": "~/.config/hypr/scripts/RunCMD.sh blur",
 },
 
 // NOTE:! This is only for Arch and Arch Based Distros
@@ -543,7 +546,7 @@
   "format-alt-click": "click",
   "interval": 1,
   "return-type": "json",
-  "exec": "~/.config/hypr/UserScripts/Weather.py",
+  "exec": "~/.config/hypr/scripts/RunCMD.sh weather",
   "exec-if": "ping wttr.in -c1",
   "tooltip" : true,
 },
@@ -683,7 +686,7 @@
   "format": "⏻",
   "exec": "echo ; echo 󰟡 power // blur",
   "on-click-right": "~/.config/hypr/scripts/ChangeBlur.sh",
-  "on-click":"~/.config/hypr/scripts/RofiPower.sh",
+  "on-click":"~/.config/hypr/scripts/RunCMD.sh powermenu",
   "interval": 86400, // once every day
   "tooltip": false,
 },

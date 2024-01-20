@@ -1,22 +1,55 @@
 
+@define-color base   #1e1e2e;
+@define-color mantle #181825;
+@define-color crust  #11111b;
 
-@define-color noti-border-color @color2;
-@define-color noti-bg rgba(0, 0, 0, 0.8);
-@define-color noti-bg-alt #111111;
-@define-color noti-bg-hover @color2;
-@define-color text-color @color2;
-@define-color text-color-alt @color7;
+@define-color text     #cdd6f4;
+@define-color subtext0 #a6adc8;
+@define-color subtext1 #bac2de;
+
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color surface2 #585b70;
+
+@define-color overlay0 #6c7086;
+@define-color overlay1 #7f849c;
+@define-color overlay2 #9399b2;
+
+@define-color blue      #89b4fa;
+@define-color lavender  #b4befe;
+@define-color sapphire  #74c7ec;
+@define-color sky       #89dceb;
+@define-color teal      #94e2d5;
+@define-color green     #a6e3a1;
+@define-color yellow    #f9e2af;
+@define-color peach     #fab387;
+@define-color maroon    #eba0ac;
+@define-color red       #f38ba8;
+@define-color mauve     #cba6f7;
+@define-color pink      #f5c2e7;
+@define-color flamingo  #f2cdcd;
+@define-color rosewater #f5e0dc;
+
+@define-color noti-border-color @pink;
+@define-color notify-bg @surface0;
+@define-color black-bg rgba(30, 30, 46, 0.85);
+@define-color black-bg-alt #181825;
+/* @define-color black-bg-center rgba(30, 30, 46, 0.5); */
+@define-color black-bg-hover #6c7086;
+@define-color text-color #cdd6f4;
+@define-color text-color-alt #a6adc8;
 @define-color text-color-disabled rgba(150, 150, 150, 0.8);
+/* @define-color highlight-color; */
 
 * {
-    font-family: FiraCode;
+     font-family: "CaskaydiaCove Nerd Font Mono";
     font-weight: Bolder;
 }
 
 .control-center .notification-row:focus,
 .control-center .notification-row:hover {
     opacity: 1;
-    background: @noti-bg;
+    background: @black-bg;
     border-radius: 10px
 }
 
@@ -24,17 +57,24 @@
     outline: none;
     margin: 0px;
 }
-
+.notification.critical .summary {
+    font-size:2rem;
+    margin:10px;
+    padding-left:20px;
+}
+.notification.critical {
+    border: 2px solid @red;
+}
 .notification {
 	border-radius: 10px;
 }
 
 .notification-content{
 	color: @text-color;
-    background: @noti-bg;
+    background: @notify-bg;
     padding: 3px 10px 3px 6px;
     border-radius: 10px;
-    border: 2px solid @noti-border-color;
+    border: 2px solid @mauve;
     margin: 0px;
 }
 
@@ -45,8 +85,8 @@
 }
 
 .close-button {
-    background: #f7768e;
-    color: @noti-bg;
+    background: #eba0ac;
+    color: @black-bg;
     text-shadow: none;
     padding: 0;
     border-radius: 10px;
@@ -56,7 +96,7 @@
 
 .close-button:hover {
     box-shadow: none;
-    background: #f7768e;
+    background: #eba0ac;
     transition: all .15s ease-in-out;
     border: none
 }
@@ -87,12 +127,12 @@
 
 .notification-action:first-child {
     border-bottom-left-radius: 10px;
-    background: #1b1b2b
+    background: #1e1e2e
 }
 
 .notification-action:last-child {
     border-bottom-right-radius: 10px;
-    background: #1b1b2b
+    background: #1e1e2e
 }
 
 .inline-reply {
@@ -100,7 +140,7 @@
 }
 
 .inline-reply-entry {
-    background: @noti-bg;
+    background: @black-bg;
     color: @text-color;
     caret-color: @text-color;
     border: 1px solid @noti-border-color;
@@ -110,7 +150,7 @@
 .inline-reply-button {
 	font-size: 0.5rem;
     margin-left: 4px;
-    background: @noti-bg;
+    background: @black-bg;
     border: 1px solid @noti-border-color;
     border-radius: 10px;
     color: @text-color
@@ -123,7 +163,7 @@
 }
 
 .inline-reply-button:hover {
-    background: @noti-bg-hover
+    background: @black-bg-hover
 }
 
 .body-image {
@@ -133,8 +173,8 @@
 }
 
 .summary {
-    font-size: 1rem;
-    font-weight: 200;
+    font-size: 1.15rem;
+    /* font-weight: 200; */
     background: transparent;
     color: @text-color-alt;
     text-shadow: none
@@ -142,7 +182,7 @@
 
 .time {
     font-size: 1rem;
-    font-weight: 200;
+    /* font-weight: 200; */
     background: transparent;
     color: @text-color;
     text-shadow: none;
@@ -151,16 +191,16 @@
 
 .body {
     font-size: 1rem;
-    font-weight: 200;
+    /* font-weight: 200; */
     background: transparent;
     color: @text-color;
     text-shadow: none
 }
 
 .control-center {
-    background: @noti-bg;
+    background: @black-bg;
     border: 2px solid @noti-border-color;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .control-center-list {
@@ -181,7 +221,7 @@
 
 .widget-title {
     color: @noti-border-color;
-    background: @noti-bg-alt;
+    background: @black-bg-alt;
     padding: 3px 6px;
     margin: 5px;
     font-size: 1rem;
@@ -202,7 +242,7 @@
 }
 
 .widget-dnd {
-    background: @noti-bg-alt;
+    background: @black-bg-alt;
     padding: 3px 6px;
     margin: 5px;
     border-radius: 10px;
@@ -213,21 +253,21 @@
 .widget-dnd>switch {
     border-radius: 10px;
     /* border: 1px solid #7aa2f7; */
-    background: white;
+    background: @notify-bg;
 }
 
 .widget-dnd>switch:checked {
-    background: #f7768e;
-    border: 1px solid #f7768e;
+    background: @mauve;
+    border: 1px solid @mauve;
 }
 
 .widget-dnd>switch slider {
-    background: @noti-bg;
+    background: @mauve;
     border-radius: 10px
 }
 
 .widget-dnd>switch:checked slider {
-    background: @noti-bg;
+    background: @black-bg;
     border-radius: 10px
 }
 
@@ -242,7 +282,7 @@
 
 .widget-mpris {
     color: @text-color;
-    background: @noti-bg-alt;
+    background: @black-bg-alt;
     padding: 3px 6px;
     margin: 5px;
     border-radius: 10px;
@@ -258,7 +298,7 @@
 }
 
 .widget-mpris-title {
-    font-weight: 100;
+    /* font-weight: 100; */
     font-size: 1rem
 }
 
@@ -267,17 +307,19 @@
 }
 
 .widget-buttons-grid {
-    font-size: large;
+    font-size: 20px;
 	color: @noti-border-color;
     padding: 2px;
     margin: 5px;
+    padding-left:15px;
+    padding-right:15px;
     border-radius: 10px;
-    background: @noti-bg-alt;
+    background: @black-bg-alt;
 }
 
 .widget-buttons-grid>flowbox>flowboxchild>button {
     margin: 1px;
-    background: @noti-bg;
+    background: @black-bg;
     border-radius: 10px;
     color: @text-color
 }
@@ -298,7 +340,7 @@
 }
 
 .widget-volume {
-    background: @noti-bg-alt;
+    background: @black-bg-alt;
     padding: 2px;
     margin: 10px 10px 5px 10px;
     border-radius: 10px;
@@ -312,7 +354,7 @@
 }
 
 .per-app-volume {
-    background-color: @noti-bg;
+    background-color: @black-bg;
     padding: 4px 8px 8px;
     margin: 0 8px 8px;
     border-radius: 10px;
@@ -320,7 +362,7 @@
 }
 
 .widget-backlight {
-    background: @noti-bg-alt;
+    background: @black-bg-alt;
     padding: 5px;
     margin: 10px 10px 5px 10px;
     border-radius: 10px;
