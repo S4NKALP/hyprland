@@ -42,7 +42,6 @@ cd misc
 cp -r fonts ~/.local/
 cp .zshenv ~/
 cp -r bin ~/.local/
-cp -r Notes ~/Documents
 
 chmod +x ~/.config/hypr/scripts/*
 chmod +x ~/.config/hypr/UserScripts/*
