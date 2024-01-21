@@ -1,4 +1,0 @@
----
-author: <Your Name>
----
-
