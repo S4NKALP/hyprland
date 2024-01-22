@@ -170,5 +170,11 @@ gamemode() {
     fi
 }
 
-
-
+enable_opaque() {
+	sleep 0.2
+	hyprctl setprop address:$(hyprctl -j activewindow | jq -r -c ".address") forceopaque 0 lock
+}
+disable_opaque() {
+	sleep 0.2
+	hyprctl setprop address:$(hyprctl -j activewindow | jq -r -c ".address") forceopaque 1 lock
+}
