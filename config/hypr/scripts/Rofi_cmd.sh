@@ -209,20 +209,4 @@ CONFIG=$(rofi -show file-browser-extended -file-browser-stdout -file-browser-dir
 hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$CONFIG'"
 }
 
-# Emoji (ALT SLASH)
-emoji() {
-    emojis_file="$HOME/.config/hypr/scripts/emoji.txt"
-
-    show_emoji_menu() {
-        awk '{print $1, substr($0, index($0,$2))}' "$emojis_file" | rofi -dmenu -p "🔎 Search" -config ~/.config/rofi/config-long.rasi
-    }
-
-    emojis=$(awk '{print $1}' "$emojis_file" | tr '\n' ' ')
-    selected_emoji=$(show_emoji_menu)
-
-    if [ -n "$selected_emoji" ]; then
-        emoji=$(grep "$selected_emoji" "$emojis_file" | awk '{print $1}')
-        echo -n "$emoji" | wl-copy
-    fi
-}
 
