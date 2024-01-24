@@ -18,7 +18,7 @@
 	"custom/separator#dot-line",
 	"cpu",
 	"custom/separator#dot-line",
-	"custom/CpuTemp",
+	"temperature",
 	"custom/separator#dot-line",
 	"memory",
 	"custom/separator#dot-line",

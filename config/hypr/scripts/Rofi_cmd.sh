@@ -209,4 +209,8 @@ CONFIG=$(rofi -show file-browser-extended -file-browser-stdout -file-browser-dir
 hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$CONFIG'"
 }
 
-
+# Emoji (ALT SLASH)
+emoji() {
+    A="$(rofi -dmenu -l 10 -p "Emoji:" -config ~/.config/rofi/config-long.rasi < "$HOME/.config/hypr/configs/emojis" | cut -d' ' -f1 | tr -d '\n')"
+[[ -n "$A" ]] && wl-copy -- "$A"
+}

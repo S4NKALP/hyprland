@@ -133,11 +133,11 @@ window#waybar.empty {
 #taskbar,
 #tray,
 #window,
+#temperature,
 #wireplumber,
 #workspaces,
 #custom-keybinds,
 #custom-keyboard,
-#custom-CpuTemp,
 #custom-cycle_wall,
 #custom-backlight,
 #custom-music,
@@ -213,7 +213,7 @@ window#waybar.empty {
   color: @sapphire;
 }
 
-#custom-CpuTemp {
+#temperature {
   color: @teal;
 }
 
