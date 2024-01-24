@@ -178,3 +178,11 @@ disable_opaque() {
 	sleep 0.2
 	hyprctl setprop address:$(hyprctl -j activewindow | jq -r -c ".address") forceopaque 1 lock
 }
+
+welcome() {
+sleep 1
+
+name=$(whoami)
+
+notify-send "Hello" "${name}?,you're back? welcome what will we do today!"
+}
