@@ -56,7 +56,7 @@ height=$(wc -l "$file" | awk '{print $1}')
 # For Waybar Layout
 config_dir="$HOME/.config/waybar/configs"
 waybar_config="$HOME/.config/waybar/config"
-CMD="$SCRIPTSDIR/RunCMD.sh reload"
+RunCMD="$SCRIPTSDIR/RunCMD.sh"
 
 
 # For Note

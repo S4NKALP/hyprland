@@ -6,8 +6,8 @@
 # not necessary to do since this script is only designed to run only once as long as the marker exists
 
 # Variables
-scriptsDir=$HOME/.config/hypr/scripts
-wallpaper=$HOME/Pictures/wallpapers/62.jpg
+RunCMD=$HOME/.config/hypr/scripts/RunCMD.sh
+wallpaper=$HOME/Pictures/wallpapers/1.png
 kvantum_theme="Tokyo-Night"
 
 swww="swww img"
@@ -20,7 +20,7 @@ if [ ! -f $HOME/cache/.initial_startup_done ]; then
     swww init || swww query && $swww "$wallpaper" $effect
 
     # For Symbolic Link
-    "$scriptsDir/Linker.sh" > /dev/null 2>&1
+    "$RunCMD linker" > /dev/null 2>&1
 
     # initiate GTK dark mode and apply icon and cursor theme
     gsettings set org.gnome.desktop.interface gtk-theme Tokyonight-Dark-BL-LB > /dev/null 2>&1 &
@@ -36,7 +36,7 @@ if [ ! -f $HOME/cache/.initial_startup_done ]; then
     grep 'kb_layout=' "$HOME/.config/hypr/UserConfigs/UserSettings.conf" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null > $HOME/.cache/kb_layout
 
     # Refreshing waybar, dunst, rofi etc.
-    "$scriptsDir/Refresh.sh" > /dev/null 2>&1 &
+    "$RunCMD reloadall" > /dev/null 2>&1 &
 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done

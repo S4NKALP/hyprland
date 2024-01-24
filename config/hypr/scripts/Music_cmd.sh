@@ -1,73 +1,101 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
+music(){
+# Directory for icons
 iDIR="$HOME/.config/swaync/icons"
-LOFI_STREAM="https://www.youtube.com/watch?v=jfKfPfyJRdk"
-NEPALI_OLD_SONG="https://youtube.com/playlist?list=PLXuVG9D9JQ8RAhpH2TyISgBgEmXONIhGY&si=SLyxb2vxaE0XuXsz"
-BOLLYWOOD_LOVE_SONG="https://youtube.com/playlist?list=PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK&si=J0gPvKL4R4fIlPz9"
-TOP_50_BOLLYWOOD="https://youtube.com/playlist?list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI&si=-TBeeNJ28NqVcnKu"
-BHAJAN="https://youtube.com/playlist?list=PLwIh-QEhrDJDM8IF3gLUgnEyZm6dBgr_n&si=_RDHngYobHlcxaJW"
 
-play="  Play music"
-pause="  Pause music"
-stop="  Stop music"
-next_track="  Next track"
-prev_track="  Previous track"
-increase_volume="󰝝  Increase volume"
-decrease_volume="󰝞  Decrease volume"
+# Note: You can add more options below with the following format:
+# ["TITLE"]="link"
 
-play_bhajan="󰥳 Play Bhajan"
-play_lofi="  Play lofi girl"
-play_old_nepali="1.   Play Nepali Old Song"
-play_bollywood_love="2.   Play BollyWood Love"
-play_TOP_50_BOLLYWOOD="3.   Play Top 50 BollyWood"
+# Define menu options as an associative array
+declare -A menu_options=(
+  ["Play Bhajan"]="https://youtube.com/playlist?list=PLwIh-QEhrDJDM8IF3gLUgnEyZm6dBgr_n&si=_RDHngYobHlcxaJW"
+  ["Play lofi girl"]="https://www.youtube.com/watch?v=jfKfPfyJRdk"
+  ["Play Nepali Old Song"]="https://youtube.com/playlist?list=PLXuVG9D9JQ8RAhpH2TyISgBgEmXONIhGY&si=SLyxb2vxaE0XuXsz"
+  ["Play BollyWood Love"]="https://youtube.com/playlist?list=PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK&si=J0gPvKL4R4fIlPz9"
+  ["Play Top 50 BollyWood"]="https://youtube.com/playlist?list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI&si=-TBeeNJ28NqVcnKu"
+)
 
-notify() { notify-send -u normal -i "$iDIR/music.png" "$1"; }
-
-music() {
-    if pgrep -x "mpv" > /dev/null; then
-        controls
-    else
-        local chosen=$(printf "%s\n%s\n%s\n%s\n" "$play_bhajan" "$play_lofi" "$play_old_nepali" "$play_bollywood_love" "$play_TOP_50_BOLLYWOOD" | rofi -dmenu -i -l 5 -p "Music Time:" -config ~/.config/rofi/config.rasi)
-
-        case "$chosen" in
-            "$play_bhajan") notify "Playing Bhajan"; exec -a "rofi-music" mpv --no-video "$BHAJAN" --shuffle --no-resume-playback ;;
-            "$play_lofi") notify "🎹 Playing lofi girl"; exec -a "rofi-music" mpv --no-video "$LOFI_STREAM" --no-resume-playback ;;
-            "$play_old_nepali") notify "🎹 Playing nepali old song"; exec -a "rofi-music" mpv --no-video "$NEPALI_OLD_SONG" --shuffle --no-resume-playback ;;
-            "$play_bollywood_love") notify "🎹 Playing bollywood love"; exec -a "rofi-music" mpv --no-video "$BOLLYWOOD_LOVE_SONG" --shuffle --no-resume-playback ;;
-            "$play_TOP_50_BOLLYWOOD") notify "🎹 Playing top 50 bollywood"; exec -a "rofi-music" mpv --no-video "$TOP_50_BOLLYWOOD" --shuffle --no-resume-playback ;;
-        esac
-    fi
+# Function for displaying notifications
+notification() {
+  notify-send -u normal -i "$iDIR/music.png" "$1"
 }
 
-controls() {
-    local chosen=$(printf "%s\n%s\n%s\n%s\n%s\n%s\n%s\n" "$play" "$pause" "$stop" "$next_track" "$prev_track" "$increase_volume" "$decrease_volume" | rofi -dmenu -i -l 7 -p "Music Controls:" -config ~/.config/rofi/config.rasi)
+# Function to play music
+play_music() {
+  local choice="$1"
+  local link="${menu_options[$choice]}"
 
-    case "$chosen" in
-        "$play") playerctl --player=mpv play && notify-send -u normal -i "$1" "▶️  Resuming music" ;;
-        "$pause") playerctl --player=mpv pause && notify-send -u normal -i "$1" "⏸️ Music paused" ;;
-        "$stop") pkill mpv && notify-send -u normal -i "$1" "🛑 Music stopped" ;;
-        "$next_track") playerctl --player=mpv next && notify-send -u normal -i "$1" "⏭️  Next track playing" ;;
-        "$prev_track") playerctl --player=mpv previous && notify-send -u normal -i "$1" "⏮️  Previous track playing" ;;
-        "$increase_volume") adjust_volume 0.1 "🔊 Increasing track volume" ;;
-        "$decrease_volume") adjust_volume -0.1 "🔉 Decreasing track volume" ;;
-    esac
+  notification "Playing now: $choice"
+
+  # Check if the link is a playlist
+  if [[ $link == *playlist* ]]; then
+    mpv --shuffle --vid=no --no-resume-playback "$link"
+  else
+    mpv "$link"
+  fi
 }
 
+# Function for music controls
+music_controls() {
+  local choice="$1"
+
+  case "$choice" in
+    "Play") playerctl --player=mpv play && notify-send -u low "▶️  Resuming music" ;;
+    "Pause") playerctl --player=mpv pause && notify-send -u low "⏸️ Music paused" ;;
+    "Stop") pkill mpv && notify-send -u low "🛑 Music stopped" ;;
+    "Next track") playerctl --player=mpv next && notify-send -u low "⏭️  Next track playing" ;;
+    "Previous track") playerctl --player=mpv previous && notify-send -u low "⏮️  Previous track playing" ;;
+    "Increase volume") adjust_volume 0.1 "🔊 Increasing track volume" ;;
+    "Decrease volume") adjust_volume -0.1 "🔉 Decreasing track volume" ;;
+  esac
+}
+
+# Function to adjust volume
 adjust_volume() {
-    current_volume=$(playerctl --player=mpv volume)
-    new_volume=$(echo "$current_volume + $1" | bc)
-    playerctl --player=mpv volume "$new_volume"
-    notify-send -u normal -i "$iDIR/music.png" "$2"
+  local change="$1"
+  local message="$2"
+
+  current_volume=$(playerctl --player=mpv volume)
+  new_volume=$(echo "$current_volume + $change" | bc)
+  playerctl --player=mpv volume "$new_volume"
+  notify-send -u low "$message"
 }
 
-while getopts midnpks flag; do
+# Function to play/pause music
+play_pause() {
+  playerctl --player=mpv play-pause
+  if playerctl --player=mpv status | grep -q "Playing"; then
+    notify-send -u low "▶️  Resuming music"
+  else
+    notify-send -u low "⏸️ Music paused"
+  fi
+}
+
+# Main function
+main() {
+  local is_music_playing=$(pgrep -x "mpv")
+  local streaming_options=("Play Bhajan" "Play lofi girl" "Play Nepali Old Song" "Play BollyWood Love" "Play Top 50 BollyWood")
+
+  if [ -n "$is_music_playing" ]; then
+    local controls=("Play" "Pause" "Stop" "Next track" "Previous track" "Increase volume" "Decrease volume")
+    choice=$(printf "%s\n" "${controls[@]}" | rofi -dmenu -i -p "Music Controls:")
+    music_controls "$choice"
+  else
+    choice=$(printf "%s\n" "${streaming_options[@]}" | rofi -dmenu -i -p "Music Time:")
+    play_music "$choice"
+  fi
+}
+
+while getopts "midnpks" flag; do
     case "${flag}" in
-        m) music ;;
-        i) adjust_volume 0.1 "🔊 Increasing track volume" ;;
+        m) main ;;
+        i) adjust_volume 0.1  "🔊 Increasing track volume" ;;
         d) adjust_volume -0.1 "🔉 Decreasing track volume" ;;
-        s) kill $(pidof "rofi-music") && notify-send "🛑 Music stopped" ;;
-        n) playerctl --player=mpv next && notify-send "⏭️  Next track playing" ;;
-        p) playerctl --player=mpv previous && notify-send "⏮️  Previous track playing" ;;
+        n) playerctl --player=mpv next && notify-send -u low "⏭️  Next track playing" ;;
+        p) playerctl --player=mpv previous && notify-send -u low "⏮️  Previous track playing" ;;
         k) play_pause ;;
+        s) pkill mpv && notify-send -u low "🛑 Music stopped" ;;
     esac
 done
+}
