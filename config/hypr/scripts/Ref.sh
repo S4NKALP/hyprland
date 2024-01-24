@@ -11,7 +11,7 @@ notif="$HOME/.config/swaync/images/bell.png"
 # Scripts DIR
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
 UserSCRIPTSDIR="$HOME/.config/hypr/UserScripts"
-linker="$SCRIPTSDIR/Linker.sh"
+linker="$SCRIPTSDIR/RunCMD.sh linker"
 
 
 # For Tmux Sessions
