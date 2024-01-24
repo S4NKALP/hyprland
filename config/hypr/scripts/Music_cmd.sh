@@ -45,7 +45,7 @@ controls() {
     case "$chosen" in
         "$play") playerctl --player=mpv play && notify-send -u normal -i "$1" "▶️  Resuming music" ;;
         "$pause") playerctl --player=mpv pause && notify-send -u normal -i "$1" "⏸️ Music paused" ;;
-        "$stop") kill $(pidof "rofi-music") && notify-send -u normal -i "$1" "🛑 Music stopped" ;;
+        "$stop") pkill mpv && notify-send -u normal -i "$1" "🛑 Music stopped" ;;
         "$next_track") playerctl --player=mpv next && notify-send -u normal -i "$1" "⏭️  Next track playing" ;;
         "$prev_track") playerctl --player=mpv previous && notify-send -u normal -i "$1" "⏮️  Previous track playing" ;;
         "$increase_volume") adjust_volume 0.1 "🔊 Increasing track volume" ;;
