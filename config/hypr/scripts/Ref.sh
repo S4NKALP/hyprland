@@ -67,3 +67,9 @@ NOTES_EDITOR="kitty nvim"
 # Misc
 lock="$SCRIPTSDIR/device_cmd.sh lockscreen"
 
+# For panel
+theme="$HOME/.config/rofi/config-panel.rasi"
+
+# For Bluetooth
+bluetooth_status=$(bluetoothctl show | grep "Powered" | awk '{print $2}')
+

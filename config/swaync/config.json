@@ -55,10 +55,10 @@
             "image-radius": 0
         },
         "volume": {
-            "label": "󰕾"
+            "label": "🔉"
         },
         "backlight": {
-            "label": "󰃟"
+            "label": "🔅"
         },
         "buttons-grid": {
             "actions": [
@@ -72,7 +72,7 @@
                 },
                 {
                     "label": "󰌾",
-                    "command": "~/.config/hypr/scripts/RunCMD.sh lockscreen"
+                    "command": "~/.config/hypr/scripts/RunCMD.sh lock"
                 },
                 {
                     "label": "󰍃",

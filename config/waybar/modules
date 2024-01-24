@@ -137,7 +137,7 @@
 	"modules": [
 		"cpu",
 		"memory",
-		"custom/CpuTemp",
+		"temperature",
 		"disk",
 		]
 },
@@ -164,8 +164,10 @@
   "rotate": 0,
   //"format": "{icon} {percent}%",
   //"format-icons": ["󰃞", "󰃟", "󰃠"],
+  //"format-icons": ["󰛩", "󱩎", "󱩏", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󰛨"],
+  // "format-icons": ["", "", "", "", "", "", "", "", ""],
   "format": "{icon}",
-  "format-icons": ["󰛩", "󱩎", "󱩏", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󰛨"],
+  "format-icons": ["🔅", "🔆", "☀️"],
   "tooltip-format": "backlight {percent}%",
   "icon-size": 10,
   "on-click": "",
@@ -216,9 +218,11 @@
 
 "clock": {
 	"interval": 1,
-  "format": "  {:%I:%M %p}",
+  //"format": "  {:%I:%M %p}",
   //"format": " {:%H:%M:%S}",
-  "format-alt": "  {:%H:%M   %Y, %d %B, %A}",
+  //"format-alt": "  {:%I:%M   %Y, %d %B, %A}",
+  "format": "{:🕰️ %I:%M %p 📅 %d/%m}",
+  "format-alt": "🕰️ {:%I:%M %B %d, %Y %A} 🗓️",
   "tooltip-format": "<tt><small>{calendar}</small></tt>",
   "calendar": {
     "mode"          : "year",
@@ -243,10 +247,11 @@
 },
 
 "cpu": {
-  "format": "󰍛 {usage}%",
+  //"format": "󰍛 {usage}%",
+  "format": "📊 {usage}%",
   "interval": 1,
   "format-alt-click": "click",
-  "format-alt": "{icon0}{icon1}{icon2}{icon3} {usage:>2}% 󰍛",
+  "format-alt": "{icon0}{icon1}{icon2}{icon3} {usage:>2}% 📊",
   "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
   "on-click-right": "gnome-system-monitor",
 },
@@ -256,7 +261,7 @@
   //"format": "󰋊",
   "path": "/",
   //"format-alt-click": "click",
-  "format": "󰋊 {percentage_used}%",
+  "format": " {percentage_used}%",
   //"tooltip": true,
   "tooltip-format": "{used} used out of {total} on {path} ({percentage_used}%)",
 },
@@ -308,11 +313,12 @@
 
 "memory": {
   "interval": 1,
-  "format": "󰾆 {used:0.1f}G",
-  "format-alt": "󰾆 {percentage}%",
+  //"format": "󰾆 {used:0.1f}G",
+  //"format-alt": "󰾆 {percentage}%",
+  "format": "🧬 {used:0.1f}G/{total:0.1f}G",
+  "format-alt": "🧬 {percentage}%",
   "format-alt-click": "click",
   "tooltip": true,
-  "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
   "on-click-right": "kitty --title btop sh -c 'btop'"
 },
 
@@ -462,14 +468,23 @@
     "tooltip":true,
     "format": "{icon} {}",
     "format-icons": {
-      "notification": "<span foreground='red'><sup></sup></span>",
-      "none": "",
-      "dnd-notification": "<span foreground='red'><sup></sup></span>",
-      "dnd-none": "",
-      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-      "inhibited-none": "",
-      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-      "dnd-inhibited-none": ""
+      "notification": "🔔<span foreground='red'><sup></sup></span>",
+      "none": "🔔",
+      "dnd-notification": "🔕<span foreground='red'><sup></sup></span>",
+      "dnd-none": "🔕",
+      "inhibited-notification": "🔔<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "🔔",
+      "dnd-inhibited-notification": "🔕<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": "🔕"
+
+      //"none": "",
+      //"notification": "<span foreground='red'><sup></sup></span>",
+      //"dnd-notification": "<span foreground='red'><sup></sup></span>",
+      //"dnd-none": "",
+      //"inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      //"inhibited-none": "",
+      //"dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      //"dnd-inhibited-none": ""
     },
     "return-type": "json",
     "exec-if": "which swaync-client",
@@ -545,11 +560,16 @@
       "tooltip": false,
       "interval": 900
       },
-"custom/CpuTemp":{
-  "exec": "~/.config/hypr/scripts/HeatSensors.sh",
-  "interval": 10,
-  "format": "{} 󰈸",
-	"tooltip": false,
+"temperature": {
+    "interval": 10,
+    "tooltip": true,
+    "hwmon-path": ["/sys/class/hwmon/hwmon7/temp1_input"],
+    //"thermal-zone": 0,
+    "critical-threshold": 82,
+    "format-critical": "{temperatureC}°C {icon}",
+    "format": "{temperatureC}°C {icon}",
+    "format-icons": ["🔥", "❤️‍🔥", "🌡️"],
+    "on-click-right": "kitty --title nvtop sh -c 'nvtop'"
 },
 
 // Separators
@@ -596,7 +616,7 @@
     "align": 0.4,
     "rotate": 1,
     "format": "{icon}",
-    "format-icons": ["󰃞", "󰃟", "󰃠"],
+   "format-icons": ["🔅", "🔆", "☀️"],
     "on-click": "",
     "on-click-middle": "",
     "on-click-right": "",
@@ -609,8 +629,9 @@
 
 "clock#vertical": {
    //"format": "{:\n%H\n%M\n%S\n\n \n%d\n%m\n%y}",
+   //"format": "{:\n%I\n%M\n%p\n\n \n%d\n%m\n%y}",
+   "format": "{:🕰️\n%I\n%M\n%p\n\n🗓 \n%d\n%m\n%y}",
    "interval": 1,
-   "format": "{:\n%I\n%M\n%p\n\n \n%d\n%m\n%y}",
    "tooltip": true,
    "tooltip-format": "{calendar}",
    "calendar": {
@@ -622,15 +643,18 @@
    }
 },
 "cpu#vertical": {
-  "format": "󰍛\n{usage}%",
+  //"format": "󰍛\n{usage}%",
+  "format": "📊\n{usage}%",
   "interval": 1,
   "on-click-right": "gnome-system-monitor",
 },
 
 "memory#vertical": {
   "interval": 10,
-  "format": "󰾆\n{percentage}%",
-  "format-alt": "󰾆\n{used:0.1f}G",
+  "format": "🧬\n{percentage}%",
+  //"format": "󰾆\n{percentage}%",
+  "format-alt": "🧬\n{used:0.1f}G",
+  //"format-alt": "󰾆\n{used:0.1f}G",
   "format-alt-click": "click",
   "tooltip": true,
   "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",

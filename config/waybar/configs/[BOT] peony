@@ -25,7 +25,7 @@
 	"custom/separator#blank",
 	"pulseaudio",
 	"custom/separator#blank",
-	"custom/CpuTemp",
+	"temperature",
 	"custom/separator#blank",
 	"network#peony",
 	"custom/swaync"],

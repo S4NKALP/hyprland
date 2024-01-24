@@ -1,6 +1,6 @@
 #!/bin/bash
 
-batterynotify_conf=$HOME/.config/hypr/scripts/batterynotify.conf
+batterynotify_conf=$HOME/.config/hypr/configs/batterynotify.conf
 config_info() {
 cat <<  EOF
 
