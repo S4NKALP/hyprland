@@ -69,7 +69,7 @@ randomwall() {
   if [[ ${#PICS[@]} -gt 0 ]]; then
     RANDOMPICS=${PICS[RANDOM % ${#PICS[@]}]}  # Select a random image
     swww img "${RANDOMPICS}" ${SWWW_PARAMS}   # Set the randomly selected wallpaper
-    $linker
+    linker
   else
     echo "No images found in ${wallDIR}"
   fi
@@ -84,7 +84,7 @@ autowall() {
   while true; do
     find "$wallDIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) -print0 \
       | shuf -z -n 1 \
-      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && $linker
+      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && linker
 
     sleep $INTERVAL
   done
@@ -113,7 +113,7 @@ selectwall() {
             choice=$(find "$wallDIR" -type f -maxdepth 1 -printf "%f\n" | shuf -n1)
         fi
         wallpaper="$wallDIR/${choice#*icon\x1f}"
-        swww img $SWWW_PARAMS1 "$wallpaper" && $linker
+        swww img $SWWW_PARAMS1 "$wallpaper" && linker
     else
         echo "No wallpaper selected. Exiting."
         exit 0
@@ -139,9 +139,15 @@ waybarl() {
     }
     apply_config() {
         ln -sf "$config_dir/$1" "$waybar_config"
-        pkill -x waybar && sleep 0.1
-        $CMD &
+        restart_waybar_if_needed
     }
+restart_waybar_if_needed() {
+    if pgrep -x "waybar" >/dev/null; then
+        pkill waybar
+        sleep 0.1
+    fi
+    $RunCMD reload_waybar &
+}
     main() {
         choice=$(menu | rofi -dmenu -p " Choose Waybar Layout")
 
@@ -185,4 +191,65 @@ sleep 1
 name=$(whoami)
 
 notify-send "Hello" "${name}?,you're back? welcome what will we do today!"
+}
+
+# Switch Keyboard Layout (ALT F1)
+kb() {
+if [ ! -f "$layout_f" ]; then
+  default_layout=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null)
+  if [ -z "$default_layout" ]; then
+    default_layout="us" # Default to 'us' layout if Settings.conf or 'kb_layout' is not found
+  fi
+  echo "$default_layout" > "$layout_f"
+fi
+current_layout=$(cat "$layout_f")
+if [ -f "$settings_file" ]; then   # Read keyboard layout settings from Settings.conf
+  kb_layout_line=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2)
+  IFS=',' read -ra layout_mapping <<< "$kb_layout_line"
+fi
+layout_count=${#layout_mapping[@]}
+for ((i = 0; i < layout_count; i++)); do  # Find the index of the current layout in the mapping
+  if [ "$current_layout" == "${layout_mapping[i]}" ]; then
+    current_index=$i
+    break
+  fi
+done
+next_index=$(( (current_index + 1) % layout_count ))  # Calculate the index of the next layout
+new_layout="${layout_mapping[next_index]}"
+hyprctl keyword input:kb_layout "$new_layout"   # Update the keyboard layout
+echo "$new_layout" > "$layout_f"
+notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
+}
+
+linker() {
+  # Define the path to the swww cache directory
+cache_dir="$HOME/.cache/swww/"
+
+# Get a list of monitor outputs
+monitor_outputs=("$cache_dir"/*)
+
+# Initialize a flag to determine if the ln command was executed
+ln_success=false
+
+# Loop through monitor outputs
+for cache_file in "${monitor_outputs[@]}"; do
+    # Check if the cache file exists for the current monitor output
+    if [ -f "$cache_file" ]; then
+        # Get the wallpaper path from the cache file
+        wallpaper_path=$(<"$cache_file")
+
+        # Copy the wallpaper to the location Rofi can access
+        if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then
+            ln_success=true  # Set the flag to true upon successful execution
+            break  # Exit the loop after processing the first found monitor output
+        fi
+    fi
+done
+
+# Add a message indicating whether the ln command was successful
+if $ln_success; then
+    echo "Wallpaper linked successfully."
+else
+    echo "Failed to link wallpaper."
+fi
 }
