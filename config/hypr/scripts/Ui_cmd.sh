@@ -120,6 +120,24 @@ selectwall() {
     fi
 }
 
+
+select_wall(){
+  # Set some variables
+rofi_command="rofi -dmenu -theme ${HOME}/.config/rofi/WallSelect.rasi -theme-str ${rofi_override}"
+
+rofi_override="element-icon{size:${monitor_res}px;border-radius:0px;}"
+
+
+# Launch rofi
+wall_selection=$(find "${wallDIR}" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -exec basename {} \; | sort | while read -r A ; do  echo -en "$A\x00icon\x1f""${wallDIR}"/"$A\n" ; done | $rofi_command)
+
+# Set wallpaper
+[[ -n "$wall_selection" ]] || exit 1
+swww img $SWWW_PARAMS1 "${wallDIR}"/"${wall_selection}" && linker
+
+exit 0
+}
+
 sr() {
   if pgrep -x "wf-recorder" > /dev/null; then
     pkill -SIGTERM wf-recorder
