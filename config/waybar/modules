@@ -293,8 +293,8 @@
 "idle_inhibitor": {
   "format": "{icon}",
   "format-icons": {
-    "activated": " ",
-    "deactivated": " ",
+      "activated": " ",
+      "deactivated": " ",
                   }
 },
 
@@ -430,6 +430,16 @@
 	},
 	// "ignored-players": ["firefox"]
 	"max-length": 30,
+},
+
+"custom/clip": {
+    "format": "",
+    "exec": "echo ; echo  Copying List Menu",
+	  "on-click": "~/.config/hypr/scripts/RunCMD.sh clip",
+    "on-click-right": "~/.config/hypr/scripts/RunCMD.sh clip",
+    "interval" : 86400, // once every day
+    "tooltip": true,
+
 },
 
 // This is a custom cava visualizer

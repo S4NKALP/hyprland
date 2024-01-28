@@ -33,7 +33,7 @@ FPS1=30
 TYPE1="wipe"
 DURATION1=1
 BEZIER1=".43,1.19,1,.4"
-SWWW_PARAMS1="--transition-fps $FPS1 --transition-type $TYPE1 --transition-duration $DURATION1"
+SWWW_PARAMS1="--transition-fps $FPS1 --transition-type $TYPE1 --transition-duration $DURATION1 --transition-bezier ${BEZIER1}"
 
 
 # For Keyboard Layout Switcher

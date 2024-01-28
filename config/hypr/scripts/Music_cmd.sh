@@ -26,13 +26,13 @@ play_music() {
   local choice="$1"
   local link="${menu_options[$choice]}"
 
-  notification "Playing now: $choice"
-
   # Check if the link is a playlist
   if [[ $link == *playlist* ]]; then
     mpv --shuffle --vid=no --no-resume-playback "$link"
-  else
+    notification "Playing now: $choice"
+  elif [[ -n $link ]]; then
     mpv "$link"
+    notification "Playing now: $choice"
   fi
 }
 
