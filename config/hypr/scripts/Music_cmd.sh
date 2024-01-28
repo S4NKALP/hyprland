@@ -75,19 +75,20 @@ play_pause() {
 }
 
 # Main function
+# Main function
 main() {
-  local is_music_playing=$(pgrep -x "mpv")
-  local streaming_options=("Bhajan 🚩" "Lofi girl 📻🎶" "Nepali Old Song 📻🎶" "BollyWood Love 📻🎶" "Top 50 BollyWood 📻🎶" "ʜɪɴᴅɪ ᴅᴊ 🔊🎶" "ʜɪɴᴅɪ ʟᴏꜰɪ 📻🎶")
+  local is_music_playing=$(playerctl --player=mpv status 2>/dev/null)
 
-  if [ -n "$is_music_playing" ]; then
+  if [ "$is_music_playing" == "Playing" ]; then
     local controls=("Play" "Pause" "Stop" "Next track" "Previous track" "Increase volume" "Decrease volume")
     choice=$(printf "%s\n" "${controls[@]}" | rofi -dmenu -i -p "Music Controls:")
     music_controls "$choice"
   else
-    choice=$(printf "%s\n" "${streaming_options[@]}" | rofi -dmenu -i -p "Music Time:")
+    choice=$(printf "%s\n" "${!menu_options[@]}" | rofi -dmenu -i -p "Music Time:")
     play_music "$choice"
   fi
 }
+
 
 while getopts "midnpks" flag; do
     case "${flag}" in
