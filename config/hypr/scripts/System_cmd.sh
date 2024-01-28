@@ -51,12 +51,6 @@ reloadall() {
     waybar &
     sleep 0.5
     swaync > /dev/null 2>&1 &
-    sleep 1
-
-    script_path="${UserSCRIPTSDIR}/RainbowBorders.sh"
-    if file_exists "$script_path"; then
-        "$script_path" &
-    fi
 }
 reload_waybar() {
 	_ps=(waybar rofi)
@@ -82,14 +76,6 @@ reload_hypr() {
 	hyprctl reload
 	notify-send -u low -i $notif 'Reload Hyprland'
 }
-restart_waybar_if_needed() {
-	if pgrep -x "waybar" >/dev/null; then
-		pkill waybar
-		sleep 0.1 # Delay for Waybar to completely terminate
-	fi
-	reload_waybar &
-}
-
 lock_screen() {
 	LOCKCONFIG="$HOME/.config/swaylock/config"
 	sleep 0.5s

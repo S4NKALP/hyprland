@@ -69,7 +69,7 @@ randomwall() {
   if [[ ${#PICS[@]} -gt 0 ]]; then
     RANDOMPICS=${PICS[RANDOM % ${#PICS[@]}]}  # Select a random image
     swww img "${RANDOMPICS}" ${SWWW_PARAMS}   # Set the randomly selected wallpaper
-    linker
+    $linker
   else
     echo "No images found in ${wallDIR}"
   fi
@@ -84,7 +84,7 @@ autowall() {
   while true; do
     find "$wallDIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) -print0 \
       | shuf -z -n 1 \
-      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && linker
+      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && $linker
 
     sleep $INTERVAL
   done
@@ -113,41 +113,11 @@ selectwall() {
             choice=$(find "$wallDIR" -type f -maxdepth 1 -printf "%f\n" | shuf -n1)
         fi
         wallpaper="$wallDIR/${choice#*icon\x1f}"
-        swww img $SWWW_PARAMS1 "$wallpaper" && linker
+        swww img $SWWW_PARAMS1 "$wallpaper" && $linker
     else
         echo "No wallpaper selected. Exiting."
         exit 0
     fi
-}
-
-
-select_wall(){
-  # Set some variables
-rofi_command="rofi -dmenu -theme ${HOME}/.config/rofi/WallSelect.rasi -theme-str ${rofi_override}"
-
-rofi_override="element-icon{size:${monitor_res}px;border-radius:0px;}"
-
-
-# Launch rofi
-wall_selection=$(find "${wallDIR}" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" \) -exec basename {} \; | sort | while read -r A ; do  echo -en "$A\x00icon\x1f""${wallDIR}"/"$A\n" ; done | $rofi_command)
-
-# Set wallpaper
-[[ -n "$wall_selection" ]] || exit 1
-swww img $SWWW_PARAMS1 "${wallDIR}"/"${wall_selection}" && linker
-
-exit 0
-}
-
-sr() {
-  if pgrep -x "wf-recorder" > /dev/null; then
-    pkill -SIGTERM wf-recorder
-    wait "$(pgrep -o wf-recorder)" || true
-    notify-send "Screen recording stopped."
-  else
-    wf-recorder --force-yuv -c libx264rgb -t -f "$HOME/Videos/sr--$(date +'%I:%M:%S_%p_%d-%m-%Y.mp4')" --audio=alsa_output.pci-0000_03_00.6.analog-stereo.monitor &
-    disown
-    notify-send "Screen recording started."
-  fi
 }
 
 # Waybar Layout (ALT W)
@@ -167,7 +137,7 @@ restart_waybar_if_needed() {
     $RunCMD reload_waybar &
 }
     main() {
-        choice=$(menu | rofi -dmenu -p " Choose Waybar Layout")
+        choice=$(menu | rofi -dmenu -p "  Choose Waybar Layout")
 
         [[ -z "$choice" ]] && { echo "No option selected. Exiting."; exit 0; }
 
@@ -239,6 +209,7 @@ echo "$new_layout" > "$layout_f"
 notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
 }
 
+# Symbolic link for wallpaper
 linker() {
   # Define the path to the swww cache directory
 cache_dir="$HOME/.cache/swww/"

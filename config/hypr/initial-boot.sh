@@ -20,7 +20,7 @@ if [ ! -f $HOME/cache/.initial_startup_done ]; then
     swww init || swww query && $swww "$wallpaper" $effect
 
     # For Symbolic Link
-    "$RunCMD linker" > /dev/null 2>&1
+    $RunCMD linker > /dev/null 2>&1
 
     # initiate GTK dark mode and apply icon and cursor theme
     gsettings set org.gnome.desktop.interface gtk-theme Tokyonight-Dark-BL-LB > /dev/null 2>&1 &
