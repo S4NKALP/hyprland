@@ -9,13 +9,15 @@ iDIR="$HOME/.config/swaync/icons"
 
 # Define menu options as an associative array
 declare -A menu_options=(
-  ["Bhajan 🚩"]="https://youtube.com/playlist?list=PLwIh-QEhrDJDM8IF3gLUgnEyZm6dBgr_n&si=_RDHngYobHlcxaJW"
-  ["lofi girl 📻🎶"]="https://www.youtube.com/watch?v=jfKfPfyJRdk"
-  ["Nepali Old Song 📻🎶"]="https://youtube.com/playlist?list=PLXuVG9D9JQ8RAhpH2TyISgBgEmXONIhGY&si=SLyxb2vxaE0XuXsz"
-  ["BollyWood Love 📻🎶"]="https://youtube.com/playlist?list=PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK&si=J0gPvKL4R4fIlPz9"
-  ["Top 50 BollyWood 📻🎶"]="https://youtube.com/playlist?list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI&si=-TBeeNJ28NqVcnKu"
-  ["ʜɪɴᴅɪ ᴅᴊ 🔊🎶"]="https://www.youtube.com/playlist?list=PL5mldcWb5ccDe5hhI8FU9UPgJhbjKO4lR"
-  ["ʜɪɴᴅɪ ʟᴏꜰɪ 📻🎶"]="https://www.youtube.com/playlist?list=PL5mldcWb5ccCoMeoTEwJGC9V9ax-z89wu"
+  ["ʙʜᴀᴊᴀɴ 🚩"]="https://youtube.com/playlist?list=PLwIh-QEhrDJDM8IF3gLUgnEyZm6dBgr_n&si=_RDHngYobHlcxaJW"
+  ["ʟᴏꜰɪ ɢɪʀʟ 📻🎶"]="https://www.youtube.com/watch?v=jfKfPfyJRdk"
+  ["ɴᴇᴘᴀʟɪ ᴏʟᴅ ꜱᴏɴɢ 📻🎶"]="https://youtube.com/playlist?list=PLXuVG9D9JQ8RAhpH2TyISgBgEmXONIhGY&si=SLyxb2vxaE0XuXsz"
+  ["ʙᴏʟʟʏᴡᴏᴏᴅ 📻🎶"]="https://youtube.com/playlist?list=PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK&si=J0gPvKL4R4fIlPz9"
+  ["ᴛᴏᴘ 50 ʙᴏʟʟʏᴡᴏᴏᴅ 📻🎶"]="https://youtube.com/playlist?list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI&si=-TBeeNJ28NqVcnKu"
+  ["ʜɪɴᴅɪ ᴅᴊ 🔊🎶"]="https://youtube.com/playlist?list=PLuVudh8_zaHsZKa76lLfirUazcMZWzodb&si=14t1wkmsHiREB71u"
+  ["ʜɪɴᴅɪ ʀᴇᴍɪx 📻🎶"]="https://youtube.com/playlist?list=PLuVudh8_zaHvhUe3kLBrq5H3DeTY0bjN2&si=9dzEcnR3n5j1It3S"
+  ["ᴍɪx 🔊🎶"]="https://youtube.com/playlist?list=PLwIh-QEhrDJCPrtNv-r0swKWG-onndWjg&si=37SGSalBVz7kwhso"
+  ["ᴀʟʟ ᴛɪᴍᴇ ɴᴇᴘᴀʟɪ ʙᴇꜱᴛ 📻🎶"]="https://youtube.com/playlist?list=PLMRKdK25AuPX9eE1G1W6-xBAYGDvKRX6H&si=pAmEK2fV6bLLN8Ss"
 )
 
 # Function for displaying notifications
@@ -31,9 +33,11 @@ play_music() {
   # Check if the link is a playlist
   if [[ $link == *playlist* ]]; then
     mpv --shuffle --vid=no --no-resume-playback "$link"
-    notification "Playing now: $choice"
   elif [[ -n $link ]]; then
     mpv "$link"
+  fi
+
+  if pgrep -x "mpv" >/dev/null; then
     notification "Playing now: $choice"
   fi
 }
