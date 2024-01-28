@@ -9,11 +9,13 @@ iDIR="$HOME/.config/swaync/icons"
 
 # Define menu options as an associative array
 declare -A menu_options=(
-  ["Play Bhajan"]="https://youtube.com/playlist?list=PLwIh-QEhrDJDM8IF3gLUgnEyZm6dBgr_n&si=_RDHngYobHlcxaJW"
-  ["Play lofi girl"]="https://www.youtube.com/watch?v=jfKfPfyJRdk"
-  ["Play Nepali Old Song"]="https://youtube.com/playlist?list=PLXuVG9D9JQ8RAhpH2TyISgBgEmXONIhGY&si=SLyxb2vxaE0XuXsz"
-  ["Play BollyWood Love"]="https://youtube.com/playlist?list=PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK&si=J0gPvKL4R4fIlPz9"
-  ["Play Top 50 BollyWood"]="https://youtube.com/playlist?list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI&si=-TBeeNJ28NqVcnKu"
+  ["Bhajan 🚩"]="https://youtube.com/playlist?list=PLwIh-QEhrDJDM8IF3gLUgnEyZm6dBgr_n&si=_RDHngYobHlcxaJW"
+  ["lofi girl 📻🎶"]="https://www.youtube.com/watch?v=jfKfPfyJRdk"
+  ["Nepali Old Song 📻🎶"]="https://youtube.com/playlist?list=PLXuVG9D9JQ8RAhpH2TyISgBgEmXONIhGY&si=SLyxb2vxaE0XuXsz"
+  ["BollyWood Love 📻🎶"]="https://youtube.com/playlist?list=PL9bw4S5ePsEEqCMJSiYZ-KTtEjzVy0YvK&si=J0gPvKL4R4fIlPz9"
+  ["Top 50 BollyWood 📻🎶"]="https://youtube.com/playlist?list=PLHuHXHyLu7BEnMJNeVvkXpxapvDSp5UdI&si=-TBeeNJ28NqVcnKu"
+  ["ʜɪɴᴅɪ ᴅᴊ 🔊🎶"]="https://www.youtube.com/playlist?list=PL5mldcWb5ccDe5hhI8FU9UPgJhbjKO4lR"
+  ["ʜɪɴᴅɪ ʟᴏꜰɪ 📻🎶"]="https://www.youtube.com/playlist?list=PL5mldcWb5ccCoMeoTEwJGC9V9ax-z89wu"
 )
 
 # Function for displaying notifications
@@ -75,7 +77,7 @@ play_pause() {
 # Main function
 main() {
   local is_music_playing=$(pgrep -x "mpv")
-  local streaming_options=("Play Bhajan" "Play lofi girl" "Play Nepali Old Song" "Play BollyWood Love" "Play Top 50 BollyWood")
+  local streaming_options=("Bhajan 🚩" "Lofi girl 📻🎶" "Nepali Old Song 📻🎶" "BollyWood Love 📻🎶" "Top 50 BollyWood 📻🎶" "ʜɪɴᴅɪ ᴅᴊ 🔊🎶" "ʜɪɴᴅɪ ʟᴏꜰɪ 📻🎶")
 
   if [ -n "$is_music_playing" ]; then
     local controls=("Play" "Pause" "Stop" "Next track" "Previous track" "Increase volume" "Decrease volume")
