@@ -1,11 +1,11 @@
 /* ---- Configuration ---- */
 configuration {
-    modi:                       "drun,run,filebrowser,calc";
+    modi:                       "drun,run,file-browser-extended";
     font:                       "Fira Code SemiBold 12";
     show-icons:                 true;
     display-drun:               "🐧";
     display-run:                "📦";
-    display-filebrowser:        "📂";
+    display-file-browser-extended: "📂";
     display-window:             "🗄️";
     display-calc:               "calc";
 	drun-display-format:        "{name}";
