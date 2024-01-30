@@ -17,7 +17,7 @@ git clone https://aur.archlinux.org/paru-bin.git
 <b> Installing automatically</b>
 
 ```
-curl https://raw.githubusercontent.com/S4NKALP/hyprland/main/Installer.sh -o $HOME/Installer.sh
+curl https://raw.githubusercontent.com/S4NKALP/hyprland/main/Installer.sh -o $HOME/Installer
 chmod +x Installer.sh
 ./Installer
 ```
