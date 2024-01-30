@@ -14,14 +14,12 @@ git clone https://aur.archlinux.org/paru-bin.git
 
 * makepkg -Si
 
-> **Warning**
->
-> DO NOT blindly run this. Backup your dots beforehand.
-
 <b> Installing automatically</b>
 
 ```
-git clone https://github.com/S4NKALP/hyprland
+curl https://raw.githubusercontent.com/S4NKALP/hyprland/main/Installer.sh -o $HOME/Installer.sh
+chmod +x Installer.sh
+./Installer
 ```
 
 <details>
