@@ -23,6 +23,7 @@ declare -A menu_options=(
 	["gm GameMode"]="$RunCMD gamemode"
 	["bl ChangeBlur"]="$RunCMD blur"
 	["flt Float all window"]="hyprctl dispatch workspaceopt allfloat"
+        ["hpa Toggle hyprland animation"]="$RunCMD animation"
         ["op1 enable_opaque"]="$RunCMD enable_opaque"
 	["op0 disable_opaque"]="$RunCMD disable_opaque"
   #wallpaper
