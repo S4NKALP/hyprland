@@ -14,16 +14,24 @@ git clone https://aur.archlinux.org/paru-bin.git
 
 * makepkg -Si
 
-
-<b>Install Dependencies / Packages </b>
-
-```
-paru -S fnm hyprland keyb rofi-file-browser-extended-git imv brightnessctl yazi waybar playerctl wf-recorder kvantum swaylock-effects-git qt5ct qt6ct nwg-look mpv-mpris pacman-contrib swayidle pavucontrol pamixer file-roller htop adobe-source-code-pro-fonts ttf-fira-code ttf-jetbrains-mono-nerd ttf-jetbrains-mono noto-fonts-emoji ttf-droid otf-font-awesome ttf-cascadia-code-nerd ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid ttf-ibm-plex ttf-liberation noto-fonts gnu-free-fonts linux-headers alsa-utils less wlroots vlc thunar thunar-volman thunar-archive-plugin udiskie mtpfs jmtpfs gvfs-gphoto2 gvfs-mtp mousepad rofi-lbonn-wayland-git network-manager-applet lsd cava geany geany-plugin swaync tumbler unzip zip unrar polkit-gnome xdg-user-dirs grim slurp gnome-system-monitor jq blueberyy-wayland polkit-kde-agent cbonsai zathura-pdf-mupdf zathura yt-dlp ffmpegthumbnailer xdotool wmctrl zsh lazygit xdg-desktop-portal-gtk gtk-engine-murrine lxappearance xsel bc
-```
-
 > **Warning**
 >
 > DO NOT blindly run this. Backup your dots beforehand.
+
+<b> Installing automatically</b>
+
+```
+git clone https://github.com/S4NKALP/hyprland
+```
+
+<details>
+<summary><h3>Manual Installation</h3></summary>
+
+<b> Dependency
+
+```
+paru -S fnm hyprland keyb rofi-file-browser-extended-git imv brightnessctl yazi waybar playerctl wf-recorder kvantum swaylock-effects-git qt5ct qt6ct nwg-look mpv-mpris pacman-contrib swayidle pavucontrol pamixer file-roller adobe-source-code-pro-fonts ttf-fira-code ttf-jetbrains-mono-nerd ttf-jetbrains-mono noto-fonts-emoji otf-font-awesome ttf-cascadia-code-nerd ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid ttf-ibm-plex ttf-liberation noto-fonts gnu-free-fonts linux-headers alsa-utils less wlroots thunar thunar-volman thunar-archive-plugin udiskie mtpfs jmtpfs gvfs-gphoto2 gvfs-mtp rofi-lbonn-wayland-git network-manager-applet lsd cava geany geany-plugin swaync tumbler unzip zip unrar polkit-gnome xdg-user-dirs grim slurp jq polkit-kde-agent zathura-pdf-mupdf zathura yt-dlp ffmpegthumbnailer xdotool wmctrl zsh lazygit xdg-desktop-portal-gtk gtk-engine-murrine lxappearance xsel bc clipshit bluez bluez-utils swww kitty imagemagick
+```
 
 <b> Install GTK Themes,Icons,Cursor
 
@@ -37,23 +45,18 @@ git clone https://github.com/S4NKALP/hyprland.git
 cd hyprland
 cp -r wallpapers ~/Pictures
 cp -r config/* ~/.config
-
-cd misc
-cp -r fonts ~/.local/
-cp .zshenv ~/
-cp -r bin ~/.local/
+cp -r misc/bin ~/.local
+cp -r misc/.zshenv ~/
 
 chmod +x ~/.config/hypr/scripts/*
-chmod +x ~/.config/hypr/UserScripts/*
 ```
 
 * GTK Themes
 
  ```
 git clone https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme.git
-cd Tokyo-Night-GTK-Theme/
-sudo cp -r themes/Tokyonight-Dark-BL-LB /usr/share/themes/
-sudo cp -r icons/Tokyonight-Dark /usr/share/icons/
+sudo cp -r Tokyo-Night-GTK-Theme/themes/Tokyonight-Dark-BL-LB /usr/share/themes/
+sudo cp -r Tokyo-Night-GTK-Theme/icons/Tokyonight-Dark /usr/share/icons/
 
 sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 ```

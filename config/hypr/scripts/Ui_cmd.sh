@@ -20,6 +20,17 @@ blur (){
   fi
 }
 
+animation() {
+	STATE=$(hyprctl -j getoption animations:enabled | jq ".int")
+	if [ "${STATE}" = "1" ]; then
+		hyprctl keyword animations:enabled 0
+		noti_n "Disable animation"
+	else
+		hyprctl keyword animations:enabled 1
+		noti_n "Enable animation"
+	fi
+
+}
 
 rainbowborder() {
   function random_hex() {
