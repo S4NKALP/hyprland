@@ -64,7 +64,6 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 <img scr="assets/QuickLink.png">
 </details>
 
-# HyprLand
 <b> HyprLand Setup  </b>
 
 <b> ArchInstall </b>
