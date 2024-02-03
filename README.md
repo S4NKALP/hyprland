@@ -1,3 +1,34 @@
+# :herb: ‎ <samp>About</samp>
+
+Hey there! :wave:
+
+This is my personal dotfiles repository. A simple aesthetic (at least for me). I edited [JakooLit](https://github.com/JaKooLit/Hyprland-Dots) dotfiles for Hyprland for my base rice but without pywal
+
+
+### ✨ Features
+
+- :bell: Notification Center
+- :zzz: Neovim powered by LazyVim with custom extras added (More than 200!)
+- :dark_sunglasses: Dark Mode for the whole system
+- :framed_picture: Various Wallpapers
+- :nerd_face: Nerd Fonts for the Shell Prompt
+- :rocket: VSCodium with native integration of your Neovim setup
+- :loud_sound: Volume OSD
+- :iphone: App Launcher
+- :keyboard: Multiple Keyboard Layouts
+- :art: Color scripts for the terminal
+- :car: Automatic mount of USB devices with notification
+- :lock: Idle and lock apps
+- :open_file_folder: Following XDG Base Directory Standard
+- :broom: Organized and cleaned up config files
+- :film_projector: Recording script
+- :point_up: Screenshot, Clipboard and Wallpaper Picker
+- :boom: Performance Mode
+- :window: Window Animations
+- :gear: Various other tweaks & scripts
+
+---
+
 ### 🌸 Core System Info
 
 - **OS**: [Arch Linux](https://archlinux.org/) :boom:
