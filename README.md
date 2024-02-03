@@ -1,3 +1,38 @@
+### 🌸 Core System Info
+
+- **OS**: [Arch Linux](https://archlinux.org/) :boom:
+- **WM**: [hyprland](https://hyprland.org/) :window:
+- **Shell**: [zsh](https://www.zsh.org/) [starship](https://github.com/starship/starship) :shell:
+- **Terminal Emulator**: [kitty](https://sw.kovidgoyal.net/kitty/) :cat:
+- **Panel**: [waybar](https://github.com/Alexays/Waybar) :shaved_ice:
+- **Text Editor**: [neovim](https://neovim.io/) :keyboard:
+- **App Launcher**: [rofi](https://davatorium.github.io/rofi/) :rocket:
+- **File Manager**: [yazi](https://yazi-rs.github.io/) / [Thunar](https://github.com/neilbrown/thunar) :open_file_folder:
+- **Browser**: [firefox](https://www.mozilla.org/) :globe_with_meridians:
+- **Notification Manager**: [swaync](https://github.com/ErikReider/SwayNotificationCenter) :bell:
+- **Colorscheme**: Mixed of Many colorscheme :art:
+
+---
+
+<details>
+<summary><i><b>
+📸 Screenshots</b>
+</i></summary>
+<img src="assets/Rice.png">
+<img src="assets/RofiLauncher.png">
+<img src="assets/RofiEmoji.png">
+<img src="assets/RofiNotes.png">
+<img src="assets/RofiTmux.png">
+<img src="assets/RofiWallpaper.png">
+<img src="assets/RofiMusic.png">
+<img src="assets/RofiMusicControl.png">
+<img src="assets/ScreenRecorder.png">
+<img src="assets/RofiPowermenu.png">
+<img src="assets/Keybinds.png">
+<img scr="assets/RofiTodoList.png">
+<img scr="assets/QuickLink.png">
+</details>
+
 # HyprLand
 <b> HyprLand Setup  </b>
 
@@ -63,25 +98,8 @@ sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 After this Press SUPER + SHIFT + W and choose wallpaper And Restart Your System and boom!
 ```
 </details>
-## Credits
+
+# Credits
 Built on top of : [JakooLit](https://github.com/JaKooLit/Hyprland-Dots)
 
-<details>
-<summary><i>
-📸 Screenshots
-</i></summary>
-<img src="assets/Rice.png">
-<img src="assets/RofiLauncher.png">
-<img src="assets/RofiEmoji.png">
-<img src="assets/RofiNotes.png">
-<img src="assets/RofiTmux.png">
-<img src="assets/RofiWallpaper.png">
-<img src="assets/RofiMusic.png">
-<img src="assets/RofiMusicControl.png">
-<img src="assets/ScreenRecorder.png">
-<img src="assets/RofiPowermenu.png">
-<img src="assets/Keybinds.png">
-<img scr="assets/RofiTodoList.png">
-<img scr="assets/QuickLink.png">
-</details>
 
