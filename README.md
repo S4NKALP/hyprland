@@ -2,7 +2,7 @@
 
 Hey there! :wave:
 
-This is my personal dotfiles repository. A simple aesthetic (at least for me). I edited [JakooLit](https://github.com/JaKooLit/Hyprland-Dots) dotfiles for Hyprland for my base rice but without pywal
+This is my personal dotfiles repository. A simple aesthetic (at least for me). I edited [JakooLit](https://github.com/JaKooLit/Hyprland-Dots) dotfiles for Hyprland for my base rice but without pywal.
 
 
 ### ✨ Features
@@ -64,7 +64,7 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 <img scr="assets/QuickLink.png">
 </details>
 
-<h2> <b> HyprLand Setup </b> </h2>
+# :wrench: ‎ <samp>Setup</samp>
 
 <b> ArchInstall </b>
 * Using ArchInstall Script Install Archlinux on bare metal.
@@ -79,7 +79,7 @@ git clone https://aur.archlinux.org/paru-bin.git
 
 * makepkg -Si
 
-<h2> <b> Installing automatically </b> </h2>
+### :package: <samp>Automatic Installation (Arch Linux)</samp>
 
 ```
 curl https://raw.githubusercontent.com/S4NKALP/hyprland/main/Installer.sh -o $HOME/Installer
@@ -88,9 +88,8 @@ chmod +x Installer.sh
 ```
 
 <details>
-<summary><h2>Manual Installation</h2></summary>
-
-<b> Dependency
+<summary><h3> :package: <samp>Manual Installation </samp> </h3></summary>
+ <b> Dependency
 
 ```
 paru -S fnm hyprland keyb rofi-file-browser-extended-git imv brightnessctl yazi waybar playerctl wf-recorder kvantum swaylock-effects-git qt5ct qt6ct nwg-look mpv-mpris pacman-contrib swayidle pavucontrol pamixer file-roller adobe-source-code-pro-fonts ttf-fira-code ttf-jetbrains-mono-nerd ttf-jetbrains-mono noto-fonts-emoji otf-font-awesome ttf-cascadia-code-nerd ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid ttf-ibm-plex ttf-liberation noto-fonts gnu-free-fonts linux-headers alsa-utils less wlroots thunar thunar-volman thunar-archive-plugin udiskie mtpfs jmtpfs gvfs-gphoto2 gvfs-mtp rofi-lbonn-wayland-git network-manager-applet lsd cava geany geany-plugin swaync tumbler unzip zip unrar polkit-gnome xdg-user-dirs grim slurp jq polkit-kde-agent zathura-pdf-mupdf zathura yt-dlp ffmpegthumbnailer xdotool wmctrl zsh lazygit xdg-desktop-portal-gtk gtk-engine-murrine lxappearance xsel bc clipshit bluez bluez-utils swww kitty imagemagick
@@ -125,8 +124,39 @@ sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 ```
 </details>
 
-# Credits
+# :tada: ‎ <samp>Credits</samp>
+
 I wanna point out some resources that helped me the most with the setup:
 
 - [Matt](https://github.com/Matt-FTW/dotfiles) for README & nvim config.
-- [JaKooLit](https://github.com/JaKooLit/HyprLand-Dots) for base configs as this is built on the base of his dotfiles
+- [JaKooLit](https://github.com/JaKooLit/HyprLand-Dots) for base configs as this is built on the base of his dotfiles.
+
+### :two_hearts: Star History and Contributors
+
+Thanks to everyone who have contributed and given an star to this project!
+
+<div align="center">
+
+#### :pencil2: Contributors
+
+</div>
+
+<a href="https://github.com/S4NKALP/hyprland/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=S4NKALP/hyprland"/>
+</a>
+
+<div align="center">
+
+#### :star: Star History
+
+</div>
+
+<div>
+  <a href="https://star-history.com/#S4NKALP/hyprlands&Timeline">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=S4NKALP/hyprland&type=Timeline&theme=dark" />
+      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=S4NKALP/hyprland&type=Timeline" />
+      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=S4NKALP/hyprland&type=Timeline" />
+    </picture>
+  </a>
+</div>
