@@ -63,8 +63,8 @@ sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 After this Press SUPER + SHIFT + W and choose wallpaper And Restart Your System and boom!
 ```
 </details>
-# Credits:
-- These base dotfiles are from [JaKooLit](https://github.com/JaKooLit/Hyprland-Dots) dots.
+## Credits
+Built on top of : [JakooLit](https://github.com/JaKooLit/Hyprland-Dots)
 
 <details>
 <summary><i>
