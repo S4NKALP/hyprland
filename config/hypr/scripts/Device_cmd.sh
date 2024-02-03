@@ -36,7 +36,7 @@ wifi() {
 }
 
 # Toggle Bluetooth
-bluetooth() {
+toggle_bluetooth() {
     if [ "$bluetooth_status" == "no" ]; then
         bluetoothctl power on
         notify-send -u low -i "$notif" 'Bluetooth ON'

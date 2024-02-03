@@ -62,14 +62,7 @@ RunCMD="$SCRIPTSDIR/RunCMD.sh"
 # For Note
 NOTES_AUTHOR="$(whoami)"
 NOTES_FOLDER="$HOME/Documents/Notes"
-NOTES_EDITOR="kitty nvim"
+NOTES_EDITOR="kitty --class fly_is_kitty -e nvim"
 
 # Misc
 lock="$SCRIPTSDIR/device_cmd.sh lockscreen"
-
-# For panel
-theme="$HOME/.config/rofi/config-panel.rasi"
-
-# For Bluetooth
-bluetooth_status=$(bluetoothctl show | grep "Powered" | awk '{print $2}')
-
