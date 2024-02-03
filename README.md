@@ -129,7 +129,7 @@ sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 I wanna point out some resources that helped me the most with the setup:
 
 - [Matt](https://github.com/Matt-FTW/dotfiles) for README & nvim config.
-- [JaKooLit](https://github.com/JaKooLit/HyprLand-Dots) for base configs as this is built on the base of his dotfiles.
+- [JaKooLit](https://github.com/JaKooLit/HyprLand-Dots) for base configs.
 
 ### :two_hearts: Star History and Contributors
 
