@@ -46,9 +46,9 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 ---
 
 <details>
-<summary><i><b>
-📸 Screenshots</b>
-</i></summary>
+<summary><h3><i>
+📸 Screenshots
+</i></h3></summary>
 <img src="assets/Rice.png">
 <img src="assets/RofiLauncher.png">
 <img src="assets/RofiEmoji.png">
@@ -64,7 +64,7 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 <img scr="assets/QuickLink.png">
 </details>
 
-<b> HyprLand Setup  </b>
+<h2> <b> HyprLand Setup </b> </h2>
 
 <b> ArchInstall </b>
 * Using ArchInstall Script Install Archlinux on bare metal.
@@ -79,7 +79,7 @@ git clone https://aur.archlinux.org/paru-bin.git
 
 * makepkg -Si
 
-<b> Installing automatically</b>
+<h2> <b> Installing automatically </b> </h2>
 
 ```
 curl https://raw.githubusercontent.com/S4NKALP/hyprland/main/Installer.sh -o $HOME/Installer
@@ -88,7 +88,7 @@ chmod +x Installer.sh
 ```
 
 <details>
-<summary><h3>Manual Installation</h3></summary>
+<summary><h2>Manual Installation</h2></summary>
 
 <b> Dependency
 
@@ -123,13 +123,10 @@ sudo cp -r Tokyo-Night-GTK-Theme/icons/Tokyonight-Dark /usr/share/icons/
 
 sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 ```
-
-```
-After this Press SUPER + SHIFT + W and choose wallpaper And Restart Your System and boom!
-```
 </details>
 
 # Credits
-Built on top of : [JakooLit](https://github.com/JaKooLit/Hyprland-Dots)
+I wanna point out some resources that helped me the most with the setup:
 
-
+- [Matt](https://github.com/Matt-FTW/dotfiles) for README & nvim config.
+- [JaKooLit](https://github.com/JaKooLit/HyprLand-Dots) for base configs as this is built on the base of his dotfiles
