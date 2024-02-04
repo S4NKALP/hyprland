@@ -41,7 +41,7 @@ window {
     fullscreen:                 false;
     border-radius:              12px;
     enabled:                    true;
-    background-color:           transparent;
+    background-color:           rgba(0, 0, 0, 0.6);
 }
 
 /* ---- Mainbox ---- */
@@ -106,7 +106,7 @@ entry {
 	padding:					6px 6px 6px 6px;
     text-color:                 inherit;
     cursor:                     text;
-    placeholder:                "Search.(ctrl+tab to select windows)";
+    placeholder:                "Search.....(ctrl+tab to select windows)";
     placeholder-color:          inherit;
 	background-color:			transparent;
 }
@@ -116,8 +116,8 @@ mode-switcher{
 	orientation:				horizontal;
     enabled:                    true;
     spacing:                    20px;
-    padding:                     2px;
-    background-color:          	transparent;
+    padding:                    2px;
+    background-color:          	rgba(0, 0, 0, 0.6);
     text-color:                 @foreground;
 }
 
@@ -127,8 +127,8 @@ button {
     background-color:          @background;
     text-color:                inherit;
     cursor:                    pointer;
-    border: 0px 0px 2px 0px;
-    border-color:               #7aa2f7;
+    border:                    0px 0px 2px 0px;
+    border-color:              #7aa2f7;
 }
 
 button selected {
