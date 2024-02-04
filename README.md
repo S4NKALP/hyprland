@@ -1,3 +1,10 @@
+<div align="center">
+	<a href="https://github.com/S4NKALP/hyprland/stargazers"><img alt="Stargazers" src="https://img.shields.io/github/stars/S4NKALP/hyprland?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41"></a>
+	<a href="https://github.com/S4NKALP/hyprland/issues"><img alt="Forks" src="https://img.shields.io/github/issues/S4NKALP/hyprland?style=for-the-badge&logo=gitbook&color=B5E8E0&logoColor=D9E0EE&labelColor=302D41"></a>
+  <a href="https://github.com/S4NKALP/hyprland/commits/main/"><img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/S4NKALP/hyprland/main?style=for-the-badge&logo=github&color=F2CDCD&logoColor=D9E0EE&labelColor=302D41"/></a>
+	<a href="https://github.com/S4NKALP/hyprland"><img alt="Size" src="https://img.shields.io/github/repo-size/S4NKALP/hyprland?style=for-the-badge&logo=discord&color=DDB6F2&logoColor=D9E0EE&labelColor=302D41"></a>
+</div>
+
 # :herb: ‎ <samp>About</samp>
 
 Hey there! :wave:
