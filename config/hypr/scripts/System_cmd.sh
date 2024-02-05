@@ -242,7 +242,20 @@ screenshot() {
     shot_timer() { countdown "$1"; sleep 1 && take_shot; }
     shot5() { shot_timer 5; }
     shot10() { shot_timer 10; }
-    shotarea() { cd "${dir}" && grim -g "$(slurp)" - | tee "$file" | wl-copy && notify_view; }
+
+    shotarea() {
+        tmpfile=$(mktemp)
+        area="$(slurp)"
+
+        [[ -z "$area" ]] && { notify-send -u low -i "$iDIR/picture.png"  'No area selected'; rm; "$tmpfile": return;}
+        grim -g "$area" - > "$tmpfile" && [[ -s "$tmpfile" ]] && {
+        wl-copy < "$tmpfile"
+        mv "$tmpfile" "$dir/Screenshot_$(date '+%d-%b_%H-%M-%S')_${RANDOM}.png"
+        notify_view
+    }
+        rm "$tmpfile"
+    }
+
     shotactive() { hyprctl -j activewindow | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"' | grim -g - "${active_window_path}" && sleep 1 && notify_view "active"; }
 
     [[ ! -d "$dir" ]] && mkdir -p "$dir"
