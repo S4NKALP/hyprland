@@ -36,7 +36,7 @@ if [ ! -f $HOME/cache/.initial_startup_done ]; then
     grep 'kb_layout=' "$HOME/.config/hypr/UserConfigs/UserSettings.conf" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null > $HOME/.cache/kb_layout
 
     # Refreshing waybar, dunst, rofi etc.
-    "$RunCMD reloadall" > /dev/null 2>&1 &
+    $RunCMD reloadall > /dev/null 2>&1 &
 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done
