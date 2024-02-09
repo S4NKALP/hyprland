@@ -6,7 +6,7 @@ source "$CONFIG_FILE"
 
 
 # Change blur (SUPER SHIFT Q)
-blur (){
+toggle_blur (){
   STATE=$(hyprctl -j getoption decoration:blur:passes | jq ".int")
 
   if [ "${STATE}" == "2" ]; then
@@ -20,7 +20,7 @@ blur (){
   fi
 }
 
-animation() {
+toggle_animation() {
 	STATE=$(hyprctl -j getoption animations:enabled | jq ".int")
 	if [ "${STATE}" = "1" ]; then
 		hyprctl keyword animations:enabled 0
@@ -32,7 +32,7 @@ animation() {
 
 }
 
-rainbowborder() {
+rainbow_border() {
   function random_hex() {
     random_hex=("0xff$(openssl rand -hex 3)")
     echo $random_hex
@@ -44,7 +44,7 @@ hyprctl keyword general:col.inactive_border $(random_hex) $(random_hex) $(random
 }
 
 # Change layout to master & dwindle (SUPER SPACE)
-layout() {
+change_layout() {
   LAYOUT=$(hyprctl -j getoption general:layout | jq -r '.str')
 
   case $LAYOUT in
@@ -73,7 +73,7 @@ layout() {
 
 # Script for Random Wallpaper ( SHIFT ALT W)
 
-randomwall() {
+random_wall() {
   swww query || swww init
   PICS=("${wallDIR}"/*.{jpg,jpeg,png,gif})  # Array of image files in wallDIR
 
@@ -89,7 +89,7 @@ randomwall() {
 
 # Change Wallpaper automatically after 30min
 
-autowall() {
+auto_wall() {
   INTERVAL=1800   # This controls (in seconds) when to switch to the next image
 
   while true; do
@@ -104,7 +104,7 @@ autowall() {
 
 
 # selecting wallpapers (SUPER W)
-selectwall() {
+select_wall() {
     build_theme() {
         rows="$1"
         cols="$1"
@@ -132,7 +132,7 @@ selectwall() {
 }
 
 # Waybar Layout (ALT W)
-waybarl() {
+waybar_layout() {
     menu() {
         find "$config_dir" -maxdepth 1 -type f -exec basename {} \; | sort
     }
@@ -193,7 +193,7 @@ notify-send "Hello" "${name}?,you're back? welcome what will we do today!"
 }
 
 # Switch Keyboard Layout (ALT F1)
-kb() {
+kb_changer() {
 if [ ! -f "$layout_f" ]; then
   default_layout=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null)
   if [ -z "$default_layout" ]; then
