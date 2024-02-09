@@ -445,7 +445,7 @@
 },
     "escape": true,
     "tooltip": true,
-    "exec": "~/.config/hypr/scripts/Caway.sh -b 10",
+    "exec": "~/.config/hypr/scripts/RunCMD.sh caway -b 10",
     "return-type": "json",
     "on-click": "playerctl play-pause",
     "on-click-middle": "playerctl previous",
