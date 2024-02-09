@@ -33,7 +33,7 @@ sys_poweroff() {
 }
 
 # Reload Waybar, Rofi, Swaync, and Rainbowborder.sh (SHIFT ALT R)
-reloadall() {
+reload_all() {
     file_exists() {
         [ -e "$1" ]
     }
@@ -86,8 +86,6 @@ lock_screen() {
 
 # Volume Controller
 volume() {
-    iDIR="$HOME/.config/swaync/icons"
-
     get_volume() {
         volume=$(pamixer --get-volume)
         if [[ "$volume" -eq "0" ]]; then
@@ -212,7 +210,6 @@ volume() {
 
 # ScreenShot
 screenshot() {
-    iDIR="$HOME/.config/swaync/icons"
     notify_cmd_shot="notify-send -h string:x-canonical-private-synchronous:shot-notify -u low -i ${iDIR}/picture.png"
     time=$(date "+%d-%b_%H-%M-%S")
     dir="$(xdg-user-dir)/Pictures/Screenshots"
@@ -275,8 +272,6 @@ screenshot() {
 
 # Brightness Controller
 brightness() {
-
-iDIR="$HOME/.config/swaync/icons"
 notification_timeout=1000
 
 get_backlight() {
@@ -333,3 +328,50 @@ case "$1" in
 esac
 }
 
+battery_notify() {
+last="NONE" # Possible values: NONE, FULL, LOW, CRITICAL, CHARGING
+# Default values for LOW/CRITICAL status
+low=40
+critical=20
+
+while true; do
+  # If battery is plugged, do stuff
+  battery="/sys/class/power_supply/BAT0"
+  if [ -d $battery ]; then
+    capacity=$(cat $battery/capacity)
+    status=$(cat $battery/status)
+
+    # If battery full and not already warned about that
+    if [ "$last" != "FULL" ] && [ "$status" = "Full" ]; then
+      notify-send -u normal -i "$iDIR/battery-full.png" "Battery full" "Remove the adapter! $capacity%"
+      last="FULL"
+    fi
+
+    # If low and discharging
+    if [ "$last" != "LOW" ] && [ "$status" = "Discharging" ] && [ $capacity -le $low ]; then
+      notify-send -u normal -i "$iDIR/battery-low.png" "Battery low" "Plug in the adapter! $capacity%"
+      last="LOW"
+    fi
+
+    # If critical and discharging
+    if [ "$status" = "Discharging" ] && [ $capacity -le $critical ]; then
+      notify-send -u critical -i "$iDIR/battery-low.png" "Battery very low" "Plug in the adapter!!! $capacity%"
+      last="CRITICAL"
+    fi
+
+    # If charging and not already notified
+    if [ "$last" != "CHARGING" ] && [ "$status" = "Charging" ]; then
+      notify-send -u low -i "$iDIR/battery-charging.png" "Charger connected" "Battery is charging $capacity%"
+      last="CHARGING"
+    fi
+
+        # If unplugged and not already notified
+    if [ "$last" != "UNPLUGGED" ] && [ "$status" = "Discharging" ] && [ "$capacity" != "Full" ]; then
+      notify-send -u normal -i "$iDIR/battery-notcharging.png" "Charger unplugged" "Battery is not charging! $capacity%"
+      last="UNPLUGGED"
+    fi
+  fi
+  sleep 0.1
+done
+
+}

@@ -6,7 +6,7 @@ source "$CONFIG_FILE"
 
 
 # Toggle touchpad state. (SUPER SHIFT D)
-touchpad() {
+toggle_touchpad() {
   local status_file="$STATUS_FILE"
   local action
 
@@ -24,7 +24,7 @@ touchpad() {
 
 
 # Toggle Wifi
-wifi() {
+toggle_wifi() {
     wifi_status=$(nmcli radio wifi)
     if [ "$wifi_status" == "enabled" ]; then
 	    nmcli radio wifi off

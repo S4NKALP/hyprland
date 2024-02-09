@@ -188,7 +188,7 @@ edit() {
     }
     main() {
         options=("ENVariables.conf" "WindowRules.conf" "Startup_Apps.conf" "UserKeybinds.conf" "Monitors.conf" "Laptops.conf" "UserSettings.conf" "Settings.conf" "Keybinds.conf")
-        choice=$(menu | rofi -dmenu -i -l 9 -p " View / Edit Hyprland Configs:" | cut -d. -f1)
+        choice=$(menu | rofi -dmenu -i -p " View / Edit Hyprland Configs:" | cut -d. -f1)
         [[ $choice =~ ^[1-9]$ ]] && kitty -e nano "$UserConfigs/${options[choice - 1]}"
     }
     main

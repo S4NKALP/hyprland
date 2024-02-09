@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Directory for icons
-iDIR="$HOME/.config/swaync/icons"
-scriptsDir="$HOME/.config/hypr/scripts"
-RunCMD="$scriptsDir/RunCMD.sh"
+# Source the configuration file.
+CONFIG_FILE=~/.config/hypr/scripts/Ref.sh
+source "$CONFIG_FILE"
+
 # Note: You can add more options below with the following format:
 # ["TITLE"]="link"
 
@@ -13,22 +13,22 @@ declare -A menu_options=(
 
 	#waybar
 	["wbt ToggleWaybar"]="killall -SIGUSR1 waybar"
-	["wbl WaybarLayout"]="$RunCMD waybarl"
+	["wbl WaybarLayout"]="$RunCMD waybar_layout"
         ["wbr Reload Waybar"]="$RunCMD reload_waybar"
 	["wbu Update Waybar"]="$RunCMD update_waybar"
   #hypr
 	["hpr Reload hyprland"]="$RunCMD reload_hypr"
-        ["rld Reload All"]="$RunCMD reloadall"
-        ["cl ChangeLayout"]="$RunCMD layout"
+        ["rld Reload All"]="$RunCMD reload_all"
+        ["cl ChangeLayout"]="$RunCMD change_layout"
 	["gm GameMode"]="$RunCMD gamemode"
-	["bl ChangeBlur"]="$RunCMD blur"
+	["bl ChangeBlur"]="$RunCMD toggle_blur"
 	["flt Float all window"]="hyprctl dispatch workspaceopt allfloat"
-        ["hpa Toggle hyprland animation"]="$RunCMD animation"
+        ["hpa Toggle hyprland animation"]="$RunCMD toggle_animation"
         ["op1 enable_opaque"]="$RunCMD enable_opaque"
 	["op0 disable_opaque"]="$RunCMD disable_opaque"
   #wallpaper
-        ["ws Wallpaper Select"]="$RunCMD selectwall"
-        ["wc Random Wallpaper"]="$RunCMD randomwall"
+        ["ws Wallpaper Select"]="$RunCMD select_wall"
+        ["wc Random Wallpaper"]="$RunCMD random_wall"
   #RunCMD
 	["; Launcher"]="rofi -show drun -modi drun,filebrowser,run,window -theme $HOME/.config/rofi/launcher.rasi"
         ["cb Clipboard"]="$RunCMD clip"
@@ -47,9 +47,9 @@ declare -A menu_options=(
 	["cn Close Notifactions"]="swaync-client -C"
 	["dm0"]="$RunCMD enable_edp1"
 	["dm1"]="$RunCMD enable_edp1"
-        ["tt Touchpad"]="$RunCMD touchpad"
-        ["tw Wifi"]="$RunCMD wifi"
-        ["kb Keyboard switcher"]="$RunCMD kb"
+        ["tt Touchpad"]="$RunCMD toggle_touchpad"
+        ["tw Wifi"]="$RunCMD toggle_wifi"
+        ["kb Keyboard switcher"]="$RunCMD kb_changer"
   #Misc
 	["ff Firefox"]="firefox"
         ["sr ScreenRecord"]="$RunCMD sr"
