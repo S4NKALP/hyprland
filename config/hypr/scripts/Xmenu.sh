@@ -10,7 +10,6 @@ source "$CONFIG_FILE"
 # Define menu options as an associative array
 declare -A menu_options=(
 
-
 	#waybar
 	["wbt ToggleWaybar"]="killall -SIGUSR1 waybar"
 	["wbl WaybarLayout"]="$RunCMD waybar_layout"
@@ -32,12 +31,10 @@ declare -A menu_options=(
   #RunCMD
 	["; Launcher"]="rofi -show drun -modi drun,filebrowser,run,window -theme $HOME/.config/rofi/launcher.rasi"
         ["cb Clipboard"]="$RunCMD clip"
-        ["rmc RunCMDMusic"]="$RunCMD music -m"
+        ["rm RunCMDMusic"]="$RunCMD music -m"
 	["emj RunCMDEmoji"]="$RunCMD emoji"
 	["cc Calculator"]="$RunCMD calc"
-        ["td Todo"]="$RunCMD todo"
         ["tx Tmux"]="$RunCMD tmux"
-        ["nt Note"]="$RunCMD note"
         ["kb Kebinds"]="$RunCMD keybind"
         ["qe Edits"]="$RunCMD edit"
   #System
@@ -45,18 +42,22 @@ declare -A menu_options=(
 	["rr Reboot"]="$RunCMD sys_reboot"
 	["pm Powermenu"]="$RunCMD powermenu"
 	["cn Close Notifactions"]="swaync-client -C"
-	["dm0"]="$RunCMD enable_edp1"
-	["dm1"]="$RunCMD enable_edp1"
+	["dm0 disable monitor"]="$RunCMD disable_edp1"
+	["dm1 enable monitor"]="$RunCMD enable_edp1"
         ["tt Touchpad"]="$RunCMD toggle_touchpad"
+        ["tbt Bluetooth"]="$RunCMD toggle_bluetooth"
         ["tw Wifi"]="$RunCMD toggle_wifi"
         ["kb Keyboard switcher"]="$RunCMD kb_changer"
+        ["bt Bluetooth"]="$RunCMD bluetooth"
   #Misc
 	["ff Firefox"]="firefox"
+	["ffp Firefox"]="firefox --private-window"
+	["dd Discord"]="discord"
         ["sr ScreenRecord"]="$RunCMD sr"
 	["lg Lazygit"]="kitty lazygit"
         ["vi Nvim"]="kitty nvim"
         ["yz Yazi"]="kitty yazi"
-        ["cd Codium"]="codium"
+        ["cd Codium"]="codium --disable-gpu"
 )
 
 # Main function
