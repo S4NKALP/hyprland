@@ -5,7 +5,12 @@ CONFIG_FILE=~/.config/hypr/scripts/Ref.sh
 source "$CONFIG_FILE"
 
 
-# Change blur (SUPER SHIFT Q)
+######################################
+#                                    #
+#             Toggle Blur            #
+#                                    #
+######################################
+
 toggle_blur (){
   STATE=$(hyprctl -j getoption decoration:blur:passes | jq ".int")
 
@@ -20,6 +25,12 @@ toggle_blur (){
   fi
 }
 
+######################################
+#                                    #
+#        Toggle Animation            #
+#                                    #
+######################################
+
 toggle_animation() {
 	STATE=$(hyprctl -j getoption animations:enabled | jq ".int")
 	if [ "${STATE}" = "1" ]; then
@@ -32,21 +43,30 @@ toggle_animation() {
 
 }
 
+######################################
+#                                    #
+#           Rainbow Border           #
+#                                    #
+######################################
+
 rainbow_border() {
   function random_hex() {
     random_hex=("0xff$(openssl rand -hex 3)")
     echo $random_hex
 }
-
 hyprctl keyword general:col.active_border $(random_hex)  $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
 
 hyprctl keyword general:col.inactive_border $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
 }
 
-# Change layout to master & dwindle (SUPER SPACE)
+################################################
+#                                              #
+#      Change Layout Master to Dwindle         #
+#                                              #
+################################################
+
 change_layout() {
   LAYOUT=$(hyprctl -j getoption general:layout | jq -r '.str')
-
   case $LAYOUT in
     "master")
       hyprctl keyword general:layout dwindle
@@ -71,7 +91,11 @@ change_layout() {
 }
 
 
-# Script for Random Wallpaper ( SHIFT ALT W)
+######################################
+#                                    #
+#         Random Wallpaper           #
+#                                    #
+######################################
 
 random_wall() {
   swww query || swww init
@@ -87,23 +111,28 @@ random_wall() {
 }
 
 
-# Change Wallpaper automatically after 30min
+######################################
+#                                    #
+#       Auto Wallpaper Changer       #
+#                                    #
+######################################
 
 auto_wall() {
   INTERVAL=1800   # This controls (in seconds) when to switch to the next image
-
   while true; do
     find "$wallDIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) -print0 \
       | shuf -z -n 1 \
       | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && $linker
-
     sleep $INTERVAL
   done
 }
 
+######################################
+#                                    #
+#        Wallpaper Selector          #
+#                                    #
+######################################
 
-
-# selecting wallpapers (SUPER W)
 select_wall() {
     build_theme() {
         rows="$1"
@@ -115,10 +144,8 @@ select_wall() {
         echo "Error: Wallpaper directory not found." >&2
         exit 1
     fi
-
     images=$(find "$wallDIR" -maxdepth 1 -type f -printf "%f\x00icon\x1f$wallDIR/%f\n" | sort -n)
     choice=$(echo -en "$images\nRandom Choice" | rofi -dmenu -i -show-icons -theme-str "$(build_theme 3 5 6)" -config ~/.config/rofi/config-wallpaper.rasi)
-
     if [ -n "$choice" ]; then
         if [ "$choice" = "Random Choice" ]; then
             choice=$(find "$wallDIR" -type f -maxdepth 1 -printf "%f\n" | shuf -n1)
@@ -131,7 +158,12 @@ select_wall() {
     fi
 }
 
-# Waybar Layout (ALT W)
+######################################
+#                                    #
+#            Waybar Layout           #
+#                                    #
+######################################
+
 waybar_layout() {
     menu() {
         find "$config_dir" -maxdepth 1 -type f -exec basename {} \; | sort
@@ -161,7 +193,11 @@ restart_waybar_if_needed() {
     main
 }
 
-# Toggle animations (SUPER SHIFT A)
+######################################
+#                                    #
+#             GameMode               #
+#                                    #
+######################################)
 gamemode() {
     status=$(hyprctl getoption animations:enabled -j | jq ".int")
     if [[ $status -eq 1 ]]; then
@@ -175,6 +211,12 @@ gamemode() {
     fi
 }
 
+######################################
+#                                    #
+#            Toggle Opaque           #
+#                                    #
+######################################
+
 enable_opaque() {
 	sleep 0.2
 	hyprctl setprop address:$(hyprctl -j activewindow | jq -r -c ".address") forceopaque 0 lock
@@ -184,15 +226,11 @@ disable_opaque() {
 	hyprctl setprop address:$(hyprctl -j activewindow | jq -r -c ".address") forceopaque 1 lock
 }
 
-welcome() {
-sleep 1
+######################################
+#     Keyboard Layout Switcher       #
+#                                    #
+######################################
 
-name=$(whoami)
-
-notify-send "Hello" "${name}?,you're back? welcome what will we do today!"
-}
-
-# Switch Keyboard Layout (ALT F1)
 kb_changer() {
 if [ ! -f "$layout_f" ]; then
   default_layout=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null)
@@ -220,34 +258,26 @@ echo "$new_layout" > "$layout_f"
 notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
 }
 
-# Symbolic link for wallpaper
+######################################
+#                                    #
+#   Symbolic Linker for Wallpaper    #
+#                                    #
+######################################
+
 linker() {
-  # Define the path to the swww cache directory
-cache_dir="$HOME/.cache/swww/"
-
-# Get a list of monitor outputs
-monitor_outputs=("$cache_dir"/*)
-
-# Initialize a flag to determine if the ln command was executed
-ln_success=false
-
-# Loop through monitor outputs
-for cache_file in "${monitor_outputs[@]}"; do
-    # Check if the cache file exists for the current monitor output
-    if [ -f "$cache_file" ]; then
-        # Get the wallpaper path from the cache file
-        wallpaper_path=$(<"$cache_file")
-
-        # Copy the wallpaper to the location Rofi can access
-        if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then
+cache_dir="$HOME/.cache/swww/"   # Define the path to the swww cache directory
+monitor_outputs=("$cache_dir"/*)          # Get a list of monitor outputs
+ln_success=false  # Initialize a flag to determine if the ln command was executed
+for cache_file in "${monitor_outputs[@]}"; do    # Loop through monitor outputs
+    if [ -f "$cache_file" ]; then     # Check if the cache file exists for the current monitor output
+        wallpaper_path=$(<"$cache_file")   # Get the wallpaper path from the cache file
+        if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then         # Copy the wallpaper to the location Rofi can access
             ln_success=true  # Set the flag to true upon successful execution
             break  # Exit the loop after processing the first found monitor output
         fi
     fi
 done
-
-# Add a message indicating whether the ln command was successful
-if $ln_success; then
+if $ln_success; then # Add a message indicating whether the ln command was successful
     echo "Wallpaper linked successfully."
 else
     echo "Failed to link wallpaper."
@@ -255,13 +285,18 @@ fi
 }
 
 
-caway() {
-    trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM
+######################################
+#                                    #
+#          Cava visulizer            #
+#                                    #
+######################################
 
+caway() {
+
+trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM
 BARS=8;
 FRAMERATE=60;
 EQUILIZER=1;
-
 # Get script options
 while getopts 'b:f:m:eh' flag; do
     case "${flag}" in
@@ -280,28 +315,21 @@ while getopts 'b:f:m:eh' flag; do
             ;;
     esac
 done
-
 bar="▁▂▃▄▅▆▇█"
 dict="s/;//g;"
-
-# creating "dictionary" to replace char with bar + thin space " "
-i=0
+i=0  # creating "dictionary" to replace char with bar + thin space " "
 while [ $i -lt ${#bar} ]
 do
     dict="${dict}s/$i/${bar:$i:1} /g;"
     i=$((i=i+1))
 done
-
-# Remove last extra thin space
-dict="${dict}s/.$//;"
-
+dict="${dict}s/.$//;"       # Remove last extra thin space
 clean_create_pipe() {
     if [ -p $1 ]; then
         unlink $1
     fi
     mkfifo $1
 }
-
 kill_pid_file() {
     if [[ -f $1 ]]; then
         while read pid; do
@@ -309,16 +337,10 @@ kill_pid_file() {
         done < $1
     fi
 }
-
-# PID of the cava process and while loop launched from the script
-cava_waybar_pid="/tmp/cava_waybar_pid"
-
-# Clean pipe for cava
-cava_waybar_pipe="/tmp/cava_waybar.fifo"
+cava_waybar_pid="/tmp/cava_waybar_pid"     # PID of the cava process and while loop launched from the script
+cava_waybar_pipe="/tmp/cava_waybar.fifo"   # Clean pipe for cava
 clean_create_pipe $cava_waybar_pipe
-
-# Custom cava config
-cava_waybar_config="/tmp/cava_waybar_config"
+cava_waybar_config="/tmp/cava_waybar_config"     # Custom cava config
 echo "
 [general]
 mode = normal
@@ -332,40 +354,22 @@ data_format = ascii
 ascii_max_range = 7
 " > $cava_waybar_config
 
-# Clean pipe for playerctl
-playerctl_waybar_pipe="/tmp/playerctl_waybar.fifo"
+playerctl_waybar_pipe="/tmp/playerctl_waybar.fifo"   # Clean pipe for playerctl
 clean_create_pipe $playerctl_waybar_pipe
-
-# playerctl output into playerctl_waybar_pipe
-playerctl -a metadata --format '{"tooltip": "{{playerName}} : {{markup_escape(artist)}} - {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F > "$playerctl_waybar_pipe" &
-
-# Read the playerctl o/p via its fifo pipe
-while read -r line; do
-    # Kill the cava process to stop the input to cava_waybar_pipe
-    kill_pid_file $cava_waybar_pid
-
+playerctl -a metadata --format '{"tooltip": "{{playerName}} : {{markup_escape(artist)}} - {{markup_escape(title)}}", "alt": "{{status}}", "class": "{{status}}"}' -F > "$playerctl_waybar_pipe" &          # playerctl output into playerctl_waybar_pipe
+while read -r line; do   # Read the playerctl o/p via its fifo pipe
+    kill_pid_file $cava_waybar_pid    # Kill the cava process to stop the input to cava_waybar_pipe
     echo "$line" | jq --unbuffered --compact-output
-
     # If the class says "Playing" and equilizer is enabled
     # then show the cava equilizer
     if [[ $EQUILIZER == 1 && $(echo $line | jq -r '.class') == 'Playing' ]]; then
-        # Show the playing title for 2 seconds
-        sleep 2
-
-        # cava output into cava_waybar_pipe
-        cava -p $cava_waybar_config >$cava_waybar_pipe &
-
-        # Save the PID of child process
-        echo $! > $cava_waybar_pid
-
-        # Read the cava o/p via its fifo pipe
-        while read -r cmd2; do
-            # Change the "text" key to bars
-            echo "$line" | jq --arg a $(echo $cmd2 | sed "$dict") '.text = $a' --unbuffered --compact-output
+        sleep 2  # Show the playing title for 2 seconds
+        cava -p $cava_waybar_config >$cava_waybar_pipe &     # cava output into cava_waybar_pipe
+        echo $! > $cava_waybar_pid          # Save the PID of child process
+        while read -r cmd2; do                # Read the cava o/p via its fifo pipe
+            echo "$line" | jq --arg a $(echo $cmd2 | sed "$dict") '.text = $a' --unbuffered --compact-output        # Change the "text" key to bars
         done < $cava_waybar_pipe & # Do this fifo read in background
-
-        # Save the while loop PID into the file as well
-        echo $! >> $cava_waybar_pid
+        echo $! >> $cava_waybar_pid         # Save the while loop PID into the file as well
     fi
 done < $playerctl_waybar_pipe
 }

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+######################################
+#                                    #
+#                 Music              #
+#                                    #
+######################################
+
 music(){
 # Directory for icons
 iDIR="$HOME/.config/swaync/icons"
@@ -42,7 +48,12 @@ play_music() {
   fi
 }
 
-# Function for music controls
+######################################
+#                                    #
+#            Music Control           #
+#                                    #
+######################################
+
 music_controls() {
   local choice="$1"
 
@@ -79,7 +90,6 @@ play_pause() {
 }
 
 # Main function
-# Main function
 main() {
   local is_music_playing=$(playerctl --player=mpv status 2>/dev/null)
 
@@ -93,6 +103,11 @@ main() {
   fi
 }
 
+######################################
+#                                    #
+#                 Usage              #
+#                                    #
+######################################
 
 while getopts "midnpks" flag; do
     case "${flag}" in

@@ -5,7 +5,12 @@ CONFIG_FILE=~/.config/hypr/scripts/Ref.sh
 source "$CONFIG_FILE"
 
 
-# Toggle touchpad state. (SUPER SHIFT D)
+######################################
+#                                    #
+#       Toggle touchpad state        #
+#                                    #
+######################################
+
 toggle_touchpad() {
   local status_file="$STATUS_FILE"
   local action
@@ -22,8 +27,12 @@ toggle_touchpad() {
   hyprctl keyword "device:$HYPRLAND_DEVICE:enabled" "$(cat "$status_file")"
 }
 
+######################################
+#                                    #
+#       Toggle wifi state            #
+#                                    #
+######################################
 
-# Toggle Wifi
 toggle_wifi() {
     wifi_status=$(nmcli radio wifi)
     if [ "$wifi_status" == "enabled" ]; then
@@ -35,7 +44,12 @@ toggle_wifi() {
     fi
 }
 
-# Toggle Bluetooth
+######################################
+#                                    #
+#       Toggle bluetooth state       #
+#                                    #
+######################################
+
 toggle_bluetooth() {
     if [ "$bluetooth_status" == "no" ]; then
         bluetoothctl power on
@@ -45,6 +59,12 @@ toggle_bluetooth() {
         notify-send -u low -i "$notif" 'Bluetooth OFF'
     fi
 }
+
+######################################
+#                                    #
+#        Enable/Disable Monitor      #
+#                                    #
+######################################
 
 disable_edp1() {
   enable_edp1
