@@ -365,38 +365,31 @@ esac
 ######################################
 
 battery_notify() {
-last="NONE" # Possible values: NONE, FULL, LOW, CRITICAL, CHARGING
-# Default values for LOW/CRITICAL status
-low=40
-critical=20
+PREV_STATUS="Unknown" # Initialize previous status
+
 while true; do
-  # If battery is plugged, do stuff
-  battery="/sys/class/power_supply/BAT0"
-  if [ -d $battery ]; then
-    capacity=$(cat $battery/capacity)
-    status=$(cat $battery/status)
-    # If battery full and not already warned about that
-    if [ "$last" != "FULL" ] && [ "$status" = "Full" ]; then
-      notify-send -u normal -i "$iDIR/battery-full.png" "Battery full" "Remove the adapter! $capacity%"
-      last="FULL"
+    STATUS=$(cat /sys/class/power_supply/AC/online 2>/dev/null)   # Get charger status using power supply directory
+
+    if [ "$STATUS" != "$PREV_STATUS" ]; then   # Check if the charger status has changed
+        if [ "$STATUS" == "1" ]; then    # Send a notification when charger is plugged in or unplugged
+            notify-send -u low "🔌 Charger Plugged In" "Battery charging"
+        else
+            notify-send -u low "🔌 Charger Unplugged" "Battery not charging"
+        fi
+        PREV_STATUS="$STATUS"   # Update previous status
     fi
-    # If low and discharging
-    if [ "$last" != "LOW" ] && [ "$status" = "Discharging" ] && [ $capacity -le $low ]; then
-      notify-send -u normal -i "$iDIR/battery-low.png" "Battery low" "Plug in the adapter! $capacity%"
-      last="LOW"
+
+    # Get battery percentage and remaining time using acpi
+    BATTERY_INFO=$(acpi)
+    PERCENT=$(echo "$BATTERY_INFO" | awk -F ',|%' '{print $2}')
+
+    if [ "$STATUS" == "1" ] && [ "$PERCENT" -eq 100 ]; then       # Check if the battery is charging and the percentage is 100%
+        notify-send -u low "🔌 Battery Fully Charged" "You can unplug the charger"        # Send a notification when the battery is fully charged
     fi
-    # If critical and discharging
-    if [ "$status" = "Discharging" ] && [ $capacity -le $critical ]; then
-      notify-send -u critical -i "$iDIR/battery-low.png" "Battery very low" "Plug in the adapter!!! $capacity%"
-      last="CRITICAL"
+    if [ "$PERCENT" -le 15 ]; then     # Check if the battery percentage is less than or equal to 20%
+        notify-send -u critical "🪫 Low Battery" "Plug in the charger"    #Send low battery notification
     fi
-    # If charging and not already notified
-    if [ "$last" != "CHARGING" ] && [ "$status" = "Charging" ]; then
-      notify-send -u low -i "$iDIR/battery-charging.png" "Charger connected" "Battery is charging $capacity%"
-      last="CHARGING"
-    fi
-  fi
-  sleep 0.1
+    sleep 0.1  # Sleep for some time before checking again
 done
 }
 
