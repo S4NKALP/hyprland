@@ -135,7 +135,7 @@ auto_wall() {
 
 select_wall() {
     build_theme() {
-        rows="$1"
+        rows="$2"
         cols="$1"
         icon_size="$3"
         echo "element{orientation:vertical;}element-text{horizontal-align:0.5;}element-icon{size:${icon_size}.0000em;}listview{lines:${rows};columns:${cols};}"
