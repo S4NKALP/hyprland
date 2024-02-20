@@ -100,7 +100,6 @@ dependencias=(
     gvfs-mtp
     rofi-lbonn-wayland-git
     network-manager-applet
-    lsd
     cava
     geany
     geany-plugin
