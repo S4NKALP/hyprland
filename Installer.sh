@@ -132,7 +132,6 @@ dependencias=(
     lxappearance
     xsel
     bc
-    vesktop-bin
     sddm
     adobe-source-code-pro-fonts
     ttf-fira-code
