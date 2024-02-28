@@ -44,15 +44,15 @@
   "format": "{icon}",
   "format-bluetooth": "{icon} 󰂰 {volume}%",
   "format-bluetooth-muted": " {icon}",
-  "format-muted": "󰸈",
+  "format-muted": "🔇",
   "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": ["", "", ""]
+      "headphone": "🎧",
+      "hands-free": "🎧",
+      "headset": "🎧",
+      "phone": "📞",
+      "portable": "📞",
+      "car": "🚘",
+      "default": ["🔈", "🔉", "🔊"]
     },
   "on-click": "pamixer --toggle-mute",
   "on-click-right": "pavucontrol",
@@ -85,12 +85,12 @@
   "format-plugged": "󱘖 ",
   "format-full": "{icon}",
   "format-alt": "{icon} {time}",
-  "format-icons": [" ", " ", " ", " ", " "],
+  "format-icons": ["","","","","","","","","","",""],
   "format-time": "{H}h {M}min",
   "tooltip": true,
   "tooltip-format": "{capacity}%",
   "on-click-middle": "~/.config/hypr/scripts/RunCMD.sh blur",
-  "on-click-right": "~/.config/hypr/scripts/RunCMD.sh powermenu",
+  "on-click-right": "wlogout",
 },
 
 }

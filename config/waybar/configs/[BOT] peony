@@ -48,13 +48,14 @@
 	"on-click-right": "pavucontrol -t 3",
 	"on-scroll-up": "~/.config/hypr/scripts/Volume.sh --inc",
 	"on-scroll-down": "~/.config/hypr/scripts/Volume.sh --dec",
-	"format-icons": ["", "", "󰕾", ""],
+	"default": ["🔈", "🔉", "🔊"]
 },
 
 "backlight#peony": {
 	"device": "intel_backlight",
 	"format": "{percent}% {icon}",
-	"format-icons": ["󰛩", "󱩎", "󱩏", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󰛨"],
+        //"format-icons": ["󰛩", "󱩎", "󱩏", "󱩑", "󱩒", "󱩓", "󱩔", "󱩕", "󰛨"],
+        "format-icons": ["🔅", "🔆", "☀️"],
 },
 
 "network#peony": {
@@ -89,7 +90,7 @@
 	"format-plugged": "󱘖 {capacity}%",
 	"format-full": "{icon} Full",
 	"format-alt": "{icon} {time}",
-	"format-icons": ["", "", "", "", ""],
+	 "format-icons": ["","","","","","","","","","",""],
 	"format-time": "{H}h {M}min",
 	"tooltip": true,
 	"tooltip-format": "{timeTo} {power}w",

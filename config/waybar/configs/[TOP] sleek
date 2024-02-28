@@ -42,7 +42,7 @@
 "custom/power": {
 	"format": " ",
 	"icon-size": 20,
-        "on-click": "~/.config/hypr/scripts/RunCMD.sh powermenu",
+        "on-click": "wlogout",
 	"tooltip": false,
 },
 
