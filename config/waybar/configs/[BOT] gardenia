@@ -52,7 +52,7 @@
       "phone": "📞",
       "portable": "📞",
       "car": "🚘",
-      "default": ["🔈", "🔉", "🔊"]
+      "default": ["🔈", "🔉", "🔊"],
     },
   "on-click": "pamixer --toggle-mute",
   "on-click-right": "pavucontrol",

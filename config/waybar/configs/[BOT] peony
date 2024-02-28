@@ -48,7 +48,7 @@
 	"on-click-right": "pavucontrol -t 3",
 	"on-scroll-up": "~/.config/hypr/scripts/Volume.sh --inc",
 	"on-scroll-down": "~/.config/hypr/scripts/Volume.sh --dec",
-	"default": ["🔈", "🔉", "🔊"]
+	"default": ["🔈", "🔉", "🔊"],
 },
 
 "backlight#peony": {
