@@ -545,7 +545,7 @@
   "exec": "echo ; echo 󰟡 power // blur",
   "interval": 86400,
   "tooltip": false,
-  "on-click": "~/.config/hypr/scripts/RunCMD.sh powermenu",
+  "on-click": "wlogout",
   "on-click-right": "~/.config/hypr/scripts/RunCMD.sh blur",
 },
 
@@ -707,7 +707,7 @@
   "format": "⏻",
   "exec": "echo ; echo 󰟡 power // blur",
   "on-click-right": "~/.config/hypr/scripts/RunCMD.sh blur",
-  "on-click":"~/.config/hypr/scripts/RunCMD.sh powermenu",
+  "on-click":"wlogout",
   "interval": 86400, // once every day
   "tooltip": false,
 },

@@ -99,7 +99,7 @@
 	"format-plugged": "󱘖 ",
 	"format-full": "{icon} Full",
 	"format-alt": "{icon} {time}",
-	"format-icons": [" ", " ", " ", " ", " "],
+        "format-icons": ["","","","","","","","","","",""],
 	"format-time": "{H}h {M}min",
 	"tooltip": true,
 	"tooltip-format": "{timeTo} {power}w"
