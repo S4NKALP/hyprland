@@ -108,40 +108,6 @@ edit() {
     main
 }
 
-
-######################################
-#                                    #
-#               Powermenu            #
-#                                    #
-######################################
-
-powermenu() {
-    uptime_info=$(uptime -p | sed -e 's/up //g')
-    host=$(hostnamectl hostname)
-    options=("Lock(l)" "Suspend(u)" "Logout(e)" "Reboot(r)" "Shutdown(s)" "Hibernate(h)")
-    icons=("" "" "󰿅" "󱄌" "" "󰒲")
-
-    chosen_option=$(printf "%s\n" "${options[@]}" | \
-        rofi -dmenu -i -p " $USER@$host" -mesg " Uptime: $uptime_info" \
-        -kb-select-1 "l" \
-        -kb-select-2 "u" \
-        -kb-select-3 "e" \
-        -kb-select-4 "r" \
-        -kb-select-5 "s" \
-        -kb-select-6 "h" \
-        -theme ~/.config/rofi/config-powermenu.rasi | awk '{print $1}')
-
-    case $chosen_option in
-        "Lock(l)") swaylock & ;;
-        "Suspend(u)") swaylock -f && systemctl suspend ;;
-        "Logout(e)") hyprctl dispatch exit 0 ;;
-        "Reboot(r)") systemctl reboot ;;
-        "Shutdown(s)") systemctl poweroff ;;
-        "Hibernate(h)") swaylock -f && systemctl hibernate ;;
-        *) echo "choose: $chosen_option" ;;
-    esac
-}
-
 ######################################
 #                                    #
 #               Keybinds             #

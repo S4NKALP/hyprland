@@ -1,0 +1,61 @@
+* {
+  background-image: none;
+}
+window {
+    font-family: CaskaydiaCove Nerd Font, monospace;
+    font-size: 18pt;
+    background-color: rgba(17, 17, 27, .88);
+}
+
+button {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+    text-shadow: none;
+    border-radius: 20px 20px 20px 20px;
+    background-color: rgba(17, 17, 27, 0.0);
+    color: #ad8ee6;
+    margin: 20px;
+    /* transition: box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out; */
+}
+
+button:focus {
+
+    background-color: rgba(17, 17, 27, 0.0);
+    background-size: 50%;
+}
+
+button:active {
+    background-color: rgba(17, 17, 27, 0.0);
+    background-size: 25%;
+}
+
+button:hover {
+    background-color: rgba(17, 17, 27, 0.0);
+    background-size: 50%;
+}
+
+#lock {
+    background-image: image(url("./icons/lock.png"));
+    /* background-size: 70%; */
+}
+
+#logout {
+    background-image: image(url("./icons/logout.png"));
+}
+
+#suspend {
+    background-image: image(url("./icons/sleep.png"));
+}
+
+#shutdown {
+    background-image: image(url("./icons/power.png"));
+}
+
+#reboot {
+    background-image: image(url("./icons/restart.png"));
+}
+
+#hibernate {
+    background-image: image(url("./icons/hibernate.png"));
+}
