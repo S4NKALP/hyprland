@@ -72,13 +72,13 @@ dependencias=(
     playerctl
     wf-recorder
     kvantum
-    swaylock-effects-git
+    hyprlock
     qt5ct
     qt6ct
     nwg-look
     mpv-mpris
     pacman-contrib
-    swayidle
+    hypridle
     pavucontrol
     pamixer
     file-roller
@@ -206,7 +206,7 @@ if [ ! -d "$backup_folder" ]; then
   mkdir -p "$backup_folder"
 fi
 
-for folder in cava geany hypr keyb kitty Kvantum lazygit lsd mpv neofetch nvim qimgv qt5ct qt6ct rofi starship swaylock swaync Thunar VSCodium waybar yazi zathura zsh; do
+for folder in cava geany hypr keyb kitty Kvantum lazygit lsd mpv neofetch nvim qimgv qt5ct qt6ct rofi starship npm swaync Thunar VSCodium waybar yazi zathura zsh; do
   if [ -d "$HOME/.config/$folder" ]; then
     mv "$HOME/.config/$folder" "$backup_folder/${folder}_$date"
     echo "$folder folder backed up successfully at $backup_folder/${folder}_$date"
