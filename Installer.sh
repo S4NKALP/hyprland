@@ -23,19 +23,15 @@ exec > >(tee -a "$log_file") 2>&1
 # Function to display logo
 logo () {
 
-	local text="${1:?}"
-	echo -en "
+cat <<"EOF"
+ _____  _  _      ____   _  __ __  __
+|__  / | || |    / ___| | |/ / \ \/ /
+  / /  | || |_  | |     | ' /   \  /
+ / /_  |__   _| | |___  | . \   /  \
+/____|    |_|    \____| |_|\_\ /_/\_\  S4NKALP
 
-#####################################
-#                                   #
-#  @author      : 00xZ4CKX          #
-#    GitHub    : @S4NKALP          #
-#    Developer : Sankalp Tharu     #
-#  﫥 Copyright : Sankalp Tharu     #
-#                                   #
-#####################################
-"
-printf ' %s [%s%s %s%s %s]%s\n\n' "${CRE}" "${CNC}" "${CYE}" "${text}" "${CNC}" "${CRE}" "${CNC}"
+
+EOF
 }
 
 ########## ---------- You must not run this as root ---------- ##########
