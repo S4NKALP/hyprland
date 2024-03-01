@@ -52,7 +52,6 @@ declare -A menu_options=(
   #Misc
 	["ff Firefox"]="firefox"
 	["ffp Firefox"]="firefox --private-window"
-	["dd Discord"]="discord"
         ["sr ScreenRecord"]="$RunCMD sr"
 	["lg Lazygit"]="kitty lazygit"
         ["vi Nvim"]="kitty nvim"
