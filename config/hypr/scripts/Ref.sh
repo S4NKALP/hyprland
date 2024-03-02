@@ -6,12 +6,12 @@ DIR=$HOME/.cache
 STATUS_FILE="$DIR/touchpad.status"
 
 # For Notification icon
-notif="$HOME/.config/swaync/images/bell.png"
-iDIR="$HOME/.config/swaync/icons"
+notif="$HOME/dotfiles/swaync/images/bell.png"
+iDIR="$HOME/dotfiles/swaync/icons"
 
 # Scripts DIR
-SCRIPTSDIR="$HOME/.config/hypr/scripts"
-UserSCRIPTSDIR="$HOME/.config/hypr/UserScripts"
+SCRIPTSDIR="$HOME/dotfiles/hypr/scripts"
+UserSCRIPTSDIR="$HOME/dotfiles/hypr/UserScripts"
 linker="$SCRIPTSDIR/RunCMD.sh linker"
 
 
@@ -39,30 +39,17 @@ SWWW_PARAMS1="--transition-fps $FPS1 --transition-type $TYPE1 --transition-durat
 
 # For Keyboard Layout Switcher
 layout_f="$HOME/.cache/kb_layout"
-settings_file="$HOME/.config/hypr/UserConfigs/UserSettings.conf"
+settings_file="$HOME/dotfiles/hypr/UserConfigs/UserSettings.conf"
 
 
 # For Quickedit
-configs="$HOME/.config/hypr/configs"
-UserConfigs="$HOME/.config/hypr/UserConfigs"
-
-
-# For TODO
-file="$HOME/Documents/Notes/.rofi_todo"
-touch "$file"
-prompt="Add/delete a task: "
-height=$(wc -l "$file" | awk '{print $1}')
-
+configs="$HOME/dotfiles/hypr/configs"
+UserConfigs="$HOME/dotfiles/hypr/UserConfigs"
 
 # For Waybar Layout
-config_dir="$HOME/.config/waybar/configs"
-waybar_config="$HOME/.config/waybar/config"
+config_dir="$HOME/dotfiles/waybar/configs"
+waybar_config="$HOME/dotfiles/waybar/config"
 RunCMD="$SCRIPTSDIR/RunCMD.sh"
 
-
-# For Note
-NOTES_AUTHOR="$(whoami)"
-NOTES_FOLDER="$HOME/Documents/Notes"
-NOTES_EDITOR="kitty --class fly_is_kitty -e nvim"
 
 

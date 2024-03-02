@@ -52,7 +52,7 @@
       "phone": "📞",
       "portable": "📞",
       "car": "🚘",
-      "default": ["🔈", "🔉", "🔊"],
+      "default": ["🔈", "🔉", "🔊"]
     },
   "on-click": "pamixer --toggle-mute",
   "on-click-right": "pavucontrol",
@@ -89,7 +89,7 @@
   "format-time": "{H}h {M}min",
   "tooltip": true,
   "tooltip-format": "{capacity}%",
-  "on-click-middle": "~/.config/hypr/scripts/RunCMD.sh blur",
+  "on-click-middle": "~/dotfiles/hypr/scripts/RunCMD.sh blur",
   "on-click-right": "wlogout",
 },
 
