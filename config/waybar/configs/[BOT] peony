@@ -44,10 +44,10 @@
 "wireplumber#peony": {
 	"format": "{icon} {volume}",
 	"format-muted": " Mute",
-	"on-click": "~/.config/hypr/scripts/Volume.sh --toggle",
+	"on-click": "~/dotfiles/hypr/scripts/Volume.sh --toggle",
 	"on-click-right": "pavucontrol -t 3",
-	"on-scroll-up": "~/.config/hypr/scripts/Volume.sh --inc",
-	"on-scroll-down": "~/.config/hypr/scripts/Volume.sh --dec",
+	"on-scroll-up": "~/dotfiles/hypr/scripts/Volume.sh --inc",
+	"on-scroll-down": "~/dotfiles/hypr/scripts/Volume.sh --dec",
 	"default": ["🔈", "🔉", "🔊"],
 },
 
@@ -94,8 +94,8 @@
 	"format-time": "{H}h {M}min",
 	"tooltip": true,
 	"tooltip-format": "{timeTo} {power}w",
-	"on-click-middle": "~/.config/hypr/scripts/RunCMD.sh lur",
-	"on-click-right": "~/.config/hypr/scripts/RunCMD.sh powermenu",
+	"on-click-middle": "~/dotfiles/hypr/scripts/RunCMD.sh lur",
+	"on-click-right": "~/dotfiles/hypr/scripts/RunCMD.sh powermenu",
 },
 
 "tray#peony": {

@@ -2,40 +2,71 @@
 ## Aliases
 ##
 
-alias run='pnpm run'
+#List
+alias ls="eza --color=auto --icons"
+alias l="ls -l"
+alias ll="ls -a"
+alias lla="ls -la"
+alias lt="ls --tree"
+
+#pacman unlock
+alias unlock="sudo rm /var/lib/pacman/db.lck"
+alias rmpacmanlock="sudo rm /var/lib/pacman/db.lck"
+
+#cache clean
+alias clean="paru -Scc"
+
+# paru as aur helper - updates everything
+alias parsua="paru -Syu --noconfirm"
+alias upall="paru -Syu --noconfirm"
+
+# pacman or pm
+alias pacman='sudo pacman --color auto'
+alias update='sudo pacman -Syyu'
+alias upgrade='paru -Syyu'
+
+#ps
+alias psa="ps auxf"
+alias psgrep="ps aux | grep -v grep | grep -i -e VSZ -e"
+
+#add new fonts
+alias update-fc='sudo fc-cache -fv'
+
+#switch between bash and zsh
+alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
+alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
+alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
+
+#Cleanup orphaned packages
+alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
+
+
+#fix obvious typo's
 alias c="clear"
 alias q="exit"
-alias cleanram="sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'"
-alias trim_all="sudo fstrim -va"
-alias mkgrub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias mtar='tar -zcvf' # mtar <archive_compress>
 alias utar='tar -zxvf' # utar <archive_decompress> <file_list>
 alias z='zip -r' # z <archive_compress> <file_list>
 alias uz='unzip' # uz <archive_decompress> -d <dir>
 alias sr='source ~/.config/zsh/env.zsh'
 alias ..="cd .."
-alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
 alias mkdir="mkdir -p"
-alias pacin="pacman -Slq | fzf -m --preview 'cat <(pacman -Si {1}) <(pacman -Fl {1} | awk \"{print \$2}\")' | xargs -ro sudo pacman -S"
-alias paruin="paru -Slq | fzf -m --preview 'cat <(paru -Si {1}) <(paru -Fl {1} | awk \"{print \$2}\")' | xargs -ro  paru -S"
-alias pacrem="pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns"
-alias pac="pacman -Q | fzf"
-alias parucom="paru -Gc"
-alias parupd="paru -Qua"
-alias pacupd="pacman -Qu"
-alias parucheck="paru -Gp"
-alias installed="grep -i installed /var/log/pacman.log"
-alias clean="sudo pacman -Scc"
-alias ls="exa --color=auto --icons"
-alias l="ls -l"
-alias ll="ls -a"
-alias lla="ls -la"
-alias lt="ls --tree"
 alias cat="bat --color always --plain"
 alias grep='grep --color=auto'
 alias mv='mv -v'
 alias cp='cp -vr'
 alias rm='rm -vr'
+
+#clean caches
+alias cleanram="sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'"
+
+#grub update
+alias mkgrub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+
+# other
+alias py='python'
+alias wifi="nmtui-connect"
+
 # git Aliases
 alias commit="git add . && git commit -m"
 alias push="git push"
@@ -216,12 +247,5 @@ alias gupav='git pull --rebase --autostash -v'
 alias gupv='git pull --rebase -v'
 alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
-# my aliases
-alias vi='nvim'
-alias py='python'
-alias paclean="paru -Scc"
-alias n="neofetch"
-alias pacupg="sudo pacman -Syu"
-alias update="paru -Syu"
-alias wifi="nmtui-connect"
+
 # vim:ft=zsh

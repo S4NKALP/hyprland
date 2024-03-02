@@ -188,7 +188,7 @@ repo_dir="$HOME/dotfiles"
 		rm -rf "$repo_dir"
 	fi
 
-# Clona el repositorio
+# Cloning the repository
 printf "Cloning dotfiles from %s\n" "$repo_url"
 git clone --depth=1 "$repo_url" "$repo_dir"
 
@@ -224,12 +224,12 @@ sleep 5
 logo "Installing dotfiles.."
 printf "Copying files to respective directories..\n"
 
-[ ! -d ~/.config ] && mkdir -p ~/.config
+[ ! -d ~/dotfiles ] && mkdir -p ~/dotfiles
 [ ! -d ~/.local/bin ] && mkdir -p ~/.local/bin
 [ ! -d ~/Pictures/wallpapers ] && mkdir -p ~/Pictures/wallpapers
 
 for archivos in ~/dotfiles/config/*; do
-  cp -R "${archivos}" ~/.config/
+  cp -R "${archivos}" ~/dotfiles/
   if [ $? -eq 0 ]; then
 	printf "%s%s%s folder copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
 	sleep 1
@@ -250,16 +250,6 @@ for archivos in ~/dotfiles/misc/bin/*; do
   fi
 done
 
-for archivos in ~/dotfiles/misc/.zshenv; do
-  cp -R "${archivos}" ~/
-  if [ $? -eq 0 ]; then
-	printf "%s%s%s file copied succesfully!%s\n" "${BLD}" "${CGR}" "${archivos}" "${CNC}"
-	sleep 1
-  else
-	printf "%s%s%s failed to been copied, you must copy it manually%s\n" "${BLD}" "${CRE}" "${archivos}" "${CNC}"
-	sleep 1
-  fi
-done
 
 for archivos in ~/dotfiles/wallpapers/*; do
   cp -R "${archivos}" ~/Pictures/wallpapers
@@ -275,6 +265,80 @@ done
 printf "%s%sFiles copied succesfully!!%s\n" "${BLD}" "${CGR}" "${CNC}"
 sleep 3
 
+########## --------- Installng .config directores ---------- ##########
+
+logo "Installing .config directores(making symlink)"
+
+DOTFILES_DIR="$HOME/dotfiles"
+
+CONFIG_DIRS=(
+    "nvim"
+    "cava"
+    "geany"
+    "keyb"
+    "Kvantum"
+    "mpv"
+    "neofetch"
+    "npm"
+    "qimgv"
+    "qt5ct"
+    "qt6ct"
+    "starship"
+    "Thunar"
+    "VSCodium"
+    "yazi"
+    "zathura"
+    "zsh"
+    "kitty"
+    "wlogout"
+    "hypr"
+    "rofi"
+    "swaync"
+    "waybar"
+)
+
+CONFIG_FILES=(
+    ".zshenv"
+)
+
+
+# Install .config directories
+for dir in "${CONFIG_DIRS[@]}"; do
+    source_path="$DOTFILES_DIR/config/$dir"
+    target_path="$HOME/.config/$dir"
+
+    # Create symlink
+    ln -sf "$source_path" "$target_path"
+
+    # Check if the symlink creation was successful
+    if [ $? -eq 0 ]; then
+        printf "%s%sCreated symlink for .config/%s\n" "$dir" "${BLD}" "${CGR}" "${CNC}"
+    else
+        printf "%s%sFailed to create symlink for .config/%s. Please check and fix the issue.\n" "$dir" "${BLD}" "${CGR}" "${CNC}"
+        # You can choose to exit or handle the error in another way based on your requirements.
+        exit 1
+    fi
+done
+
+# Install individual files
+for file in "${CONFIG_FILES[@]}"; do
+    source_path="$DOTFILES_DIR/config/$file"
+    target_path="$HOME/$file"
+
+    # Create symlink
+    ln -sf "$source_path" "$target_path"
+
+    # Check if the symlink creation was successful
+    if [ $? -eq 0 ]; then
+        printf "%s%sCreated symlink for %s\n" "$file" "${BLD}" "${CGR}" "${CNC}"
+    else
+        printf "%s%sFailed to create symlink for %s. Please check and fix the issue.\n" "$file" "${BLD}" "${CGR}" "${CNC}"
+        # You can choose to exit or handle the error in another way based on your requirements.
+        exit 1
+    fi
+done
+
+printf "%s%sSymlink creation is successful!!%S\n\n" "${BLD}" "${CGR}" "${CNC}"
 
 ########## ---------- Enabling Bluetooth service ---------- ##########
 
@@ -333,3 +397,5 @@ logo "Changing default shell to zsh"
 		printf "%s%sYour shell is already zsh\nGood bye! installation finished, now reboot%s\n" "${BLD}" "${CGR}" "${CNC}"
 	fi
 zsh
+
+

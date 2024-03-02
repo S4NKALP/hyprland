@@ -271,7 +271,7 @@ ln_success=false  # Initialize a flag to determine if the ln command was execute
 for cache_file in "${monitor_outputs[@]}"; do    # Loop through monitor outputs
     if [ -f "$cache_file" ]; then     # Check if the cache file exists for the current monitor output
         wallpaper_path=$(<"$cache_file")   # Get the wallpaper path from the cache file
-        if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then         # Copy the wallpaper to the location Rofi can access
+        if ln -sf "$wallpaper_path" "$HOME/dotfiles/rofi/.current_wallpaper"; then         # Copy the wallpaper to the location Rofi can access
             ln_success=true  # Set the flag to true upon successful execution
             break  # Exit the loop after processing the first found monitor output
         fi
@@ -372,4 +372,19 @@ while read -r line; do   # Read the playerctl o/p via its fifo pipe
         echo $! >> $cava_waybar_pid         # Save the while loop PID into the file as well
     fi
 done < $playerctl_waybar_pipe
+}
+
+
+######################################
+#                                    #
+#            Cursor Zoom             #
+#                                    #
+######################################
+
+cz() {
+if [ $(hyprctl -j getoption misc:cursor_zoom_factor | jq '.float' | sed 's/\..*$//') == 1 ]; then
+  $(hyprctl keyword misc:cursor_zoom_factor 2) &> /dev/null
+else
+  $(hyprctl keyword misc:cursor_zoom_factor 1) &> /dev/null
+fi
 }

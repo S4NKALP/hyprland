@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the configuration file.
-CONFIG_FILE=~/.config/hypr/scripts/Ref.sh
+CONFIG_FILE=~/dotfiles/hypr/scripts/Ref.sh
 source "$CONFIG_FILE"
 
 # Note: You can add more options below with the following format:
@@ -40,7 +40,7 @@ declare -A menu_options=(
   #System
 	["qq Shutdown"]="$RunCMD sys_poweroff"
 	["rr Reboot"]="$RunCMD sys_reboot"
-	["pm Powermenu"]="$RunCMD powermenu"
+	["SS Wlogout"]="wlogout"
 	["cn Close Notifactions"]="swaync-client -C"
 	["dm0 disable monitor"]="$RunCMD disable_edp1"
 	["dm1 enable monitor"]="$RunCMD enable_edp1"
@@ -57,6 +57,7 @@ declare -A menu_options=(
         ["vi Nvim"]="kitty nvim"
         ["yz Yazi"]="kitty yazi"
         ["cd Codium"]="codium --disable-gpu"
+        ["tg Telegram"]="telegram-desktop"
 )
 
 # Main function
