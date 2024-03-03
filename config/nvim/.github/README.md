@@ -47,6 +47,7 @@
 <summary><b>🖌️ Color</b></summary>
 
 - [folke/twilight.nvim](https://dotfyle.com/plugins/folke/twilight.nvim)
+- [mvllow/modes.nvim](https://dotfyle.com/plugins/mvllow/modes.nvim)
 - [echasnovski/mini.hipatterns](https://dotfyle.com/plugins/echasnovski/mini.hipatterns)
 - [miversen33/sunglasses.nvim](https://dotfyle.com/plugins/miversen33/sunglasses.nvim)
 - [xiyaowong/nvim-transparent](https://dotfyle.com/plugins/xiyaowong/nvim-transparent)
@@ -484,6 +485,7 @@
 <summary><b>🔧 Utility</b></summary>
 
 - [zbirenbaum/neodim](https://dotfyle.com/plugins/zbirenbaum/neodim)
+- [dmmulroy/ts-error-translator.nvim](https://dotfyle.com/plugins/dmmulroy/ts-error-translator.nvim)
 - [creativenull/dotfyle-metadata.nvim](https://dotfyle.com/plugins/creativenull/dotfyle-metadata.nvim)
 - [rasulomaroff/reactive.nvim](https://dotfyle.com/plugins/rasulomaroff/reactive.nvim)
 - [chrisgrieser/nvim-origami](https://dotfyle.com/plugins/chrisgrieser/nvim-origami)
