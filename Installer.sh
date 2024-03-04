@@ -267,7 +267,7 @@ sleep 3
 
 ########## --------- Installng .config directores ---------- ##########
 
-logo "Installing .config directores(making symlink)"
+logo "synchronize dotfiles(making symlink)"
 
 DOTFILES_DIR="$HOME/dotfiles"
 
