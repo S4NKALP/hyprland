@@ -47,3 +47,4 @@ yandeu.five-server
 YoavBls.pretty-ts-errors
 YuTengjing.vscode-colorize-plus
 ziglang.vscode-zig
+dlasagno.wal-theme

@@ -8,7 +8,7 @@
 
 music(){
 # Directory for icons
-iDIR="$HOME/.config/swaync/icons"
+iDIR="$HOME/dotfiles/swaync/icons"
 
 # Note: You can add more options below with the following format:
 # ["TITLE"]="link"

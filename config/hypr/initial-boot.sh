@@ -7,7 +7,7 @@
 
 # Variables
 RunCMD=$HOME/.config/hypr/scripts/RunCMD.sh
-wallpaper=$HOME/Pictures/wallpapers/1.png
+wallpaper=$HOME/Pictures/wallpapers/47.png
 kvantum_theme="Tokyo-Night"
 
 swww="swww img"
@@ -16,11 +16,15 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
 # Check if a marker file exists.
 if [ ! -f $HOME/cache/.initial_startup_done ]; then
 
-    # Initial scripts to load in order to have a proper wallpaper
-    swww init || swww query && $swww "$wallpaper" $effect
+   # Initialize pywal and wallpaper
+	if [ -f "$wallpaper" ]; then
+		wal -i $wallpaper -s -t > /dev/null
+		swww init && $swww $wallpaper $effect
+	    $RunCMD linker > /dev/null 2>&1 &
+	fi
 
-    # For Symbolic Link
-    $RunCMD linker > /dev/null 2>&1
+    # Initial symlink for Pywal Dark and Light for Rofi Themes
+    ln -sf "$HOME/.cache/wal/colors-rofi-dark.rasi" "$HOME/.config/rofi/pywal-color/pywal-theme.rasi" > /dev/null 2>&1 &
 
     # initiate GTK dark mode and apply icon and cursor theme
     gsettings set org.gnome.desktop.interface gtk-theme Tokyonight-Dark-BL-LB > /dev/null 2>&1 &
@@ -34,9 +38,6 @@ if [ ! -f $HOME/cache/.initial_startup_done ]; then
 
     #initiate the kb_layout
     grep 'kb_layout=' "$HOME/.config/hypr/UserConfigs/UserSettings.conf" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null > $HOME/.cache/kb_layout
-
-    # Refreshing waybar, dunst, rofi etc.
-    $RunCMD reload_all > /dev/null 2>&1 &
 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done

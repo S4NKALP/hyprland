@@ -2,10 +2,10 @@
   // open json editor for settings
   "workbench.settings.editor": "json",
   // Theme
-  "workbench.colorTheme": "Catppuccin Macchiato",
-  "workbench.preferredDarkColorTheme": "Catppuccin Macchiato",
+  "workbench.colorTheme": "Wal Bordered",
+  "workbench.preferredDarkColorTheme": "Wal Bordered",
   "workbench.iconTheme": "catppuccin-perfect-mocha",
-  "workbench.preferredHighContrastColorTheme": "Catppuccin Macchiato",
+  "workbench.preferredHighContrastColorTheme": "Wal Bordered",
   "catppuccin.accentColor": "lavender",
   "catppuccin.extraBordersEnabled": true,
   "catppuccin.italicComments": true,
