@@ -75,7 +75,7 @@ main
 
 clip() {
     while true; do
-        result=$(rofi -dmenu -kb-custom-1 "Control-Delete" -kb-custom-2 "Alt-Delete" -p "CTRL Del - Cliphist del || Alt Del - cliphist wipe" -config ~/.config/rofi/config-long.rasi < <(cliphist list))
+        result=$(rofi -dmenu -kb-custom-1 "Control-Delete" -kb-custom-2 "Alt-Delete" -p "CTRL Del - Cliphist del || Alt Del - cliphist wipe" -config ~/dotfiles/rofi/config-long.rasi < <(cliphist list))
 
         case "$?" in
             1) exit ;;
@@ -115,9 +115,9 @@ edit() {
 ######################################
 
 keybind() {
-CONFIG=$(rofi -show file-browser-extended -file-browser-stdout -file-browser-dir "$HOME"/.config/keyb/bindings -config ~/.config/rofi/config-long.rasi)
+CONFIG=$(fd --base-directory "$HOME/.config/keyb/bindings" --type f . | rofi -dmenu -config ~/dotfiles/rofi/config-long.rasi)
 
-hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$CONFIG'"
+hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$HOME/.config/keyb/bindings/$CONFIG'"
 }
 
 ######################################
@@ -127,7 +127,7 @@ hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$CONFIG'"
 ######################################
 
 emoji() {
-    A="$(rofi -dmenu -p "Emoji:" -config ~/.config/rofi/config-long.rasi < "$HOME/.config/hypr/configs/emojis" | cut -d ' ' -f 1 | tr -d '\n')"
+    A="$(rofi -dmenu -p "Emoji:" -config ~/dotfiles/rofi/config-long.rasi < "$HOME/.config/hypr/configs/emojis" | cut -d ' ' -f 1 | tr -d '\n')"
 [[ -n "$A" ]] && wl-copy -- "$A"
 }
 

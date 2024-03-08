@@ -68,6 +68,8 @@ reload_all() {
     waybar &
     sleep 0.5
     swaync > /dev/null 2>&1 &
+    # for cava-pywal (note, need to manually restart cava once wallpaper changes)
+    ln -sf "$HOME/.cache/wal/cava-colors" "$HOME/dotfiles/cava/config" || true
 }
 
 ######################################
@@ -90,17 +92,7 @@ reload_waybar() {
 		waybar &
 	fi
 	notify-send -u low -i $notif "Reload Waybar"
-}
 
-######################################
-#                                    #
-#          Update Waybar             #
-#                                    #
-######################################
-
-update_waybar() {
-	pkill -RTMIN+4 waybar
-	notify-send -u low -i $notif 'Refresh Waybar'
 }
 
 ######################################
@@ -111,194 +103,18 @@ update_waybar() {
 
 reload_hypr() {
 	hyprctl reload
+    $RunCMD linker
 	notify-send -u low -i $notif 'Reload Hyprland'
 }
 
 ######################################
 #                                    #
-#       lockscreen(swaylock)         #
+#       lockscreen(hyprlock)         #
 #                                    #
 ######################################
 
 lock_screen() {
-	LOCKCONFIG="$HOME/.config/swaylock/config"
-	sleep 0.5s
-	swaylock --config ${LOCKCONFIG} &
-	disown
-}
-
-
-######################################
-#                                    #
-#        Volume Controller           #
-#                                    #
-######################################
-
-volume() {
-    get_volume() {
-        volume=$(pamixer --get-volume)
-        if [[ "$volume" -eq "0" ]]; then
-            echo "Muted"
-        else
-            echo "$volume%"
-        fi
-    }
-    get_icon() {
-        current=$(get_volume)
-        if [[ "$current" == "Muted" ]]; then
-            echo "$iDIR/volume-mute.png"
-        elif [[ "${current%\%}" -le 30 ]]; then
-            echo "$iDIR/volume-low.png"
-        elif [[ "${current%\%}" -le 60 ]]; then
-            echo "$iDIR/volume-mid.png"
-        else
-            echo "$iDIR/volume-high.png"
-        fi
-    }
-    notify_user() {
-        if [[ "$(get_volume)" == "Muted" ]]; then
-            notify-send -e -h string:x-canonical-private-synchronous:volume_notif -u low -i "$(get_icon)" "Volume: Muted"
-        else
-            notify-send -e -h int:value:"$(get_volume | sed 's/%//')" -h string:x-canonical-private-synchronous:volume_notif -u low -i "$(get_icon)" "Volume: $(get_volume)"
-        fi
-    }
-    inc_volume() {
-        if [ "$(pamixer --get-mute)" == "true" ]; then
-            pamixer -u && notify_user
-        fi
-        pamixer -i 5 && notify_user
-    }
-    dec_volume() {
-        if [ "$(pamixer --get-mute)" == "true" ]; then
-            pamixer -u && notify_user
-        fi
-        pamixer -d 5 && notify_user
-    }
-    toggle_mute() {
-        if [ "$(pamixer --get-mute)" == "false" ]; then
-            pamixer -m && notify-send -e -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
-        elif [ "$(pamixer --get-mute)" == "true" ]; then
-            pamixer -u && notify-send -e -u low -i "$(get_icon)" "Volume Switched ON"
-        fi
-    }
-    toggle_mic() {
-        if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
-            pamixer --default-source -m && notify-send -e -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF"
-        elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-            pamixer -u --default-source u && notify-send -e -u low -i "$iDIR/microphone.png" "Microphone Switched ON"
-        fi
-    }
-    get_mic_icon() {
-        current=$(pamixer --default-source --get-volume)
-        if [[ "$current" -eq "0" ]]; then
-            echo "$iDIR/microphone-mute.png"
-        else
-            echo "$iDIR/microphone.png"
-        fi
-    }
-    get_mic_volume() {
-        volume=$(pamixer --default-source --get-volume)
-        if [[ "$volume" -eq "0" ]]; then
-            echo "Muted"
-        else
-            echo "$volume%"
-        fi
-    }
-    notify_mic_user() {
-        volume=$(get_mic_volume)
-        icon=$(get_mic_icon)
-        notify-send -e -h int:value:"$volume" -h "string:x-canonical-private-synchronous:volume_notif" -u low -i "$icon" "Mic-Level: $volume"
-    }
-    inc_mic_volume() {
-        if [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-            pamixer --default-source -u && notify_mic_user
-        fi
-        pamixer --default-source -i 5 && notify_mic_user
-    }
-    dec_mic_volume() {
-        if [ "$(pamixer --default-source --get-mute)" == "true" ]; then
-            pamixer --default-source -u && notify_mic_user
-        fi
-        pamixer --default-source -d 5 && notify_mic_user
-    }
-    if [[ "$1" == "--get" ]]; then
-        get_volume
-    elif [[ "$1" == "--inc" ]]; then
-        inc_volume
-    elif [[ "$1" == "--dec" ]]; then
-        dec_volume
-    elif [[ "$1" == "--toggle" ]]; then
-        toggle_mute
-    elif [[ "$1" == "--toggle-mic" ]]; then
-        toggle_mic
-    elif [[ "$1" == "--get-icon" ]]; then
-        get_icon
-    elif [[ "$1" == "--get-mic-icon" ]]; then
-        get_mic_icon
-    elif [[ "$1" == "--mic-inc" ]]; then
-        inc_mic_volume
-    elif [[ "$1" == "--mic-dec" ]]; then
-        dec_mic_volume
-    else
-        get_volume
-    fi
-}
-
-
-############################################################
-#                                                          #
-#        Brightness Controller both keyboard & screen      #
-#                                                          #
-############################################################
-
-brightness() {
-notification_timeout=1000
-get_backlight() {
-    echo $(brightnessctl -m | cut -d, -f4)
-}
-get_kbd_backlight() {
-    brightnessctl -d '*::kbd_backlight' -m | cut -d, -f4 | tr -d '%'
-}
-get_icon() {
-    current=$(get_backlight | sed 's/%//')
-    [ "$current" -le "20" ] && icon="$iDIR/brightness-20.png" ||
-    [ "$current" -le "40" ] && icon="$iDIR/brightness-40.png" ||
-    [ "$current" -le "60" ] && icon="$iDIR/brightness-60.png" ||
-    [ "$current" -le "80" ] && icon="$iDIR/brightness-80.png" ||
-    icon="$iDIR/brightness-100.png"
-}
-notify_user() {
-    notify-send -e -h string:x-canonical-private-synchronous:brightness_notif -h int:value:$current -u low -i "$icon" "Brightness: $current%"
-}
-change_backlight() {
-    brightnessctl set "$1" && get_icon && notify_user
-}
-change_kbd_backlight() {
-    brightnessctl -d '*::kbd_backlight' set "$1" && get_icon && notify_user
-}
-case "$1" in
-    "--get")
-        get_backlight
-        ;;
-    "--inc")
-        change_backlight "+5%"
-        ;;
-    "--dec")
-        change_backlight "5%-"
-        ;;
-    "--get-kbd")
-        get_kbd_backlight
-        ;;
-    "--inc-kbd")
-        change_kbd_backlight "+30%"
-        ;;
-    "--dec-kbd")
-        change_kbd_backlight "30%-"
-        ;;
-    *)
-        get_backlight
-        ;;
-esac
+    hyprlock
 }
 
 ######################################

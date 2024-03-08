@@ -129,6 +129,11 @@ sudo cp -r Tokyo-Night-GTK-Theme/icons/Tokyonight-Dark /usr/share/icons/
 
 sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 ```
+
+* At Last (Do this)
+```
+ln -sf "$HOME/.cache/wal/colors-rofi-dark.rasi" "$HOME/.config/rofi/pywal-color/pywal-theme.rasi"
+```
 </details>
 
 # :tada: ‎ <samp>Credits</samp>
