@@ -1,6 +1,3 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
 local go = vim.g
 local o = vim.opt
 
@@ -34,5 +31,19 @@ go.root_spec = {
   "cwd",
 }
 
--- Show last command in the status line
+-- Disable annoying cmd line stuff
 o.showcmd = false
+o.laststatus = 0
+o.cmdheight = 0
+
+-- Enable spell checking
+o.spell = true
+
+-- Backspacing and indentation when wrapping
+o.backspace = { "start", "eol", "indent" }
+o.breakindent = true
+
+-- Smoothscroll
+if vim.fn.has("nvim-0.10") == 1 then
+  o.smoothscroll = true
+end
