@@ -341,7 +341,6 @@
 <summary><b>📚 Note-Taking</b></summary>
 
 - [nvim-neorg/neorg](https://dotfyle.com/plugins/nvim-neorg/neorg)
-- [epwalsh/obsidian.nvim](https://dotfyle.com/plugins/epwalsh/obsidian.nvim)
 
 </details>
 
