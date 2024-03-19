@@ -1,8 +1,6 @@
 {
   "distribution": "LazyVim",
   "masonTools": [
-    "ansible-language-server",
-    "ansible-lint",
     "bash-language-server",
     "beautysh",
     "biome",
