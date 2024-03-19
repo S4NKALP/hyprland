@@ -1,19 +1,14 @@
 return {
-  "nvimdev/dashboard-nvim",
-  opts = function(_, opts)
-    vim.api.nvim_create_autocmd("TabNewEntered", { command = "Dashboard" })
-
-    local logo = [[
-   ███╗   ██╗ ███████╗ ██████╗  ██╗   ██╗ ██╗ ███╗   ███╗
-   ████╗  ██║ ██╔════╝██╔═══██╗ ██║   ██║ ██║ ████╗ ████║
-   ██╔██╗ ██║ █████╗  ██║   ██║ ██║   ██║ ██║ ██╔████╔██║
-   ██║╚██╗██║ ██╔══╝  ██║   ██║ ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║
-   ██║ ╚████║ ███████╗╚██████╔╝  ╚████╔╝  ██║ ██║ ╚═╝ ██║
-   ╚═╝  ╚═══╝ ╚══════╝ ╚═════╝    ╚═══╝   ╚═╝ ╚═╝     ╚═╝
-      ]]
-
-    logo = string.rep("\n", 8) .. logo .. "\n\n"
-    opts.config.header = vim.split(logo, "\n")
-    return opts
-  end,
+	'nvimdev/dashboard-nvim',
+	dependencies = {
+		'kyazdani42/nvim-web-devicons'
+	},
+	enabled = true,
+	config = function()
+		-- local theme = require('plugins.dashboard-theme.landing')
+		-- local theme = require('plugins.dashboard-theme.minimal')
+		-- local theme = require('plugins.dashboard-theme.doom')
+		local theme = require('plugins.dashboard-theme.hyper')
+		require('dashboard').setup (theme)
+	end,
 }

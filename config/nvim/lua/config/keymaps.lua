@@ -1,4 +1,5 @@
 local map = vim.keymap.set
+local api = vim.api
 local o = vim.opt
 
 local Util = require("lazyvim.util")
@@ -121,6 +122,12 @@ map("n", "<a-l>", "$", { desc = "Last character of Line" })
 -- Copy whole text to clipboard
 map("n", "<C-c>", ":%y+<CR>", { desc = "Copy whole text to clipboard", silent = true })
 
+-- clipboard
+map("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
+
+-- Duplicate paragraph
+map('n', '<Leader>p', 'yap<S-}>p', { desc = 'Duplicate Paragraph' })
+
 -- Motion
 map("c", "<C-a>", "<C-b>", { desc = "Start Of Line" })
 map("i", "<C-a>", "<Home>", { desc = "Start Of Line" })
@@ -163,3 +170,5 @@ map("n", "<leader>fd", function()
     vim.cmd("Dashboard")
   end
 end, { desc = "Dashboard" })
+
+
