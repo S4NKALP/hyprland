@@ -2,7 +2,6 @@ local map = vim.keymap.set
 local api = vim.api
 local o = vim.opt
 
-local Util = require("lazyvim.util")
 local lazy = require("lazy")
 
 -- Search current word
@@ -11,36 +10,11 @@ local searching_brave = function()
 end
 map("n", "<leader>?", searching_brave, { noremap = true, silent = true, desc = "Search current word on brave search" })
 
--- Lazy options
-map("n", "<leader>l", "<Nop>")
-map("n", "<leader>ll", "<cmd>Lazy<cr>", { desc = "Lazy" })
--- stylua: ignore start
-map("n", "<leader>ld", function() vim.fn.system({ "xdg-open", "https://lazyvim.org" }) end, { desc = "LazyVim Docs" })
-map("n", "<leader>lr", function() vim.fn.system({ "xdg-open", "https://github.com/LazyVim/LazyVim" }) end, { desc = "LazyVim Repo" })
-map("n", "<leader>lx", "<cmd>LazyExtras<cr>", { desc = "Extras" })
-map("n", "<leader>lc", function() Util.news.changelog() end, { desc = "LazyVim Changelog" })
+-- return to dir
+map("n", "<leader>pv", vim.cmd.Ex)
 
-map("n", "<leader>lu", function() lazy.update() end, { desc = "Lazy Update" })
-map("n", "<leader>lC", function() lazy.check() end, { desc = "Lazy Check" })
-map("n", "<leader>ls", function() lazy.sync() end, { desc = "Lazy Sync" })
--- stylua: ignore end
-
--- Disable LazyVim bindings
-map("n", "<leader>L", "<Nop>")
-map("n", "<leader>fT", "<Nop>")
-
--- Identation
-map("n", "<", "<<", { desc = "Deindent" })
-map("n", ">", ">>", { desc = "Indent" })
-
--- Save without formatting
-map("n", "<A-s>", "<cmd>noautocmd w<CR>", { desc = "Save without formatting" })
-
--- Cursor navigation on insert mode
-map("i", "<M-h>", "<left>", { desc = "Move cursor left" })
-map("i", "<M-l>", "<right>", { desc = "Move cursor left" })
-map("i", "<M-j>", "<down>", { desc = "Move cursor left" })
-map("i", "<M-k>", "<up>", { desc = "Move cursor left" })
+-- Exit insert mode without hitting Esc
+map("i", "jj", "<Esc>", { desc = "Esc" })
 
 -- End of the word backwards
 map("n", "E", "ge")
@@ -67,7 +41,7 @@ map("n", "n", "nzzzv")
 map("n", "N", "Nzzzv")
 
 -- Toggle statusline
-map("n", "<leader>uS", function()
+map("n", "<leader>sl", function()
   if o.laststatus:get() == 0 then
     o.laststatus = 3
   else
@@ -84,33 +58,35 @@ map("n", "<leader>u<tab>", function()
   end
 end, { desc = "Toggle Tabline" })
 
+
+-- Shift arrows to select
+map('i', '<S-Down>', '<ESC>lvj')
+map('v', '<S-Down>', 'j')
+map('n', '<S-Down>', 'vj')
+
+map('i', '<S-Up>', '<ESC>vk')
+map('v', '<S-Up>', 'k')
+map('n', '<S-Up>', 'vk')
+
+map('i', '<S-Right>', '<ESC>vl')
+map('v', '<S-Right>', 'l')
+map('n', '<S-Right>', 'vl')
+
+map('i', '<S-Left>', '<ESC>vh')
+map('v', '<S-Left>', 'h')
+map('n', '<S-Left>', 'vh')
+
+
+-- " Ctrl-C, Ctrl-V option for copy/paste
+map('v', '<C-c>', '"+yi')
+map('i', '<C-c>', '"+yi')
+map('v', '<C-x>', '"+c')
+map('v', '<C-v>', 'c<ESC>"+p')
+map('i', '<C-v>', '<ESC>"+pa')
+
 -- Comment box
 map("n", "]/", "/\\S\\zs\\s*╭<CR>zt", { desc = "Next block comment" })
 map("n", "[/", "?\\S\\zs\\s*╭<CR>zt", { desc = "Prev block comment" })
-
--- Plugin Info
-map("n", "<leader>cif", "<cmd>LazyFormatInfo<cr>", { desc = "Formatting" })
-map("n", "<leader>cic", "<cmd>ConformInfo<cr>", { desc = "Conform" })
-local linters = function()
-  local linters_attached = require("lint").linters_by_ft[vim.bo.filetype]
-  local buf_linters = {}
-
-  if not linters_attached then
-    vim.notify("No linters attached", vim.log.levels.WARN, { title = "Linter" })
-    return
-  end
-
-  for _, linter in pairs(linters_attached) do
-    table.insert(buf_linters, linter)
-  end
-
-  local unique_client_names = table.concat(buf_linters, ", ")
-  local linters = string.format("%s", unique_client_names)
-
-  vim.notify(linters, vim.log.levels.INFO, { title = "Linter" })
-end
-map("n", "<leader>ciL", linters, { desc = "Lint" })
-map("n", "<leader>cir", "<cmd>LazyRoot<cr>", { desc = "Root" })
 
 -- U for redo
 map("n", "U", "<C-r>", { desc = "Redo" })
@@ -119,11 +95,8 @@ map("n", "U", "<C-r>", { desc = "Redo" })
 map("n", "<a-h>", "_", { desc = "First character of Line" })
 map("n", "<a-l>", "$", { desc = "Last character of Line" })
 
--- Copy whole text to clipboard
-map("n", "<C-c>", ":%y+<CR>", { desc = "Copy whole text to clipboard", silent = true })
-
--- clipboard
-map("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
+-- Select & copy to clipboard
+map("v", "<C-c>", '"+y', { desc = "Yank to clipboard" })
 
 -- Duplicate paragraph
 map('n', '<Leader>p', 'yap<S-}>p', { desc = 'Duplicate Paragraph' })
@@ -137,7 +110,6 @@ map("i", "<C-e>", "<End>", { desc = "End Of Line" })
 map("n", "<C-a>", "gg<S-V>G", { desc = "Select all text", silent = true, noremap = true })
 
 -- Paste options
-map("i", "<C-v>", '<C-r>"', { desc = "Paste on insert mode" })
 map("v", "p", '"_dP', { desc = "Paste without overwriting" })
 
 -- Delete and change without yanking
@@ -154,13 +126,30 @@ map("n", "dd", function()
   end
 end, { noremap = true, expr = true, desc = "Don't yank empty line to clipboard" })
 
--- Search inside visually highlighted text. Use `silent = false` for it to
--- make effect immediately.
-map("x", "g/", "<esc>/\\%V", { silent = false, desc = "Search inside visual selection" })
+-- Search for highlighted text in buffer
+map("v", "//", 'y/<C-R>"<CR>', { desc = "Search for highlighted text" })
 
--- Search visually selected text (slightly better than builtins in Neovim>=0.8)
-map("x", "*", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]])
-map("x", "#", [[y?\V<C-R>=escape(@", '?\')<CR><CR>]])
+-- Visual --
+-- Stay in indent mode
+map("v", "<", "<gv")
+map("v", ">", ">gv")
+
+map({"n", "o", "x"}, "<s-h>", "^", { desc = "Jump to beginning of line" })
+map({"n", "o", "x"}, "<s-l>", "g_", { desc = "Jump to end of line" })
+
+-- Copy file paths
+map("n", "<leader>cf", "<cmd>let @+ = expand(\"%\")<CR>", { desc = "Copy File Name" })
+map("n", "<leader>cp", "<cmd>let @+ = expand(\"%:p\")<CR>", { desc = "Copy File Path" })
+
+-- Dismiss Noice Message
+map("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", {desc = "Dismiss Noice Message"})
+
+-- Replace word under cursor across entire buffer
+map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "Replace word under cursor" })
+
+-- Replace all instances of highlighted words
+map("v", "<leader>rr", '"hy:%s/<C-r>h//g<left><left>')
 
 -- Dashboard
 map("n", "<leader>fd", function()
@@ -170,5 +159,3 @@ map("n", "<leader>fd", function()
     vim.cmd("Dashboard")
   end
 end, { desc = "Dashboard" })
-
-
