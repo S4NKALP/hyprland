@@ -21,11 +21,10 @@
 @define-color purple #bd93f9;
 @define-color red #ff5555;
 @define-color yellow #f1fa8c;
-@define-color blue #6272a4 ;
+@define-color blue #6272a4;
 
 window#waybar {
 	background: transparent;
-	color: #cba6f7;
 }
 
 window#waybar.hidden {
@@ -34,7 +33,6 @@ window#waybar.hidden {
 
 window#waybar.empty {
 	background-color: transparent;
-	background: #100214;
 }
 
 window#waybar.empty #window {
