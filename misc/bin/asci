@@ -1,0 +1,32 @@
+#!/bin/bash
+cat <<"EOF"
+    _    ____   ____ ___ ___
+   / \  / ___| / ___|_ _|_ _|
+  / _ \ \___ \| |    | | | |
+ / ___ \ ___) | |___ | | | |
+/_/   \_\____/ \____|___|___|
+                             -Z4CKX
+
+EOF
+
+# -----------------------------------------------------
+# Script to create ascii font based header on user input
+# and copy the result to the clipboard
+# -----------------------------------------------------
+
+read -p "Enter the text for ascii encoding: " mytext
+
+if [ -f ~/ASCII.txt ]; then
+    touch ~/ASCII.txt
+fi
+
+echo "cat <<\"EOF\"" > ~/ASCII.txt
+ASCII "$mytext" >> ~/ASCII.txt
+echo "" >> ~/ASCII.txt
+echo "EOF" >> ~/ASCII.txt
+
+lines=$( cat ~/ASCII.txt )
+wl-copy "$lines"
+xclip -sel clip ~/ASCII.txt
+
+echo "Text copied to clipboard!"
