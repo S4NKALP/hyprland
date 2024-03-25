@@ -235,7 +235,7 @@ element-icon {
 
 element-text {
     background-color:           transparent;
-    text-color:                 #e6ede8;
+    text-color:                 @foreground;
     cursor:                     inherit;
     vertical-align:             0.5;
     horizontal-align:           0;
