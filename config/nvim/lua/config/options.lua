@@ -19,15 +19,10 @@ go.gui_font_face = "JetBrainsMono Nerd Font"
 -- Enable EditorConfig integration
 go.editorconfig = true
 
--- Disable some repl providers
-for _, provider in ipairs({ "node", "perl", "python3", "ruby" }) do
-  go["loaded_" .. provider .. "_provider"] = 0
-end
-
 -- Root dir detection
 go.root_spec = {
   "lsp",
-  { ".git", "lua", "package.json", "Makefile", "go.mod", "cargo.toml", "pyproject.toml", "src" },
+  { ".git", "lua", ".obsidian", "package.json", "Makefile", "go.mod", "cargo.toml", "pyproject.toml", "src" },
   "cwd",
 }
 
@@ -38,7 +33,7 @@ o.cmdheight = 0
 
 -- Enable spell checking
 o.spell = true
-o.spelllang = { "en_us" }
+o.spelllang = { "en" }
 
 -- Backspacing and indentation when wrapping
 o.backspace = { "start", "eol", "indent" }
@@ -50,7 +45,3 @@ if vim.fn.has("nvim-0.10") == 1 then
 end
 
 o.conceallevel = 2
-
--- LSP Server to use for Python.
--- Set to "basedpyright" to use basedpyright instead of pyright.
-vim.g.lazyvim_python_lsp = "basedpyright"

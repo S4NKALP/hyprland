@@ -40,25 +40,26 @@ return {
       { "<leader>sSp", LazyVim.telescope("lsp_dynamic_workspace_symbols", { symbols = { "Property" } }), desc = "Property" },
       { "<leader>sSv", LazyVim.telescope("lsp_dynamic_workspace_symbols", { symbols = { "Variable", "Parameter" } }), desc = "Variable" },
       { "<leader>sA", LazyVim.telescope("treesitter"), desc = "Treesitter Symbols" },
+      { "<leader>sp", "<cmd>Telescope builtin<cr>", desc = "Pickers (Telescope)" },
+      { "<leader>fh", LazyVim.telescope("find_files", { hidden = true }), desc = "Find Files (hidden)" },
+      { "<leader><c-space>", LazyVim.telescope("find_files", { hidden = true }), desc = "Find Files (hidden)" },
       { "<leader>gf", "<cmd>Telescope git_bcommits<cr>", desc = "File History" },
       { "<leader>gS", "<cmd>Telescope git_stash<cr>", desc = "stash" },
       { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "branches" },
-      { "<leader>cs", function()
-        require('telescope.builtin').spell_suggest(require('telescope.themes').get_dropdown({}), { layout_config = { width=0.25, height=0.3 } })
-      end, desc = "Spelling" },
+      { "<leader>cs", "<cmd>Telescope spell_suggest<cr>", desc = "Spelling" },
     },
     opts = {
       defaults = {
         mappings = {
           i = {
             ["<C-k>"] = actions.move_selection_previous,
-            ["<C-r>"] = actions.delete_buffer,
             ["<C-j>"] = actions.move_selection_next,
             ["<S-esc>"] = actions.close,
             ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
+            ["<c-l>"] = require("telescope.actions.layout").cycle_layout_next,
+            ["<a-l>"] = require("telescope.actions.layout").cycle_layout_prev,
             ["<C-Down>"] = actions.cycle_history_next,
             ["<C-Up>"] = actions.cycle_history_prev,
-            ["<esc>"] = actions.close,
           },
         },
         file_ignore_patterns = {
@@ -70,21 +71,42 @@ return {
           "*.git/*",
           "*/tmp/*",
         },
-        pickers = {
-          find_files = {
-            hidden = false,
+      },
+      pickers = {
+        find_files = {
+          hidden = false,
+        },
+        buffers = {
+          layout_config = {
+            prompt_position = "top",
+            height = 0.5,
+            width = 0.6,
+          },
+          sorting_strategy = "ascending",
+          mappings = {
+            i = {
+              ["<c-r>"] = require("telescope.actions").delete_buffer,
+            },
           },
         },
-        extensions = {
-          fzf = {
-            fuzzy = true,
-            override_generic_sorter = true,
-            override_file_sorter = true,
-            case_mode = "smart_case",
+        spell_suggest = {
+          layout_config = {
+            prompt_position = "top",
+            height = 0.3,
+            width = 0.25,
           },
-          ["ui-select"] = {
-            require("telescope.themes").get_dropdown({}),
-          },
+          sorting_strategy = "ascending",
+        },
+      },
+      extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = "smart_case",
+        },
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown({}),
         },
       },
     },
