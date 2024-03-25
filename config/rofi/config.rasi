@@ -13,13 +13,22 @@ configuration {
     me-select-entry:            "MouseSecondary";
     me-accept-entry:            "MousePrimary";
     window-format:              "{w} · {c} · {t}";
-    icon-theme:                 "Tokyonight-Dark";
+    icon-theme:                 "Dracula";
 	dpi:						1;
 }
 
-
-/* ---- Load pywal colors (custom wal template) ---- */
-@import "~/dotfiles/rofi/pywal-color/pywal-theme.rasi"
+ * {
+    foreground: #f8f8f2;
+    background-color: #282a36;
+    active-background: #6272a4;
+    urgent-background: #ff5555;
+    urgent-foreground: #282a36;
+    selected-background: @active-background;
+    selected-urgent-background: @urgent-background;
+    selected-active-background: @active-background;
+    separatorcolor: @active-background;
+    bordercolor: @active-background;
+}
 
 /* ---- Window ---- */
 window {
@@ -30,7 +39,7 @@ window {
     padding:                    0px;
     margin:                     0px;
     border:                     2px;
-    border-color:               @active-background;
+    border-color:               @bordercolor;
     cursor:                     "default";
     location:                   center;
     anchor:                     center;
@@ -64,8 +73,8 @@ listbox {
     children:                   ["listview" ];
 	padding:					0px;
     border-radius:              12px;
-    border-color:               @active-background;
-	background-color:		    @background;
+    border-color:               @bordercolor;
+	background-color:		    transparent;
 }
 
 /* ---- Dummy ---- */
@@ -79,12 +88,12 @@ inputbar {
     padding:                    2px;
     text-color:                 @foreground;
     spacing:                    10px;
-    border-colon:               @foreground;
-	background-color:		    @background;
+    border-color:               @bordercolor;
+	background-color:		    transparent;
     children:                   [ "prompt", "textbox-prompt-colon","entry" ];
     border:                     0px 0px 2px 0px;
     border-radius:              12px;
-    border-color:               @active-background;
+    border-color:               @bordercolor;
 
 }
 
@@ -131,14 +140,14 @@ button {
     text-color:                inherit;
     cursor:                    pointer;
     border:                    0px 0px 2px 0px;
-    border-color:              @active-background;
+    border-color:              @bordercolor;
 }
 
 button selected {
-    background-color:          @selected-normal-background;
+    background-color:          @selected-background;
     text-color:                @foreground;
     border:                    1px;
-    border-color:              @background;
+    border-color:              @bordercolor;
 
 }
 
@@ -188,7 +197,7 @@ element normal.active {
 }
 
 element selected.normal {
-    background-color:           @selected-normal-background;
+    background-color:           @selected-background;
     text-color:                 @foreground;
 }
 

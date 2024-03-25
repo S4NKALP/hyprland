@@ -29,12 +29,10 @@ declare -A menu_options=(
         ["ws Wallpaper Select"]="$RunCMD select_wall"
         ["wc Random Wallpaper"]="$RunCMD random_wall"
   #RunCMD
-	["; Launcher"]="rofi -show drun -modi drun,filebrowser,run,window -theme $HOME/.config/rofi/launcher.rasi"
+	["; Launcher"]="rofi -show drun -modi drun,filebrowser,run,window"
         ["cb Clipboard"]="$RunCMD clip"
         ["rm RunCMDMusic"]="$RunCMD music -m"
 	["emj RunCMDEmoji"]="$RunCMD emoji"
-	["cc Calculator"]="$RunCMD calc"
-        ["tx Tmux"]="$RunCMD tmux"
         ["kb Kebinds"]="$RunCMD keybind"
         ["qe Edits"]="$RunCMD edit"
   #System
@@ -46,17 +44,15 @@ declare -A menu_options=(
 	["dm1 enable monitor"]="$RunCMD enable_edp1"
         ["tt Touchpad"]="$RunCMD toggle_touchpad"
         ["tbt Bluetooth"]="$RunCMD toggle_bluetooth"
-        ["tw Wifi"]="$RunCMD toggle_wifi"
+        ["tw Wifi"]="$RunCMD totggle_wifi"
         ["kb Keyboard switcher"]="$RunCMD kb_changer"
         ["bt Bluetooth"]="$RunCMD bluetooth"
   #Misc
 	["ff Firefox"]="firefox"
 	["ffp Firefox"]="firefox --private-window"
         ["sr ScreenRecord"]="$RunCMD sr"
-	["lg Lazygit"]="kitty lazygit"
         ["vi Nvim"]="kitty nvim"
         ["yz Yazi"]="kitty yazi"
-        ["cd Codium"]="codium --disable-gpu"
         ["tg Telegram"]="telegram-desktop"
 )
 

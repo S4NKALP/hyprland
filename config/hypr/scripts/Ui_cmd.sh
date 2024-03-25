@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the configuration file.
-CONFIG_FILE=~/.config/hypr/scripts/Ref.sh
+CONFIG_FILE=~/dotfiles/hypr/scripts/Ref.sh
 source "$CONFIG_FILE"
 
 
@@ -19,9 +19,9 @@ toggle_blur (){
 	   hyprctl keyword decoration:blur:passes 1
  	   notify-send -e -u low -i "$notif" "Less blur"
   else
-     hyprctl keyword decoration:blur:size 5
+       hyprctl keyword decoration:blur:size 5
 	   hyprctl keyword decoration:blur:passes 2
-     notify-send -e -u low -i "$notif" "Normal blur"
+       notify-send -e -u low -i "$notif" "Normal blur"
   fi
 }
 
@@ -105,7 +105,6 @@ random_wall() {
     RANDOMPICS=${PICS[RANDOM % ${#PICS[@]}]}  # Select a random image
     swww img "${RANDOMPICS}" ${SWWW_PARAMS}   # Set the randomly selected wallpaper
     $linker
-    $RunCMD reload_all
   else
     echo "No images found in ${wallDIR}"
   fi
@@ -123,7 +122,7 @@ auto_wall() {
   while true; do
     find "$wallDIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) -print0 \
       | shuf -z -n 1 \
-      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && $linker && $RunCMD reload_all
+      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && $linker
     sleep $INTERVAL
   done
 }
@@ -136,9 +135,9 @@ auto_wall() {
 
 select_wall() {
     build_theme() {
-        rows="$2"
-        cols="$1"
-        icon_size="$3"
+        rows="$1"
+        cols="$2"
+        icon_size="$2"
         echo "element{orientation:vertical;}element-text{horizontal-align:0.5;}element-icon{size:${icon_size}.0000em;}listview{lines:${rows};columns:${cols};}"
     }
     if [ ! -d "$wallDIR" ]; then
@@ -146,13 +145,13 @@ select_wall() {
         exit 1
     fi
     images=$(find "$wallDIR" -maxdepth 1 -type f -printf "%f\x00icon\x1f$wallDIR/%f\n" | sort -n)
-    choice=$(echo -en "$images\nRandom Choice" | rofi -dmenu -i -show-icons -theme-str "$(build_theme 3 5 6)" -config ~/dotfiles/rofi/config-wallpaper.rasi)
+    choice=$(echo -en "$images\nRandom Choice" | rofi -dmenu -i -show-icons -theme-str "$(build_theme 3 5 6)" config ~/dotfiles/rofi/config-wallpaper.rasi)
     if [ -n "$choice" ]; then
         if [ "$choice" = "Random Choice" ]; then
             choice=$(find "$wallDIR" -type f -maxdepth 1 -printf "%f\n" | shuf -n1)
         fi
         wallpaper="$wallDIR/${choice#*icon\x1f}"
-        swww img $SWWW_PARAMS1 "$wallpaper" && $linker && $RunCMD reload_all
+        swww img $SWWW_PARAMS1 "$wallpaper" && $linker
     else
         echo "No wallpaper selected. Exiting."
         exit 0
@@ -266,43 +265,23 @@ notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
 ######################################
 
 linker() {
-# Define the path to the swww cache directory
-cache_dir="$HOME/.cache/swww/"
-
-# Get a list of monitor outputs
-monitor_outputs=($(ls "$cache_dir"))
-
-# Initialize a flag to determine if the ln command was executed
-ln_success=false
-
-# Get first valid monitor
-current_monitor=$(hyprctl -j monitors | jq -r '.[0].name')
-echo $current_monitor
-# Construct the full path to the cache file
-cache_file="$cache_dir$current_monitor"
-echo $cache_file
-# Check if the cache file exists for the current monitor output
-if [ -f "$cache_file" ]; then
-    # Get the wallpaper path from the cache file
-    wallpaper_path=$(cat "$cache_file")
-    echo $wallpaper_path
-    # Copy the wallpaper to the location Rofi can access
-    if ln -sf "$wallpaper_path" "$HOME/dotfiles/rofi/.current_wallpaper"; then
-        ln_success=true  # Set the flag to true upon successful execution
+cache_dir="$HOME/.cache/swww/"   # Define the path to the swww cache directory
+monitor_outputs=("$cache_dir"/*)          # Get a list of monitor outputs
+ln_success=false  # Initialize a flag to determine if the ln command was executed
+for cache_file in "${monitor_outputs[@]}"; do    # Loop through monitor outputs
+    if [ -f "$cache_file" ]; then     # Check if the cache file exists for the current monitor output
+        wallpaper_path=$(<"$cache_file")   # Get the wallpaper path from the cache file
+        if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then         # Copy the wallpaper to the location Rofi can access
+            ln_success=true  # Set the flag to true upon successful execution
+            break  # Exit the loop after processing the first found monitor output
+        fi
     fi
+done
+if $ln_success; then # Add a message indicating whether the ln command was successful
+    echo "Wallpaper linked successfully."
+else
+    echo "Failed to link wallpaper."
 fi
-
-# Check the flag before executing further commands
-if [ "$ln_success" = true ]; then
-    # execute pywal
-    # wal -i "$wallpaper_path"
-	echo 'about to execute wal'
-    # execute pywal skipping tty and terminal changes
-    wal -i "$wallpaper_path" -s -t &
-fi
-
-# for cava-pywal (note, need to manually restart cava once wallpaper changes)
-ln -sf "$HOME/.cache/wal/cava-colors" "$HOME/dotfiles/cava/config" || true
 }
 
 ######################################

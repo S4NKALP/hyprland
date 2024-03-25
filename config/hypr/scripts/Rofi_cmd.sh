@@ -2,70 +2,9 @@
 
 
 # Source the configuration file.
-CONFIG_FILE=~/.config/hypr/scripts/Ref.sh
+CONFIG_FILE=~/dotfiles/hypr/scripts/Ref.sh
 source "$CONFIG_FILE"
 
-
-######################################
-#                                    #
-#              Calculator            #
-#                                    #
-######################################
-
-calc() {
-    roficmd="rofi -dmenu -p Calc $@"
-
-    while true; do
-        result=$(xsel -o -b | $roficmd | xargs echo | bc -l 2>&1)
-
-        if [[ $result ]]; then
-            printf "$result" | xsel -b
-        else
-            break
-        fi
-    done
-}
-
-######################################
-#                                    #
-#             Tmux Session           #
-#                                    #
-######################################
-
-tmux(){
-tmux_sessions() {
-    tmux list-sessions | sed 's/: /| /' | column -t -s'|' -o' | '
-}
-add_session() {
-    kitty -e tmux new-session
-}
-delete_session() {
-    SESSION_TO_DELETE=$(tmux_sessions | rofi -dmenu -p "Select session to delete" | awk '{print $1}')
-    [ -n "$SESSION_TO_DELETE" ] && tmux kill-session -t "$SESSION_TO_DELETE"
-}
-main() {
-    if pgrep -x rofi > /dev/null; then
-        echo ""
-        exit
-    fi
-    TMUX_SESSION=$(
-        (printf "%s\n" "$ADD" "$DELETE" "$QUIT"; tmux_sessions) |
-            rofi -dmenu -p " Tmux" -no-show-icons
-    )
-    case "$TMUX_SESSION" in
-        "$ADD") add_session ;;
-        "$DELETE") delete_session ;;
-        "$QUIT") exit ;;
-        *)
-            if [ -n "$TMUX_SESSION" ]; then
-                SESSION=$(echo "$TMUX_SESSION" | cut -d\  -f1)
-                kitty -e tmux attach -t "$SESSION"
-            fi
-            ;;
-    esac
-}
-main
-}
 
 ######################################
 #                                    #
@@ -115,9 +54,9 @@ edit() {
 ######################################
 
 keybind() {
-CONFIG=$(fd --base-directory "$HOME/.config/keyb/bindings" --type f . | rofi -dmenu -config ~/dotfiles/rofi/config-long.rasi)
+CONFIG=$(fd --base-directory "$HOME/dotfiles/keyb/bindings" --type f . | rofi -dmenu -config ~/dotfiles/rofi/config-long.rasi)
 
-hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$HOME/.config/keyb/bindings/$CONFIG'"
+hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$HOME/dotfiles/keyb/bindings/$CONFIG'"
 }
 
 ######################################
@@ -127,7 +66,7 @@ hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$HOME/.confi
 ######################################
 
 emoji() {
-    A="$(rofi -dmenu -p "Emoji:" -config ~/dotfiles/rofi/config-long.rasi < "$HOME/.config/hypr/configs/emojis" | cut -d ' ' -f 1 | tr -d '\n')"
+    A="$(rofi -dmenu -p "Emoji:" -config ~/dotfiles/rofi/config-long.rasi < "$HOME/dotfiles/hypr/configs/emojis" | cut -d ' ' -f 1 | tr -d '\n')"
 [[ -n "$A" ]] && wl-copy -- "$A"
 }
 
@@ -140,7 +79,7 @@ emoji() {
 bluetooth(){
 divider="—————————————————————————————————————————————————————————"
 goback=" Back"
-theme=~/.config/rofi/config-long.rasi
+theme=~/dotfiles/rofi/config-long.rasi
 
 power_on() {   # Checks if bluetooth controller is powered on
     if bluetoothctl show | grep -q "Powered: yes"; then
