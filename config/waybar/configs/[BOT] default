@@ -23,8 +23,6 @@
 	"memory",
 	"custom/separator#dot-line",
 	"custom/weather",
-        "custom/separator#blank_3",
-        "custom/music",
 	],
 
 "modules-center": [
