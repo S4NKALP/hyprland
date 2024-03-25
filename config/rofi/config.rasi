@@ -18,11 +18,8 @@ configuration {
 }
 
 
-* {
-    background:     #11111be6;
-    foreground:     #cdd6f4ff;
-}
-
+/* ---- Load pywal colors (custom wal template) ---- */
+@import "~/dotfiles/rofi/pywal-color/pywal-theme.rasi"
 
 /* ---- Window ---- */
 window {
@@ -33,14 +30,13 @@ window {
     padding:                    0px;
     margin:                     0px;
     border:                     2px;
-    border-color:               #7aa2f7;
+    border-color:               @active-background;
     cursor:                     "default";
     location:                   center;
     anchor:                     center;
     fullscreen:                 false;
     border-radius:              12px;
     enabled:                    true;
-    background-color:           rgba(0, 0, 0, 0.6);
 }
 
 /* ---- Mainbox ---- */
@@ -50,7 +46,7 @@ mainbox {
 	padding:					8px;
     children:                   [ "inputbar", "imagebox", "mode-switcher" ];
     border-radius:              12px;
-    background-image:           url("~/.config/rofi/.current_wallpaper", height);
+    background-image:           url("~/dotfiles/rofi/.current_wallpaper", height);
 
 }
 
@@ -68,8 +64,8 @@ listbox {
     children:                   ["listview" ];
 	padding:					0px;
     border-radius:              12px;
-    border-color:               #7aa2f7;
-	background-color:		    rgba(0, 0, 0, 0.6);
+    border-color:               @active-background;
+	background-color:		    @background;
 }
 
 /* ---- Dummy ---- */
@@ -83,11 +79,12 @@ inputbar {
     padding:                    2px;
     text-color:                 @foreground;
     spacing:                    10px;
-	background-color:		    rgba(0, 0, 0, 0.6);
+    border-colon:               @foreground;
+	background-color:		    @background;
     children:                   [ "prompt", "textbox-prompt-colon","entry" ];
     border:                     0px 0px 2px 0px;
     border-radius:              12px;
-    border-color:               #7aa2f7;
+    border-color:               @active-background;
 
 }
 
@@ -133,12 +130,12 @@ button {
     background-color:          @background;
     text-color:                inherit;
     cursor:                    pointer;
-    border: 0px 0px 2px 0px;
-    border-color:               #7aa2f7;
+    border:                    0px 0px 2px 0px;
+    border-color:              @active-background;
 }
 
 button selected {
-    background-color:          rgb(92, 107, 192, 0.8);
+    background-color:          @selected-normal-background;
     text-color:                @foreground;
     border:                    1px;
     border-color:              @background;
@@ -191,7 +188,7 @@ element normal.active {
 }
 
 element selected.normal {
-    background-color:           rgb(92, 107, 192, 0.7);
+    background-color:           @selected-normal-background;
     text-color:                 @foreground;
 }
 
