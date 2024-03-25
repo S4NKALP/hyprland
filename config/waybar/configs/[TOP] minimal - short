@@ -3,7 +3,7 @@
 // ### SIMPLE -SHORT ### //
 
 {
-"include": "~/.config/waybar/modules",
+"include": "~/dotfiles/waybar/modules",
 "layer": "top",
 "position": "top",
 "width": 1050,

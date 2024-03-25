@@ -20,7 +20,7 @@ window#waybar.hidden {
 }
 
 window#waybar.empty {
-    background-color: @background;
+    background-color: transparent;
 }
 
 window#waybar.empty #window {

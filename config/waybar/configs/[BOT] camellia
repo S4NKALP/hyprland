@@ -1,7 +1,7 @@
 
 {
 
-"include": "~/.config/waybar/modules",
+"include": "~/dotfiles/waybar/modules",
 "layer": "top",
 //"mode": "dock",
 "exclusive": true,

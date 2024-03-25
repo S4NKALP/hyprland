@@ -434,25 +434,6 @@
 
 },
 
-// This is a custom cava visualizer
-"custom/music": {
-    "format": "{icon}{}",
-    "format-icons": {
-    // "Playing": " ", // Uncomment if not using the dynamic script
-    "Paused": " ",
-    "Stopped": "&#x202d;ﭥ " // This stop symbol is RTL. So &#x202d; is left-to-right override.
-},
-    "escape": true,
-    "tooltip": true,
-    "exec": "~/dotfiles/hypr/scripts/RunCMD.sh caway -b 10",
-    "return-type": "json",
-    "on-click": "playerctl play-pause",
-    "on-click-middle": "playerctl previous",
-    "on-click-right": "playerctl next",
-    "max-length": 30
-},
-
-
 "wlr/taskbar": {
   "format": "{icon}",
   "icon-size": 15,
