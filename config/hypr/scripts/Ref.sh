@@ -6,20 +6,12 @@ DIR=$HOME/.cache
 STATUS_FILE="$DIR/touchpad.status"
 
 # For Notification icon
-notif="$HOME/dotfiles/swaync/images/bell.png"
-iDIR="$HOME/dotfiles/swaync/icons"
+notif="$HOME/dotfiles/hypr/assets/bell.png"
 
 # Scripts DIR
 SCRIPTSDIR="$HOME/dotfiles/hypr/scripts"
 UserSCRIPTSDIR="$HOME/dotfiles/hypr/UserScripts"
 linker="$SCRIPTSDIR/RunCMD.sh linker"
-
-
-# For Tmux Sessions
-ADD="  Add new session"
-DELETE="󰆴  Delete a session"
-QUIT="󰗼  Quit"
-
 
 # For Random Wallpaper
 wallDIR="$HOME/Pictures/wallpapers"
@@ -45,6 +37,7 @@ settings_file="$HOME/dotfiles/hypr/UserConfigs/UserSettings.conf"
 # For Quickedit
 configs="$HOME/dotfiles/hypr/configs"
 UserConfigs="$HOME/dotfiles/hypr/UserConfigs"
+
 
 # For Waybar Layout
 config_dir="$HOME/dotfiles/waybar/configs"

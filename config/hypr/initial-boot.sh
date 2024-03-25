@@ -8,27 +8,24 @@
 # Variables
 RunCMD=$HOME/.config/hypr/scripts/RunCMD.sh
 wallpaper=$HOME/Pictures/wallpapers/47.png
-kvantum_theme="Tokyo-Night"
+kvantum_theme="Dracula"
 
 swww="swww img"
 effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type grow --transition-pos 0.925,0.977 --transition-duration 2"
 
-# Check if a marker file exists.
-if [ ! -f $HOME/cache/.initial_startup_done ]; then
+    # Check if a marker file exists.
+    if [ ! -f $HOME/cache/.initial_startup_done ]; then
 
-   # Initialize pywal and wallpaper
-	if [ -f "$wallpaper" ]; then
-		wal -i $wallpaper -s -t > /dev/null
-		swww init && $swww $wallpaper $effect
-	    $RunCMD linker > /dev/null 2>&1 &
-	fi
+    # Initial scripts to load in order to have a proper wallpaper
+    swww init || swww query && $swww "$wallpaper" $effect
 
-    # Initial symlink for Pywal Dark and Light for Rofi Themes
-    ln -sf "$HOME/.cache/wal/colors-rofi-dark.rasi" "$HOME/.config/rofi/pywal-color/pywal-theme.rasi" > /dev/null 2>&1 &
+    # For Symbolic Link
+    $RunCMD linker > /dev/null 2>&1
 
     # initiate GTK dark mode and apply icon and cursor theme
-    gsettings set org.gnome.desktop.interface gtk-theme Tokyonight-Dark-BL-LB > /dev/null 2>&1 &
-    gsettings set org.gnome.desktop.interface icon-theme Tokyonight-Dark > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.interface gtk-theme Dracula > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.wm.preferences theme Dracula > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.interface icon-theme Dracula > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface cursor-size 6 > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface font-name JetBrainsMono Nerd Font 10 > /dev/null 2>&1 &

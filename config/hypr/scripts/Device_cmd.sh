@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Source the configuration file.
-CONFIG_FILE=~/.config/hypr/scripts/Ref.sh
+CONFIG_FILE=~/dotfiles/hypr/scripts/Ref.sh
 source "$CONFIG_FILE"
 
 

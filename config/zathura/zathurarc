@@ -1,69 +1,56 @@
-# Open document in fit-width mode by default
-set adjust-open "best-fit"
+set window-title-basename "true"
+set selection-clipboard "clipboard"
 
-# One page per row by default
-set pages-per-row 1
+# Dracula color theme for Zathura
+# Swaps Foreground for Background to get a light version if the user prefers
 
-# Stop at page boundries
-set scroll-page-aware "true"
-set smooth-scroll "true"
-set scroll-full-overlap 0.01
-set scroll-step 100
+#
+# Dracula color theme
+#
 
-# Zoom settings
-set zoom-min 10
-set guioptions ""
+set notification-error-bg       rgba(255,85,85,1)     # Red
+set notification-error-fg       rgba(248,248,242,1)   # Foreground
+set notification-warning-bg     rgba(255,184,108,1)   # Orange
+set notification-warning-fg     rgba(68,71,90,1)      # Selection
+set notification-bg             rgba(40,42,54,1)      # Background
+set notification-fg             rgba(248,248,242,1)   # Foreground
 
-set render-loading "false"
-set font "JetBrainsMono NF"
-unmap f
-map f toggle_fullscreen
-unmap a
-map a toggle_statusbar
-map [fullscreen] f toggle_fullscreen
+set completion-bg               rgba(40,42,54,1)      # Background
+set completion-fg               rgba(98,114,164,1)    # Comment
+set completion-group-bg         rgba(40,42,54,1)      # Background
+set completion-group-fg         rgba(98,114,164,1)    # Comment
+set completion-highlight-bg     rgba(68,71,90,1)      # Selection
+set completion-highlight-fg     rgba(248,248,242,1)   # Foreground
 
-# Colors
-set selection-clipboard clipboard
-set window-title-page true
+set index-bg                    rgba(40,42,54,1)      # Background
+set index-fg                    rgba(248,248,242,1)   # Foreground
+set index-active-bg             rgba(68,71,90,1)      # Current Line
+set index-active-fg             rgba(248,248,242,1)   # Foreground
 
-set default-fg "#CAD3F5"
-set default-bg "#24273A"
+set inputbar-bg                 rgba(40,42,54,1)      # Background
+set inputbar-fg                 rgba(248,248,242,1)   # Foreground
+set statusbar-bg                rgba(40,42,54,1)      # Background
+set statusbar-fg                rgba(248,248,242,1)   # Foreground
 
-set completion-bg "#363A4F"
-set completion-fg "#CAD3F5"
-set completion-highlight-bg "#575268"
-set completion-highlight-fg "#CAD3F5"
-set completion-group-bg "#363A4F"
-set completion-group-fg "#8AADF4"
+set highlight-color             rgba(255,184,108,0.5) # Orange
+set highlight-active-color      rgba(255,121,198,0.5) # Pink
 
-set statusbar-fg "#CAD3F5"
-set statusbar-bg "#363A4F"
+set default-bg                  rgba(40,42,54,1)      # Background
+set default-fg                  rgba(248,248,242,1)   # Foreground
 
-set notification-bg "#363A4F"
-set notification-fg "#CAD3F5"
-set notification-error-bg "#363A4F"
-set notification-error-fg "#ED8796"
-set notification-warning-bg "#363A4F"
-set notification-warning-fg "#FAE3B0"
+set render-loading              true
+set render-loading-fg           rgba(40,42,54,1)      # Background
+set render-loading-bg           rgba(248,248,242,1)   # Foreground
 
-set inputbar-fg "#CAD3F5"
-set inputbar-bg "#363A4F"
+#
+# Recolor mode settings
+#
 
-set recolor-lightcolor "#24273A"
-set recolor-darkcolor "#CAD3F5"
+set recolor-lightcolor          rgba(40,42,54,1)      # Background
+set recolor-darkcolor           rgba(248,248,242,1)   # Foreground
 
-set index-fg "#CAD3F5"
-set index-bg "#24273A"
-set index-active-fg "#CAD3F5"
-set index-active-bg "#363A4F"
-
-set render-loading-bg "#24273A"
-set render-loading-fg "#CAD3F5"
-
-set highlight-color "#575268"
-set highlight-fg "#F5BDE6"
-set highlight-active-color "#F5BDE6"
-
-set recolor "true"
-set recolor-reverse-video "true"
-set recolor-keephue "true"
+#
+# Startup options
+#
+set adjust-open width
+set recolor true

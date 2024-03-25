@@ -65,7 +65,6 @@ dependencias=(
     fnm
     keyb
     fd
-    python-pywal
     imv
     brightnessctl
     yazi
@@ -379,9 +378,8 @@ sleep 2
 
 logo "Installing GTK THMES"
 
-    git clone https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme.git
-    sudo cp -r Tokyo-Night-GTK-Theme/themes/Tokyonight-Dark-BL-LB /usr/share/themes/
-    sudo cp -r Tokyo-Night-GTK-Theme/icons/Tokyonight-Dark /usr/share/icons/
+    sudo cp -r assets/Dracula /usr/share/themes/
+    sudo cp -r assets/Dracula/icons/Dracula /usr/share/icons/
     sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 
 

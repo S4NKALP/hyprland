@@ -22,7 +22,7 @@ go.editorconfig = true
 -- Root dir detection
 go.root_spec = {
   "lsp",
-  { ".git", "lua", ".obsidian", "package.json", "Makefile", "go.mod", "cargo.toml", "pyproject.toml", "src" },
+  { ".git", "lua", "package.json", "Makefile", "go.mod", "cargo.toml", "pyproject.toml", "src" },
   "cwd",
 }
 
