@@ -1,7 +1,7 @@
 // Sleek
 
 {
-"include": "~/.config/waybar/modules",
+"include": "~/dotfiles/waybar/modules",
 "layer": "top",
 "position": "top",
 "height": 14,
