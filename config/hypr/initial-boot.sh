@@ -7,7 +7,7 @@
 
 # Variables
 RunCMD=$HOME/.config/hypr/scripts/RunCMD.sh
-wallpaper=$HOME/Pictures/wallpapers/47.png
+wallpaper=$HOME/Pictures/wallpapers/wall-08.png
 kvantum_theme="Dracula"
 
 swww="swww img"
