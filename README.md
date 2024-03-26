@@ -48,7 +48,7 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 - **File Manager**: [yazi](https://yazi-rs.github.io/) / [Thunar](https://github.com/neilbrown/thunar) :open_file_folder:
 - **Browser**: [firefox](https://www.mozilla.org/) :globe_with_meridians:
 - **Notification Manager**: [swaync](https://github.com/ErikReider/SwayNotificationCenter) :bell:
-- **Colorscheme**: Mixed of Many colorscheme :art:
+- **Colorscheme**: [Dracula](https://github.com/dracula/dracula-theme) :art:
 
 ---
 
