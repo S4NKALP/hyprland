@@ -59,16 +59,13 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 <img src="assets/Rice.png">
 <img src="assets/RofiLauncher.png">
 <img src="assets/RofiEmoji.png">
-<img src="assets/RofiNotes.png">
-<img src="assets/RofiTmux.png">
 <img src="assets/RofiWallpaper.png">
 <img src="assets/RofiMusic.png">
 <img src="assets/RofiMusicControl.png">
-<img src="assets/ScreenRecorder.png">
-<img src="assets/RofiPowermenu.png">
 <img src="assets/Keybinds.png">
-<img scr="assets/RofiTodoList.png">
-<img scr="assets/QuickLink.png">
+<img scr="assets/QuickEdit.png">
+<img scr="assets/WaybarLayout.png">
+<img scr="assets/Xmenu.png">
 </details>
 
 # :wrench: ‎ <samp>Setup</samp>
