@@ -53,9 +53,9 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 ---
 
 <details>
-<summary><h3><i>
+<summary><i>
 📸 Screenshots
-</i></h3></summary>
+</i></summary>
 <img src="assets/Rice.png">
 <img src="assets/RofiLauncher.png">
 <img src="assets/RofiEmoji.png">
