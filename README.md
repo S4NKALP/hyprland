@@ -53,9 +53,9 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 ---
 
 <details>
-<summary><i>
+<summary><h3>
 📸 Screenshots
-</i></summary>
+</h3></summary>
 <img src="assets/Rice.png">
 <img src="assets/RofiLauncher.png">
 <img src="assets/RofiEmoji.png">
@@ -95,7 +95,7 @@ chmod +x Installer.sh
 ```
 
 <details>
-<summary><h3> :package: <samp>Manual Installation </samp> </h3></summary>
+<summary><h3> :package: Manual Installation </h3></summary>
  <b> Dependency
 
 ```
