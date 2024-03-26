@@ -52,9 +52,10 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 
 ---
 
-<details>
+
 <summary><h3><i>
 📸 Screenshots
+<details>
 </i></h3></summary>
 <img src="assets/Rice.png">
 <img src="assets/RofiLauncher.png">
