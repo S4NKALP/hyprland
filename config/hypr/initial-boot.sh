@@ -6,7 +6,6 @@
 # not necessary to do since this script is only designed to run only once as long as the marker exists
 
 # Variables
-RunCMD=$HOME/.config/hypr/scripts/RunCMD.sh
 wallpaper=$HOME/Pictures/wallpapers/wall-08.png
 kvantum_theme="Dracula"
 
@@ -18,9 +17,6 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
 
     # Initial scripts to load in order to have a proper wallpaper
     swww init || swww query && $swww "$wallpaper" $effect
-
-    # For Symbolic Link
-    $RunCMD linker > /dev/null 2>&1
 
     # initiate GTK dark mode and apply icon and cursor theme
     gsettings set org.gnome.desktop.interface gtk-theme Dracula > /dev/null 2>&1 &
@@ -34,7 +30,7 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
     kvantummanager --set "$kvantum_theme" > /dev/null 2>&1 &
 
     #initiate the kb_layout
-    grep 'kb_layout=' "$HOME/.config/hypr/UserConfigs/UserSettings.conf" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null > $HOME/.cache/kb_layout
+    grep 'kb_layout=' "$HOME/dotfiles/hypr/UserConfigs/UserSettings.conf" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null > $HOME/.cache/kb_layout
 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done

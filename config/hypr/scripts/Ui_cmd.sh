@@ -104,7 +104,6 @@ random_wall() {
   if [[ ${#PICS[@]} -gt 0 ]]; then
     RANDOMPICS=${PICS[RANDOM % ${#PICS[@]}]}  # Select a random image
     swww img "${RANDOMPICS}" ${SWWW_PARAMS}   # Set the randomly selected wallpaper
-    $linker
   else
     echo "No images found in ${wallDIR}"
   fi
@@ -122,7 +121,7 @@ auto_wall() {
   while true; do
     find "$wallDIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) -print0 \
       | shuf -z -n 1 \
-      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} && $linker
+      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} &&
     sleep $INTERVAL
   done
 }
@@ -145,13 +144,13 @@ select_wall() {
         exit 1
     fi
     images=$(find "$wallDIR" -maxdepth 1 -type f -printf "%f\x00icon\x1f$wallDIR/%f\n" | sort -n)
-    choice=$(echo -en "$images\nRandom Choice" | rofi -dmenu -i -show-icons -theme-str "$(build_theme 3 5 6)" config ~/dotfiles/rofi/config-wallpaper.rasi)
+    choice=$(echo -en "$images\nRandom Choice" | rofi -dmenu -i -show-icons -theme-str "$(build_theme 3 5 6)" -p "󰸉  Wallpaper")
     if [ -n "$choice" ]; then
         if [ "$choice" = "Random Choice" ]; then
             choice=$(find "$wallDIR" -type f -maxdepth 1 -printf "%f\n" | shuf -n1)
         fi
         wallpaper="$wallDIR/${choice#*icon\x1f}"
-        swww img $SWWW_PARAMS1 "$wallpaper" && $linker
+        swww img $SWWW_PARAMS1 "$wallpaper"
     else
         echo "No wallpaper selected. Exiting."
         exit 0
@@ -207,7 +206,7 @@ gamemode() {
     else
         notify-send -e -u normal -i "$notif" "All animations normal"
         hyprctl keyword animations:enabled 1
-        swww init && swww img "$HOME/dotfiles/rofi/.current_wallpaper"
+        swww query || swww init && $random_wall
     fi
 }
 
@@ -259,30 +258,6 @@ notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
 }
 
 ######################################
-#                                    #
-#   Symbolic Linker for Wallpaper    #
-#                                    #
-######################################
-
-linker() {
-cache_dir="$HOME/.cache/swww/"   # Define the path to the swww cache directory
-monitor_outputs=("$cache_dir"/*)          # Get a list of monitor outputs
-ln_success=false  # Initialize a flag to determine if the ln command was executed
-for cache_file in "${monitor_outputs[@]}"; do    # Loop through monitor outputs
-    if [ -f "$cache_file" ]; then     # Check if the cache file exists for the current monitor output
-        wallpaper_path=$(<"$cache_file")   # Get the wallpaper path from the cache file
-        if ln -sf "$wallpaper_path" "$HOME/.config/rofi/.current_wallpaper"; then         # Copy the wallpaper to the location Rofi can access
-            ln_success=true  # Set the flag to true upon successful execution
-            break  # Exit the loop after processing the first found monitor output
-        fi
-    fi
-done
-if $ln_success; then # Add a message indicating whether the ln command was successful
-    echo "Wallpaper linked successfully."
-else
-    echo "Failed to link wallpaper."
-fi
-}
 
 ######################################
 #                                    #
