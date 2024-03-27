@@ -54,7 +54,7 @@ edit() {
 ######################################
 
 keybind() {
-CONFIG=$(fd --base-directory "$HOME/dotfiles/keyb/bindings" --type f . | rofi -dmenu -config ~/dotfiles/rofi/config-long.rasi)
+CONFIG=$(fd --base-directory "$HOME/dotfiles/keyb/bindings" --type f . | rofi -dmenu -p "Keybinds" -config ~/dotfiles/rofi/config-long.rasi)
 
 hyprctl dispatch exec "[float;size 45% 80%;center 1] kitty keyb -k '$HOME/dotfiles/keyb/bindings/$CONFIG'"
 }

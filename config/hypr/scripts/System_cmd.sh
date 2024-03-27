@@ -93,7 +93,7 @@ reload_waybar() {
 	if [[ -z $1 ]]; then
 		waybar &
 	fi
-	notify-send -u low -i $notif "Reload Waybar"
+	notify-send -u low -i $reload "Reload Waybar"
 
 }
 
@@ -105,8 +105,7 @@ reload_waybar() {
 
 reload_hypr() {
 	hyprctl reload
-    $RunCMD linker
-	notify-send -u low -i $notif 'Reload Hyprland'
+	notify-send -u low -i $reload 'Reload Hyprland'
 }
 
 ######################################

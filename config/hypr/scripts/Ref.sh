@@ -7,11 +7,12 @@ STATUS_FILE="$DIR/touchpad.status"
 
 # For Notification icon
 notif="$HOME/dotfiles/hypr/assets/bell.png"
+reload="$HOME/dotfiles/hypr/assets/reload.png"
 
 # Scripts DIR
 SCRIPTSDIR="$HOME/dotfiles/hypr/scripts"
 UserSCRIPTSDIR="$HOME/dotfiles/hypr/UserScripts"
-linker="$SCRIPTSDIR/RunCMD.sh linker"
+
 
 # For Random Wallpaper
 wallDIR="$HOME/Pictures/wallpapers"
