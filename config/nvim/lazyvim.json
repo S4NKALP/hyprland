@@ -5,7 +5,6 @@
     "lazyvim.plugins.extras.util.dot",
     "plugins.extras.coding.ai.codeium",
     "plugins.extras.coding.annotation",
-    "plugins.extras.coding.dial",
     "plugins.extras.coding.multicursor",
     "plugins.extras.coding.refactoring",
     "plugins.extras.coding.treesitter.endwise",
@@ -72,7 +71,7 @@
     "plugins.extras.util.wakatime"
   ],
   "news": {
-    "NEWS.md": "2123"
+    "NEWS.md": "2590"
   },
   "version": 3
 }
