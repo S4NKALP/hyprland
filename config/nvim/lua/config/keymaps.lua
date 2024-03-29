@@ -23,6 +23,10 @@ map("n", "E", "ge")
 map("n", "+", "<C-a>")
 map("n", "-", "<C-x>")
 
+-- Spelling
+map("n", "<leader>!", "zg", { desc = "Add Word to Dictionary" })
+map("n", "<leader>@", "zug", { desc = "Remove Word from Dictionary" })
+
 -- Tabs
 map("n", "]<tab>", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 map("n", "[<tab>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })

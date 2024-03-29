@@ -6,7 +6,7 @@ vim.loader.enable()
 
 -- Define leader key
 go.mapleader = " "
-go.maplocalleader = "\\"
+go.maplocalleader = " "
 
 -- Autoformat on save (Global)
 go.autoformat = true
@@ -45,3 +45,5 @@ if vim.fn.has("nvim-0.10") == 1 then
 end
 
 o.conceallevel = 2
+
+vim.g.lazyvim_python_lsp = "basedpyright"
