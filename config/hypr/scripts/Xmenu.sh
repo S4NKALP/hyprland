@@ -50,7 +50,6 @@ declare -A menu_options=(
   #Misc
 	["ff Firefox"]="firefox"
 	["ffp Firefox"]="firefox --private-window"
-        ["sr ScreenRecord"]="$RunCMD sr"
         ["vi Nvim"]="kitty nvim"
         ["yz Yazi"]="kitty yazi"
         ["tg Telegram"]="telegram-desktop"
