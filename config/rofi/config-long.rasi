@@ -88,7 +88,8 @@
 		text-color: #1a1c23;
 	}
 
-
+    // LIST VIEW
+    //------------------------------------------------
 
     listview {
 	    columns: 1;
@@ -123,4 +124,24 @@
 	    margin: 0 -2 0 0;
     }
 
+    // MESSAGE
+    //------------------------------------------------
 
+    message {
+        background-color:           #1a1c23;
+        margin:						0 -2 0 0;
+        border-radius: 				10px;
+    }
+
+    textbox {
+        padding:                    10px;
+        background-color:      		#1a1c23;
+        text-color:                 #bd93f9;
+    }
+
+    error-message {
+        padding:                    15px;
+        border-radius:            	10px;
+        background-color:      		#1a1c23;
+        text-color:                 #bd93f9;
+    }
