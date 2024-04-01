@@ -4,11 +4,12 @@ local o = vim.opt
 
 local lazy = require("lazy")
 
--- Search current word
-local searching_brave = function()
-  vim.fn.system({ "xdg-open", "https://search.brave.com/search?q=" .. vim.fn.expand("<cword>") })
-end
-map("n", "<leader>?", searching_brave, { noremap = true, silent = true, desc = "Search current word on brave search" })
+
+-- Lazy Option
+map("n", "<leader>lu", function() lazy.update() end, { desc = "Lazy Update" })
+map("n", "<leader>lC", function() lazy.check() end, { desc = "Lazy Check" })
+map("n", "<leader>ls", function() lazy.sync() end, { desc = "Lazy Sync" })
+
 
 -- return to dir
 map("n", "<leader>pv", vim.cmd.Ex)
@@ -103,7 +104,7 @@ map("n", "<a-l>", "$", { desc = "Last character of Line" })
 map("v", "<C-c>", '"+y', { desc = "Yank to clipboard" })
 
 -- Duplicate paragraph
-map('n', '<Leader>p', 'yap<S-}>p', { desc = 'Duplicate Paragraph' })
+map('n', '<Leader>dd', 'yap<S-}>p', { desc = 'Duplicate Paragraph' })
 
 -- Motion
 map("c", "<C-a>", "<C-b>", { desc = "Start Of Line" })
@@ -149,11 +150,14 @@ map("n", "<leader>cp", "<cmd>let @+ = expand(\"%:p\")<CR>", { desc = "Copy File 
 map("n", "<leader>nd", "<cmd>NoiceDismiss<CR>", {desc = "Dismiss Noice Message"})
 
 -- Replace word under cursor across entire buffer
-map("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-  { desc = "Replace word under cursor" })
+map('x', '<Leader>rw', '"hy:%s/<C-r>h/<C-r>h/gc<Left><Left><Left>')
+map('n', '<Leader>rw', ':%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>')
 
 -- Replace all instances of highlighted words
 map("v", "<leader>rr", '"hy:%s/<C-r>h//g<left><left>')
+
+-- Cancel search highlighting with ESC
+map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Clear hlsearch and ESC" })
 
 -- Dashboard
 map("n", "<leader>fd", function()
@@ -163,3 +167,14 @@ map("n", "<leader>fd", function()
     vim.cmd("Dashboard")
   end
 end, { desc = "Dashboard" })
+
+-- search and replace
+map({ "v", "n" }, "<leader>rp", ":%s/", { desc = "Buffer search and replace" })
+
+-- Move to the end of yanked text after yank and paste
+map('n', 'p', 'p`]')
+map('x', 'y', 'y`]')
+map('x', 'p', 'p`]')
+
+-- Select last pasted text
+map('n', 'gp', "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true })

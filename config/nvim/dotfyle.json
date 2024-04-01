@@ -333,48 +333,6 @@
       "rhs": "<function>"
     },
     {
-      "desc": "LazyVim Changelog",
-      "noremap": true,
-      "lhs": "<Space>lc",
-      "mode": "n",
-      "rhs": "<function>"
-    },
-    {
-      "desc": "Extras",
-      "noremap": true,
-      "lhs": "<Space>lx",
-      "mode": "n",
-      "rhs": "<Cmd>LazyExtras<CR>"
-    },
-    {
-      "desc": "LazyVim Repo",
-      "noremap": true,
-      "lhs": "<Space>lr",
-      "mode": "n",
-      "rhs": "<function>"
-    },
-    {
-      "desc": "LazyVim Docs",
-      "noremap": true,
-      "lhs": "<Space>ld",
-      "mode": "n",
-      "rhs": "<function>"
-    },
-    {
-      "desc": "Lazy",
-      "noremap": true,
-      "lhs": "<Space>ll",
-      "mode": "n",
-      "rhs": "<Cmd>Lazy<CR>"
-    },
-    {
-      "desc": "Search current word on brave search",
-      "noremap": true,
-      "lhs": "<Space>?",
-      "mode": "n",
-      "rhs": "<function>"
-    },
-    {
       "desc": "Previous Tab",
       "noremap": true,
       "lhs": "<Space><Tab>[",
@@ -2062,24 +2020,10 @@
       "rhs": "<function>"
     },
     {
-      "desc": "Open Yank History",
-      "noremap": true,
-      "lhs": "<Space>p",
-      "mode": "n",
-      "rhs": "<function>"
-    },
-    {
       "desc": "Yank History",
       "noremap": true,
       "lhs": "<Space>sy",
       "mode": "n",
-      "rhs": "<function>"
-    },
-    {
-      "desc": "Yank History",
-      "noremap": true,
-      "lhs": "<Space>sy",
-      "mode": "v",
       "rhs": "<function>"
     },
     {
