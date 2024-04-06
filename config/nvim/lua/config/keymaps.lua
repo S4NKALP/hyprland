@@ -24,6 +24,9 @@ map("n", "E", "ge")
 map("n", "+", "<C-a>")
 map("n", "-", "<C-x>")
 
+
+
+
 -- Spelling
 map("n", "<leader>!", "zg", { desc = "Add Word to Dictionary" })
 map("n", "<leader>@", "zug", { desc = "Remove Word from Dictionary" })
@@ -36,6 +39,34 @@ map("n", "<s-tab>", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 for i = 1, 9 do
   map("n", "<leader><tab>" .. i, "<cmd>tabn " .. i .. "<cr>", { desc = "Tab " .. i })
 end
+map("n", "<leader>f<tab>", function()
+  vim.ui.select(vim.api.nvim_list_tabpages(), {
+    prompt = "Select tab:",
+    format_item = function(tabid)
+      local wins = vim.api.nvim_tabpage_list_wins(tabid)
+      local not_floating_win = function(winid)
+        return vim.api.nvim_win_get_config(winid).relative == ""
+      end
+      wins = vim.tbl_filter(not_floating_win, wins)
+      local bufs = {}
+      for _, win in ipairs(wins) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
+        if buftype ~= "nofile" then
+          local fname = vim.api.nvim_buf_get_name(buf)
+          table.insert(bufs, vim.fn.fnamemodify(fname, ":t"))
+        end
+      end
+      local tabnr = vim.api.nvim_tabpage_get_number(tabid)
+      local cwd = vim.fn.fnamemodify(vim.fn.getcwd(-1, tabnr), ":t")
+      return "Tab " .. tabnr .. " (" .. cwd .. "): " .. table.concat(bufs, ",")
+    end,
+  }, function(tabid)
+    if tabid ~= nil then
+      vim.cmd(tabid .. "tabnext")
+    end
+  end)
+end, { desc = "Tabs" })
 
 -- Buffers
 map("n", "<leader>bf", "<cmd>bfirst<cr>", { desc = "First Buffer" })
@@ -179,3 +210,35 @@ map('x', 'p', 'p`]')
 
 -- Select last pasted text
 map('n', 'gp', "'`[' . strpart(getregtype(), 0, 1) . '`]'", { expr = true })
+
+
+-- Search visually selected text (slightly better than builtins in Neovim>=0.8)
+map("x", "*", [[y/\V<C-R>=escape(@", '/\')<CR><CR>]], { desc = "Search Selected Text", silent = true })
+map("x", "#", [[y?\V<C-R>=escape(@", '?\')<CR><CR>]], { desc = "Search Selected Text (Backwards)", silent = true })
+
+-- Marks
+map("n", "dm", function()
+  local cur_line = vim.fn.line(".")
+  -- Delete buffer local mark
+  for _, mark in ipairs(vim.fn.getmarklist("%")) do
+    if mark.pos[2] == cur_line and mark.mark:match("[a-zA-Z]") then
+      vim.api.nvim_buf_del_mark(0, string.sub(mark.mark, 2, #mark.mark))
+      return
+    end
+  end
+  -- Delete global marks
+  local cur_buf = vim.api.nvim_win_get_buf(vim.api.nvim_get_current_win())
+  for _, mark in ipairs(vim.fn.getmarklist()) do
+    if mark.pos[1] == cur_buf and mark.pos[2] == cur_line and mark.mark:match("[a-zA-Z]") then
+      vim.api.nvim_buf_del_mark(0, string.sub(mark.mark, 2, #mark.mark))
+      return
+    end
+  end
+end, { noremap = true, desc = "Mark on Current Line" })
+
+-- Empty Line
+map("n", "gO", "<Cmd>call append(line('.') - 1, repeat([''], v:count1))<CR>", { desc = "Empty Line Above" })
+map("n", "go", "<Cmd>call append(line('.'), repeat([''], v:count1))<CR>", { desc = "Empty Line Below" })
+
+-- Insert Mode
+map({ "c", "i", "t" }, "<M-BS>", "<C-w>", { desc = "Delete Word" })
