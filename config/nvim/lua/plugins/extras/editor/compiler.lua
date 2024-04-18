@@ -7,7 +7,7 @@ return {
     -- stylua: ignore
     keys = {
       { "<F3>", "<cmd>CompilerOpen<cr>", desc = "Open Compiler" },
-      { "<S-F3>", function() vim.cmd("CompilerStop") vim.cmd("CompilerRedo") end, desc = "Redo Compiler" },
+      { "<A-F3>", function() vim.cmd("CompilerStop") vim.cmd("CompilerRedo") end, desc = "Redo Compiler" },
       { "<F4>", "<cmd>CompilerToggleResults<cr>", desc = "Toggle Compiler Results" },
     },
   },
