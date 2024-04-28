@@ -144,6 +144,7 @@ dependencias=(
     ttf-liberation
     noto-fonts
     gnu-free-fonts
+    qutebrowser
 )
 
 is_installed() {
@@ -205,7 +206,7 @@ if [ ! -d "$backup_folder" ]; then
   mkdir -p "$backup_folder"
 fi
 
-for folder in cava geany hypr keyb kitty Kvantum mpv neofetch nvim qimgv qt5ct qt6ct rofi starship npm swaync Thunar waybar yazi zathura zsh wal; do
+for folder in cava geany hypr keyb kitty Kvantum mpv neofetch qimgv qt5ct qt6ct rofi starship npm swaync Thunar waybar yazi zathura zsh; do
   if [ -d "$HOME/.config/$folder" ]; then
     mv "$HOME/.config/$folder" "$backup_folder/${folder}_$date"
     echo "$folder folder backed up successfully at $backup_folder/${folder}_$date"
@@ -272,9 +273,7 @@ logo "synchronize dotfiles(making symlink)"
 DOTFILES_DIR="$HOME/dotfiles"
 
 CONFIG_DIRS=(
-    "nvim"
     "cava"
-    "wal"
     "geany"
     "keyb"
     "Kvantum"
