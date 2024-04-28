@@ -1,22 +1,41 @@
-<div align="center">
-	<a href="https://github.com/S4NKALP/hyprland/stargazers"><img alt="Stargazers" src="https://img.shields.io/github/stars/S4NKALP/hyprland?style=for-the-badge&logo=starship&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41"></a>
-	<a href="https://github.com/S4NKALP/hyprland/issues"><img alt="Forks" src="https://img.shields.io/github/issues/S4NKALP/hyprland?style=for-the-badge&logo=gitbook&color=B5E8E0&logoColor=D9E0EE&labelColor=302D41"></a>
-  <a href="https://github.com/S4NKALP/hyprland/commits/main/"><img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/S4NKALP/hyprland/main?style=for-the-badge&logo=github&color=F2CDCD&logoColor=D9E0EE&labelColor=302D41"/></a>
-	<a href="https://github.com/S4NKALP/hyprland"><img alt="Size" src="https://img.shields.io/github/repo-size/S4NKALP/hyprland?style=for-the-badge&logo=discord&color=DDB6F2&logoColor=D9E0EE&labelColor=302D41"></a>
+<div align = "center">
+
+<h1><a href="https://github.com/S4NKALP/hyprland">hyprland</a></h1>
+
+<a href="https://github.com/S4NKALP/hyprland/blob/main/LICENSE">
+<img alt="License" src="https://img.shields.io/github/license/S4NKALP/hyprland?style=flat&color=eee&label="> </a>
+
+<a href="https://github.com/S4NKALP/hyprland/graphs/contributors">
+<img alt="People" src="https://img.shields.io/github/contributors/S4NKALP/hyprland?style=flat&color=ffaaf2&label=People"> </a>
+
+<a href="https://github.com/S4NKALP/hyprland/stargazers">
+<img alt="Stars" src="https://img.shields.io/github/stars/S4NKALP/hyprland?style=flat&color=98c379&label=Stars"></a>
+
+<a href="https://github.com/S4NKALP/hyprland/network/members">
+<img alt="Forks" src="https://img.shields.io/github/forks/S4NKALP/hyprland?style=flat&color=66a8e0&label=Forks"> </a>
+
+<a href="https://github.com/S4NKALP/hyprland/watchers">
+<img alt="Watches" src="https://img.shields.io/github/watchers/S4NKALP/hyprland?style=flat&color=f5d08b&label=Watches"> </a>
+
+<a href="https://github.com/S4NKALP/hyprland/pulse">
+<img alt="Last Updated" src="https://img.shields.io/github/last-commit/S4NKALP/hyprland?style=flat&color=e06c75&label="> </a>
+
+<h3>Hyprland Dots As I use for my daily driver<h3>
+
+
+<figure>
+  <img src="assets/Rice.png" alt="hyprland" width="400">
+  <img src="assets/Rofi.png" alt="rofi" width="300">
+  <br/>
+</figure>
+
+
 </div>
-
-# :herb: ‎ <samp>About</samp>
-
-Hey there! :wave:
-
-This is my personal dotfiles repository. A simple aesthetic (at least for me). I edited [JakooLit](https://github.com/JaKooLit/Hyprland-Dots) dotfiles for Hyprland for my base rice but without pywal.
-
 
 ### ✨ Features
 
 - :dark_sunglasses: Dark Mode for the Whole System
 - :bell: Notification Center
-- :zzz: Neovim powered by LazyVim with custom extras added (More than 200!)
 - :framed_picture: Various Wallpapers
 - :nerd_face: Nerd Fonts for the Shell Prompt
 - :loud_sound: Volume OSD
@@ -37,33 +56,17 @@ This is my personal dotfiles repository. A simple aesthetic (at least for me). I
 
 - **OS**: [Arch Linux](https://archlinux.org/) :boom:
 - **WM**: [hyprland](https://hyprland.org/) :window:
-- **Shell**: [zsh](https://www.zsh.org/) [starship](https://github.com/starship/starship) :shell:
+- **Shell**: [zsh](https://www.zsh.org/) / [starship](https://github.com/starship/starship) :shell:
 - **Terminal Emulator**: [kitty](https://sw.kovidgoyal.net/kitty/) :cat:
 - **Panel**: [waybar](https://github.com/Alexays/Waybar) :shaved_ice:
 - **Text Editor**: [neovim](https://neovim.io/) :keyboard:
 - **App Launcher**: [rofi](https://davatorium.github.io/rofi/) :rocket:
 - **File Manager**: [yazi](https://yazi-rs.github.io/) / [Thunar](https://github.com/neilbrown/thunar) :open_file_folder:
-- **Browser**: [firefox](https://www.mozilla.org/) :globe_with_meridians:
+- **Browser**: [firefox](https://www.mozilla.org/) / [qutebrowser](https://github.com/qutebrowser/qutebrowser) :globe_with_meridians:
 - **Notification Manager**: [swaync](https://github.com/ErikReider/SwayNotificationCenter) :bell:
 - **Colorscheme**: [Dracula](https://github.com/dracula/dracula-theme) :art:
 
 ---
-
-<details>
-<summary><hb>
-📸 Screenshots
-</b></summary>
-<img src="assets/Rice.png">
-<img src="assets/RofiLauncher.png">
-<img src="assets/RofiEmoji.png">
-<img src="assets/RofiWallpaper.png">
-<img src="assets/RofiMusic.png">
-<img src="assets/RofiMusicControl.png">
-<img src="assets/Keybinds.png">
-<img scr="assets/QuickEdit.png">
-<img scr="assets/WaybarLayout.png">
-<img scr="assets/Xmenu.png">
-</details>
 
 # :wrench: ‎ <samp>Setup</samp>
 
@@ -88,8 +91,9 @@ chmod +x Installer.sh
 ./Installer
 ```
 
-<details>
-<summary><b> :package: Manual Installation </b></summary>
+
+<h1><b> :package: Manual Installation </b></h1>
+
  <b> Dependency
 
 ```
@@ -123,46 +127,22 @@ sudo cp -r Tokyo-Night-GTK-Theme/icons/Tokyonight-Dark /usr/share/icons/
 
 sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 ```
+<hr>
 
-* At Last (Do this)
-```
-ln -sf "$HOME/.cache/wal/colors-rofi-dark.rasi" "$HOME/.config/rofi/pywal-color/pywal-theme.rasi"
-```
-</details>
+### 🧰 Tools Used
 
-# :tada: ‎ <samp>Credits</samp>
+- [qute](https://github.com/S4NKALP/qute) — Personalized Browser
+- [nvim](https://github.com/S4NKALP/nvim) — Personalized Editor
 
-I wanna point out some resources that helped me the most with the setup:
-
-- [Matt](https://github.com/Matt-FTW/dotfiles) for README & nvim config.
-- [JaKooLit](https://github.com/JaKooLit/HyprLand-Dots) for base configs.
-
-### :two_hearts: Star History and Contributors
-
-Thanks to everyone who have contributed and given an star to this project!
+<hr>
 
 <div align="center">
 
-#### :pencil2: Contributors
+<strong>⭐ hit the star button if you found this useful ⭐</strong><br>
 
 </div>
 
-<a href="https://github.com/S4NKALP/hyprland/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=S4NKALP/hyprland"/>
-</a>
 
-<div align="center">
 
-#### :star: Star History
 
-</div>
 
-<div>
-  <a href="https://star-history.com/#S4NKALP/hyprlands&Timeline">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=S4NKALP/hyprland&type=Timeline&theme=dark" />
-      <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=S4NKALP/hyprland&type=Timeline" />
-      <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=S4NKALP/hyprland&type=Timeline" />
-    </picture>
-  </a>
-</div>
