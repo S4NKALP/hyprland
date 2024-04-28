@@ -1,8 +1,0 @@
-[FORMAT]
-max-line-length = 120
-
-[BASIC]
-indent-string = "  "
-
-[REPORTS]
-output-format=colorized
