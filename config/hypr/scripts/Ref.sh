@@ -7,7 +7,7 @@ STATUS_FILE="$DIR/touchpad.status"
 
 # For Notification icon
 notif="$HOME/dotfiles/hypr/assets/bell.png"
-reload="$HOME/dotfiles/hypr/assets/reload.png"
+reload="$HOME/dotfiles/hypr/assets/reload.svg"
 
 # Scripts DIR
 SCRIPTSDIR="$HOME/dotfiles/hypr/scripts"
