@@ -69,6 +69,8 @@
       key: Ctr + Alt + Enter
     - name: Launch Yazi
       key: Alt + Y
+    - name: Launch LibreOffice
+      key: Win + Shift + O
     - name: Open Launcher
       key: Win + D / Win
 

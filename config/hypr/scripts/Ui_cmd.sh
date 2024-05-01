@@ -252,7 +252,7 @@ for ((i = 0; i < layout_count; i++)); do  # Find the index of the current layout
 done
 next_index=$(( (current_index + 1) % layout_count ))  # Calculate the index of the next layout
 new_layout="${layout_mapping[next_index]}"
-hyprctl keyword input:kb_layout "$new_layout"   # Update the keyboard layout
+hyprctl switchxkblayout input:kb_layout "$next_index"   # Update the keyboard layout
 echo "$new_layout" > "$layout_f"
 notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
 }
