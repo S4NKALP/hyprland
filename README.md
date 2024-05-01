@@ -127,7 +127,8 @@ or in ~/dotfiles/hypr/configs/Keybinds.conf
 </figure>
 
 ```
-curl https://raw.githubusercontent.com/S4NKALP/hyprland/main/Installer.sh -o $HOME/Installer
+git clone https://github.com/S4NKALP/hyprland.git
+cd hyprland
 chmod +x setup
 ./setup
 ```
@@ -136,7 +137,7 @@ chmod +x setup
 
 - [qute](https://github.com/S4NKALP/qute) — Personalized Browser
 - [nvim](https://github.com/S4NKALP/nvim) — Personalized Editor
-- [blog](https://github.com/S4NKALP/blog) — Blog where you can find my articles and thoughts.
+- [blog](https://github.com/S4NKALP/blog) — Blog
 <hr>
 
 <div align="center">
