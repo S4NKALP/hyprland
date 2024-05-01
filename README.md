@@ -32,6 +32,13 @@
 
 </div>
 
+## 🌌 Overview
+
+<h3>This repository contains Arch Linux's DotFiles, which I use on a daily basis. <br>
+It includes custom settings, aliases, settings for familiar tools, and more to quickly create my ideal work environment on any machine.</h3>
+<hr>
+
+
 ### ✨ Features
 
 - :dark_sunglasses: Dark Mode for the Whole System
@@ -50,7 +57,6 @@
 - :window: Window Animations
 - :gear: Various other tweaks & scripts
 
----
 
 ### 🌸 Core System Info
 
@@ -68,66 +74,63 @@
 
 ---
 
+## 📁 Directory Structure
+
+```
+
+  Dotfiles🌴
+    │
+    ├─ 📁 assets
+    │   └─ screenshot fonts
+    ├─ 📁 config
+    │   └─ configuration directory
+    ├─ 📁 misc
+    │   └─ bins/scripts
+    ├─ 📁 wallpapers
+        └─ wallpapers used for hyprland
+
+
+```
+
+## :keyboard: Keyboard Shortcuts Guide
+
+```
+    Windows + Enter: Open Terminal
+    Windows + E: Thunar File Manager
+    Windows + D: Application Launcher
+    Windows + C: Close Program
+    ALT + C: Xmenu
+    ALT + W: Waybar layout Switcher
+    ALT + M: Online Music Player
+    Windows + W: Wallpaper Picker
+    Windows + Space: Change Screen Layout Style
+    PrtSc: Taking Screentshot
+    ALT + F1: Change Keyboard Layout
+    Windows + F1: For Keybinds
+
+Other keybinds can be found in ~/dotfiles/hypr/UserConfigs/UserKeybinds.conf
+or in ~/dotfiles/hypr/configs/Keybinds.conf
+
+```
+
+
 # :wrench: ‎ <samp>Setup</samp>
 
 <b> ArchInstall </b>
 * Using ArchInstall Script Install Archlinux on bare metal.
 * After Booting into HyprLand, Open terminal and install Aur Helper called Paru
-
-<b> Install Paru (Aur Helper)</b>
-
-```
-git clone https://aur.archlinux.org/paru-bin.git
-```
-* cd paru-bin
-
-* makepkg -Si
-
 ### :package: <samp>Automatic Installation (Arch Linux)</samp>
+
+<figure>
+    <img src ="assets/installer.png" alt="installer"
+    width="800">
+</figure>
 
 ```
 curl https://raw.githubusercontent.com/S4NKALP/hyprland/main/Installer.sh -o $HOME/Installer
-chmod +x Installer.sh
-./Installer
+chmod +x setup
+./setup
 ```
-
-
-<h1><b> :package: Manual Installation </b></h1>
-
- <b> Dependency
-
-```
-paru -S fnm hyprland keyb rofi-file-browser-extended-git imv brightnessctl yazi waybar playerctl wf-recorder kvantum swaylock-effects-git qt5ct qt6ct nwg-look mpv-mpris pacman-contrib swayidle pavucontrol pamixer file-roller adobe-source-code-pro-fonts ttf-fira-code ttf-jetbrains-mono-nerd ttf-jetbrains-mono noto-fonts-emoji otf-font-awesome ttf-cascadia-code-nerd ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid ttf-ibm-plex ttf-liberation noto-fonts gnu-free-fonts linux-headers alsa-utils less wlroots thunar thunar-volman thunar-archive-plugin udiskie mtpfs jmtpfs gvfs-gphoto2 gvfs-mtp rofi-lbonn-wayland-git network-manager-applet lsd cava geany geany-plugin swaync tumbler unzip zip unrar polkit-gnome xdg-user-dirs grim slurp jq polkit-kde-agent zathura-pdf-mupdf zathura yt-dlp ffmpegthumbnailer xdotool wmctrl zsh lazygit xdg-desktop-portal-gtk gtk-engine-murrine lxappearance xsel bc clipshit bluez bluez-utils swww kitty imagemagick
-```
-
-<b> Install GTK Themes,Icons,Cursor
-
-
-* Dotfiles
-
-```
-cd Downloads
-git clone https://github.com/S4NKALP/hyprland.git
-
-cd hyprland
-cp -r wallpapers ~/Pictures
-cp -r config/* ~/.config
-cp -r misc/bin ~/.local
-cp -r misc/.zshenv ~/
-
-chmod +x ~/.config/hypr/scripts/*
-```
-
-* GTK Themes
-
- ```
-git clone https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme.git
-sudo cp -r Tokyo-Night-GTK-Theme/themes/Tokyonight-Dark-BL-LB /usr/share/themes/
-sudo cp -r Tokyo-Night-GTK-Theme/icons/Tokyonight-Dark /usr/share/icons/
-
-sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
-```
-<hr>
 
 ### 🧰 Tools Used
 
@@ -141,8 +144,11 @@ sudo tar -xf "assets/Bibata-Modern-Ice.tar.xz" -C /usr/share/icons/
 <strong>⭐ hit the star button if you found this useful ⭐</strong><br>
 
 </div>
+If you have any questions, issues, or suggestions, feel free to let us know by opening an issue. Your feedback is greatly appreciated!
 
-
+<div align ="center">
+    <strong>Thank you for your support as well🦊</strong>
+</div>
 
 
 
