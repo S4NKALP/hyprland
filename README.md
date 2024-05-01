@@ -136,7 +136,7 @@ chmod +x setup
 
 - [qute](https://github.com/S4NKALP/qute) — Personalized Browser
 - [nvim](https://github.com/S4NKALP/nvim) — Personalized Editor
-
+- [blog](https://github.com/S4NKALP/blog) — Blog where you can find my articles and thoughts.
 <hr>
 
 <div align="center">
