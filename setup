@@ -1,0 +1,484 @@
+#!/bin/bash
+INSTLOG="install.log"
+#-- package -----------------------------------------
+pkg=(
+    hyprland
+    fnm
+    keyb
+    fd
+    imv
+    brightnessctl
+    yazi
+    waybar
+    playerctl
+    wf-recorder
+    kvantum
+    hyprlock
+    qt5ct
+    qt6ct
+    nwg-look
+    mpv-mpris
+    pacman-contrib
+    hypridle
+    pavucontrol
+    pamixer
+    file-roller
+    alsa-utils
+    linux-headers
+    less
+    wlroots
+    thunar
+    thunar-volman
+    thunar-archive-plugin
+    udiskie
+    mtpfs
+    jmtpfs
+    gvfs-gphoto2
+    gvfs-mtp
+    rofi-lbonn-wayland-git
+    network-manager-applet
+    cava
+    geany
+    geany-plugin
+    swaync
+    tumbler
+    unzip
+    zip
+    unrar
+    polkit-gnome
+    xdg-user-dirs
+    clipshit
+    swww
+    kitty
+    imagemagick
+    bluez
+    bluez-utils
+    grim
+    slurp
+    jq
+    zathura
+    zathura-pdf-mupdf
+    yt-dlp
+    ffmpegthumbnailer
+    xdotool
+    wmctrl
+    zsh
+    xdg-desktop-portal-gtk
+    gtk-engine-murrine
+    lxappearance
+    xsel
+    bc
+    wlogout
+    sddm
+    adobe-source-code-pro-fonts
+    ttf-fira-code
+    ttf-jetbrains-mono-nerd
+    ttf-jetbrains-mono
+    noto-fonts-emoji
+    ttf-droid
+    otf-font-awesome
+    ttf-cascadia-code-nerd
+    ttf-bitstream-vera
+    ttf-croscore
+    ttf-dejavu
+    ttf-ibm-plex
+    ttf-liberation
+    noto-fonts
+    gnu-free-fonts
+    qutebrowser
+    dracula-gtk-theme
+    dracula-icons-git
+    bibata-cursor-theme
+)
+# Creating a new `packages` array
+packages=(
+    "${pkg[@]}"
+)
+#-- function -----------------------------------------
+install_software() {
+    echo -en "\e[90mInstalling\e[0m \e[97m$1\e[0m..."
+    paru -S --noconfirm $1 &>>$INSTLOG &
+    show_progress $!
+}
+installed() {
+    echo -en "Installed package \e[97m$1\e[0m."
+}
+#-- express -----------------------------------------
+clear
+echo -e "\033[1;34m"
+cat <<"EOF"
+
+                                  ▄
+                                 ▄█▄
+                                ▄███▄
+                               ▄█████▄                          ██████   ██████  ████████ ███████ ██ ██      ███████ ███████
+                              ▄███████▄                         ██   ██ ██    ██    ██    ██      ██ ██      ██      ██
+                             ▄ ▀▀██████▄                        ██   ██ ██    ██    ██    █████   ██ ██      █████   ███████
+                            ▄██▄▄ ▀█████▄                       ██   ██ ██    ██    ██    ██      ██ ██      ██           ██
+                           ▄█████████████▄                      ██████   ██████     ██    ██      ██ ███████ ███████ ███████
+                          ▄███████████████▄
+                         ▄█████████████████▄
+                        ▄███████████████████▄                   ┌───────────────────────────────────────────────────────────┐
+                       ▄█████████▀▀▀▀████████▄                  │                                                           │
+                      ▄████████▀      ▀███████▄                 │  • "Welcome to the Arch Linux DotFiles Setup Script!"     │
+                     ▄█████████        ████▀▀██▄                │                                                           │
+                    ▄██████████        █████▄▄▄                 │  • Created with    by S4NKALP                             │
+                   ▄██████████▀        ▀█████████▄              │ • Find me at [My GitHub/Facebook/Website]                 │
+                  ▄██████▀▀▀              ▀▀██████▄             │    for more awesomeness.                                  │
+                 ▄███▀▀                       ▀▀███▄            └───────────────────────────────────────────────────────────┘
+                ▄▀▀                               ▀▀▄
+
+
+
+Notes.
+    - Operation on non-Arch Linux is not guaranteed.
+    - Not supported on VMs
+    - NVIDIA GPUs are not supported
+
+
+EOF
+echo -e "\033[0m"
+echo "┌──────────────────────────────────────┐"
+echo "│   Start Setup? (y/n)                 │"
+echo "└──────────────────────────────────────┘"
+read -n1 -rep $'\e[97m: : \e[32m1) \e[0my\e[32m 2) \e[0mn\e[32m \e[0m ' INST
+if [[ $INST == "y" || $INST == "Y" ]]; then
+    echo -e "\nStarting setup..."
+else
+    echo -e "\nSetup cancelled."
+    exit 0
+fi
+#-- check step -----------------------------------------
+current_step=1
+total_steps=7 # Adjust this number based on the total number of checks you plan to perform
+perform_check() {
+    local message="$1"
+    local cmd="$2"
+    local success_msg="$3"
+    local failure_msg="$4"
+    local exit_on_fail=${5:-false}
+    # Generate a random delay time between 1 and 3 seconds.
+    local delay_time=$((RANDOM % 3 + 1))
+    # Display step number
+    echo -n "($current_step/$total_steps) $message"
+    (
+        sleep $delay_time
+        eval "$cmd"
+    ) &
+    local pid=$!
+    while ps | grep -Ew $pid &>/dev/null; do
+        echo -n "."
+        sleep 1
+    done
+    wait $pid
+    if [ $? -eq 0 ]; then
+        echo -en "\r\e[K"
+        echo -e "$success_msg"
+    else
+        echo -en "\r\e[K"
+        echo -e "$failure_msg"
+        [ "$exit_on_fail" = true ] && exit 1
+    fi
+    # Increment the step count for the next check
+    ((current_step++))
+}
+echo -e "Check step in progress:"
+perform_check "Checking your system" \
+    "grep -q 'Arch Linux' /etc/os-release" \
+    "  - Check System is Arch Linux" \
+    "  - Error System is not Arch Linux" \
+    true
+perform_check "Checking network connection" \
+    "ping -c 1 8.8.8.8 &>/dev/null" \
+    "  - Check Internet connection is available" \
+    "  - Error No internet connection" \
+    true
+perform_check "Checking if git is installed" \
+    "command -v git &>/dev/null" \
+    "  - Check Git is installed" \
+    "  - Error Git is not installed" \
+    true
+perform_check "Checking for VM environment" \
+    "! grep -i -e 'VMware' -e 'VirtualBox' -e 'KVM' -e 'Hyper-V' /proc/cpuinfo &>/dev/null" \
+    "  - Check This system is not running inside a VM" \
+    "  - Error This script is not supported inside a VM." \
+    true
+perform_check "Checking for NVIDIA usage" \
+    "! lspci 2>/dev/null | grep -i 'NVIDIA' &>/dev/null" \
+    "  - Check NVIDIA GPU not detected" \
+    "  - Error NVIDIA hardware is not supported." \
+    true
+
+# #-- Installing AUR -----------------------------------------
+echo "Please enter password required"
+sudo -v
+
+if [ ! -f /sbin/paru ]; then
+    echo -en "Configuring paru."
+    git clone https://aur.archlinux.org/paru.git &>>$INSTLOG
+    cd paru
+    makepkg -si --noconfirm &>>../$INSTLOG
+    cd ..
+    rm -rf paru
+fi
+
+sleep 2
+echo -e "[\e[32m   OK   \e[0m] All checks completed"
+echo -e "Installing main components. This may take a while...\n\n\n\n\n\n\n\n\n\n\n\n"
+
+#-- installation steps -----------------------------------------
+package_count=${#packages[@]}
+current_package=0
+DISPLAY_LINES=10
+CURSOR_MOVE=$((DISPLAY_LINES + 1))
+# Display the header
+display_header() {
+    echo -e "\e[K:: Installing package ($current_package/$package_count)"
+}
+# Print the last DISPLAY_LINES actions
+display_actions() {
+    local start_index=$((current_package - DISPLAY_LINES))
+    if [ $start_index -lt 0 ]; then
+        start_index=0
+    fi
+    for ((i = 0; i < DISPLAY_LINES; i++)); do
+        echo -en "\e[K"
+        if [ $((start_index + i)) -lt $current_package ]; then
+            echo "  Installing ${packages[start_index + i]}.."
+        else
+            echo ""
+        fi
+    done
+}
+# Manage the entire display
+display_installation() {
+    echo -en "\e[${CURSOR_MOVE}A"
+    display_header
+    display_actions
+}
+show_progress() {
+    while ps | grep $1 &>/dev/null; do
+        sleep 1
+    done
+}
+# Initialize the display
+display_installation
+for SOFTWR in ${packages[@]}; do
+    install_software $SOFTWR &>/dev/null
+    ((current_package++))
+    display_installation
+done
+sleep 1
+echo -e "Installation step completed ..."
+sleep 5
+# Display installation completion for each package with a random delay
+echo -e "\n==> Installation Summary: [packages]"
+for SOFTWR in ${packages[@]}; do
+    echo -e "  -> Installed $SOFTWR"
+    # Generate a random delay between 0 and 0.3 seconds
+    random_delay=$(awk -v min=0 -v max=0.3 'BEGIN{srand(); print min+rand()*(max-min)}')
+    sleep $random_delay
+done
+sleep 2
+
+# Function to generate random seconds
+random_sleep() {
+    random_delay=$(awk -v min=0 -v max=3 'BEGIN{srand(); print min+rand()*(max-min)}')
+    sleep $random_delay
+}
+
+# Function to display simulated output
+simulate_output() {
+    echo -e "$1"
+    random_sleep
+}
+
+#-- Create directories if they don't exist -----------------
+echo "Making directories if they don't exist..."
+directories=(
+    "~/dotfiles"
+    "~/.local/bin"
+    "~/.local/share/fonts"
+    "~/Pictures/wallpapers"
+)
+
+for dir in "${directories[@]}"; do
+    if [ ! -d "$dir" ]; then
+        mkdir -p "$dir"
+        echo "Created directory: $dir"
+    fi
+done
+
+echo ""
+echo ""
+
+#-- Copy Settings -----------------------------------------
+echo "Copying .zshevn file ..."
+for file in $HOME/hyrpland/misc/.zshevn; do
+    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
+        sudo cp "$file" $HOME/
+    fi
+done
+echo "Copying bin ..."
+for binn in $HOME/hyrpland/misc/bin/*; do
+    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
+        sudo cp -r "$file" $HOME/.local/bin
+    fi
+done
+echo "Copying fonts..."
+for font in $HOME/hyrpland/assets/fonts/*; do
+    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
+        sudo cp -r "$file" $HOME/.local/share/fonts
+    fi
+done
+
+sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
+sudo cp -r $HOME/hyprland/wallpapers/* $HOME/Pictures/wallpapers
+simulate_output "[   \e[32mOK\e[0m   ] Copied .zshevn dotfiles to $HOME"
+simulate_output "[   \e[32mOK\e[0m   ] Copied binn dotfiles to $HOME/.local/bin"
+simulate_output "[   \e[32mOK\e[0m   ] Copied font dotfiles to $HOME/.local/share/fonts"
+simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/dotfiles/"
+simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/Pictures/wallpapers"
+
+echo ""
+echo ""
+
+#-- Synchronize -----------------------------------------
+echo "Synchronizing dotfiles .."
+DOTFILES_DIR="$HOME/dotfiles"
+
+CONFIG_DIRS=(
+    "cava"
+    "geany"
+    "keyb"
+    "Kvantum"
+    "mpv"
+    "neofetch"
+    "npm"
+    "qimgv"
+    "qt5ct"
+    "qt6ct"
+    "starship"
+    "Thunar"
+    "yazi"
+    "zathura"
+    "zsh"
+    "kitty"
+    "wlogout"
+    "hypr"
+    "rofi"
+    "swaync"
+    "waybar"
+)
+# Install .config directories
+for dir in "${CONFIG_DIRS[@]}"; do
+    source_path="$DOTFILES_DIR/config/$dir"
+    target_path="$HOME/.config/$dir"
+
+    # Create symlink
+    ln -sf "$source_path" "$target_path"
+
+    # Check if the symlink creation was successful
+    if [ $? -eq 0 ]; then
+        printf "%s%sCreated symlink for .config/%s\n" "$dir" "${BLD}" "${CGR}" "${CNC}"
+    else
+        printf "%s%sFailed to create symlink for .config/%s. Please check and fix the issue.\n" "$dir" "${BLD}" "${CGR}" "${CNC}"
+        # You can choose to exit or handle the error in another way based on your requirements.
+        exit 1
+    fi
+done
+echo ""
+echo ""
+
+#-- Enabling the service -----------------------------------------
+echo "┌──────────────────────────────────────┐"
+echo "│   Bluetooth enabled ...              │"
+echo "└──────────────────────────────────────┘"
+echo ""
+sudo systemctl enable --now bluetooth.service &>>$INSTLOG
+simulate_output "==> Starting Bluetooth..."
+simulate_output "    -> Running bluez"
+simulate_output "    -> Running bluez-utils"
+simulate_output "    -> Running blueman"
+simulate_output "[   \e[32mOK\e[0m   ] Started Bluetooth service"
+sleep 2
+
+echo ""
+echo ""
+#-- SDDM Settings -----------------------------------------
+echo "┌──────────────────────────────────────┐"
+echo "│   SDDM enabled ...                   │"
+echo "└──────────────────────────────────────┘"
+echo ""
+echo "Enabling the SDDM Service..."
+sudo systemctl enable sddm &>>$INSTLOG
+simulate_output "Enabling the SDDM Service..."
+simulate_output "[   \e[32mOK\e[0m   ] Enabled SDDM Service"
+sleep 2
+echo "Setting theme for sddm..."
+sudo mkdir -p /etc/sddm.conf.d
+sudo tee /etc/sddm.conf.d/theme.conf <<EOF
+[Theme]
+Current=corners
+EOF
+sudo cp -f ~/dotfiles/extras/theme.conf /usr/share/sddm/themes/corners/
+simulate_output "Setting theme for sddm..."
+simulate_output "[   \e[32mOK\e[0m   ] SDDM theme set to 'corners'"
+
+echo ""
+echo ""
+#-- GTK Settings -----------------------------------------
+echo "┌──────────────────────────────────────┐"
+echo "│   Setting GTK and icon themes...     │"
+echo "└──────────────────────────────────────┘"
+echo ""
+simulate_output "Setting GTK and icon themes..."
+simulate_output "[   \e[32mOK\e[0m   ] GTK theme set to 'Dracula'"
+simulate_output "[   \e[32mOK\e[0m   ] Icon theme set to 'Dracula'"
+simulate_output "[   \e[32mOK\e[0m   ] curosr theme set to 'Bibata'"
+gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
+gsettings set org.gnome.desktop.interface icon-theme "Dracula"
+gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice"
+
+echo ""
+echo ""
+#-- shell changes -----------------------------------------
+simulate_output "Changing default shell to Zsh..."
+simulate_output "[   \e[32mOK\e[0m   ] Default shell set to Zsh"
+if ! command -v zsh &>/dev/null; then
+    echo "Zsh is not installed. Please install Zsh first."
+    exit 1
+fi
+chsh -s /bin/zsh
+
+echo ""
+
+#-- Give permissions to scripts -----------------------------------------
+simulate_output "Setting some files as executable..."
+simulate_output "[   \e[32mOK\e[0m   ] Granted execute permissions to scripts"
+sudo chmod +x ~/dotfiles/hypr/scripts/*
+
+
+echo ""
+echo ""
+#-- Script completion -----------------------------------------
+echo "┌──────────────────────────────────────┐"
+echo -e "│\e[97m  Start Hyprland? (y/n)               \e[0m│"
+echo "└──────────────────────────────────────┘"
+echo ""
+echo "Setup is complete."
+
+echo "Do you want to  Start?  y/N"
+read -rep 'Choose: ' HYP
+if [[ $HYP == "y" ]]; then
+    simulate_output "Starting Hyprland..."
+    simulate_output "[   \e[32mOK\e[0m   ] Started Hyprland"
+    sleep 3
+    exec sudo systemctl start sddm &>>$INSTLOG
+else
+    echo "Setup completed."
+    exit
+fi
+echo ""
+echo ""
+echo "Good bye!, now you must reboot the system"
