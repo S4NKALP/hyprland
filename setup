@@ -15,6 +15,8 @@ pkg=(
     kvantum
     hyprlock
     qt5ct
+    devify
+    pyprland
     qt6ct
     nwg-look
     mpv-mpris
