@@ -221,7 +221,7 @@
   //"format": "  {:%I:%M %p}",
   //"format": " {:%H:%M:%S}",
   //"format-alt": "  {:%I:%M   %Y, %d %B, %A}",
-  "format": "{:🕰️ %I:%M %p 📅 %d/%m}",
+  "format": "🕰️ {:%I:%M %p 📅 %d/%m}",
   "format-alt": "🕰️ {:%I:%M %B %d, %Y %A} 🗓️",
   "tooltip-format": "<tt><small>{calendar}</small></tt>",
   "calendar": {
@@ -612,9 +612,9 @@
 },
 
 "clock#vertical": {
-   //"format": "{:\n%H\n%M\n%S\n\n \n%d\n%m\n%y}",
-   //"format": "{:\n%I\n%M\n%p\n\n \n%d\n%m\n%y}",
-   "format": "{:🕰️\n%I\n%M\n%p\n\n🗓 \n%d\n%m\n%y}",
+   //"format": "\n{:%H\n%M\n%p\n\n \n%d\n%m\n%y}",
+   //"format": "\n{:%I\n%M\n%p\n\n \n%d\n%m\n%y}",
+   "format": "🕰️\n{:%I\n%M\n%p\n\n🗓 \n%d\n%m\n%y}",
    "interval": 1,
    "tooltip": true,
    "tooltip-format": "{calendar}",
