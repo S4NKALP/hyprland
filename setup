@@ -3,6 +3,7 @@ INSTLOG="install.log"
 #-- package -----------------------------------------
 pkg=(
     hyprland
+    aylurs-gtk-shell
     fnm
     keyb
     fd
