@@ -163,34 +163,34 @@ select_wall() {
 #                                    #
 ######################################
 
-waybar_layout() {
-    menu() {
-        find "$config_dir" -maxdepth 1 -type f -exec basename {} \; | sort
-    }
-    apply_config() {
-        ln -sf "$config_dir/$1" "$waybar_config"
-        restart_waybar_if_needed
-    }
-restart_waybar_if_needed() {
-    if pgrep -x "waybar" >/dev/null; then
-        pkill waybar
-        sleep 0.1
-    fi
-    $RunCMD reload_waybar &
-}
-    main() {
-        choice=$(menu | rofi -dmenu -p "  Choose Waybar Layout")
-
-        [[ -z "$choice" ]] && { echo "No option selected. Exiting."; exit 0; }
-
-        case $choice in
-            "no panel") pkill -x waybar || true ;;
-            *) apply_config "$choice" ;;
-        esac
-    }
-    pgrep -x rofi && { pkill rofi; exit 0; }
-    main
-}
+#waybar_layout() {
+#    menu() {
+#        find "$config_dir" -maxdepth 1 -type f -exec basename {} \; | sort
+#    }
+#    apply_config() {
+#        ln -sf "$config_dir/$1" "$waybar_config"
+#        restart_waybar_if_needed
+#    }
+#restart_waybar_if_needed() {
+#    if pgrep -x "waybar" >/dev/null; then
+#        pkill waybar
+#        sleep 0.1
+#    fi
+#    $RunCMD reload_waybar &
+#}
+#    main() {
+#        choice=$(menu | rofi -dmenu -p "  Choose Waybar Layout")
+#
+#        [[ -z "$choice" ]] && { echo "No option selected. Exiting."; exit 0; }
+#
+#        case $choice in
+#            "no panel") pkill -x waybar || true ;;
+#            *) apply_config "$choice" ;;
+#        esac
+#    }
+#    pgrep -x rofi && { pkill rofi; exit 0; }
+#    main
+#}
 
 ######################################
 #                                    #
