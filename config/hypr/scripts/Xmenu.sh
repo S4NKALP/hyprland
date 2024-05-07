@@ -12,7 +12,7 @@ declare -A menu_options=(
 
 	#waybar
 	["wbt ToggleWaybar"]="killall -SIGUSR1 waybar"
-	["wbl WaybarLayout"]="$RunCMD waybar_layout"
+	#["wbl WaybarLayout"]="$RunCMD waybar_layout"
         ["wbr Reload Waybar"]="$RunCMD reload_waybar"
 	["wbu Update Waybar"]="$RunCMD update_waybar"
   #hypr
