@@ -16,10 +16,10 @@ toggle_touchpad() {
   local action
 
   if [[ ! -e "$status_file" ]] || ! $(<"$status_file"); then
-    echo "true" > "$status_file"
+    echo "1" > "$status_file"
     action="enabled"
   else
-    echo "false" > "$status_file"
+    echo "0" > "$status_file"
     action="disabled"
   fi
 

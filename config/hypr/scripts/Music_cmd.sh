@@ -43,10 +43,12 @@ play_music() {
     mpv "$link"
   fi
 
+  # Check if mpv is running to ensure music is playing
   if pgrep -x "mpv" >/dev/null; then
     notification "Playing now: $choice"
   fi
 }
+
 
 ######################################
 #                                    #
@@ -63,8 +65,8 @@ music_controls() {
     "Stop") pkill mpv && notify-send -u low "🛑 Music stopped" ;;
     "Next track") playerctl --player=mpv next && notify-send -u low "⏭️  Next track playing" ;;
     "Previous track") playerctl --player=mpv previous && notify-send -u low "⏮️  Previous track playing" ;;
-    "Increase volume") adjust_volume 0.1 "🔊 Increasing track volume" ;;
-    "Decrease volume") adjust_volume -0.1 "🔉 Decreasing track volume" ;;
+    "Increase volume") adjust_volume 0.1 && notify-send -u low "🔊 Increasing track volume" ;;
+    "Decrease volume") adjust_volume -0.1 && notify-send -u low "🔉 Decreasing track volume" ;;
   esac
 }
 
@@ -98,10 +100,29 @@ main() {
     choice=$(printf "%s\n" "${controls[@]}" | rofi -dmenu -i -p "Music Controls:")
     music_controls "$choice"
   else
-    choice=$(printf "%s\n" "${!menu_options[@]}" | rofi -dmenu -i -p "Music Time:")
-    play_music "$choice"
+    local options=("Play from Playlist" "Play from Folder")
+    choice=$(printf "%s\n" "${options[@]}" | rofi -dmenu -i -p "Music Time:")
+
+case "$choice" in
+    "Play from Playlist")
+        playlist_choice=$(printf "%s\n" "${!menu_options[@]}" | rofi -dmenu -i -p "Choose playlist:")
+        play_music "$playlist_choice"
+        ;;
+    "Play from Folder")
+        local music_files=$(find ~/Music -type f \( -iname \*.mp3 -o -iname \*.flac -o -iname \*.wav -o -iname \*.ogg -o -iname \*.aac -o -iname \*.m4a -o -iname \*.wma -o -iname \*.opus \) -exec basename {} \; | rofi -dmenu -i -p "Choose music file:")
+        if [ -n "$music_files" ]; then
+            notification "Playing now: $music_files"  # Moved the notification here
+            local full_path=$(find ~/Music -type f \( -iname \*.mp3 -o -iname \*.flac -o -iname \*.wav -o -iname \*.ogg -o -iname \*.aac -o -iname \*.m4a -o -iname \*.wma -o -iname \*.opus \) -exec realpath {} \; | grep "$music_files")
+            mpv "$full_path"
+        fi
+        ;;
+esac
+
+
   fi
 }
+
+
 
 ######################################
 #                                    #

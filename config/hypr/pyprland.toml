@@ -10,8 +10,8 @@ lazy = true
 command = "kitty --class scratchpad-large yazi"
 lazy = true
 
-[scratchpads.gpt]
-command = "kitty --class scratchpad-large tgpt -m"
+[scratchpads.nvim]
+command = "kitty --class scratchpad-large nvim"
 lazy = true
 
 [scratchpads.btop]
@@ -22,10 +22,8 @@ lazy = true
 command = "kitty --class scratchpad-mini cava"
 lazy = true
 
-[scratchpads.bluetooth]
-command = "blueman-manager"
-animation = "fromRight"
-unfocus = "hide"
-margin = 20
-lazy = true
-
+[scratchpads.term]
+animation = "fromTop"
+command = "kitty --class kitty-dropterm"
+class = "kitty-dropterm"
+size = "40% 50%"
