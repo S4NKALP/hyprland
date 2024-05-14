@@ -158,13 +158,19 @@
 		]
 },
 
-"group/other":{
+"group/audio": {
   "orientation": "horizontal",
   "modules": [
-    "idle_inhibitor",
-    "custom/swaync",
-    "mpris",
-    "tray",
+    "pulseaudio",
+    "pulseaudio#microphone",
+    ]
+},
+
+"group/keyboard": {
+  "orientation": "horizontal",
+  "modules": [
+    "keyboard-state",
+    "custom/keyboard",
     ]
 },
 
@@ -223,7 +229,7 @@
   "tooltip-format-connected": "{device_enumerate}",
   "tooltip-format-enumerate-connected": " {device_alias} 󰂄{device_battery_percentage}%",
   "tooltip": true,
-  "on-click": "blueberry",
+  "on-click": "blueman-manager",
 },
 
 "clock": {
@@ -325,7 +331,7 @@
   "format-alt": "🧬 {percentage}%",
   "format-alt-click": "click",
   "tooltip": true,
-  "on-click-right": "kitty --title btop sh -c 'btop'"
+  "on-click-right": "pypr toggle btop'"
 },
 
 
@@ -516,7 +522,7 @@
   "format": "󰌾 {}",
   "exec": "echo ; echo 󰷛  screen lock",
   "interval" : 86400, // once every day
-  "on-click": "swaylock",
+  "on-click": "hyprlock",
   "tooltip": false,
 },
 
@@ -527,7 +533,7 @@
   "interval" : 86400, // once every day
   "tooltip": false,
   "on-click": "pkill rofi || rofi -show drun -modi drun,filebrowser,run,window",
-  "on-click-right": "~/dotfiles/hypr/scripts/RunCMD.sh waybarl",
+  //"on-click-right": "~/dotfiles/hypr/scripts/RunCMD.sh waybarl",
 },
 
 
@@ -563,7 +569,6 @@
     "format-critical": "{temperatureC}°C {icon}",
     "format": "{temperatureC}°C {icon}",
     "format-icons": ["🔥", "❤️‍🔥", "🌡️"],
-    "on-click-right": "kitty --title nvtop sh -c 'nvtop'"
 },
 
 // Separators
@@ -652,7 +657,7 @@
   "format-alt-click": "click",
   "tooltip": true,
   "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
-  "on-click-right": "kitty --title btop sh -c 'btop'",
+  "on-click-right": "pypr toggle btop'",
 },
 
 "pulseaudio#vertical": {
