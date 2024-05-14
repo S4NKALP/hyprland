@@ -46,12 +46,11 @@ declare -A menu_options=(
         ["tbt Bluetooth"]="$RunCMD toggle_bluetooth"
         ["tw Wifi"]="$RunCMD totggle_wifi"
         ["kb Keyboard switcher"]="$RunCMD kb_changer"
-        ["bt Bluetooth"]="$RunCMD bluetooth"
   #Misc
 	["ff Firefox"]="firefox"
 	["ffp Firefox"]="firefox --private-window"
-        ["vi Nvim"]="kitty nvim"
-        ["yz Yazi"]="kitty yazi"
+        ["vi Nvim"]="pypr toggle nvim"
+        ["yz Yazi"]="pypr toggle yazi"
         ["tg Telegram"]="telegram-desktop"
 )
 

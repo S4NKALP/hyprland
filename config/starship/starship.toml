@@ -1,62 +1,43 @@
-## ░█▀▀░▀█▀░█▀█░█▀▄░█▀▀░█░█░▀█▀░█▀█
-## ░▀▀█░░█░░█▀█░█▀▄░▀▀█░█▀█░░█░░█▀▀
-## ░▀▀▀░░▀░░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀░░
-# Setups
-format = """\
-[](fg:#161925)\
-$username\
-[](fg:#161925 bg:#1d2131)\
-$directory\
-[](fg:#1d2131 bg:#252a3e)\
-$git_branch\
-$git_status\
-[](fg:#252a3e bg:#2c324a)\
-$all\
-$cmd_duration\
-$jobs\
-$battery\
-$time\
-$character"""
-# [](fg:#2c324a bg:#333a56)\
+add_newline = false
 
-# Disable the blank line at the start of the prompt
-add_newline = true
+[character]
+error_symbol = "[  ✗](bold red)"
+success_symbol = "[  λ](bold red)"
 
-[line_break]
-disabled = true
+[package]
+disabled = false
 
-# You can also replace your username with a neat symbol like  to save some space
-[username]
-show_always = true
-style_user = "fg:#f38ba8 bg:#161925"
-style_root = "fg:#f38ba8 bg:#161925"
-format = '[󰥳 ]($style)' # $user
+[cmd_duration]
+min_time = 5000
+show_milliseconds = false
+disabled = false
+format="[$duration]($style)"
+style="italic blue"
 
 [directory]
-style = "fg:#fab387 bg:#1d2131"
-format = "[ $path ]($style)"
-truncation_length = 3
-truncation_symbol = "…/"
+truncation_length = 5
+format = "[$path]($style)[$lock_symbol]($lock_style) "
+style = "bold yellow"
+read_only = "🔒"
+read_only_style= "bold white"
 
-# Here is how you can shorten some long paths by text replacement
-# similar to mapped_locations in Oh My Posh:
-[directory.substitutions]
-"~" = " ~"
-"Documents" = " "
-"Downloads" = " "
-"Music" = "🎜 "
-"Pictures" = " "
-"Videos" = " "
-# Keep in mind that the order matters. For example:
-# "Important Documents" = "  "
-# will not be replaced, because "Documents" was already substituted before.
-# So either put "Important Documents" before "Documents" or use the substituted version:
-# "Important  " = "  "
+[hostname]
+ssh_only = false
+trim_at = ".companyname.com"
+disabled = false
+style = "bold italic green"
+
+
 
 [git_branch]
 symbol = ""
 style = "fg:#a6e3a1 bg:#252a3e"
 format = '[ $symbol $branch(:$remote_branch) ]($style)'
+
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
 
 [git_status]
 style = "fg:#a6e3a1 bg:#252a3e"
@@ -172,54 +153,21 @@ symbol = "ﯣ"
 style = "fg:#cba6f7 bg:#2c324a"
 format = '[ $symbol ($version )]($style)'
 
-[package]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = "[ $symbol $version]($style)"
-disabled = true
-
-
-[cmd_duration]
-min_time = 1
-style = "fg:#f9e2af bg:#333a56"
-format = "[ $duration]($style)"
-disabled = true
-
-[jobs]
-symbol = "華"
-style = "fg:#f9e2af bg:#333a56"
-format = "[ $symbol]($style)"
-
-[battery]
-full_symbol = " "
-charging_symbol = " "
-discharging_symbol = " "
-unknown_symbol = " "
-empty_symbol = " "
-format = "[ $symbol$percentage ]($style bg:#333a56)"
-disabled = true
-
-[[battery.display]]
-threshold = 15
-style = "bold fg:#f38ba8"
-
-[[battery.display]]
+[memory_usage]
+format = "[${ram}( | ${swap})]($style) "
 threshold = 50
-style = "fg:#f9e2af"
-
-[[battery.display]]
-threshold = 101
-style = "bold #a6e3a1"
-
-# Prompt: optional param 1
-[time]
+style = "bold dimmed white"
 disabled = true
-time_format = "%R"
-style = "bg:#3b4363"
-format = '[](fg:#2c324a $style)[  $time ](fg:#94e2d5 $style)'
 
-# Last param in the first line/row
-# fg:#3b4363 if time enabled
-[character]
-success_symbol = "[ ](fg:#2c324a)"
-error_symbol = "[ ](fg:#2c324a)"
+[status]
+style = "bg:transparent"
+symbol = "💥 "
+# format = '[\[$symbol$status\]]($style) '
+format = '($style)'
+disabled = false
+
+
+[dotnet]
+symbol = "🥅 "
+style = "green"
+heuristic = false

@@ -65,12 +65,12 @@ It includes custom settings, aliases, settings for familiar tools, and more to q
 - **Shell**: [zsh](https://www.zsh.org/) / [starship](https://github.com/starship/starship) :shell:
 - **Terminal Emulator**: [kitty](https://sw.kovidgoyal.net/kitty/) :cat:
 - **Panel**: [waybar](https://github.com/Alexays/Waybar) :shaved_ice:
-- **Text Editor**: [neovim](https://neovim.io/) :keyboard:
+- **Text Editor**: [neovim](https://neovim.io/) / [geany](https://www.geany.org/) :keyboard:
 - **App Launcher**: [rofi](https://davatorium.github.io/rofi/) :rocket:
 - **File Manager**: [yazi](https://yazi-rs.github.io/) / [Thunar](https://github.com/neilbrown/thunar) :open_file_folder:
 - **Browser**: [firefox](https://www.mozilla.org/) / [qutebrowser](https://github.com/qutebrowser/qutebrowser) :globe_with_meridians:
 - **Notification Manager**: [swaync](https://github.com/ErikReider/SwayNotificationCenter) :bell:
-- **Colorscheme**: [Dracula](https://github.com/dracula/dracula-theme) :art:
+- **Colorscheme**: [Darker](https://github.com/S4NKALP/hyprland/tree/main/assets/Darker) :art:
 
 ---
 

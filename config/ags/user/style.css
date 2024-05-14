@@ -2,32 +2,6 @@
   all: unset;
 }
 
-@define-color foreground #ccc5c0;
-@define-color background #11151c;
-@define-color cursor #ccc5c0;
-
-@define-color color0 #11151c;
-@define-color color1 #706867;
-@define-color color2 #9B6C69;
-@define-color color3 #93726E;
-@define-color color4 #9A7D7F;
-@define-color color5 #A5857B;
-@define-color color6 #AE9690;
-@define-color color7 #ccc5c0;
-@define-color color8 #8e8986;
-@define-color color9 #706867;
-@define-color color10 #9B6C69;
-@define-color color11 #93726E;
-@define-color color12 #9A7D7F;
-@define-color color13 #A5857B;
-@define-color color14 #AE9690;
-@define-color color15 #ccc5c0;
-
-@define-color border-color	@color2;
-@define-color border-color-alt	@color7;
-@define-color noti-bg rgba(0, 0, 0, 0.8);
-@define-color noti-bg-alt #111111;
-
 
 widget {
   border-radius: 0.818rem;
@@ -42,24 +16,24 @@ widget {
   transition: 300ms cubic-bezier(0, 0.55, 0.45, 1);
   border-radius: 1.705rem;
   -gtk-outline-radius: 1.705rem;
-  border-top: 1px solid @color7;
-  border-left: 1px solid @color7;
-  border-right: 1px solid @color7;
-  border-bottom: 1px solid @color7;
+  border-top: 1px solid #DB4740;
+  border-left: 1px solid #DB4740;
+  border-right: 1px solid #DB4740;
+  border-bottom: 1px solid #DB4740;
   /* box-shadow: 0px 2px 3px alpha(@color0, 0.45); */
   margin: 0.476rem;
   min-width: 13.636rem;
   min-height: 3.409rem;
   padding: 0rem 1.364rem;
   padding-right: 2.864rem;
-  background-color: alpha(@color0, 0.5);
-  color: alpha(@color7, 0.9);
-  caret-color: transparent;
-  font-weight: bold;
+  background-color: #000000;
+  color: @text-color;
+  caret-color: inherit;
+  font-weight: bolder;
 }
 .overview-search-box selection {
-  background-color: #DEBCDF;
-  color: #402843;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 .overview-search-box-extended {
@@ -68,7 +42,7 @@ widget {
 }
 
 .overview-search-prompt {
-  color: alpha(@color7, 0.9);
+  color: #ffffff;
 }
 
 .overview-search-icon {
@@ -88,16 +62,16 @@ widget {
 .overview-search-results {
   border-radius: 1.705rem;
   -gtk-outline-radius: 1.705rem;
-  border-top: 1px solid @color7;
-  border-left: 1px solid @color7;
-  border-right: 1px solid @color7;
-  border-bottom: 1px solid @color7;
-  box-shadow: 0px 2px 3px @color9;
+  border-top: 1px solid #DB4740;
+  border-left: 1px solid #DB4740;
+  border-right: 1px solid #DB4740;
+  border-bottom: 1px solid #DB4740;
+  box-shadow: 0px 2px 3px #DB4740;
   margin: 0.476rem;
   min-width: 28.773rem;
   padding: 0.682rem;
-  background-color: alpha(@color2, 0.5);
-  color: alpha(@color7, 1.5);
+  background-color: #000000;
+  color: #ffffff;
   font-weight: bold;
 }
 
@@ -129,27 +103,27 @@ widget {
 
 .overview-search-result-btn:hover,
 .overview-search-result-btn:focus {
-  background-color: alpha(@color7, 0.4);
-  color: alpha(@color0, 0.7);
+  background-color: #3d3d3d;
+  color: #3d3d3d;
 }
 
 .overview-search-result-btn:active {
-  background-color: alpha(@color7, 0.4);
-  color: @color4;
+  background-color: #3d3d3d;
+  color: #9A7D7F;
 }
 
 .overview-tasks {
   border-radius: 1.705rem;
   -gtk-outline-radius: 1.705rem;
-  border-top: 1px solid @color7;
-  border-left: 1px solid @color7;
-  border-right: 1px solid @color7;
-  border-bottom: 1px solid @color7;
-  box-shadow: 0px 2px 3px @color5;
+  border-top: 1px solid #DB4740;
+  border-left: 1px solid #DB4740;
+  border-right: 1px solid #DB4740;
+  border-bottom: 1px solid #DB4740;
+  box-shadow: 0px 2px 3px #A5857B;
   margin: 0.476rem;
   padding: 0.341rem;
   /* background-color: rgba(49, 50, 68, 0.8); */
-  background-color: alpha(@color0, 0.6);
+  background-color: #000000;
   color: #EBDFED;
 }
 
@@ -157,11 +131,11 @@ widget {
   border-radius: 1.159rem;
   -gtk-outline-radius: 1.159rem;
   margin: 0.341rem;
-  /* background-color: #26233A; */
-  background-image: url('../../rofi/.current_wallpaper');
+  background-color: transparent;
+  /*background-image: url('../../rofi/.current_wallpaper'); */
   background-size: cover;
   background-position: center;
-  border: 0.068rem solid alpha(@color4, 0.5);
+  border: 0.068rem solid #9A7D7F;
 }
 
 .overview-tasks-workspace-number {
@@ -173,24 +147,24 @@ widget {
   border-radius: 1.159rem;
   -gtk-outline-radius: 1.159rem;
   transition: 300ms cubic-bezier(0.1, 1, 0, 1);
-  background-color: alpha(@color3, .7);
+  background-color: transparent;
   /* background-color: @color_a3; */
   /* background-color: rgba(46, 40, 50, 0.8); */
   color: #EBDFED;
-  border: 0.068rem solid @color7;
+  border: 0.068rem solid #3d3d3d;
 }
 
 .overview-tasks-window:hover,
 .overview-tasks-window:focus {
-  background-color: alpha(@color9, 0.8);
+  background-color: #DB4740;
 }
 
 .overview-tasks-window:active {
-  background-color: alpha(@color9, 0.8);
+  background-color: #DB4740;
 }
 
 .overview-tasks-window-selected {
-  background-color: alpha(@color9, 0.8);
+  background-color: #DB4740;
 }
 
 .overview-tasks-window-dragging {

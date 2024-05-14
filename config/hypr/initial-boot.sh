@@ -7,7 +7,7 @@
 
 # Variables
 wallpaper=$HOME/Pictures/wallpapers/wall-08.png
-kvantum_theme="Dracula"
+kvantum_theme="Darker"
 
 swww="swww img"
 effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type grow --transition-pos 0.925,0.977 --transition-duration 2"
@@ -19,10 +19,11 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
     swww init || swww query && $swww "$wallpaper" $effect
 
     # initiate GTK dark mode and apply icon and cursor theme
-    gsettings set org.gnome.desktop.interface gtk-theme Dracula > /dev/null 2>&1 &
-    gsettings set org.gnome.desktop.wm.preferences theme Dracula > /dev/null 2>&1 &
-    gsettings set org.gnome.desktop.interface icon-theme Dracula > /dev/null 2>&1 &
-    gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.interface color-scheme prefer-dark > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.interface gtk-theme Darker > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.wm.preferences theme Darker > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.interface icon-theme GruvboxPlus > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.interface cursor-theme PearDarkCursors > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface cursor-size 6 > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface font-name JetBrainsMono Nerd Font 10 > /dev/null 2>&1 &
 

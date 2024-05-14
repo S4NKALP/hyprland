@@ -71,7 +71,6 @@ pkg=(
     lxappearance
     xsel
     bc
-    wlogout
     sddm
     adobe-source-code-pro-fonts
     ttf-fira-code
@@ -89,9 +88,9 @@ pkg=(
     noto-fonts
     gnu-free-fonts
     qutebrowser
-    dracula-gtk-theme
-    dracula-icons-git
-    bibata-cursor-theme
+    sweet-cursor-theme-git
+    gruvbox-plus-icon-theme-git
+    swayosd-git
 )
 # Creating a new `packages` array
 packages=(
@@ -334,12 +333,19 @@ for font in $HOME/hyrpland/assets/fonts/*; do
         sudo cp -r "$file" $HOME/.local/share/fonts
     fi
 done
+echo "Copying Darker theme..."
+for font in $HOME/hyrpland/assets/Darker; do
+    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
+        sudo cp -r "$file" /usr/share/themes
+    fi
+done
 
 sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
 sudo cp -r $HOME/hyprland/wallpapers/* $HOME/Pictures/wallpapers
 simulate_output "[   \e[32mOK\e[0m   ] Copied .zshevn dotfiles to $HOME"
 simulate_output "[   \e[32mOK\e[0m   ] Copied binn dotfiles to $HOME/.local/bin"
 simulate_output "[   \e[32mOK\e[0m   ] Copied font dotfiles to $HOME/.local/share/fonts"
+simulate_output "[   \e[32mOK\e[0m   ] Copied Darker theme dotfiles to /usr/share/themes"
 simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/dotfiles/"
 simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/Pictures/wallpapers"
 
@@ -351,9 +357,12 @@ echo "Synchronizing dotfiles .."
 DOTFILES_DIR="$HOME/dotfiles"
 
 CONFIG_DIRS=(
+    "ags"
     "cava"
     "geany"
+    "hypr"
     "keyb"
+    "kitty"
     "Kvantum"
     "mpv"
     "neofetch"
@@ -361,17 +370,15 @@ CONFIG_DIRS=(
     "qimgv"
     "qt5ct"
     "qt6ct"
-    "starship"
+    "rofi"
+    "startship"
+    "swaync"
+    "swayosd"
     "Thunar"
+    "waybar"
     "yazi"
     "zathura"
     "zsh"
-    "kitty"
-    "wlogout"
-    "hypr"
-    "rofi"
-    "swaync"
-    "waybar"
 )
 # Install .config directories
 for dir in "${CONFIG_DIRS[@]}"; do
