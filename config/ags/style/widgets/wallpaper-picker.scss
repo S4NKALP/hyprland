@@ -1,0 +1,127 @@
+.wallpaper-picker__container {
+  .item {
+    padding: 10px;
+  }
+
+  .entry-box {
+    margin: 10px;
+    margin-right: 0px;
+  }
+
+  .path {
+    margin-left: 10px;
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .folder-button {
+    background-color: $on_secondary;
+    padding: 0px 10px;
+    margin: 10px 0px;
+    margin-right: 10px;
+
+    &:hover {
+      background-color: $primary_container;
+    }
+  }
+}
+
+popover {
+  background-color: $background;
+  color: $on_background;
+
+  >*>* {
+    padding: 6px;
+  }
+}
+
+dialog {
+  background-color: $background_color;
+  color: $on_background;
+
+  .dialog-action-box {
+    background-color: $background_color;
+
+    button {
+      padding: 10px;
+      margin-right: 5px;
+      margin-left: 5px;
+      border: 1px solid $primary;
+    }
+  }
+
+  scrolledwindow {
+    treeview {
+      padding: 6px;
+      color: $on_background;
+
+      &:disabled {
+        color: transparentize($color: $on_background, $amount: 0.5);
+      }
+
+      &:selected {
+        background-color: $primary;
+        color: $background;
+      }
+
+      button {
+        // padding: 10px;
+        padding: 10px;
+      }
+    }
+  }
+
+  #pathbarbox {
+    stack {
+      .popup.toggle {
+        padding: 10px;
+      }
+
+      .linked.path-bar {
+        button {
+          background-color: transparentize($color: $background, $amount: 0.2);
+          border-left: 0.25px solid transparentize($color: $on_background, $amount: 0.8);
+          border-right: 0.25px solid transparentize($color: $on_background, $amount: 0.4);
+          color: $on_background;
+          padding: 10px;
+
+          &:checked {
+            background-color: transparentize($color: $primary, $amount: 0.2);
+            color: $background;
+          }
+
+          &:hover {
+            background-color: transparentize($color: $primary_container,
+                $amount: 0.3);
+            color: $on_background;
+          }
+        }
+      }
+    }
+  }
+
+  placessidebar {
+    background-color: $background_color;
+
+    row {
+      padding: 10px;
+
+      &:selected {
+        background-color: $primary;
+        color: $background;
+
+        &:hover {
+          color: $on_background;
+        }
+      }
+
+      &:hover {
+        background-color: $primary_container;
+      }
+
+      image {
+        padding-right: 10px;
+      }
+    }
+  }
+}

@@ -59,7 +59,7 @@ reload_all() {
         [ -e "$1" ]
     }
 
-    processes=("waybar" "rofi" "swaync")
+    processes=("waybar" "rofi" "swaync" "ags")
 
     for process in "${processes[@]}"; do
         pid=$(pidof "$process")
@@ -68,6 +68,8 @@ reload_all() {
         fi
     done
 
+    sleep 0.3
+    ags &
     sleep 0.3
     waybar &
     sleep 0.5
