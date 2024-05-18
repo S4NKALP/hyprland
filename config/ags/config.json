@@ -7,7 +7,7 @@
     "dark_mode": true,
     "border_radius": "6",
     "window": {
-      "margin": "12",
+      "margin": "2",
       "border": false,
       "opacity": 0.6
     },
@@ -21,8 +21,8 @@
       "button_spacing": 4,
       "button_shadow": false,
       "button_border_radius": "6",
-      "margin": "3",
-      "padding": "3",
+      "margin": "1",
+      "padding": "1",
       "border_radius": "0",
       "launcher_icon": "󰢚",
       "workspace_active_width": "20"
@@ -46,6 +46,6 @@
   },
   "system_monitor": {
     "position": "bottom left",
-    "margin": "12, 12, 12, 12"
+    "margin": "2"
   }
 }
