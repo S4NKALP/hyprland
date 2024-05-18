@@ -1,0 +1,46 @@
+.media__container {
+  .player {
+    margin-top: 0px;
+    padding: 10px;
+
+    scale.position {
+      margin-bottom: 6px;
+
+      trough {
+        min-height: 15px;
+      }
+    }
+
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .artist {
+      font-size: 14px;
+    }
+
+    .img {
+      min-width: 100px;
+      min-height: 100px;
+      background-size: cover;
+      background-position: center;
+      border-radius: $border_radius;
+      margin-right: 1em;
+    }
+
+    .position {
+      font-weight: 600;
+    }
+
+    .length {
+      font-weight: 600;
+    }
+
+    button {
+      padding: 4px;
+      box-shadow: none;
+      border-radius: divide-each($border_radius, 2);
+    }
+  }
+}

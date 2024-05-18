@@ -1,0 +1,74 @@
+.powermenu__container {
+  padding: 10px;
+
+  button {
+    background-color: $on_secondary;
+
+    &:focus {
+      background-color: $primary;
+      color: $on_primary;
+
+      &:hover {
+        background-color: $primary;
+        color: $primary_container;
+      }
+    }
+
+    &:hover {
+      background-color: $primary_container;
+    }
+
+    .system-button {
+      border-radius: $border_radius;
+      padding: 25px;
+
+      image {
+        font-size: 50px;
+      }
+
+      label {
+        margin-top: 6px;
+      }
+    }
+  }
+}
+
+.verification__container {
+  padding: 10px;
+
+  .text-box {
+    .title {
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    .desc {
+      margin-top: 4px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+
+  .buttons {
+    margin-top: 10px;
+
+    button {
+      background-color: $on_secondary;
+      padding: 10px 40px;
+
+      &:focus {
+        background-color: $primary;
+        color: $on_primary;
+
+        &:hover {
+          background-color: $primary;
+          color: $primary_container;
+        }
+      }
+
+      &:hover {
+        background-color: $primary_container;
+      }
+    }
+  }
+}

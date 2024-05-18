@@ -1,0 +1,90 @@
+.control-center__container {
+  .brightness-box {
+    padding: 10px;
+  }
+
+  .notifications__container {
+    padding: 10px 0px;
+
+    .placeholder {
+      image {
+        font-size: 24px;
+      }
+
+      label {
+        margin-top: 6px;
+        font-size: 14px;
+      }
+    }
+
+    .header {
+      padding: 0px 10px;
+      padding-right: 13px;
+      margin-bottom: 5px;
+
+      label {
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      button {
+        border-radius: divide-each($border_radius, 2);
+        background-color: $on_secondary;
+        padding: 10px;
+
+        &:hover {
+          background-color: $primary_container;
+        }
+      }
+    }
+
+    .notification {
+      margin: 5px 10px;
+      margin-right: 13px;
+      background-color: $on_secondary;
+
+      .actions button {
+        background-color: transparentize($color: $on_background, $amount: 0.9);
+
+        &:hover {
+          background-color: $primary_container;
+        }
+      }
+
+      .content {
+        .description {
+          min-width: 235px;
+        }
+      }
+    }
+  }
+
+  .qs-buttons {
+    padding: 10px;
+
+    .qs-button {
+      background-color: $on_secondary;
+      color: $on_background;
+      padding: 6px 4px;
+
+      &:active {
+        background-color: $primary;
+        color: $on_background;
+      }
+
+      &:hover {
+        background-color: $primary_container;
+      }
+
+      .label {
+        font-weight: 500;
+        font-size: 12px;
+      }
+
+      &.active {
+        background-color: $primary;
+        color: $background;
+      }
+    }
+  }
+}

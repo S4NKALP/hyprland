@@ -1,0 +1,51 @@
+{
+  "wallpaper": {
+    "folder": "{{home}}/Pictures/wallpapers",
+    "current": "wall-16.png"
+  },
+  "theme": {
+    "dark_mode": true,
+    "border_radius": "6",
+    "window": {
+      "margin": "12",
+      "border": false,
+      "opacity": 0.6
+    },
+    "bar": {
+      "position": "bottom",
+      "opacity": 0,
+      "shadow": false,
+      "border": false,
+      "button_opacity": 0.6,
+      "button_padding": "4, 8",
+      "button_spacing": 4,
+      "button_shadow": false,
+      "button_border_radius": "6",
+      "margin": "3",
+      "padding": "3",
+      "border_radius": "0",
+      "launcher_icon": "󰢚",
+      "workspace_active_width": "20"
+    }
+  },
+  "osd": {
+    "regular": {
+      "position": "bottom",
+      "vertical": true,
+      "margin": "0, 12, 60, 0",
+      "capslock": true,
+      "mic": true
+    },
+    "progress": {
+      "position": "bottom",
+      "vertical": false,
+      "margin": "12, 12, 2, 12",
+      "brightness": true,
+      "volume": true
+    }
+  },
+  "system_monitor": {
+    "position": "bottom left",
+    "margin": "12, 12, 12, 12"
+  }
+}

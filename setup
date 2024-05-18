@@ -85,12 +85,20 @@ pkg=(
     ttf-dejavu
     ttf-ibm-plex
     ttf-liberation
+    ttf-font-awesome
+    ttf-ubuntu-font-family
+    ttf-ubuntu-nerd
+    ttf-mononoki-nerd
+    gtk3
+    ttf-ubuntu-mono-nerd
     noto-fonts
     gnu-free-fonts
     qutebrowser
     sweet-cursor-theme-git
     gruvbox-plus-icon-theme-git
     swayosd-git
+    hyprpicker
+    matugen-bin
 )
 # Creating a new `packages` array
 packages=(

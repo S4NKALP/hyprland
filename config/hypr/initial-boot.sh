@@ -16,7 +16,7 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
     if [ ! -f $HOME/cache/.initial_startup_done ]; then
 
     # Initial scripts to load in order to have a proper wallpaper
-    swww init || swww query && $swww "$wallpaper" $effect
+    #swww init || swww query && $swww "$wallpaper" $effect
 
     # initiate GTK dark mode and apply icon and cursor theme
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark > /dev/null 2>&1 &
