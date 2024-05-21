@@ -8,6 +8,7 @@ import ControlCenterPanelButton from "../control_center/PanelButton.js";
 import ScreenRecordPanelButton from "../screen_record/PanelButton.js";
 import NetworkPanelButton from "../network/PanelButton.js";
 import AudioPanelButton from "../audio/PanelButton.js";
+import Tray from "../tray/tray.js";
 import { configs } from "../../vars.js";
 import { isVertical } from "../../functions/utils.js";
 const hyprland = await Service.import("hyprland");
@@ -52,6 +53,7 @@ const center = () =>
   });
 
 const endChildren = () => [
+  Tray(),
   ScreenRecordPanelButton(),
   NetworkSpeedIndicator(),
   NetworkPanelButton(),

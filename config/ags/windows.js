@@ -16,6 +16,7 @@ import SetupNetworkWindow from "./widget/network/Window.js";
 import SetupBatteryWindow from "./widget/battery/Window.js";
 import SetupControlCenterWindow from "./widget/control_center/Window.js";
 import SetupBarWindow from "./widget/bar/Window.js";
+import Tray from "./widget/tray/tray.js";
 
 App.addIcons(`${App.configDir}/assets`);
 
@@ -26,6 +27,7 @@ export function setupWindows() {
   SetupBatteryWindow();
   SetupControlCenterWindow();
   SetupBarWindow();
+  Tray();
 }
 
 export default [
@@ -35,7 +37,7 @@ export default [
   NotificationPopupWindow(),
   PowerMenuWindow(),
   VerificationWindow(),
-  HyprsplashWindow(),
+  //HyprsplashWindow(),
   SystemMonitorWindow(),
   ProgressOsd(),
   RegularOsd(),

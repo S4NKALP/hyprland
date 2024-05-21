@@ -7,21 +7,9 @@ const dispatch = (ws) => hyprland.messageAsync(`dispatch workspace ${ws}`);
 const WorkspaceButton = (ws) =>
   Widget.Button({
     class_name: "workspace-button",
-    child: Widget.Box({
-      class_name: "fill",
-      hexpand: false,
-      setup: (self) => {
-        self.hook(configs.theme.bar.position, () => {
-          self.toggleClassName(
-            "vert",
-            isVertical(configs.theme.bar.position.value),
-          );
-          self.toggleClassName(
-            "hort",
-            !isVertical(configs.theme.bar.position.value),
-          );
-        });
-      },
+    child: Widget.Label({
+      label: getNerdFontIcon(ws.id), // Use a function to get the icon
+      class_name: "workspace-icon",
     }),
     vpack: "center",
     hpack: "center",
@@ -37,7 +25,39 @@ const WorkspaceButton = (ws) =>
     },
   });
 
-// Within the default function:
+function getNerdFontIcon(workspaceId) {
+  // Return different icons based on workspaceId
+  const icons = {
+    1: '  ',
+    2: '  ',
+    3: '  ',
+    4: '  ',
+    5: '  ',
+    6: '  ',
+    7: '  ',
+    8: '  ',
+    9: ' 󰚌 ',
+  };
+  return icons[workspaceId] || '  '; // Default icon if workspaceId not found
+}
+
+async function fetchWorkspacesFromServer() {
+  // Fetch workspaces from a server or other source
+  // Example return value
+  return await fetch('/api/workspaces').then(response => response.json());
+}
+
+function createInitialWorkspaces() {
+  // Create an initial set of workspaces
+  return [
+    { id: 1, name: "Workspace 1" },
+    { id: 2, name: "Workspace 2" },
+    { id: 3, name: "Workspace 3" },
+    { id: 4, name: "Workspace 4" },
+    // Add more initial workspaces as needed
+  ];
+}
+
 export default () => {
   const wsBox = Widget.Box({
     class_names: ["workspace__container"],
@@ -45,18 +65,20 @@ export default () => {
     hexpand: false,
     vexpand: false,
     vertical: configs.theme.bar.position.bind().as(isVertical),
-    setup: (self) => {
-      // Ensure workspaces array exists
-      if (!hyprland.workspaces) {
+    setup: async (self) => {
+      // Ensure workspaces array exists and is properly initialized
+      if (!hyprland.workspaces || !Array.isArray(hyprland.workspaces)) {
         hyprland.workspaces = []; // Initialize the workspaces array if it doesn't exist
       }
 
       // Fetch or create workspaces if the array is empty
       if (hyprland.workspaces.length === 0) {
-        // For example:
-        // hyprland.workspaces = await fetchWorkspacesFromServer();
-        // or
-        // hyprland.workspaces = createInitialWorkspaces();
+        try {
+          hyprland.workspaces = await fetchWorkspacesFromServer();
+        } catch (error) {
+          console.error("Failed to fetch workspaces from server:", error);
+          hyprland.workspaces = createInitialWorkspaces();
+        }
       }
 
       // Update the workspace buttons whenever there's a change in workspaces
@@ -73,6 +95,7 @@ export default () => {
       );
     },
   });
+
   return Widget.EventBox({
     child: wsBox,
   });

@@ -100,32 +100,13 @@ const DayDots = () =>
     class_name: "day-dots",
     spacing: 8,
     hpack: "center",
-    //I guess this is not efficient?
     children: clock.bind().as((t) => {
-      const format = Number(t.format("%u"));
-      const last = 7 - format;
-      return [
-        ...Array(format)
-          .fill()
-          .map(() => Widget.Box({ class_name: "fill" })),
-        ...Array(last)
-          .fill()
-          .map(() => Widget.Box({ class_name: "empty" })),
-      ];
+      const format = Number(t.format("%u")) % 7; // Adjust for Sunday being 0
+      const dots = [...Array(7).keys()].map((day) =>
+        day <= format ? Widget.Box({ class_name: "fill" }) : Widget.Box({ class_name: "empty" })
+      );
+      return dots;
     }),
-    // setup: (self) => {
-    //   const t = GLib.DateTime.new_now_local();
-    //   const format = Number(t.format("%u"));
-    //   const last = 7 - format;
-    //   self.children = [
-    //     ...Array(format)
-    //       .fill()
-    //       .map(() => Widget.Box({ class_name: "fill" })),
-    //     ...Array(last)
-    //       .fill()
-    //       .map(() => Widget.Box({ class_name: "empty" })),
-    //   ];
-    // },
   });
 
 const Container = () =>

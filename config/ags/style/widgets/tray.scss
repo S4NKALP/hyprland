@@ -1,0 +1,11 @@
+.tray__container {
+  .entry-box {
+    margin: 10px;
+  }
+ &:selected {
+      background-color: $primary;
+      border-radius: 0;
+      color: $background;
+      border-radius: 6px;
+    }
+}

@@ -10,7 +10,7 @@ export default function setHyprland(theme) {
   const marginValue = Number(
     margin[posIndex(configs.theme.bar.position.value)],
   );
-  margin[posIndex(configs.theme.bar.position.value)] = `${marginValue / 2}`;
+  margin[posIndex(configs.theme.bar.position.value)] = `${marginValue / q}`;
   margin = margin.join(", ");
   sendBatch([
     `decoration:col.shadow rgb(${bgColor})`,

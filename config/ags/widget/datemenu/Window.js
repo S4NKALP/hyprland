@@ -12,7 +12,7 @@ const Container = () =>
     class_names: ["datemenu__container", "window-content"],
     children: [
       Widget.Label({
-        label: clock.bind().as((t) => t.format("%T")),
+        label: clock.bind().as((t) => t.format("%I:%M %p")),
         class_name: "clock",
       }),
       Widget.Label({
