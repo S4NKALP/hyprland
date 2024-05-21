@@ -10,8 +10,8 @@
   box-shadow: if($bar_button_shadow, 1px 1px 2px rgba(0, 0, 0, 0.4), none);
 
   .workspace-button {
-    min-height: 10px;
-    min-width: 10px;
+    min-height: 5px;
+    min-width: 5px;
     border: solid 2px $on_background;
     border-radius: $bar_button_border_radius;
     padding: 2px;

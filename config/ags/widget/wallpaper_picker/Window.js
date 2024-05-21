@@ -150,7 +150,7 @@ export const WallpaperPickerWindow = () =>
     animation: "slide right",
     child: WallpaperPicker({
       width: 300,
-      spacing: 12,
+      spacing: 5,
     }),
   });
 

@@ -99,6 +99,9 @@ pkg=(
     swayosd-git
     hyprpicker
     matugen-bin
+    power-profile-daemon
+    dart-sass
+    sass
 )
 # Creating a new `packages` array
 packages=(
@@ -408,6 +411,19 @@ done
 echo ""
 echo ""
 
+#-- Enabling the service -----------------------------------------
+echo "┌──────────────────────────────────────┐"
+echo "│   Powerprofile enabled ...           │"
+echo "└──────────────────────────────────────┘"
+echo ""
+systemctl unmask power-profiles-daemon.service
+systemctl start power-profiles-daemon.service
+simulate_output "==> Starting PowerProfile..."
+simulate_output "[   \e[32mOK\e[0m   ] Started PowerProfileDaemon service"
+sleep 2
+
+echo ""
+echo ""
 #-- Enabling the service -----------------------------------------
 echo "┌──────────────────────────────────────┐"
 echo "│   Bluetooth enabled ...              │"

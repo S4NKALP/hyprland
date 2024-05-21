@@ -1,7 +1,7 @@
 {
   "wallpaper": {
     "folder": "{{home}}/Pictures/wallpapers",
-    "current": "wall-16.png"
+    "current": "wall-31.png"
   },
   "theme": {
     "dark_mode": true,
@@ -9,7 +9,7 @@
     "window": {
       "margin": "2",
       "border": false,
-      "opacity": 0.6
+      "opacity": 1
     },
     "bar": {
       "position": "bottom",
@@ -25,7 +25,7 @@
       "padding": "1",
       "border_radius": "0",
       "launcher_icon": "󰢚",
-      "workspace_active_width": "20"
+      "workspace_active_width": "0"
     }
   },
   "osd": {
