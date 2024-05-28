@@ -59,7 +59,7 @@ reload_all() {
         [ -e "$1" ]
     }
 
-    processes=("waybar" "rofi" "swaync")
+    processes=("waybar" "rofi" "swaync" "ags")
 
     for process in "${processes[@]}"; do
         pid=$(pidof "$process")
@@ -68,6 +68,8 @@ reload_all() {
         fi
     done
 
+    sleep 0.3
+    ags &
     sleep 0.3
     waybar &
     sleep 0.5
@@ -186,4 +188,40 @@ done
 if [ "$executed" == false ]; then
   echo "None of the specified files were found. Install a Polkit"
 fi
+}
+
+power_profile() {
+    get_pwr() {
+        PWR=$(powerprofilesctl get)
+    }
+
+    get_pwr
+
+    if [[ "$PWR" == "balanced" ]]; then
+        text="󰾅"
+        tooltip="Balanced"
+    elif [[ "$PWR" == "performance" ]]; then
+        text="󰓅"
+        tooltip="Performance"
+    elif [[ "$PWR" == "power-saver" ]]; then
+        text="󰾆"
+        tooltip="Power Saver"
+    fi
+
+    echo '{"text": "'$text'", "tooltip": "'$tooltip'"}'
+
+    if [[ "$1" == "next" ]]; then
+        current=$(powerprofilesctl get)
+        if [[ "$current" == "balanced" ]]; then
+            next="performance"
+        elif [[ "$current" == "performance" ]]; then
+            next="power-saver"
+        elif [[ "$current" == "power-saver" ]]; then
+            next="balanced"
+        fi
+        powerprofilesctl set "$next"
+        pkill -SIGRTMIN+8 waybar
+        get_pwr
+        notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Power Profile changed to $PWR"
+    fi
 }
