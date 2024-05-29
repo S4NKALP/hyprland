@@ -231,33 +231,23 @@ disable_opaque() {
 ######################################
 
 kb_changer() {
-if [ ! -f "$layout_f" ]; then
-  default_layout=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null)
-  if [ -z "$default_layout" ]; then
-    default_layout="us" # Default to 'us' layout if Settings.conf or 'kb_layout' is not found
-  fi
-  echo "$default_layout" > "$layout_f"
-fi
-current_layout=$(cat "$layout_f")
-if [ -f "$settings_file" ]; then   # Read keyboard layout settings from Settings.conf
-  kb_layout_line=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2)
-  IFS=',' read -ra layout_mapping <<< "$kb_layout_line"
-fi
-layout_count=${#layout_mapping[@]}
-for ((i = 0; i < layout_count; i++)); do  # Find the index of the current layout in the mapping
-  if [ "$current_layout" == "${layout_mapping[i]}" ]; then
-    current_index=$i
-    break
-  fi
-done
-next_index=$(( (current_index + 1) % layout_count ))  # Calculate the index of the next layout
-new_layout="${layout_mapping[next_index]}"
-hyprctl switchxkblayout input:kb_layout "$next_index"   # Update the keyboard layout
-echo "$new_layout" > "$layout_f"
-notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
+    current_layout=$(cat "$layout_f")
+
+    [ -f "$settings_file" ] && IFS=',' read -ra layout_mapping <<< "$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2)"
+
+    for i in "${!layout_mapping[@]}"; do
+        [ "$current_layout" == "${layout_mapping[i]}" ] && new_layout="${layout_mapping[((i + 1) % ${#layout_mapping[@]})]}" && break
+    done
+
+    hyprctl switchxkblayout "at-translated-set-2-keyboard" "$new_layout" && echo "$new_layout" > "$layout_f"
+
+    hyprctl devices -j | jq -r '.keyboards[].name' | while read -r name; do
+        hyprctl switchxkblayout "$name" next || { notify-send -u low -t 2000 'Keyboard layout' 'Error: Layout change failed'; exit 1; }
+    done
+
+    notify-send -u low -i "$notif" "Keyboard language changed to $new_layout"
 }
 
-######################################
 
 ######################################
 #                                    #
