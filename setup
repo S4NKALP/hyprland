@@ -71,6 +71,7 @@ pkg=(
     xsel
     bc
     sddm
+    power-profiles-daemon
     adobe-source-code-pro-fonts
     ttf-fira-code
     ttf-jetbrains-mono-nerd
@@ -85,6 +86,10 @@ pkg=(
     ttf-ibm-plex
     ttf-liberation
     ttf-firacode-nerd
+    ttf-readex-pro
+    ttf-material-symbols-variable-git
+     ttf-space-mono-nerd
+     ttf-sarasa-gothic
     noto-fonts
     gnu-free-fonts
     qutebrowser
@@ -410,6 +415,20 @@ sleep 2
 
 echo ""
 echo ""
+#-- Enabling the service -----------------------------------------
+echo "┌──────────────────────────────────────┐"
+echo "│   powerdaemon enabled ...      │"
+echo "└──────────────────────────────────────┘"
+echo ""
+sudo systemctl enable power-profiles-daemon.service &>>$INSTLOG
+sudo systemctl unmask power-profiles-daemon.service &>>$INSTLOG
+sudo systemctl start power-profiles-daemon.service &>>$INSTLOG
+simulate_output "==> Starting power-profile-daemon.."
+simulate_output "[   \e[32mOK\e[0m   ] Started power-profile-daemon service"
+sleep 2
+
+echo ""
+echo ""
 #-- SDDM Settings -----------------------------------------
 echo "┌──────────────────────────────────────┐"
 echo "│   SDDM enabled ...                   │"
@@ -429,21 +448,6 @@ EOF
 sudo cp -f ~/dotfiles/extras/theme.conf /usr/share/sddm/themes/corners/
 simulate_output "Setting theme for sddm..."
 simulate_output "[   \e[32mOK\e[0m   ] SDDM theme set to 'corners'"
-
-echo ""
-echo ""
-#-- GTK Settings -----------------------------------------
-echo "┌──────────────────────────────────────┐"
-echo "│   Setting GTK and icon themes...     │"
-echo "└──────────────────────────────────────┘"
-echo ""
-simulate_output "Setting GTK and icon themes..."
-simulate_output "[   \e[32mOK\e[0m   ] GTK theme set to 'Dracula'"
-simulate_output "[   \e[32mOK\e[0m   ] Icon theme set to 'Dracula'"
-simulate_output "[   \e[32mOK\e[0m   ] curosr theme set to 'Bibata'"
-gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
-gsettings set org.gnome.desktop.interface icon-theme "Dracula"
-gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice"
 
 echo ""
 echo ""
