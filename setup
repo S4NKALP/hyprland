@@ -338,6 +338,7 @@ for font in $HOME/hyrpland/assets/Darker; do
     fi
 done
 
+sudo cp -r $HOME/hyprland/misc/firefox/* ~/.mozilla/firefox/*.default-release/
 sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
 sudo cp -r $HOME/hyprland/wallpapers/* $HOME/Pictures/wallpapers
 simulate_output "[   \e[32mOK\e[0m   ] Copied .zshevn dotfiles to $HOME"
