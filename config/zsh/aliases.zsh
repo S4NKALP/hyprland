@@ -44,6 +44,7 @@ alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
 #fix obvious typo's
 alias c="clear"
 alias q="exit"
+alias :q="exit"
 alias mtar='tar -zcvf' # mtar <archive_compress>
 alias utar='tar -zxvf' # utar <archive_decompress> <file_list>
 alias z='zip -r' # z <archive_compress> <file_list>
@@ -56,6 +57,7 @@ alias grep='grep --color=auto'
 alias mv='mv -v'
 alias cp='cp -vr'
 alias rm='rm -vr'
+
 
 #clean caches
 alias cleanram="sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'"
@@ -173,7 +175,6 @@ alias gmom='git merge origin/$(git_main_branch)'
 alias gmtl='git mergetool --no-prompt'
 alias gmtlvim='git mergetool --no-prompt --tool=vimdiff'
 alias gmum='git merge upstream/$(git_main_branch)'
-alias gp='git push'
 alias gpd='git push --dry-run'
 alias gpf='git push --force-with-lease'
 alias 'gpf!'='git push --force'
