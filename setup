@@ -367,15 +367,16 @@ CONFIG_DIRS=(
     "Kvantum"
     "mpv"
     "fastfetch"
-    "gtk-2.0",
-    "gtk-3.0",
-    "gtk-4.0",
+    "gtk-2.0"
+    "gtk-3.0"
+    "gtk-4.0"
     "npm"
     "qimgv"
     "qt5ct"
     "qt6ct"
     "rofi"
     "startship"
+    "nwg-look"
     "swaync"
     "swayosd"
     "Thunar"
