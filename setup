@@ -26,6 +26,7 @@ pkg=(
     pamixer
     file-roller
     alsa-utils
+    npm
     linux-headers
     less
     wlroots
@@ -83,6 +84,7 @@ pkg=(
     ttf-dejavu
     ttf-ibm-plex
     ttf-liberation
+    ttf-firacode-nerd
     noto-fonts
     gnu-free-fonts
     qutebrowser
@@ -356,6 +358,9 @@ CONFIG_DIRS=(
     "Kvantum"
     "mpv"
     "fastfetch"
+    "gtk-2.0",
+    "gtk-3.0",
+    "gtk-4.0",
     "npm"
     "qimgv"
     "qt5ct"

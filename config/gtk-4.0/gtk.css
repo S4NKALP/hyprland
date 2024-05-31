@@ -1,0 +1,30 @@
+
+    @define-color text #e6e1e9;
+    
+    @define-color accent_color #cebdfe;
+
+    @define-color accent_bg_color #cebdfe;
+
+    @define-color window_bg_color #141218;
+
+    @define-color window_fg_color #e6e1e9;
+
+    @define-color headerbar_bg_color #141218;
+
+    @define-color headerbar_fg_color #e6e1e9;
+
+    @define-color sidebar_bg_color #1c1b20;
+
+    @define-color sidebar_fg_color #e6e1e9;
+
+    @define-color popover_bg_color #141218;
+
+    @define-color popover_fg_color #e6e1e9;
+
+    @define-color view_bg_color #211f24;
+
+    @define-color view_fg_color #e6e1e9;
+
+    @define-color card_bg_color alpha(#e6e1e9, 0.08);
+
+    @define-color card_fg_color #e6e1e9;
