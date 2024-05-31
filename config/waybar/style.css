@@ -105,6 +105,7 @@ tooltip {
     border-radius: 15px 15px 15px 15px;
     padding-left: 2px;
     padding-right: 2px;
+    color: yellow;
 }
 
 #workspaces button.focused {
@@ -157,6 +158,7 @@ tooltip {
 #custom-lock,
 #custom-menu,
 #custom-power_vertical,
+#custom-power_profile,
 #custom-power,
 #custom-swaync,
 #custom-updater,
@@ -341,4 +343,10 @@ tooltip {
 
 #mpris{
     color: white;
+}
+
+#custom-power_profile {
+    font-size: 16px;
+    margin-bottom: 2px;
+    color: #619A96;
 }

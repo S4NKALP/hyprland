@@ -36,5 +36,8 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done
 
+    # for workspace
+    hyprctl reload
+
     exit
 fi

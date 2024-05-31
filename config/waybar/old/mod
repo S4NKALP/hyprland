@@ -1,0 +1,408 @@
+  "hyprland/language": {
+    "format": "{short}"
+  },
+  "hyprland/workspaces": {
+    "all-outputs": true,
+    "disable-scroll": false,
+    "active-only": false,
+    "format": "{icon}",
+    "format-icons": {
+      "1": "1 󰛞",
+      "2": "2 ",
+      "3": "3 󰬸",
+      "4": "4 󰧱",
+      "5": "5 󰆦",
+      "6": "6 󰚀",
+      "7": "7 ",
+      "urgent": "",
+      "focused": "",
+      "default": ""
+    }
+  },
+
+
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "10": ""
+
+
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+FontAwesome
+
+			"1": " ",
+			"2": " ",
+			"3": " ",
+			"4": " ",
+			"5": " ",
+			"6": "󱎫 ",
+			"7": " ",
+
+
+
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "󰝚",
+      "urgent": "",
+      "focused": "",
+      "default": "",
+
+
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+
+
+            "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+
+    //         "1": "",
+    //         "2": "",
+    //         "3": "",
+    //         "4": "",
+    //         "5": "",
+    //         "urgent": "",
+    //         "focused": "",
+    //         "default": ""
+
+
+        //"1": " ",
+        //"2": " ",
+        //"3": " ",
+        //"4": " ",
+        //"5": " ",
+        //"6": " ",
+        //"7": " ",
+        //"8": " ",
+        //"9": " ",
+        //"urgent": " ",
+        //"active": " ",
+        //"default": " "
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "urgent": "",
+        "active": "",
+        "default": ""
+      },
+    },
+
+{
+
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "󰢹",
+      "urgent": "",
+      "default": ""
+    }
+  },
+
+
+    "mpris": {
+    "format": "{player_icon} {status_icon} {dynamic}",
+    "format-paused": "{player_icon} {status_icon} <i>{dynamic}</i>",
+    "max-length": 45,
+    "player-icons": {
+      "chromium": "",
+      "default": "",
+      "firefox": "",
+      "mopidy": "",
+      "mpv": "",
+      "spotify": ""
+    },
+    "status-icons": {
+      "paused": "",
+      "playing": "",
+      "stopped": ""
+    }
+  },
+
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "10": ""
+
+            "1": " ",
+      "2": " ",
+      "3": " ",
+      "4": " ",
+      "5": "󱃶 ",
+      "6": " ",
+      "7": "󰊻 ",
+      "urgent": " ",
+      //"active": " ",
+      //"default": " "
+      "default": " ",
+
+
+              "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "6": "",
+            "7": "",
+            "8": "",
+            "9": "",
+            "urgent": "",
+            "focused": "",
+            "default": "",
+        },
+    },
+
+
+   //         "1": "",
+    //         "2": "",
+    //         "3": "",
+    //         "4": "",
+    //         "5": "",
+    //         "urgent": "",
+        //         "focused": "",
+    //         "default": ""
+
+
+    "hyprland/window": {
+        "format": "{}",
+        "rewrite": {
+            "": "No window focused",
+            "Steam": "󰓓  Steam",
+            "Mozilla Firefox": "  Mozilla Firefox",
+            "Spotify": "  Spotify",
+            "Lutris": "  Lutris",
+            "vim": "  Vim",
+            "nvim": "  Neovim",
+            "zsh": "  zsh",
+            "VSCodium": "  VSCodium",
+            "(.*) — Mozilla Firefox": "  $1",
+            "(.*) - VSCodium": "  $1",
+            "(.*) - zsh": "  [$1]",
+            "(.*) - Discord": "󰙯  $1"
+        }
+    },
+
+
+              "1": " ",
+		          "2": " ",
+		          "3": " ",
+		          "4": " ",
+		          "5": "",
+              "urgent": " ",
+		          "default": " ",
+              "magic": " 󰐃",
+
+                    "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
+    },
+
+          "1": "",
+      "2": "󰨞",
+      // "3": "",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "󰎆",
+      "7": "󰺻",
+      "8": "",
+      "9": "󰙯",
+      "urgent": ""
+      // "active": "",
+      // "default": ""
+    },
+
+        //     "format-icons": {
+    //         "1": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "2": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "3": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "4": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "5": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "6": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "7": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "8": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "9": "<span font='Font Awesome 5 Free Solid'></span>",
+    //         "urgent": "",
+    //         "focused": "",
+    //         "default": ""
+
+
+// "format-icons": { "1": "󰋜", "2": "󰈹", "3": "󰠮", "4": "󰭹", "5": "󱓷", "6": "󱇧", "7": "󰊢", "8": "󰖲", "9": "󰕧", "10": "󰝚" }
+    },
+
+        "window-rewrite": {
+            "class<firefox>": "󰈹", // Windows whose classes are "firefox"
+            "alacritty": "", // Windows that contain "foot" in either class or title. For optimization reasons, it will only match against a title if at least one other window explicitly matches against a title.
+            "codium": "󰨞",
+            "code": "󰨞",
+            "nemo": "󰉋",
+            "ranger": "󰉋",
+            "com.stremio.stremio": "",
+            "nwg-look": "󰈈",
+            "nwg-displays": "󰍹",
+            "pavucontrol": "󰕾",
+            "btop": "󰄨",
+            "nvim":""
+        }
+
+      "1": "",
+      "2": "切",
+      "3": "",
+      "4": "",
+             "ﭮ",
+      "6": "",
+
+"network": {
+    // "format": "↕️{bandwidthTotalBytes}",
+    "format": "󰹹{bandwidthTotalBytes}",
+    "format-disconnected": "No Internet⚡",
+    "format-linked": "{ifname} (No IP) ‼️",
+    // "format-alt": "⬆️ {bandwidthUpBytes} | ⬇️ {bandwidthDownBytes}",
+    "format-alt": " {bandwidthUpBytes} |  {bandwidthDownBytes}",
+    // "format-wifi": "{essid}({signalStrength}%) 🛜",
+    "format-wifi": "{essid}({signalStrength}%) 󰖩 ",
+    "format-ethernet": "🌐 {ipaddr}/{cidr} ",
+    // "tooltip-format-wifi": "🛜 {essid}({signalStrength}%)",
+    "tooltip-format-wifi": "󰖩  {essid}({signalStrength}%)",
+    "tooltip-format-ethernet": "🌐 {ipaddr}/{cidr}",
+    // "tooltip-format-disconnected": "‼️ Disconnected",
+    "tooltip-format-disconnected": "󰖪 ",
+    "on-click-right": "nm-connection-editor",
+    "interval": 2
+  },
+
+ //"temperature": {
+  //    // "thermal-zone": 2,
+  //    // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+  //    "critical-threshold": 40,
+  //    "format-critical": "{icon} {temperatureC}°C",
+  //    "format": "{icon} {temperatureC}°C",
+  //    "format-icons": ["🔥", "❤️‍🔥", "🌡️"],
+  //    "tooltip": true,
+  //    "on-click": "kitty --start-as=fullscreen --title all_is_kitty sh -c 'btop'",
+  //    "interval": 2
+
+memory{
+  //    // "format": " {}%",
+  //    "format": "🧬 {used:0.1f}G/{total:0.1f}G",
+  }
+  //"cpu": {
+  //    "format": "📊 {usage}%",
+  //    // "format": "{avg_frequency}%  ",
+
+  //"pulseaudio": {
+  //    // "scroll-step": 1, // %, can be a float
+  //    "format": "{icon} {volume}%", // {format_source}
+  //    "format-bluetooth": "{icon} {volume}%", // {format_source}
+  //    // "format-bluetooth-muted": "", // {format_source}
+  //    "format-bluetooth-muted": "🔇", // {format_source}
+  //    // "format-muted": "", // {format_source}
+  //    "format-muted": "🔇", // {format_source}
+  //    // "format-source": "{volume}% ",
+  //    "format-source": "{volume}% ",
+  //    // "format-source-muted": "",
+  //    "format-source-muted": "",
+  //    "format-icons": {
+  //        "headphone": "🎧",
+  //        "hands-free": "🎧",
+  //        "headset": "🎧",
+  //        "phone": "📞",
+  //        "portable": "📞",
+  //        "car": "🏎️",
+  //
+  //        //"headphone": "",
+  //        //"headset": "",
+  //        //"phone": "",
+  //        //"portable": "",
+  //        //"car": " ",
+  //        "default": ["🔈", "🔉", "🔊"]
+  //        // "default": ["", "", ""]
+  //    },
+
+
+  //"battery": {
+  //    "states": {
+  //        "good": 100,
+  //        "warning": 50,
+  //        "critical": 30
+  //    },
+  //    "format": "{icon} {capacity}%",
+  //    "format-charging": "🔋 {capacity}%",
+  //    "format-plugged": "🔌 {capacity}%",
+  //    "format-alt": "{icon} {time}",
+  //    // "format-good": "", // An empty format will hide the module
+  //    // "format-full": " {capacity}%",
+  //    "format-full": "🔋 {capacity}%",
+  //    // "format-icons": ["", "", "", "", "", "", "", "", "", ""],
+  //    "format-icons": ["🪫", "🔋"],
+  //    "interval": 2
+  //},
+
+
+
+
+"format": "󰢚",
+  "custom/touchpad": {
+    "exec": "[ $(cat ~/.cache/pcp_hypr_var/touchpad) = '0' ]&&echo ''||echo ''",
+    "interval": "once",
+    "signal": 3,
+    "format": "{}",
+    "format-icons": {
+      "off": "",
+      "on": ""
+    }
+  },
+
+
+
+

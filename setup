@@ -3,7 +3,6 @@ INSTLOG="install.log"
 #-- package -----------------------------------------
 pkg=(
     hyprland
-    aylurs-gtk-shell
     fnm
     keyb
     fd
@@ -16,11 +15,11 @@ pkg=(
     kvantum
     hyprlock
     qt5ct
-    devify
     pyprland
     qt6ct
     nwg-look
     mpv-mpris
+    fast-fetch
     pacman-contrib
     hypridle
     pavucontrol
@@ -50,7 +49,7 @@ pkg=(
     unrar
     polkit-gnome
     xdg-user-dirs
-    clipshit
+    cliphist
     swww
     kitty
     imagemagick
@@ -67,7 +66,6 @@ pkg=(
     wmctrl
     zsh
     xdg-desktop-portal-gtk
-    gtk-engine-murrine
     lxappearance
     xsel
     bc
@@ -300,7 +298,6 @@ echo "Making directories if they don't exist..."
 directories=(
     "~/dotfiles"
     "~/.local/bin"
-    "~/.local/share/fonts"
     "~/Pictures/wallpapers"
 )
 
@@ -327,12 +324,6 @@ for binn in $HOME/hyrpland/misc/bin/*; do
         sudo cp -r "$file" $HOME/.local/bin
     fi
 done
-echo "Copying fonts..."
-for font in $HOME/hyrpland/assets/fonts/*; do
-    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
-        sudo cp -r "$file" $HOME/.local/share/fonts
-    fi
-done
 echo "Copying Darker theme..."
 for font in $HOME/hyrpland/assets/Darker; do
     if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
@@ -344,7 +335,6 @@ sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
 sudo cp -r $HOME/hyprland/wallpapers/* $HOME/Pictures/wallpapers
 simulate_output "[   \e[32mOK\e[0m   ] Copied .zshevn dotfiles to $HOME"
 simulate_output "[   \e[32mOK\e[0m   ] Copied binn dotfiles to $HOME/.local/bin"
-simulate_output "[   \e[32mOK\e[0m   ] Copied font dotfiles to $HOME/.local/share/fonts"
 simulate_output "[   \e[32mOK\e[0m   ] Copied Darker theme dotfiles to /usr/share/themes"
 simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/dotfiles/"
 simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/Pictures/wallpapers"
@@ -365,7 +355,7 @@ CONFIG_DIRS=(
     "kitty"
     "Kvantum"
     "mpv"
-    "neofetch"
+    "fastfetch"
     "npm"
     "qimgv"
     "qt5ct"

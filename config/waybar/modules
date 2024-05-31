@@ -21,6 +21,20 @@
     "default": "",
   },
 },
+    "hyprland/workspaces#ic": {
+        "format": "{name} {icon}",
+        "format-icons": {
+            "1": "🪬",
+            "2": "🐙",
+            "3": "👩🏿‍💻",
+            "4": "🐱",
+            "5": "㊙️",
+            "6": "🔮",
+            "7": "🌜",
+            "8": "🎮"
+        },
+        "active-only": false
+    },
 
 // ROMAN Numerals style
 "hyprland/workspaces#roman": {
@@ -101,8 +115,6 @@
     "10": "十",
   }
 },
-
-
 //  NUMBERS and ICONS style
 "hyprland/workspaces#4": {
   "format": "{name}",
@@ -128,6 +140,49 @@
     "focused": "",
     "default": "",
 	},
+},
+
+// NUMBERS and ICONS style with window rewrite
+"hyprland/workspaces#rw": {
+	"disable-scroll": true,
+	"all-outputs": true,
+	"warp-on-scroll": false,
+	"sort-by-number": true,
+	"show-special": true,
+	"on-click": "activate",
+	"on-scroll-up": "hyprctl dispatch workspace e+1",
+	"on-scroll-down": "hyprctl dispatch workspace e-1",
+	"format": "{icon} {windows}",
+	"format-window-separator": " ",
+	"window-rewrite-default": " ",
+	"window-rewrite": {
+		"title<.*youtube.*>": " ",
+		"title<.*amazon.*>": " ",
+		"title<.*reddit.*>": " ",
+		"title<.*facebook.*>": " ",
+		"title<.*Picture-in-Picture.*>": " ",
+		"class<firefox>": " ",
+		"class<.*term.*>": " ",
+		"class<kitty>": " ",
+		"class<konsole>": " ",
+		"class<.*yazi.*>": "󰝰 ",
+		"class<thunar>": "󰝰 ",
+		"class<discord>": " ",
+		"class<subl>": "󰅳 ",
+		"class<celluloid>": " ",
+		"class<mpv>": " ",
+		"class<Cider>": "󰎆 ",
+		"class<.*nvim.*>": " ",
+		"class<code-oss>": "󰨞 ",
+		"class<codium|codium-url-handler|VSCodium>": "󰨞 ",
+		"class<codeblocks>": "󰅩 ",
+		"class<mousepad>": " ",
+		"class<geany>": " ",
+		"class<.*zathura.*>": " ",
+		"class<.*telegram.*>": " ",
+		"class<libreoffice-writer>": " ",
+		"class<libreoffice-startcenter>": "󰏆 "
+		}
 },
 
 // GROUP
@@ -213,7 +268,7 @@
   "format-plugged": "󱘖",
   "format-full": "{icon}",
   "format-alt": "{icon}",
-  "format-icons": ["","","","","","","","","","",""],
+  "format-icons": [	"󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
   "format-time": "{H}h {M}min",
   "tooltip": true,
   //"tooltip-format": "{timeTo} {power}w",
@@ -334,6 +389,15 @@
   "on-click-right": "pypr toggle btop'"
 },
 
+"custom/power_profile": {
+  //shows the current power profile and switches to next on click
+  "exec": "~/dotfiles/hypr/scripts/RunCMD.sh power_profile",
+  "return-type": "json",
+  "interval": 1,
+  "format": "{}",
+  "on-click": "~/dotfiles/hypr/scripts/RunCMD.sh power_profile next",
+  "signal": 8
+},
 
 "network": {
   "format": "{ifname}",
@@ -514,7 +578,7 @@
   "exec": "cat ~/.cache/kb_layout",
 	"interval": 1,
 	"format": " {}",
-	"on-click": "~/dotfiles/hypr/scripts/RunCMD.sh kb",
+	"on-click": "~/dotfiles/hypr/scripts/RunCMD.sh kb_changer",
 	"tooltip": false,
 },
 
@@ -542,7 +606,7 @@
   "exec": "echo ; echo 󰟡 power // blur",
   "interval": 86400,
   "tooltip": false,
-  "on-click": "wlogout",
+  "on-click": "~/dotfiles/hypr/scripts/RunCMD.sh powermenu",
   "on-click-right": "~/dotfiles/hypr/scripts/RunCMD.sh blur",
 },
 

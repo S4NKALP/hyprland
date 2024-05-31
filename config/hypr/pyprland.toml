@@ -21,9 +21,3 @@ lazy = true
 [scratchpads.cava]
 command = "kitty --class scratchpad-mini cava"
 lazy = true
-
-[scratchpads.term]
-animation = "fromTop"
-command = "kitty --class kitty-dropterm"
-class = "kitty-dropterm"
-size = "40% 50%"

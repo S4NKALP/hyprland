@@ -1,39 +1,27 @@
-
 {
-
-"include": "~/dotfiles/waybar/modules",
+"include": "~/.config/waybar/modules",
 "layer": "top",
-//"mode": "dock",
-"exclusive": true,
-"passthrough": false,
 "position": "bottom",
-"fixed-center": true,
-"ipc": true,
+"width": 1050,
 
 "modules-left": [
-	"hyprland/workspaces#4",
-	"custom/separator#line",
-	"mpris",
-	"tray",
-	"hyprland/window"],
+	"clock",
+	"custom/weather",
+        "idle_inhibitor",
+	],
 
-"modules-center": ["idle_inhibitor","group/motherboard", ],
+"modules-center": [
+	"hyprland/workspaces#rw"
+	],
 
 "modules-right": [
-    "group/audio",
-	"group/laptop",
-	"clock#1",
-        "custom/swaync",
-    ],
-
-// Additional modules //
-
-
-"clock#1": {
-	"format": "{:%I:%M %p - %d/%b}", //for AM/PM
-    //"format": "{:%H:%M - %d/%b}", // 24H
-	"tooltip": false
-
-},
-
+	"custom/menu",
+	"tray",
+	"custom/swaync",
+	"mpris",
+        "custom/power_profile",
+	"backlight",
+	"pulseaudio",
+	"battery",
+	"custom/power"],
 }

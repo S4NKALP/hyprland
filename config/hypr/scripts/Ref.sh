@@ -44,3 +44,4 @@ UserConfigs="$HOME/dotfiles/hypr/UserConfigs"
 config_dir="$HOME/dotfiles/waybar/configs"
 waybar_config="$HOME/dotfiles/waybar/config"
 RunCMD="$SCRIPTSDIR/RunCMD.sh"
+
