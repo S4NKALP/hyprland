@@ -19,6 +19,7 @@ pkg=(
     qt6ct
     nwg-look
     mpv-mpris
+    tmux
     fast-fetch
     pacman-contrib
     hypridle
@@ -79,6 +80,8 @@ pkg=(
     noto-fonts-emoji
     ttf-droid
     otf-font-awesome
+    ttf-font-awesome
+    otf-operator-mono-lig
     ttf-cascadia-code-nerd
     ttf-bitstream-vera
     ttf-croscore
@@ -88,8 +91,8 @@ pkg=(
     ttf-firacode-nerd
     ttf-readex-pro
     ttf-material-symbols-variable-git
-     ttf-space-mono-nerd
-     ttf-sarasa-gothic
+    ttf-space-mono-nerd
+    ttf-sarasa-gothic
     noto-fonts
     gnu-free-fonts
     qutebrowser
