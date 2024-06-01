@@ -81,7 +81,6 @@ pkg=(
     ttf-droid
     otf-font-awesome
     ttf-font-awesome
-    otf-operator-mono-lig
     ttf-cascadia-code-nerd
     ttf-bitstream-vera
     ttf-croscore
@@ -89,10 +88,6 @@ pkg=(
     ttf-ibm-plex
     ttf-liberation
     ttf-firacode-nerd
-    ttf-readex-pro
-    ttf-material-symbols-variable-git
-    ttf-space-mono-nerd
-    ttf-sarasa-gothic
     noto-fonts
     gnu-free-fonts
     qutebrowser
