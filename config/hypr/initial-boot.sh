@@ -2,8 +2,7 @@
 
 # A bash script designed to run only once dotfiles installed
 
-# THIS SCRIPT CAN BE DELETED ONCE SUCCESSFULLY BOOTED!! And also, edit ~/.config/hypr/configs/Execs.conf
-# not necessary to do since this script is only designed to run only once as long as the marker exists
+# THIS SCRIPT CAN BE DELETED ONCE SUCCESSFULLY BOOTED!!
 
 # Variables
 wallpaper=$HOME/Pictures/wallpapers/wall-08.png
