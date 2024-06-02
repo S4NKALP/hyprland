@@ -23,7 +23,7 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
     gsettings set org.gnome.desktop.interface gtk-theme Darker > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.wm.preferences theme Darker > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface icon-theme GruvboxPlus > /dev/null 2>&1 &
-    gsettings set org.gnome.desktop.interface cursor-theme PearDarkCursors > /dev/null 2>&1 &
+    gsettings set org.gnome.desktop.interface cursor-theme sweet-cursors > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface cursor-size 6 > /dev/null 2>&1 &
     gsettings set org.gnome.desktop.interface font-name JetBrainsMono Nerd Font 10 > /dev/null 2>&1 &
 
@@ -35,9 +35,6 @@ effect="--transition-bezier .43,1.19,1,.4 --transition-fps 30 --transition-type 
 
     # Create a marker file to indicate that the script has been executed.
     touch $HOME/.cache/.initial_startup_done
-
-    # for workspace
-    hyprctl reload
 
     exit
 fi

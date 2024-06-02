@@ -1,0 +1,96 @@
+gui:
+  authorColors:
+    'S4NKALP': green
+    # stuff relating to the UI
+  branchColors:
+    main: green
+    master: green
+    docs: cyan
+    feature: yellow
+    staging: magenta
+  scrollHeight: 2 # how many lines you scroll by
+  scrollPastBottom: true # enable scrolling past the bottom
+  sidePanelWidth: 0.25 # number from 0 to 1
+  expandFocusedSidePanel: true
+  mainPanelSplitMode: 'flexible' # one of 'horizontal' | 'flexible' | 'vertical'
+  language: 'auto' # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl' | 'ja' | 'ko'
+  timeFormat: '02 Jan 06 15:04 MST' # https://pkg.go.dev/time#Time.Format
+  theme:
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - default
+    searchingActiveBorderColor:
+      - green
+      - bold
+    optionsTextColor:
+      - blue
+    selectedLineBgColor:
+      - blue # set to `default` to have no background colour
+    selectedRangeBgColor:
+      - blue
+    cherryPickedCommitBgColor:
+      - cyan
+    cherryPickedCommitFgColor:
+      - blue
+    defaultFgColor:
+      - white
+  commitLength:
+    show: true
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+  showFileTree: true # for rendering changes files in a tree format
+  showListFooter: true # for seeing the '5 of 20' message in list panels
+  showRandomTip: true
+  showBottomLine: true # for hiding the bottom information line (unless it has important information to tell you)
+  showCommandLog: true
+  # showIcons: true
+  nerdFontsVersion: '3' # nerd fonts version to use ("2" or "3"); empty means don't show nerd font icons
+  commandLogSize: 8
+  splitDiff: 'auto' # one of 'auto' | 'always'
+os:
+  editPreset: nvim
+git:
+  paging:
+    colorArg: always
+    useConfig: false
+    pager: delta --features=mantis-shrimp --paging=never
+  commit:
+    signOff: false
+  merging:
+    # only applicable to unix users
+    manualCommit: false
+    # extra args passed to `git merge`, e.g. --no-ff
+    args: ''
+  log:
+    # one of date-order, author-date-order, topo-order.
+    # topo-order makes it easier to read the git log graph, but commits may not
+    # appear chronologically. See https://git-scm.com/docs/git-log#_commit_ordering
+    order: 'topo-order'
+    # one of always, never, when-maximised
+    # this determines whether the git graph is rendered in the commits panel
+    showGraph: 'when-maximised'
+    # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
+    showWholeGraph: false
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  branchLogCmd: 'git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --'
+  allBranchesLogCmd: 'git log --graph --all --color=always --abbrev-commit --decorate --date=relative  --pretty=medium'
+  overrideGpg: false # prevents lazygit from spawning a separate process when using GPG
+  disableForcePushing: false
+  parseEmoji: true
+refresher:
+  refreshInterval: 10 # File/submodule refresh interval in seconds. Auto-refresh can be disabled via option 'git.autoRefresh'.
+  fetchInterval: 600 # Re-fetch interval in seconds. Auto-fetch can be disabled via option 'git.autoFetch'.
+update:
+  method: prompt # can be: prompt | background | never
+  days: 14 # how often an update is checked for
+confirmOnQuit: false
+# determines whether hitting 'esc' will quit the application when there is nothing to cancel/close
+quitOnTopLevelReturn: false
+disableStartupPopups: false
+notARepository: 'prompt' # one of: 'prompt' | 'create' | 'skip'
+promptToReturnFromSubprocess: true # display confirmation when subprocess terminates

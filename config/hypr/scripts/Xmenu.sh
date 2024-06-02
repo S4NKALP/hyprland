@@ -31,14 +31,17 @@ declare -A menu_options=(
   #RunCMD
 	["; Launcher"]="rofi -show drun -modi drun,filebrowser,run,window"
         ["cb Clipboard"]="$RunCMD clip"
-        ["rm RunCMDMusic"]="$RunCMD music -m"
-	["emj RunCMDEmoji"]="$RunCMD emoji"
+        ["rm Music"]="$RunCMD music -m"
+	["emj Emoji"]="$RunCMD emoji"
         ["kb Kebinds"]="$RunCMD keybind"
-        ["qe Edits"]="$RunCMD edit"
+        ["qe QuickEdits"]="$RunCMD edit"
   #System
 	["qq Shutdown"]="$RunCMD sys_poweroff"
 	["rr Reboot"]="$RunCMD sys_reboot"
-	["SS Wlogout"]="wlogout"
+	["lk Lock"]="$RunCMD sys_lock"
+	["lo LogOut"]="$RunCMD sys_logout"
+        ["sp Suspend"]="$RunCMD sys_suspend"
+        ["hb Hibernate"]="$RunCMD sys_hibernate"
 	["cn Close Notifactions"]="swaync-client -C"
 	["dm0 disable monitor"]="$RunCMD disable_edp1"
 	["dm1 enable monitor"]="$RunCMD enable_edp1"
@@ -63,6 +66,8 @@ main() {
 				-mesg "Hello" \
 				-max-history-size 0 \
 				-auto-select
+
+
 	)
 
 	if [ -z "$choice" ]; then

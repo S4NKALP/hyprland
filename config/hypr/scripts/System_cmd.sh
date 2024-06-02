@@ -47,6 +47,26 @@ sys_poweroff() {
 		poweroff
 	fi
 }
+sys_lock() {
+    if _need_confirm "Lock screen?"; then
+        pidof hyprlock || hyprlock -q
+    fi
+}
+sys_logout() {
+    if _need_confirm "Logout?"; then
+        loginctl kill-session $XDG_SESSION_ID
+    fi
+}
+sys_suspend() {
+    if _need_confirm "Suspend system?"; then
+        systemctl suspend
+    fi
+}
+sys_hibernate() {
+    if _need_confirm "Hibernate system?"; then
+        systemctl hibernate
+    fi
+}
 
 #######################################################
 #                                                     #
@@ -108,16 +128,6 @@ reload_waybar() {
 reload_hypr() {
 	hyprctl reload
 	notify-send -u low -i $reload 'Reload Hyprland'
-}
-
-######################################
-#                                    #
-#       lockscreen(hyprlock)         #
-#                                    #
-######################################
-
-lock_screen() {
-    hyprlock
 }
 
 ######################################

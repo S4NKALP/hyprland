@@ -5,6 +5,7 @@
 
     configuration {
 	    show-icons: true;
+        case-sensitive: false;
 	    icon-theme: "GruvboxPlus";
 	    location: 0;
 	    font: "JetBrainsMono Nerd Font 12";
@@ -130,11 +131,11 @@
         border-radius: 				10px;
     }
 
-    inputbar {
+   /* inputbar {
 	    background-image: url("~/dotfiles/hypr/assets/rofi.png", width);
 	    padding: 220 0 0;
 	    margin: 0 -2 0 0;
-    }
+    }*/
 
     textbox {
         padding:                    10px;
