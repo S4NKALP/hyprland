@@ -200,6 +200,13 @@ if [ "$executed" == false ]; then
 fi
 }
 
+
+######################################
+#                                                                                          #
+#                        Power Profile Daemon                         #
+#                                                                                          #
+######################################
+
 power_profile() {
     get_pwr() {
         PWR=$(powerprofilesctl get)
@@ -234,4 +241,115 @@ power_profile() {
         get_pwr
         notify-send -h string:x-canonical-private-synchronous:sys-notify -u low "Power Profile changed to $PWR"
     fi
+}
+
+######################################
+#                                                                                          #
+#                                     SymLink                                      #
+#                                                                                          #
+######################################
+
+symlink() {
+    # Define cache directory
+    cache_dir="$HOME/.cache/swww/"
+
+    # Get a list of monitor outputs
+    monitor_outputs=($(ls "$cache_dir"))
+
+    # Initialize variables
+    ln_success=false
+    current_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
+    echo $current_monitor
+    cache_file="$cache_dir$current_monitor"
+    echo $cache_file
+
+    if [ -f "$cache_file" ]; then
+        # Read wallpaper path from cache file
+        wallpaper_path=$(cat "$cache_file")
+        echo $wallpaper_path
+
+        # Symlink wallpaper to the location accessible by Rofi
+        if ln -sf "$wallpaper_path" "$HOME/dotfiles/hypr/wallpaper_effects/.wallpaper_current"; then
+            ln_success=true  # Set the flag to true upon successful execution
+        fi
+
+        # Copy the wallpaper for wallpaper effects (optional)
+        # cp -r "$wallpaper_path" "$HOME/.config/hypr/wallpaper_effects/.wallpaper_current"
+    fi
+
+    # Check if symlink was successful
+    if [ "$ln_success" = true ]; then
+        echo 'Symlink successful'
+    fi
+}
+
+######################################
+#                                                                                           #
+#                                   Wallpaper Effect                         #
+#                                                                                         #
+######################################
+
+
+apply_wallpaper_effects() {
+    current_wallpaper="$HOME/dotfiles/hypr/wallpaper_effects/.wallpaper_current"
+    wallpaper_output="$HOME/dotfiles/hypr/wallpaper_effects/.wallpaper_modified"
+    focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
+    iDIR="$HOME/dotfiles/hypr/assets/"
+    SWWW_PARAMS="--transition-fps 60 --transition-type wipe --transition-duration 2"
+
+    declare -A effects=(
+        ["Black & White"]="magick $current_wallpaper -colorspace gray -sigmoidal-contrast 10,40% $wallpaper_output"
+        ["Blurred"]="magick $current_wallpaper -blur 0x5 $wallpaper_output"
+        ["Solarize"]="magick $current_wallpaper -solarize 80% $wallpaper_output"
+        ["Sepia Tone"]="magick $current_wallpaper -sepia-tone 65% $wallpaper_output"
+        ["Negate"]="magick $current_wallpaper -negate $wallpaper_output"
+        ["Charcoal"]="magick $current_wallpaper -charcoal 0x5 $wallpaper_output"
+        ["Edge Detect"]="magick $current_wallpaper -edge 1 $wallpaper_output"
+        ["Emboss"]="magick $current_wallpaper -emboss 0x5 $wallpaper_output"
+        ["Sharpen"]="magick $current_wallpaper -sharpen 0x5 $wallpaper_output"
+        ["Oil Paint"]="magick $current_wallpaper -paint 4 $wallpaper_output"
+        ["Vignette"]="magick $current_wallpaper -vignette 0x5 $wallpaper_output"
+        ["Posterize"]="magick $current_wallpaper -posterize 4 $wallpaper_output"
+        ["Polaroid"]="magick $current_wallpaper -polaroid 0 $wallpaper_output"
+        ["No Effects"]="no-effects"
+    )
+
+    no_effects() {
+        swww img -o "$focused_monitor" "$current_wallpaper" $SWWW_PARAMS &
+        wait $!
+        notify-send -u low -i "$iDIR/bell.png" "No wallpaper effects"
+        cp $current_wallpaper $wallpaper_output
+    }
+
+    main() {
+        options="No Effects"
+        for effect in "${!effects[@]}"; do
+            if [ "$effect" != "No Effects" ]; then
+                options+="\n$effect"
+            fi
+        done
+
+        choice=$(echo -e "$options" | rofi -i -dmenu)
+        if [[ -n "$choice" && "${effects[$choice]+exists}" ]]; then
+            if [ "$choice" == "No Effects" ]; then
+                no_effects
+            else
+                notify-send -u normal -i "$iDIR/bell.png" "Applying $choice effects"
+                eval "${effects[$choice]}"
+                sleep 1
+                swww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS &
+                wait $!
+                notify-send -u low -i "$iDIR/bell.png" "$choice effects applied"
+            fi
+        else
+            echo "Effects not recognized."
+        fi
+    }
+
+    if pidof rofi > /dev/null; then
+        pkill rofi
+        exit 0
+    fi
+
+    main
 }

@@ -136,7 +136,7 @@
     "7": "",
     "8": "",
     "9": "󰚌",
-    "10": "",
+    "10": "#",
     "focused": "",
     "default": "",
 	},
@@ -162,6 +162,7 @@
 		"title<.*facebook.*>": " ",
 		"title<.*Picture-in-Picture.*>": " ",
 		"class<firefox>": " ",
+		"class<.*qutebrowser.*>": "󰖟 ",
 		"class<.*term.*>": " ",
 		"class<kitty>": " ",
 		"class<konsole>": " ",
@@ -213,20 +214,27 @@
 		]
 },
 
-"group/audio": {
-  "orientation": "horizontal",
-  "modules": [
-    "pulseaudio",
-    "pulseaudio#microphone",
-    ]
-},
-
 "group/keyboard": {
   "orientation": "horizontal",
   "modules": [
     "keyboard-state",
     "custom/keyboard",
     ]
+},
+
+"group/mobo_drawer": {
+	"orientation": "inherit",
+	"drawer": {
+		"transition-duration": 500,
+		"children-class": "cpu",
+		"transition-left-to-right": true
+        },
+	"modules": [
+		"temperature",
+		"cpu",
+		"memory",
+		"disk",
+	]
 },
 
 "backlight": {

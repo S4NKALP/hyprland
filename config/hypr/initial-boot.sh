@@ -5,7 +5,7 @@
 # THIS SCRIPT CAN BE DELETED ONCE SUCCESSFULLY BOOTED!!
 
 # Variables
-wallpaper=$HOME/Pictures/wallpapers/wall-08.png
+wallpaper=$HOME/Pictures/wallpapers/lord_krishn.jpg
 kvantum_theme="Darker"
 
 swww="swww img"
