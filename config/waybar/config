@@ -2,26 +2,26 @@
 "include": "~/.config/waybar/modules",
 "layer": "top",
 "position": "bottom",
-"width": 1050,
+/*"width": 1050,*/
 
 "modules-left": [
-	"clock",
-	"custom/weather",
         "idle_inhibitor",
+        "hyprland/workspaces#rw",
+        "group/mobo_drawer",
 	],
 
 "modules-center": [
-	"hyprland/workspaces#rw"
+	"clock",
+        "custom/weather",
 	],
 
 "modules-right": [
 	"custom/menu",
 	"tray",
-	"custom/swaync",
 	"mpris",
         "custom/power_profile",
 	"backlight",
 	"pulseaudio",
 	"battery",
-	"custom/power"],
+	"custom/swaync"],
 }
