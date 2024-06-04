@@ -33,7 +33,7 @@ declare -A menu_options=(
         ["cb Clipboard"]="$RunCMD clip"
         ["rm Music"]="$RunCMD music -m"
 	["emj Emoji"]="$RunCMD emoji"
-        ["kb Kebinds"]="$RunCMD keybind"
+        ["kb Kebinds"]="$RunCMD KeyHints.sh"
         ["qe QuickEdits"]="$RunCMD edit"
   #System
 	["qq Shutdown"]="$RunCMD sys_poweroff"

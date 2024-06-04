@@ -148,7 +148,7 @@
 	"all-outputs": true,
 	"warp-on-scroll": false,
 	"sort-by-number": true,
-	"show-special": true,
+	"show-special": false,
 	"on-click": "activate",
 	"on-scroll-up": "hyprctl dispatch workspace e+1",
 	"on-scroll-down": "hyprctl dispatch workspace e-1",
@@ -579,7 +579,7 @@
   "exec": "echo ; echo  Key Hints SUPER F1",
   "interval": 86400, // once every day
   "tooltip": false,
-  "on-click": "~/dotfiles/hypr/scripts/RunCMD.sh keybind",
+  "on-click": "~/dotfiles/hypr/scripts/KeyHints.sh",
 },
 
 "custom/keyboard": {

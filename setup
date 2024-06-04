@@ -4,7 +4,7 @@ INSTLOG="install.log"
 pkg=(
     hyprland
     fnm
-    keyb
+    yad
     fd
     imv
     brightnessctl
