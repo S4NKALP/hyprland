@@ -19,7 +19,7 @@
 
 "modules-center": ["hyprland/workspaces#4"],
 
-"modules-right": ["pulseaudio#gar","backlight#gar", "battery#gar"],
+"modules-right": ["idle_inhibitor", "pulseaudio#gar","backlight#gar", "battery#gar"],
 
 
 // M O D U L E S //
@@ -27,7 +27,7 @@
 "clock#gar": {
         "format": "{:%A, %I:%M %p}",
 	//"format": "{:%a %d | %H:%M}",
-	"format-alt": "{:%A, %d %B, %Y (%R)}"
+	"format-alt": "{:%A, %d %B, %Y (%I:%M)}"
 },
 
 "hyprland/window#gar": {

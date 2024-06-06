@@ -350,3 +350,13 @@ tooltip {
     margin-bottom: 2px;
     color: #619A96;
 }
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+

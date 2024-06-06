@@ -5,6 +5,7 @@ pkg=(
     hyprland
     fnm
     yad
+    btop
     fd
     imv
     brightnessctl
@@ -353,11 +354,10 @@ echo "Synchronizing dotfiles .."
 DOTFILES_DIR="$HOME/dotfiles"
 
 CONFIG_DIRS=(
-    "ags"
+    "btop"
     "cava"
     "geany"
     "hypr"
-    "keyb"
     "kitty"
     "Kvantum"
     "mpv"

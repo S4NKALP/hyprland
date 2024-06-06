@@ -12,7 +12,7 @@
 "modules-left": [
 	"custom/menu",
 	"custom/separator#blank_2",
-	"clock",
+	"clock#sleek",
 	"custom/separator#blank_2",
 	"hyprland/window"
 ],
@@ -45,7 +45,7 @@
 	"tooltip": false,
 },
 
-"clock": {
+"clock#sleek": {
 	//"format": "{:%I:%M %p - %d/%b}", //for AM/PM
     "format": "{:%I:%M%p - %d/%b}", // 24H
 	"tooltip": false
