@@ -375,6 +375,7 @@ CONFIG_DIRS=(
     "swaync"
     "swayosd"
     "Thunar"
+    "tmux"
     "waybar"
     "yazi"
     "zathura"
