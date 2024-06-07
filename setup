@@ -18,7 +18,7 @@ pkg=(
     qt5ct
     pyprland
     qt6ct
-    nwg-look
+    nwg-look-bin
     mpv-mpris
     tmux
     fast-fetch
