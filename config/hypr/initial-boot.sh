@@ -10,7 +10,7 @@ kvantum_theme="Darker"
 color_scheme="prefer-dark"
 gtk_theme="Darker"
 icon_theme="Tela-circle-dark"
-cursor_theme="sweet-cursors"
+cursor_theme="Bibata-Orginal-Classic"
 font_name=" JetBrainsMono Nerd Font 10"
 
 swww="swww img"

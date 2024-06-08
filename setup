@@ -23,6 +23,7 @@ pkg=(
     tmux
     fast-fetch
     pacman-contrib
+    sassc
     hypridle
     pavucontrol
     pamixer
@@ -93,8 +94,7 @@ pkg=(
     noto-fonts
     gnu-free-fonts
     qutebrowser
-    sweet-cursor-theme-git
-    gruvbox-plus-icon-theme-git
+    bibata-cursor-theme-bin
     swayosd-git
 )
 # Creating a new `packages` array
@@ -337,6 +337,12 @@ for font in $HOME/hyrpland/assets/Darker; do
         sudo cp -r "$file" /usr/share/themes
     fi
 done
+echo "Copying Icon theme..."
+for font in $HOME/hyrpland/assets/Tela-circle-black; do
+    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
+        sudo cp -r "$file" /usr/share/icons
+    fi
+done
 
 sudo cp -r $HOME/hyprland/misc/firefox/* ~/.mozilla/firefox/*.default-release/
 sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
@@ -468,6 +474,7 @@ echo ""
 simulate_output "Setting some files as executable..."
 simulate_output "[   \e[32mOK\e[0m   ] Granted execute permissions to scripts"
 sudo chmod +x ~/dotfiles/hypr/scripts/*
+sudo chmod +x ~/dotfiles/hypr/initial-boot.sh
 
 
 echo ""

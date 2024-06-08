@@ -2,12 +2,11 @@
 "include": "~/.config/waybar/modules",
 "layer": "top",
 "position": "bottom",
-/*"width": 1050,*/
+"width": 1050,
 
 "modules-left": [
         "idle_inhibitor",
         "hyprland/workspaces#rw",
-        "group/mobo_drawer",
 	],
 
 "modules-center": [
