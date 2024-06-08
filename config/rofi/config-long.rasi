@@ -5,7 +5,6 @@
 
     configuration {
 	    show-icons: true;
-	    icon-theme: "GruvboxPlus";
         case-sensitive: false;
 	    location: 0;
 	    font: "JetBrainsMono Nerd Font 12";
