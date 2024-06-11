@@ -93,7 +93,6 @@ pkg=(
     ttf-firacode-nerd
     noto-fonts
     gnu-free-fonts
-    qutebrowser
     bibata-cursor-theme-bin
     swayosd-git
 )
