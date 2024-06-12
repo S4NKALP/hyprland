@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # For TouchPad
-HYPRLAND_DEVICE="dll07a7:01-044e:120b"
+HYPRLAND_DEVICE="dll07a7:01-044e:120b-touchpad"
 DIR=$HOME/.cache
 STATUS_FILE="$DIR/touchpad.status"
 
@@ -45,3 +45,4 @@ config_dir="$HOME/dotfiles/waybar/configs"
 waybar_config="$HOME/dotfiles/waybar/config"
 RunCMD="$SCRIPTSDIR/RunCMD.sh"
 
+iDIR="$HOME/dotfiles/hypr/assets"

@@ -94,7 +94,6 @@ pkg=(
     noto-fonts
     gnu-free-fonts
     bibata-cursor-theme-bin
-    swayosd-git
 )
 # Creating a new `packages` array
 packages=(

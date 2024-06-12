@@ -5,7 +5,7 @@ source ~/dotfiles/hypr/scripts/Device_cmd.sh
 source ~/dotfiles/hypr/scripts/Rofi_cmd.sh
 source ~/dotfiles/hypr/scripts/System_cmd.sh
 source ~/dotfiles/hypr/scripts/Music_cmd.sh
-
+source ~/dotfiles/hypr/scripts/Util.sh
 
 help() {
   declare -F

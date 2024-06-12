@@ -12,20 +12,23 @@ source "$CONFIG_FILE"
 ######################################
 
 toggle_touchpad() {
-  local status_file="$STATUS_FILE"
-  local action
+    local status_file="$STATUS_FILE"
+    local action
 
-  if [[ ! -e "$status_file" ]] || ! $(<"$status_file"); then
-    echo "1" > "$status_file"
-    action="enabled"
-  else
-    echo "0" > "$status_file"
-    action="disabled"
-  fi
+    # Toggle the status in the status file
+    if [[ ! -e "$status_file" ]] || [[ $(<"$status_file") -eq 0 ]]; then
+        echo "1" > "$status_file"
+        action="enabled"
+    else
+        echo "0" > "$status_file"
+        action="disabled"
+    fi
 
-  notify-send -u low -i "$notif" "Touchpad $action"
-  hyprctl keyword "device:$HYPRLAND_DEVICE:enabled" "$(cat "$status_file")"
+    # Notify the user and update the touchpad status
+    notify-send -u low -i "$notif" "Touchpad $action"
+    hyprctl keyword "device:$HYPRLAND_DEVICE:enabled" "$(cat "$status_file")"
 }
+
 
 ######################################
 #                                    #
