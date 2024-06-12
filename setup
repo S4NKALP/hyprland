@@ -378,7 +378,6 @@ CONFIG_DIRS=(
     "startship"
     "nwg-look"
     "swaync"
-    "swayosd"
     "Thunar"
     "tmux"
     "waybar"
