@@ -28,8 +28,8 @@ brightness() {
 
     case "$1" in
         --get) get_backlight ;;
-        --inc) change_backlight "+10%" ;;
-        --dec) change_backlight "10%-" ;;
+        --inc) change_backlight "+5%" ;;
+        --dec) change_backlight "5%-" ;;
         *) get_backlight ;;
     esac
 }
@@ -76,10 +76,10 @@ volume() {
     }
 
     toggle_mic() {
-        if pamixer --default-source --get-mute; then
-            pamixer --default-source -u && notify-send -e -u low -i "$iDIR/microphone.png" "Microphone Switched ON"
-        else
+        if [ "$(pamixer --default-source --get-mute)" == "false" ]; then
             pamixer --default-source -m && notify-send -e -u low -i "$iDIR/microphone-mute.png" "Microphone Switched OFF"
+        elif [ "$(pamixer --default-source --get-mute)" == "true" ]; then
+            pamixer -u --default-source u && notify-send -e -u low -i "$iDIR/microphone.png" "Microphone Switched ON"
         fi
     }
 
