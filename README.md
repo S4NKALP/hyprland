@@ -135,7 +135,6 @@ chmod +x setup
 
 ### 🧰 Tools Used
 
-- [qute](https://github.com/S4NKALP/qute) — Personalized Browser
 - [nvim](https://github.com/S4NKALP/nvim) — Personalized Editor
 - [blog](https://github.com/S4NKALP/blog) — Blog
 <hr>
