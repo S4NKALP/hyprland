@@ -68,10 +68,10 @@ volume() {
     }
 
     toggle_mute() {
-        if pamixer --get-mute; then
-            pamixer -u && notify-send -e -u low -i "$(get_icon)" "Volume Switched ON"
-        else
+        if [ "$(pamixer --get-mute)" == "false" ]; then
             pamixer -m && notify-send -e -u low -i "$iDIR/volume-mute.png" "Volume Switched OFF"
+        elif [ "$(pamixer --get-mute)" == "true" ]; then
+            pamixer -u && notify-send -e -u low -i "$(get_icon)" "Volume Switched ON"
         fi
     }
 
