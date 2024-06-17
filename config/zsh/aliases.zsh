@@ -2,6 +2,14 @@
 ## Aliases
 ##
 
+# Use the same editor
+alias vim='$EDITOR'
+alias vi='$EDITOR'
+alias code='$EDITOR'
+
+# Suffix aliases (execute specific file types with desired tool)
+alias edit='vim'              # Edit files with vim
+
 #List
 alias ls="eza --color=auto --icons"
 alias l="ls -l"
@@ -66,7 +74,14 @@ alias mkgrub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 
 # other
 alias py='python'
-alias wifi="nmtui-connect"
+alias tree='tree -C'
+
+# Activate virtual environment in current directory, otherwise try in the parent.
+alias act='source venv/bin/activate || source ../venv/bin/activate'
+
+# Wifi management
+alias wifi-gui='nm-connection-editor'
+alias wifi-tui='nmtui'
 
 # git Aliases
 alias commit="git add . && git commit -m"
