@@ -284,6 +284,37 @@
   "on-click-middle": "~/dotfiles/hypr/scripts/RunCMD.sh toggle_blur",
 },
 
+	"battery#1": {
+		"bat": "BAT0",
+		"format": "{icon}<span size='10pt'><b>{capacity}</b></span>",
+		"format-critical": "<span font_family='JetBrainsMono Nerd Font' color='#f38ba8'>{icon}</span><small><b>{capacity}</b></small>",
+		"format-good": "<span font_family='JetBrainsMono Nerd Font' color='#a6e3a1'>{icon}</span><small><b>{capacity}</b></small>",
+		"format-icons": [
+			"󰛞 󱢠 󱢠 󱢠 󱢠 ",
+			"󰣐 󱢠 󱢠 󱢠 󱢠 ",
+			"󰣐 󰛞 󱢠 󱢠 󱢠 ",
+			"󰣐 󰣐 󱢠 󱢠 󱢠 ",
+			"󰣐 󰣐 󰛞 󱢠 󱢠 ",
+			"󰣐 󰣐 󰣐 󱢠 󱢠 ",
+			"󰣐 󰣐 󰣐 󰛞 󱢠 ",
+			"󰣐 󰣐 󰣐 󰣐 󱢠 ",
+			"󰣐 󰣐 󰣐 󰣐 󰛞 ",
+			"󰣐 󰣐 󰣐 󰣐 󰣐 "
+		],
+		"format-time": "{H}hr & {M}min",
+		"format-warning": "<span font_family='JetBrainsMono Nerd Font' color='#f9e2af'>{icon}</span><small><b>{capacity}</b></small>",
+		"interval": 60,
+		"max-length": 25,
+		"states": {
+		"critical": 15,
+		"good": 100,
+		"warning": 40
+		},
+	"tooltip-format": "󰚥 plugged, at {capacity}%",
+	"tooltip-format-charging": "󰢟 charging, at {capacity}%",
+	"tooltip-format-discharging": "󱧦 discharging, at {capacity}%"
+	},
+
 "bluetooth": {
   "format": "",
   "format-disabled": "󰂳",

@@ -2,7 +2,7 @@
 "include": "~/.config/waybar/modules",
 "layer": "top",
 "position": "bottom",
-"width": 1050,
+"width": 1080,
 
 "modules-left": [
         "idle_inhibitor",
@@ -21,6 +21,7 @@
         "custom/power_profile",
 	"backlight",
 	"pulseaudio",
-	"battery",
+	//"battery",
+	"battery#1",
 	"custom/swaync"],
 }
