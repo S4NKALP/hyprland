@@ -1,0 +1,257 @@
+import { Gtk as GtkType } from "types/@girs/gtk-3.0/gtk-3.0";
+import { Notification as NotificationType } from "types/service/notifications";
+import Box from "types/widgets/box";
+import { timeout } from "resource:///com/github/Aylur/ags/utils.js";
+import GLib from "gi://GLib";
+import Pango from "gi://Pango";
+import Label from "types/widgets/label";
+
+const notifications = await Service.import("notifications")
+const { Gtk } = imports.gi;
+
+function NotificationIcon({ app_entry, app_icon, image }: NotificationType): Box<GtkType.Widget, any> {
+    if (image) {
+        return Widget.Box({
+            css: `background-image: url("${image}");`
+                + "background-size: contain;"
+                + "background-repeat: no-repeat;"
+                + "background-position: center;",
+        })
+    }
+
+    let icon = "dialog-information-symbolic"
+    if (Utils.lookUpIcon(app_icon))
+        icon = app_icon
+
+    if (app_entry && Utils.lookUpIcon(app_entry))
+        icon = app_entry
+
+    return Widget.Box({
+        child: Widget.Icon(icon),
+    })
+}
+
+
+export const Notification = (notification: NotificationType, dismiss = true) => Widget.Box({
+    class_name: `notification ${notification.urgency}`,
+    vertical: true,
+    children: [
+        Widget.EventBox({
+            on_primary_click: (box) => {
+                // @ts-ignore
+                const label: Label<any> = box.child.children[1].children[1];
+                if (label.lines < 0) {
+                    label.lines = 3;
+                    label.truncate = "end";
+                } else {
+                    label.lines = -1;
+                    label.truncate = "none";
+                }
+            },
+            child: Widget.Box({
+                children: [
+                    Widget.Box({
+                        class_name: "notification-icon",
+                        child: NotificationIcon(notification),
+                        vpack: "start"
+                    }),
+                    Widget.Box({
+                        vertical: true,
+                        children: [
+                            Widget.Box({
+                                children: [
+                                    Widget.Label({
+                                        class_name: "notification-title",
+                                        label: notification.summary,
+                                        justification: "left",
+                                        max_width_chars: 3,
+                                        truncate: "end",
+                                        lines: 1,
+                                        xalign: 0,
+                                        hexpand: true,
+                                    }),
+                                    Widget.Label({
+                                        class_name: "notification-time",
+                                        label: GLib.DateTime.new_from_unix_local(notification.time).format("%I:%M %p"),
+                                    }),
+                                    Widget.Button({
+                                        class_name: "standard_icon_button",
+                                        child: Widget.Icon("window-close-symbolic"),
+                                        on_clicked: () => {
+                                            if (dismiss) {
+                                                notification.dismiss();
+                                            }
+                                            else {
+                                                notification.close();
+                                            }
+                                        },
+                                        css: "margin-left: 5px;"
+                                    })
+                                ]
+                            }),
+                            Widget.Label({
+                                class_name: "notification-body",
+                                justification: "left",
+                                max_width_chars: 24,
+                                lines: 3,
+                                truncate: "end",
+                                wrap_mode: Pango.WrapMode.WORD_CHAR,
+                                xalign: 0,
+                                wrap: true,
+                                // HACK: remove linebreaks, so lines property works properly
+                                label: notification.body.replace(/(\r\n|\n|\r)/gm, " "),
+                            }),
+                            notification.hints.value ?
+                                Widget.ProgressBar({
+                                    class_name: "notification-progress",
+                                    value: Number(notification.hints.value.unpack()) / 100
+                                }) : Widget.Box()
+                        ]
+                    })
+                ]
+            })
+        }),
+        Widget.Box({
+            halign: Gtk.Align.END,
+            class_name: "notification-actions",
+            children: notification.actions.map(action => Widget.Button({
+                child: Widget.Label(action.label),
+                on_clicked: () => notification.invoke(action.id),
+                class_name: "notification-action-button",
+            }))
+        })
+    ]
+});
+
+const NotificationReveal = (notification: NotificationType, visible = false, dismiss = true) => {
+    const transition_duration = 200;
+    const secondRevealer = Widget.Revealer({
+        vpack: "start",
+        child: Notification(notification, dismiss),
+        reveal_child: visible,
+        transition: "slide_left",
+        transition_duration: transition_duration,
+        hexpand: true,
+        class_name: "second_revealer",
+        setup: (revealer) => {
+            timeout(1, () => {
+                revealer.reveal_child = true;
+            });
+        },
+    });
+
+    const firstRevealer = Widget.Revealer({
+        child: secondRevealer,
+        reveal_child: true,
+        transition: "slide_down",
+        transition_duration: transition_duration,
+        class_name: "first_revealer"
+    });
+
+    type BoxAttrs = {
+        destroyWithAnims: any,
+        count: number,
+        id: number,
+    }
+
+    let box: Box<any, BoxAttrs>;
+
+    const destroyWithAnims = () => {
+        secondRevealer.reveal_child = false;
+        timeout(transition_duration, () => {
+            firstRevealer.reveal_child = false;
+            timeout(transition_duration, () => {
+                box.destroy();
+            });
+        });
+    };
+    box = Widget.Box({
+        hexpand: true,
+        hpack: "end",
+        attribute: {
+            "destroyWithAnims": destroyWithAnims,
+            count: 0,
+            id: notification.id,
+        },
+        children: [firstRevealer],
+    });
+    return box;
+};
+
+type NotificationsBoxType = {
+    exclude: string[],
+    include: string[]
+}
+
+export function NotificationPopups(
+    dismiss = true,
+    { exclude, include }: NotificationsBoxType = { exclude: [], include: [] },
+    timeout = true,
+    revealer = NotificationReveal
+) {
+    const list = Widget.Box({
+        vpack: "start",
+        vertical: true,
+        children: notifications.popups.map(id => revealer(id, false, dismiss)),
+    })
+
+    function onNotified(_: any, id: number) {
+        const n = notifications.getNotification(id)
+        if (notifications.dnd || !n)
+            return;
+        if (exclude.includes(n.app_name.trim()))
+            return
+        if (!include.includes(n.app_name.trim()) && include.length > 0)
+            return
+        const original = list.children.find(n => n.attribute.id === id);
+        const replace = original?.attribute.id;
+        if (!replace) {
+            const notification = revealer(n, false, dismiss);
+            notification.attribute.count = 1;
+            list.pack_end(notification, false, false, 0)
+        }
+        else if (original) {
+            const notification = revealer(n, true, dismiss);
+            notification.attribute.count++;
+            original.destroy()
+            list.pack_end(notification, false, false, 0)
+        }
+        if (timeout)
+            setTimeout(() => {
+                onDismissed(_, id)
+            }, 5000)
+    }
+
+    function onDismissed(_: any, id: number) {
+        const original = list.children.find(n => n.attribute.id === id);
+        if (!original)
+            return
+        original.attribute.count--;
+        if (original.attribute.count <= 0) {
+            original.attribute.destroyWithAnims()
+        }
+    }
+
+    list.hook(notifications, onNotified, "notified")
+        .hook(notifications, onDismissed, dismiss ? "dismissed" : "closed")
+    return list
+}
+
+export function Notifications(monitor = 0) {
+    const window = Widget.Window({
+        monitor,
+        name: `notifications${monitor}`,
+        class_name: "notification-popups",
+        anchor: ["bottom", "right"],
+        type: Gtk.WindowType.POPUP,
+        child: Widget.Box({
+            css: "min-width: 2px; min-height: 2px;",
+            class_name: "notifications",
+            hexpand: true,
+            vexpand: true,
+            child: NotificationPopups(),
+        }),
+        visible: true,
+    })
+    return window
+}
