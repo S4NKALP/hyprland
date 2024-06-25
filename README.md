@@ -1,6 +1,6 @@
 <div align = "center">
 
-<h1><a href="https://github.com/S4NKALP/hyprland">hyprland</a></h1>
+<h1><a href="https://github.com/S4NKALP/hyprland">Hyprland with AGS</a></h1>
 
 <a href="https://github.com/S4NKALP/hyprland/blob/main/LICENSE">
 <img alt="License" src="https://img.shields.io/github/license/S4NKALP/hyprland?style=flat&color=eee&label="> </a>
@@ -24,8 +24,10 @@
 
 
 <figure>
-  <img src="assets/Rice.png" alt="hyprland" width="400">
-  <img src="assets/Rofi.png" alt="rofi" width="300">
+  <img src="assets/Rice.png" alt="hyprland" width="300">
+  <img src="assets/Rice1.png" alt="rice" width="300">
+  <img src="assets/Rice2.png" alt="rice" width="300">
+  <img src="assets/Rice3.png" alt="rice" width="300">
   <br/>
 </figure>
 
@@ -36,6 +38,7 @@
 
 <h3>This repository contains Arch Linux's DotFiles, which I use on a daily basis. <br>
 It includes custom settings, aliases, settings for familiar tools, and more to quickly create my ideal work environment on any machine.</h3>
+for
 <hr>
 
 
@@ -45,7 +48,6 @@ It includes custom settings, aliases, settings for familiar tools, and more to q
 - :bell: Notification Center
 - :framed_picture: Various Wallpapers
 - :nerd_face: Nerd Fonts for the Shell Prompt
-- :loud_sound: Volume OSD
 - :iphone: App Launcher
 - :keyboard: Multiple Keyboard Layouts
 - :car: Automatic mount of USB devices with notification
@@ -64,12 +66,11 @@ It includes custom settings, aliases, settings for familiar tools, and more to q
 - **WM**: [hyprland](https://hyprland.org/) :window:
 - **Shell**: [zsh](https://www.zsh.org/) / [starship](https://github.com/starship/starship) :shell:
 - **Terminal Emulator**: [kitty](https://sw.kovidgoyal.net/kitty/) :cat:
-- **Panel**: [waybar](https://github.com/Alexays/Waybar) :shaved_ice:
+- **Panel**: [AGS](https://aylur.github.io/ags-docs/) :shaved_ice:
 - **Text Editor**: [neovim](https://neovim.io/) / [geany](https://www.geany.org/) :keyboard:
-- **App Launcher**: [rofi](https://davatorium.github.io/rofi/) :rocket:
+- **App Launcher**: [rofi](https://davatorium.github.io/rofi/) / [AGS](https://aylur.github.io/ags-docs/) :rocket:
 - **File Manager**: [yazi](https://yazi-rs.github.io/) / [Thunar](https://github.com/neilbrown/thunar) :open_file_folder:
-- **Browser**: [firefox](https://www.mozilla.org/) / [qutebrowser](https://github.com/qutebrowser/qutebrowser) :globe_with_meridians:
-- **Notification Manager**: [swaync](https://github.com/ErikReider/SwayNotificationCenter) :bell:
+- **Browser**: [firefox](https://www.mozilla.org/) :globe_with_meridians:
 - **Colorscheme**: [Darker](https://github.com/S4NKALP/hyprland/tree/main/assets/Darker) :art:
 
 ---
@@ -100,7 +101,6 @@ It includes custom settings, aliases, settings for familiar tools, and more to q
     Windows + D: Application Launcher
     Windows + C: Close Program
     ALT + C: Xmenu
-    ALT + W: Waybar layout Switcher
     ALT + M: Online Music Player
     Windows + W: Wallpaper Picker
     Windows + Space: Change Screen Layout Style
@@ -127,7 +127,7 @@ or in ~/dotfiles/hypr/configs/Keybinds.conf
 </figure>
 
 ```
-git clone https://github.com/S4NKALP/hyprland.git
+git clone -b AGS https://github.com/S4NKALP/hyprland.git
 cd hyprland
 chmod +x setup
 ./setup
@@ -135,7 +135,6 @@ chmod +x setup
 
 ### 🧰 Tools Used
 
-- [qute](https://github.com/S4NKALP/qute) — Personalized Browser
 - [nvim](https://github.com/S4NKALP/nvim) — Personalized Editor
 - [blog](https://github.com/S4NKALP/blog) — Blog
 <hr>

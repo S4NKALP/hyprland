@@ -10,11 +10,6 @@ source "$CONFIG_FILE"
 # Define menu options as an associative array
 declare -A menu_options=(
 
-	#waybar
-	["wbt ToggleWaybar"]="killall -SIGUSR1 waybar"
-	#["wbl WaybarLayout"]="$RunCMD waybar_layout"
-        ["wbr Reload Waybar"]="$RunCMD reload_waybar"
-	["wbu Update Waybar"]="$RunCMD update_waybar"
   #hypr
 	["hpr Reload hyprland"]="$RunCMD reload_hypr"
         ["rld Reload All"]="$RunCMD reload_all"
@@ -30,19 +25,20 @@ declare -A menu_options=(
         ["wc Random Wallpaper"]="$RunCMD random_wall"
   #RunCMD
 	["; Launcher"]="rofi -show drun -modi drun,filebrowser,run,window"
-        ["cb Clipboard"]="$RunCMD clip"
-        ["rm RunCMDMusic"]="$RunCMD music -m"
-	["emj RunCMDEmoji"]="$RunCMD emoji"
-        ["kb Kebinds"]="$RunCMD keybind"
-        ["qe Edits"]="$RunCMD edit"
+        ["cb Clipboard"]="pkill rofi || true && ags -t cliphist"
+        ["rm Music"]="$RunCMD music -m"
+	["emj Emoji"]="$RunCMD emoji"
+        ["kb Kebinds"]="$SCRIPTSDIR/KeyHints.sh"
+        ["qe QuickEdits"]="$RunCMD edit"
   #System
 	["qq Shutdown"]="$RunCMD sys_poweroff"
 	["rr Reboot"]="$RunCMD sys_reboot"
-	["SS Wlogout"]="wlogout"
-	["cn Close Notifactions"]="swaync-client -C"
+	["lk Lock"]="$RunCMD sys_lock"
+	["lo LogOut"]="$RunCMD sys_logout"
+        ["sp Suspend"]="$RunCMD sys_suspend"
+        ["hb Hibernate"]="$RunCMD sys_hibernate"
 	["dm0 disable monitor"]="$RunCMD disable_edp1"
 	["dm1 enable monitor"]="$RunCMD enable_edp1"
-        ["tt Touchpad"]="$RunCMD toggle_touchpad"
         ["tbt Bluetooth"]="$RunCMD toggle_bluetooth"
         ["tw Wifi"]="$RunCMD totggle_wifi"
         ["kb Keyboard switcher"]="$RunCMD kb_changer"
@@ -63,6 +59,8 @@ main() {
 				-mesg "Hello" \
 				-max-history-size 0 \
 				-auto-select
+
+
 	)
 
 	if [ -z "$choice" ]; then
