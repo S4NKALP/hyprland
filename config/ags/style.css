@@ -1,7 +1,8 @@
 @import "./colors.css";
 
 window.bar {
-    background-color: @surface;
+    /*background-color: @surface;*/
+    background-color: transparent;
     padding: 6px;
 }
 
@@ -629,7 +630,7 @@ window.notification-popups box.notifications {
 }
 
 .system_scale.backlight {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .system_scale.brightness slider {
