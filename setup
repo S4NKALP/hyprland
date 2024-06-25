@@ -125,7 +125,7 @@ pkg=(
     # AGS
     gnome-bluetooth-3.0
     aylurs-gtk-shell
-    esbuild
+    bun-bin
     dart-sass
     sass
 )
