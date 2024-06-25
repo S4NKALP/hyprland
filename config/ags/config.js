@@ -1,7 +1,16 @@
-import onConfigParsed from "./init.js";
-import windows from "./windows.js";
+const entry = App.configDir + '/main.ts'
+const outdir = '/tmp/ags/js'
 
-App.config({
-  windows: windows,
-  onConfigParsed: onConfigParsed,
-});
+try {
+    await Utils.execAsync([
+        'bun', 'build', entry,
+        '--outdir', outdir,
+        '--external', 'resource://*',
+        '--external', 'gi://*',
+    ])
+    await import(`file://${outdir}/main.js`)
+} catch (error) {
+    console.error(error)
+}
+
+export { }
