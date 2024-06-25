@@ -316,6 +316,14 @@ function TaskBar() {
                 globalWidgets.push(widget);
             }
         });
+if (globalWidgets.length === 0) {
+            const desktopWidget = Widget.Button({
+                attribute: { pid: 'desktop' },
+                child: Widget.Icon({ icon: "desktop-icon" }),
+                tooltip_markup: "Desktop",
+            });
+            globalWidgets.push(desktopWidget);
+        }
         return globalWidgets;
     }
 
@@ -328,8 +336,12 @@ function TaskBar() {
 
 function volumeIndicator() {
     return Widget.EventBox({
-        onScrollUp: () => audio.speaker.volume += 0.01,
-        onScrollDown: () => audio.speaker.volume -= 0.01,
+        onScrollUp: () => {
+            audio.speaker.volume = Math.min(audio.speaker.volume + 0.05, 1);
+            },
+        onScrollDown: () => {
+            audio.speaker.volume = Math.max(audio.speaker.volume - 0.05, 0);
+            },
         class_name: "filled_tonal_button volume_box",
         child: Widget.Button({
             on_primary_click: () => Utils.execAsync("pavucontrol").catch(print),
