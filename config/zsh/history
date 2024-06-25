@@ -1,1 +1,1417 @@
-echo "hello im S4NKALP"
+: 1717140522:0;echo "hello im S4NKALP"
+: 1717140594:0;sudo vim /etc/pacman.conf
+: 1717140738:0;paru -S fnm
+: 1717140817:0;paru -S pyprland
+: 1717140872:0;du -sh /var/cache/pacman/pkg/
+: 1717140896:0;sudo pacman -S pacman-contrib
+: 1717140903:0;sudo systemctl enable paccache.timer
+: 1717140913:0;sudo pacman -S xdg-user-dirs
+: 1717140980:0;ln -lf ~/dotfiles/yazi ~/.config
+: 1717140995:0;ln -sf ~/dotfiles/zathura ~/.config
+: 1717141006:0;ln -sf ~/dotfiles/mpv ~/.config
+: 1717141011:0;sudo pacman -S mpv
+: 1717141022:0;sudo pacman -S neovim
+: 1717141063:0;pypr &
+: 1717141097:0;unzip nvim-main.zip
+: 1717141114:0;ln -sf ~/dotfiles/nvim ~/.config
+: 1717141148:0;paru -S fd imv brightnessctl playerctl
+: 1717141163:0;paru -S hyprlock
+: 1717141171:0;paru -S hypridle
+: 1717141184:0;paru -S qt5ct qt6ct
+: 1717141196:0;paru -S nwg-look
+: 1717141203:0;nwg-look
+: 1717141228:0;paru -S mvp-mpris
+: 1717141234:0;paru -S mpv-mpris
+: 1717141247:0;paru -S pavucontrol
+: 1717141270:0;paru -S pamixer
+: 1717141277:0;paru -S file-roller
+: 1717141287:0;paru -S wlroots
+: 1717141296:0;paru -S wf-recorder
+: 1717141307:0;paru -S als-utils
+: 1717141311:0;paru -S alsa-utils
+: 1717141327:0;paru -S thunar-volman thunar-archive-plugin
+: 1717141365:0;paru -S mtpfs udiskie jmtpfs gvfs-gphoto2 gvfs-mtp
+: 1717141422:0;paru -S grim slurp jq
+: 1717141431:0;paru -S unrar zip
+: 1717141444:0;paru -S tumbler
+: 1717141454:0;paru -S imagemagick
+: 1717141472:0;paru -S zathura zathura-pdf-mupdf
+: 1717141487:0;paru -S yt-flp
+: 1717141490:0;paru -S yt-dlp
+: 1717141503:0;paru -S ffmpegthumbnailer
+: 1717141560:0;paru -S rofi-lbonn-wayland-git
+: 1717141749:0;ln -sf ~/dotfiles/rofi ~/.config
+: 1717141775:0;sudo vim /etc/paru.conf
+: 1717141786:0;paru -Rns wofi vlc
+: 1717141799:0;sudo pacman -Rns vlc --no-confirm
+: 1717141802:0;sudo pacman -Rns vlc
+: 1717141814:0;paru -Rns phonon-qt6-vlc
+: 1717141823:0;paru
+: 1717141841:0;paru -Rns dolphin
+: 1717141891:0;paru -S geany-plugins geany-snippets
+: 1717141938:0;sudo pacman -S bluez blueman bluez-utils
+: 1717141944:0;sudo systemctl enable bluetooth && sudo systemctl start bluetooth
+: 1717141963:0;paru -S clang jdk-openjdk
+: 1717141986:0;sudo pacman -S intel-ucode
+: 1717141998:0;paru -S base-devel
+: 1717142010:0;paru -Rns vlc
+: 1717142057:0;sudo systemctl enable preload && sudo systemctl start preload
+: 1717142092:0;paru -S swaync
+: 1717142100:0;paru -S swayosd
+: 1717142144:0;paru -S ttf-font-awesome
+: 1717142173:0;paru -S otf-font-awesome
+: 1717142186:0;paru -S adobe-source-code-pro-fonts
+: 1717142200:0;paru -S ttf-ibm-plex
+: 1717142227:0;paru -S noto-fonts gnu-free-fonts
+: 1717142256:0;paru -S ttf-droid
+: 1717142308:0;paru -S ttf-bitstream-vera ttf-croscore ttf-liveration ttf-dejavu
+: 1717142330:0;paru -S ttf-liberation
+: 1717142352:0;paru -Rns ttf-liveration
+: 1717142385:0;paru -S ttf-fira-code
+: 1717142401:0;paru -S noto-fonts-emoji
+: 1717142420:0;paru -S ttf-cascadia-code-nerd
+: 1717142454:0;ln -sf ~/dotfiles/swaync ~/.config
+: 1717142463:0;ln -sf ~/dotfiles/swayosd ~/.config
+: 1717142514:0;ln -sf ~/dotfiles/cava ~/.config
+: 1717142520:0;paru -S lxappearance
+: 1717142584:0;paru -S sweet-cursor-theme-git gruvbox-plus-icon-theme-git swww
+: 1717142699:0;paru -S wmctrl
+: 1717142712:0;paru -S polkit-gnome
+: 1717142731:0;paru -S cava
+: 1717142779:0;paru -S network-manager-applet
+: 1717142795:0;paru -S clipshit
+: 1717142814:0;paru -S xsel bc
+: 1717142852:0;paru -Rns hyprpaper
+: 1717142871:0;paru -S cmake
+: 1717142883:0;paru -S java
+: 1717142905:0;paru -S java32-environment-common
+: 1717142953:0;paru -S yazu
+: 1717142956:0;paru -S yazi
+: 1717142996:0;paru -S starship
+: 1717143007:0;starship
+: 1717143053:0;ln -sf ~/dotfiles/qimgv ~/.config
+: 1717143080:0;ln -sf ~/dotfiles/keyb ~/.config
+: 1717143185:0;paru -S zarchive
+: 1717143202:0;zarchive
+: 1717143207:0;paru -Rns zarchive
+: 1717143283:0;paru -S thunar-custom-actions thunar-archive-plugin thunar-extended
+: 1717144013:0;swww
+: 1717144882:0;paru -S fastfetch
+: 1717144899:0;ln -sf ~/dotfiles/fastfetch ~/.config
+: 1717144960:0;paru -S lazygit
+: 1717145113:0;paru -S qutebrowser
+: 1717145131:0;ln -sf ~/dotfiles/npm ~/.config
+: 1717146018:0;chmod +x Music_cmd.sh Ref.sh Rofi_cmd.sh RunCMD.sh System_cmd.sh Ui_cmd.sh Xmenu.sh
+: 1717146031:0;cd .local
+: 1717146038:0;chmod +x bin/*
+: 1717146047:0;rm neofetch
+: 1717146050:0;dog
+: 1717146054:0;unix
+: 1717146068:0;paru -S cliphist
+: 1717146185:0;ssh -v
+: 1717146192:0;paru -S openssh
+: 1717146214:0;git config --global user.name 'S4NKALP'
+: 1717146228:0;git config --global user.email 'sankalptharu50028@gmail.com'
+: 1717146236:0;ls -lah ~/.ssh
+: 1717146260:0;ssh -keygen -t rsa -b 4096 -C "sankalptharu50028@gmail.com"
+: 1717146267:0;ssh -keygen -t rsa -b 4096 -C 'sankalptharu50028@gmail.com'
+: 1717146279:0;ssh-keygen -t rsa -b 4096 -C 'sankalptharu50028@gmail.com'
+: 1717146327:0;ssh-add ~/.ssh/id_rsa
+: 1717146365:0;paru -S xclip
+: 1717146372:0;xclip -sel clip < ~/.ssh/id_rsa.pub
+: 1717146420:0;ssh -T git@github.com
+: 1717146542:0;ls -la ~/.ssh/id_*.pub
+: 1717146551:0;ssh-copy-id root@remote-server-ip
+: 1717146597:0;ssh-keygen -t rsa
+: 1717146670:0;ssh-keygen -t ed25519 -C "sankalptharu50028@gmail.com"
+: 1717146686:0;eval "$(ssh-agent -s)"
+: 1717146691:0;ssh-add ~/.ssh/id_ed25519
+: 1717146772:0;gcl git@github.com:S4NKALP/hyprland.git
+: 1717146865:0;paru -Rns xclip
+: 1717146919:0;paru -S xdg-desktop-portal-gtk
+: 1717146928:0;paru -S xdg-desktop-portal
+: 1717146936:0;paru -S xdg-desktop-portal-hyprland
+: 1717147526:0;paru -S npm
+: 1717147608:0;gcl git@github.com:S4NKALP/nvim.git
+: 1717147641:0;cd nvim
+: 1717148058:0;paru -S ttf-readex-pro ttf-material-symbols-variable-git ttf-space-mono-nerd ttf-sarasa-gothictf-jetbrains-mono-nerd
+: 1717148074:0;paru -S ttf-readex-pro ttf-material-symbols-variable-git ttf-space-mono-nerd ttf-sarasa-gothic ttf-jetbrains-mono-nerd
+: 1717148151:0;paru -S power-profiles-daemon
+: 1717148161:0;sudo systemctl enable power-profiles-daemon.service
+: 1717148171:0;systemctl unmask power-profiles-daemon.service
+: 1717148184:0;systemctl start power-profiles-daemon.service
+: 1717148536:0;gcl git@github.com:S4NKALP/project.git
+: 1717148560:0;gcl git@github.com:S4NKALP/Protofolio.git
+: 1717148570:0;gcl git@github.com:S4NKALP/blog.git
+: 1717148581:0;gcl git@github.com:S4NKALP/projects.git
+: 1717148594:0;gcl git@github.com:S4NKALP/links.git
+: 1717148604:0;gcl git@github.com:S4NKALP/resume.git
+: 1717148613:0;gcl git@github.com:S4NKALP/qute.git
+: 1717148631:0;gcl git@github.com:S4NKALP/READEME-Templates.git
+: 1717148636:0;gcl git@github.com:S4NKALP/README-Templates.git
+: 1717148657:0;gcl git@github.com:S4NKALP/S4NKALP.git
+: 1717148745:0;gcl git@github.com:S4NKALP/Wallpapers.git
+: 1717149460:0;paru -S ttf-font-awesome6
+: 1717149516:0;paru -S tmux
+: 1717149640:0;sudo pacman -S qt5-graphicaleffects qt5-svg qt5-quickcontrols2
+: 1717149720:0;sddm
+: 1717150590:0;cd boo
+: 1717150906:0;sudo cp -r Z4CKX /usr/share/sddm/themes
+: 1717150937:0;sudo cat /etc/sddm.conf
+: 1717150941:0;paru -S bat
+: 1717150947:0;sudo bat /etc/sddm.conf
+: 1717151111:0;sudo tar -xzvf ~/Downloads/sddm-sober.tar.gz -C /usr/share/sddm/themes
+: 1717151283:0;git clone https://github.com/aczw/sddm-theme-corners.git
+: 1717151304:0;cd sddm-theme-corners
+: 1717151311:0;sudo cp -r corners/ /usr/share/sddm/themes/
+: 1717151423:0;cd fa
+: 1717151443:0;sudo cp .face.icon /usr/share/sddm/facess
+: 1717151457:0;sudo mv .face.icon sankalp.face.icon
+: 1717151654:0;cd themes
+: 1717151661:0;sudo rm -rf boo
+: 1717151667:0;sudo rm -rf Z4CKX
+: 1717151671:0;sudo rm -rf corners
+: 1717151677:0;cd boo-sddm
+: 1717151682:0;sudo cp -r boo /usr/share/sddm/themes
+: 1717151684:0;sudo vim /etc/sddm.conf
+: 1717151714:0;cd /usr/
+: 1717151719:0;cd share
+: 1717151730:0;paru -Rn java32-environment-common
+: 1717151735:0;paru -Rns java32-environment-common
+: 1717151756:0;paru -Rns java
+: 1717151807:0;paru -Rns jdk-openjdk
+: 1717151826:0;paru -S jdk21-openjdk
+: 1717167897:0;paru -S otf-operator-mono
+: 1717170068:0;paru -S nerd-fonts-git
+: 1717170116:0;paru -S ttf-firacode
+: 1717170162:0;paru -Rns vim
+: 1717170571:0;paru -S otf-operator-mono-lig
+: 1717170872:0;paru -S ttf-material-design-iconic-font
+: 1717171027:0;sudo pacman -Ssq nerd-fonts
+: 1717171047:0;paru -S ttf-noto-nerd
+: 1717171066:0;paru -S ttf-iosevka-nerd
+: 1717171198:0;cd /usr/share
+: 1717171202:0;cd fonts
+: 1717171210:0;cd ttf
+: 1717171480:0;paru -S ttf-firacode-nerd
+: 1717171568:0;paru -S ttf-font-awesome ttf-jetbrains-mono-nerd noto-fonts-emoji
+: 1717171588:0;paru -S gnu-free-fonts
+: 1717171606:0;paru -S noto-fonts ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid ttf-ibm-plex ttf-liberation
+: 1717171617:0;sudo pacman -S noto-fonts ttf-bitstream-vera ttf-croscore ttf-dejavu ttf-droid ttf-ibm-plex ttf-liberation
+: 1717171625:0;sudo pacman -S ttf-font-awesome ttf-jetbrains-mono-nerd noto-fonts-emoji
+: 1717171753:0;paru -Rns alacritty
+: 1717171806:0;paru -S adobe-source-code-pro-fonts \
+noto-fonts-emoji\
+otf-font-awesome \
+ttf-droid \
+ttf-fira-code\
+ttf-jetbrains-mono \
+ttf-jetbrains-mono-nerd
+: 1717172044:0;paru -S ttf-material-design-icons-git
+: 1717172501:0;fc-conflist
+: 1717172532:0;fc-list :charset=f77e
+: 1717172553:0;kitty
+: 1717172592:0;fc-list :scalable=true:charset=f00d
+: 1717172606:0;cd .config
+: 1717172618:0;paru -S fontconfig
+: 1717172650:0;kitty +list-fonts
+: 1717172941:0;paru -S ttf-joypixels ttf-terminus-nerd webp-pixbuf-loader
+: 1717172957:0;paru -S libweb
+: 1717173008:0;nvim icons.lua
+: 1717173292:0;paru -S tf-nerd-fonts-symbols
+: 1717173300:0;paru -S ttf-nerd-fonts-symbols
+: 1717173307:0;paru -S ttf-nerd-fonts-symbols-mono
+: 1717173327:0;paru -S ttf-victor-mono ttf-victor-mono-nerd
+: 1717173343:0;paru -S ttf-bitstream-vera ttf-dejavu
+: 1717173446:0;paru -S wezterm
+: 1717175136:0;kitty --debug-font-fallback
+: 1717175208:0;nivm
+: 1717230327:0;paru -S telegram-desktop
+: 1717231001:0;python
+: 1717234634:0;paru -Rns ttf-material-design-iconic-font
+: 1717234643:0;paru -Rns ttf-material-design-icons-git
+: 1717234655:0;paru -Rns ttf-material-symbols-variable-git
+: 1717234691:0;paru -Rns ttf-sarasa-gothic
+: 1717234705:0;paru -Rns ttf-space-mono-nerd
+: 1717234718:0;paru -Rns ttf-nerd-fonts-symbols
+: 1717234763:0;paru -Rns ttf-readex-pro
+: 1717234834:0;paru -Rns otf-operator-mono-lig
+: 1717234901:0;paru -Rns ttf-victor-mono
+: 1717234932:0;paru -Rns ttf-joypixels ttf-terminus-nerd webp-pixbuf-loader
+: 1717234991:0;paru -Rns ttf-noto-nerd
+: 1717235050:0;sudo rm -rf sarasa-gothic
+: 1717235058:0;sudo rm -rf ttf-readex-pro
+: 1717236237:0;chmod +x office.AppImage
+: 1717236547:0;chmod +x DesktopEditors-x86_64.AppImage
+: 1717236569:0;chmod +x wps-office_11.1.0.11719.XA_amd64.deb
+: 1717259115:0;sudo rm sankalp.face.icon
+: 1717259155:0;ln -sf ~/dotfiles/qute ~/.config
+: 1717259198:0;ln -sf ~/dotfiles/qutebrowser ~/.config
+: 1717259209:0;ln -sf ~/dotfiles/qute ~/.config/qutebrowser
+: 1717262925:0;rofi -show run -case-sensitive false\
+
+: 1717263023:0;rofi -show drun -i\
+
+: 1717264997:0;./RunCMD.sh music
+: 1717266267:0;./Music_cmd.sh -i
+: 1717266331:0;./Music_cmd.sh -m
+: 1717266333:0;./Music_cmd.sh
+: 1717266340:0;./Music_cmd.sh 2<error.log
+: 1717266425:0;killall mpv
+: 1717266776:0;./Music_cmd.sh 2>error.log
+: 1717300388:0;git clone https://github.com/PROxZIMA/boo-sddm.git
+: 1717300464:0;cd faces
+: 1717300489:0;sudo rm .face.icon
+: 1717300505:0;sudo cp .face.icon /usr/share/sddm/themes/boo/faces
+: 1717300891:0;./RunCMD.sh music -m
+: 1717301124:0;ln -sf ~/dotfiles/lazygit ~/.config
+: 1717301242:0;commit "Plugins Update"
+: 1717328361:0;./RofiCalc.sh
+: 1717328533:0;./temp.sh
+: 1717345982:0;firefox --app=https://chat.openai.com
+: 1717346061:0;firefox -P "AppModeProfile" -new-window "https://chat.openai.com" -width 800 -height 600 -chrome\
+
+: 1717346089:0;firefox -P "AppModeProfile" -new-window "https://chat.openai.com" -width 800 -height 600 --class "webapp"\
+
+: 1717346136:0;qutebrowser --app=https://chat.openai.com
+: 1717347980:0;commit "Update Hyprlock"
+: 1717348741:0;sudo cd /etc/polkit-1/rules.d
+: 1717348748:0;cd /etc/polkit-1/rules.d
+: 1717348781:0;sudo nvim /etc/polkit-1/rules.d/10-xampp.rules
+: 1717348806:0;sudo usermod -aG wheel $USER
+: 1717348829:0;sudo nvim .local/bin/startxampp
+: 1717348861:0;sudo rm startxampp
+: 1717348866:0;nvim startxampp
+: 1717348881:0;chmod +x startxampp
+: 1717348954:0;cd D
+: 1717349000:0;paru -S xhost
+: 1717349023:0;paru -S xserver
+: 1717349026:0;c;ear
+: 1717349072:0;paru -S xorg-xhost
+: 1717349234:0;cd /etc/polkit-1/rules.d/10-xampp.rules
+: 1717349244:0;cd /etc/
+: 1717349247:0;cd polkit-1
+: 1717349249:0;cd rules.d
+: 1717349257:0;sudo cp rules.d
+: 1717349365:0;sudo rm /etc/polkit-1/rules.d/10-xampp.rules\
+
+: 1717349373:0;ls /etc/polkit-1/rules.d/\
+
+: 1717349445:0;xhost -si:localuser:sankalp
+: 1717349471:0;./lampp start
+: 1717349627:0;env | grep XAUTH
+: 1717349881:0;paru -S xorg
+: 1717349929:0;ps aux | grep Xwayland\
+
+: 1717349938:0;export DISPLAY=:0\
+\
+
+: 1717349945:0;export WAYLAND_DISPLAY=wayland-0\
+
+: 1717349982:0;export DISPLAY=:1\
+
+: 1717349984:0;xhost +local
+: 1717349992:0;xhost +local:
+: 1717350227:0;paru -S polkit-kde-agent
+: 1717350343:0;sudo -E ./xampp-linux-x64-8.2.12-0-installer.run
+: 1717350514:0;xhost +si:localuser:$USER &
+: 1717350623:0;export DISPLAY=:0
+: 1717350667:0;ls -l /tmp/.X11-unix/X0\
+
+: 1717350676:0;sudo /tmp
+: 1717350680:0;sudo /tmp/
+: 1717350761:0;sudo rm /tmp/.X11-unix/X0\
+
+: 1717350826:0;sudo rm -r /tmp/*\
+
+: 1717399183:0;nvim extract_and_store.py
+: 1717399236:0;nvim app.py
+: 1717399283:0;cd Project
+: 1717399311:0;pip install fitz PyMuPDF flask transformers torch sqlalchemy\
+
+: 1717399320:0;paru -S pip
+: 1717399338:0;paru -S python-pip
+: 1717399347:0;unlo
+: 1717399360:0;paru -S pipx
+: 1717399372:0;paru -S python-pipx
+: 1717399380:0;pip install fitz PyMuPDF flask transformers torch sqlalchemy
+: 1717399387:0;pipx install fitz PyMuPDF flask transformers torch sqlalchemy
+: 1717400655:0;pip install sqlalchemy
+: 1717400684:0;pipx uninstall fitz PyMuPDF flask transformers torch
+: 1717400701:0;pipx uninstall-all fitz PyMuPDF flask transformers torch
+: 1717400707:0;pipx uninstall-all
+: 1717400852:0;nvim install.sh
+: 1717400881:0;chmod +x install.sh
+: 1717401215:0;source venv/bin/activate
+: 1717401679:0;py app.py
+: 1717401810:0;source venv/bin/activate\
+
+: 1717401819:0;pip freeze | xargs pip uninstall -y\
+
+: 1717401954:0;./install.sh.
+: 1717401959:0;mkdir Buddy
+: 1717401960:0;cd Buddy
+: 1717402158:0;rm index.html
+: 1717402167:0;mkdir frontend
+: 1717402169:0;cd frontend
+: 1717402182:0;nvim script.js
+: 1717405020:0;./install.sh
+: 1717405101:0;lucy
+: 1717405158:0;exit
+: 1717405635:0;paru -S ttf-nepali-fonts
+: 1717405673:0;localectl list-locales
+: 1717405703:0;sudo bat /etc/locale.gen
+: 1717410519:0;chmod +x wal_effect.sh
+: 1717410679:0;cd dotfiles/waybar/old
+: 1717410681:0;cd configs
+: 1717410702:0;nvim [BOT]simple
+: 1717412209:0;notify-send "Hello World" -h int:value:100
+: 1717412216:0;notify-send "Hello World" -h int:value:100 -h
+: 1717412234:0;notify-send "Hello World" -h int:value:100 -h string:x-notify-send-stack-tag:wallpaper
+: 1717412247:0;paru -S dunst
+: 1717412280:0;dunst
+: 1717412285:0;dunstify "Wallpaper procedure complete  -h int:value:100 -h string:x-dunst-stack-tag:wallpaper\
+
+: 1717412289:0;dunst &
+: 1717412303:0;killall dunst
+: 1717412307:0;paru -Rns dunst
+: 1717412524:0;nvim wal.sh
+: 1717412593:0;rm wal.sh
+: 1717413196:0;./RunCMD.sh auto_wall ~/Pictures/wallpapers
+: 1717414306:0;./RunCMD.sh auto_wall
+: 1717416421:0;paru -S hyprshade
+: 1717416458:0;./hyprshade.sh 2>error.log
+: 1717416501:0;hyprshade off blue-light-filter
+: 1717416532:0;killall hyprshade
+: 1717416655:0;nvim hyprshade.sh
+: 1717416678:0;chmod +x hyprshade.sh
+: 1717416716:0;hyprshade auto
+: 1717416730:0;hyprshade ls
+: 1717416748:0;hyprshade on vibrance
+: 1717416753:0;hyprshade on blue-light-filter
+: 1717416759:0;hyprshade off
+: 1717416909:0;./RunCMD.sh apply_wallpaper_effects
+: 1717416938:0;nvim wal_effect.sh
+: 1717416961:0;./wal_effect.sh
+: 1717417528:0;./hyprshade.sh
+: 1717418229:0;paru -Rns hyprshade
+: 1717485671:0;paru -Rns keyb
+: 1717485686:0;paru -S keyb
+: 1717485772:0;nvim KeyHints.sh
+: 1717485790:0;chmod +x KeyHints.sh
+: 1717485796:0;paru -S yad
+: 1717485807:0;./KeyHints.sh
+: 1717485882:0;cd dotfiles/hypr/scripts
+: 1717485886:0;./RunCMD.sh keybinds
+: 1717486103:0;pyprland zoom
+: 1717486126:0;nvim pyprland.toml
+: 1717487187:0;ok
+: 1717487994:0;j
+: 1717488047:0;b
+: 1717500187:0;office2.AppImage
+: 1717585980:0;commit "updaes"
+: 1717587806:0;mkdir dsa
+: 1717587813:0;cd dsa
+: 1717588414:0;nvim stack
+: 1717588418:0;rm s
+: 1717588424:0;nvim stack.c
+: 1717588928:0;rm -rf bin
+: 1717589096:0;gcc stack.c
+: 1717589129:0;rm a.out
+: 1717589188:0;paru -S acpi
+: 1717590833:0;la
+: 1717590833:0;lsd
+: 1717590843:0;ls -al
+: 1717593042:0;paru -S ags-it
+: 1717593164:0;eza
+: 1717593379:0;paru -S gnome-bluetooth
+: 1717593396:0;paru -Rns gnome-bluetooth
+: 1717593778:0;ags -t launcher
+: 1717593789:0;wezterm
+: 1717593808:0;paru -Rns wezterm
+: 1717593821:0;ags -t terminal
+: 1717593972:0;ags --toggle-window "dashboard"
+: 1717594113:0;cd Videos
+: 1717594125:0;cd dotfiles/starship
+: 1717594140:0;./changeprompt.sh
+: 1717594228:0;cd Music
+: 1717594407:0;./wallpaperselect.sh
+: 1717594499:0;cd /usr/share/sddm
+: 1717594501:0;cd the
+: 1717594505:0;cd themes/boo
+: 1717594507:0;cd backgrounds
+: 1717594511:0;imv background.jpg
+: 1717656837:0;paru -S df
+: 1717656975:0;paru -S ags-git
+: 1717657017:0;paru -S ags
+: 1717657091:0;./sidebar.sh
+: 1717657095:0;./sidebar.sh toggle
+: 1717657115:0;./changemode.sh appLauncher
+: 1717657137:0;./changemode.sh commandLauncher
+: 1717657336:0;killall a
+: 1717657349:0;paru -S gno
+: 1717657888:0;paru -S bun
+: 1717658372:0;paru -S gnome-bluetooth-3.0
+: 1717658675:0;paru -Rns gnome-bluetooth-3.0
+: 1717659107:0;paru -Rns aylurs-gtk-shell-git
+: 1717659131:0;history
+: 1717660279:0;sudo cp -r AxDusk /usr/share/themes
+: 1717660344:0;cd AxDusk
+: 1717660374:0;sudo rm -rf AxDusk
+: 1717660384:0;rm Registration\ of\ .np\ domain\ Cover\ letter\ Generator\ -\ Prabhu\ Host.pdf
+: 1717660416:0;cd Darker
+: 1717660422:0;cd gtk-4.0
+: 1717660493:0;cd gtk-3.0
+: 1717660512:0;sudo nvim libadwaita-tweaks.css
+: 1717660524:0;nvim libadwaita.css
+: 1717660553:0;sudo nvim libadwaita.css
+: 1717660626:0;sudo nvim gtk-dark.css
+: 1717660726:0;nvim gtk.css
+: 1717660734:0;sudo nvim gtk.css
+: 1717660831:0;sudo rm -rf assets
+: 1717660855:0;sudo cp -r assets /usr/share/themes/Darker/gtk-3.0
+: 1717661059:0;sudo cp -r Reversal-black-dark /usr/share/icons
+: 1717661133:0;sudo rm -rf Reversal-black-dark
+: 1717661162:0;paru -S reversal-icon-theme-git
+: 1717661182:0;sudo cp -r Simp1e-Mix-Dark /usr/share/icons
+: 1717661221:0;sudo rm -rf Simp1e-Mix-Dark
+: 1717661494:0;ln -sf ~/dotfiles/tmux ~/.config
+: 1717661497:0;tmux
+: 1717661545:0;commit "tmux config added"
+: 1717661791:0;nvim options.lua
+: 1717661821:0;nvim list.lua
+: 1717661841:0;nvim autocmd.lua
+: 1717662400:0;nivm a.html
+: 1717662680:0;sudo pacman -S artix-dark-theme
+: 1717662694:0;paru -S artix-dark-theme-git
+: 1717662830:0;paru -Rns artix-dark-theme-git
+: 1717665687:0;cd Andromeda-dark
+: 1717665700:0;sudo cp -r Andromeda-dark /usr/share/themes
+: 1717666195:0;sudo rm -rf Andromeda-dark
+: 1717666245:0;cava
+: 1717666283:0;paru -S btop
+: 1717666302:0;ln -sf ~/dotfiles/btop ~/.config
+: 1717666561:0;nvim a.html
+: 1717666605:0;rm a.html
+: 1717667164:0;Lq
+: 1717738515:0;paru -S adbmanager
+: 1717738611:0;adb device
+: 1717738613:0;paru -Rns adbmanager
+: 1717738628:0;sudo pacman -S android-tools
+: 1717738686:0;unzip uad_gui-linux.tar.gz
+: 1717738713:0;./uad_gui-linux
+: 1717738722:0;adb devices
+: 1717738859:0;cd uad-ng-linux
+: 1717738868:0;chmod +x uad-ng-linux
+: 1717738869:0;./uad-ng-linux
+: 1717774142:0;chmod +x gpt4all-installer-linux.run
+: 1717774144:0;./gpt4all-installer-linux.run
+: 1717774214:0;rm gpt4all-installer-linux.run
+: 1717774665:0;commit "update split bindings"
+: 1717774837:0;commit "update mpv conf"
+: 1717775512:0;paru -S nwg-look-bin
+: 1717775617:0;s gtk-theme
+: 1717775770:0;paru -S gtk-engine-murrine
+: 1717780380:0;paru -Rns graphite-gtk-theme
+: 1717780396:0;paru -Rns sassc
+: 1717780634:0;paru -S graphite-gtk-theme
+: 1717780677:0;paru -S nautilus
+: 1717780763:0;paru -S jasper-gtk-theme-git
+: 1717781112:0;unzip Graphite-gtk-theme-main.zip
+: 1717781148:0;cd Graphite-gtk-theme-main
+: 1717781208:0;./install.sh -d ~/.themes -t -c dark -s standard -l --tweaks darker rimless
+: 1717781215:0;paru -S sassc
+: 1717781337:0;./install.sh -d ~/.themes -t -c dark -s standard -l --tweaks black rimless
+: 1717781448:0;cd /usr/share/color-schemes
+: 1717781570:0;cd /usr/share/qt5ct
+: 1717781774:0;cd qss
+: 1717781846:0;sudo mv Darker Darker1
+: 1717781862:0;sudo cp -r Darker /usr/share/themes
+: 1717784853:0;cd /usr/share/themes
+: 1717784856:0;cd ..
+: 1717784886:0;cd share/qt6ct
+: 1717784892:0;sudo bat darker.conf
+: 1717784903:0;sudo cat darker.conf
+: 1717784951:0;cd /usr/share/qt6ct
+: 1717784953:0;cd colors
+: 1717785671:0;commit "updates themes"
+: 1717805107:0;gcl git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git~]
+: 1717805113:0;gcl git clone https://github.com/vinceliuice/Tela-circle-icon-theme.git
+: 1717805124:0;gcl https://github.com/vinceliuice/Tela-circle-icon-theme.git
+: 1717805144:0;cd Tela-circle-icon-theme
+: 1717805215:0;./install.sh -d ~/.themes -t -c black
+: 1717805224:0;./install.sh -h
+: 1717805248:0;./install.sh -c black
+: 1717805472:0;cd /usr/share/icons
+: 1717805503:0;paru -Rns gruvbox-plus-icon-theme-git
+: 1717805524:0;sudo rm -rf Tela-circle-black-light
+: 1717805551:0;paru -Rns tela-circle-icon-theme-black
+: 1717805572:0;paru -S tela-circle-icon-theme-black
+: 1717805701:0;paru -S tela-icon-theme-bin
+: 1717805811:0;paru -S tela-circle-icon-theme-black-git
+: 1717806405:0;cd Project/Github/hyprland/assets
+: 1717806414:0;sudo cp -r Tela-circle-black /usr/share/icons
+: 1717806463:0;gsettings set org.gnome.desktop.interface icon-theme Tela circle black
+: 1717806941:0;cd Project/Github/hyprland/config
+: 1717806943:0;cd hypr
+: 1717806947:0;chmod +x initial-boot.sh
+: 1717806961:0;chmod +x Device_cmd.sh
+: 1717806971:0;chmod +x scripts/*
+: 1717806973:0;cd scripts
+: 1717807259:0;paru -Ss
+: 1717807262:0;paru -Ss icons
+: 1717807327:0;paru -Ss cursor
+: 1717807543:0;paru -S bibata-cursor-theme-bin
+: 1717807714:0;paru -Rns sweet-cursor-theme-git
+: 1717807978:0;paru -Rns nautilus
+: 1717808274:0;ln -sf ~/dotfiles/yazi ~/.config
+: 1717808292:0;yazi
+: 1717808829:0;paru -Syyu fnm
+: 1717808843:0;paru -Rns geany-snippets
+: 1717809007:0;cd encodings
+: 1717809016:0;OTF
+: 1717809060:0;cd .local/share
+: 1717809068:0;cd icons
+: 1717809165:0;paru -Rns ttf-nepali-fonts
+: 1717809268:0;sudo cp -r fonts/* /usr/share/fonts/TTF
+: 1717811513:0;paru -Rns bc
+: 1717812829:0;./rofi-cheat.sh
+: 1717812887:0;./rofi-tmux.sh
+: 1717812985:0;paru -S flutter
+: 1717813950:0;sudo usermod -a -G flutter sankalp
+: 1717814099:0;paru -S android-sdk android-sdk-platform-tools android-sdk-build-tools
+: 1717814129:0;paru -S android-platform
+: 1717814596:0;lspci
+: 1717814625:0;alsamixer
+: 1717814823:0;sudo usermod -a -G android-sdk sankalp
+: 1717814932:0;clea
+: 1717815067:0;sudo usermod -aG android-sdk sankalp
+: 1717815085:0;sudo gpasswd -d $USER android-sdk
+: 1717815152:0;sudo chown pery:users /opt
+: 1717815172:0;groups
+: 1717815175:0;sudo chown sankalp:wheel /opt
+: 1717815180:0;sudo chown sankalp:sankalp /opt
+: 1717815276:0;flutter upgrade
+: 1717815294:0;flutter --force upgrade
+: 1717815402:0;sudo flutter upgrade --force
+: 1717815415:0;paru -S dart
+: 1717815541:0;flutter config --android-sdk ~/android-sdk
+: 1717815653:0;paru -Rns android-sdk-cmdline-tools-latest android-sdk-build-tools android-sdk-cmdline-tools-latest android-platform android-sdk-platform-tools
+: 1717816130:0;sudo cp -R /opt/android-sdk ~
+: 1717816156:0;sudo chown -R sankalp:sankalp android-sdk
+: 1717816163:0;sudo chown -R sankalp:wheel android-sdk
+: 1717816168:0;id sankalp
+: 1717816187:0;cd /usr/lib/jvm
+: 1717816206:0;sdkmanager --install "system-images;android-29;default;x86"
+: 1717816210:0;sdkmanager
+: 1717816242:0;./sdkmanager --install "system-images;android-29;default;x86"
+: 1717816488:0;avdmanager create avd mydevice <name> -k "system-images;android-29;default;x86"\
+
+: 1717816494:0;./avdmanager create avd mydevice <name> -k "system-images;android-29;default;x86"\
+
+: 1717816505:0;./avdmanager create avd -n mydevice -k "system-images;android-29;default;x86"\
+
+: 1717816542:0;flutter emulators --launch mydevice
+: 1717816553:0;flutter doctor
+: 1717816590:0;yes | flutter doctor --android-licenses
+: 1717816617:0;flutter create new
+: 1717816727:0;flutter devices -v
+: 1717816861:0;flutter emulators -list-avds
+: 1717816879:0;flutter emulators -list
+: 1717816883:0;flutter -h
+: 1717817000:0;cd cmdline-tools
+: 1717817078:0;./sdkmanager --list
+: 1717817147:0;./avdmanager -s create avd -n pixel -k "system-images;android-29;google_apis;x86_64"
+: 1717817193:0;avdmanager -s create avd -n pixel -k "system-images;android-29;google_apis;x86_64"
+: 1717817420:0;sdkmanager â€ƒ¼system-images;android-29;default;x86_64â€ƒ½
+: 1717817423:0;avdmanager -s create avd -n pixel -k "system-images;android-29;default;x86_64"q
+: 1717823017:0;flutter upgrade --force
+: 1717823178:0;flutter emulator --launch mydevice
+: 1717823237:0;sdkmanager --list | grep system-images\
+
+: 1717823280:0;sudo chmod -R 755 ~/android-sdk
+: 1717823290:0;sudo chown -R $USER:$USER ~/android-sdk
+: 1717823296:0;sdkmanager "system-images;android-29;default;x86_64"
+: 1717823407:0;avdmanager create avd -n pixel -k "system-images;android-29;default;x86_64"\
+
+: 1717823450:0;flutter emulator --launch pixel
+: 1717823559:0;avdmanager list avd\
+
+: 1717823602:0;emulator -avd mydevice
+: 1717823743:0;avdmanager -s create avd -n pixel -k "system-images;android-29;default;x86_64"
+: 1717823756:0;avdmanager create avd -n pixel -k "system-images;android-29;default;x86_64"
+: 1717823763:0;avdmanager create avd -n myPixel -k "system-images;android-29;default;x86_64"\
+
+: 1717823796:0;sdkmanager "system-images;android-29;default;x86_64"\
+
+: 1717823891:0;sudo chown -R $USER:$USER /opt/android-sdk\
+sudo chmod -R 755 /opt/android-sdk
+: 1717823900:0;sudo chown -R $USER:$USER ~/android-sdk\
+sudo chmod -R 755 ~/android-sdk
+: 1717823907:0;echo "no" | avdmanager create avd -n pixel -k "system-images;android-29;default;x86_64"\
+
+: 1717823911:0;cear
+: 1717823924:0;emulator -avd pixel\
+
+: 1717823988:0;avdmanager delete avd -n pixel
+: 1717824053:0;mkdir -p ~/Android/Sdk\
+
+: 1717824274:0;mkdir -p ~/Android/\
+
+: 1717824293:0;unzip commandlinetools-linux-11076708_latest.zip
+: 1717824314:0;sudo mv cmdline-tools/ ~/Android/latest/
+: 1717824350:0;sdkmanager --licenses
+: 1717824451:0;cd latest
+: 1717824456:0;./sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+: 1717824852:0;flutter sdk-path
+: 1717825087:0;sudo groupadd android-sdk
+: 1717825101:0;sudo gpasswd -a $USER android-sdk
+: 1717825110:0;sudo setfacl -R -m g:android-sdk:rwx /opt/android-sdk
+: 1717825117:0;sudo setfacl -d -m g:android-sdk:rwX /opt/android-sdk
+: 1717825296:0;sdkmanager --install "system-images;android-30;google_atd;arm64-v8a"
+: 1717825372:0;echo $ANDROID_SDK_ROOT\
+
+: 1717825377:0;sdkmanager --update\
+
+: 1717825421:0;sdkmanager --install "system-images;android-30;aosp_atd;x86"
+: 1717825525:0;echo "no" | avdmanager --verbose create avd --force --name "mydevice" --package "system-images;android-30;aosp_atd;x86" --tag "aosp_atd" --abi "x86"
+: 1717825781:0;emulator -list-avds\
+
+: 1717826009:0;emulator @mydevice
+: 1717826189:0;avdmanager delete avd -n mydevice
+: 1717826387:0;export ANDROID_HOME=$HOME/ANDROID
+: 1717826396:0;export PATH=$ANDROID_SDK:$PATH
+: 1717826461:0;zsh
+: 1717826487:0;ls $ANDROID_HOME
+: 1717826533:0;sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+: 1717826593:0;avdmanager
+: 1717826719:0;sdkmanager "system-images;android-30;aosp;x86_64"
+: 1717826728:0;sdkmanager --install "system-images;android-30;aosp;x86_64"
+: 1717826744:0;sdkmanager "system-images;android-29;aosp;x86_64"\
+
+: 1717826894:0;sdkmanager --install "system-images;android-30;aosp_atd;x86_64 "
+: 1717827378:0;avdmanager create avd -n myDevice -k "system-images;android-30;aosp_atd;x86_64"
+: 1717827404:0;cd /tmp
+: 1717827411:0;sudo rm -rf android-sankalp
+: 1717827423:0;sudo rm adb.1000.log
+: 1717827437:0;sudo rm -rf tmp/*
+: 1717827441:0;sdkmanager --install "system-images;android-30;aosp_atd;x86_64"
+: 1717828249:0;mkdir flutter
+: 1717828259:0;android_sdk
+: 1717828293:0;chmod +x android_sdk
+: 1717828314:0;nvim flutter_sdk
+: 1717828326:0;nvim android_sdk
+: 1717828352:0;cd /etc/profile.d
+: 1717828355:0;cd /etc/profile
+: 1717828440:0;chmod +x flutter_sdk
+: 1717828832:0;cd flutter
+: 1717828834:0;./android_sdk
+: 1717828951:0;./flutter_sdk
+: 1717829205:0;cd platforms
+: 1717829333:0;paru -S android-sdk android-sdk-build-tools android-sdk-cmdline-tools-latest android-platform android-sdk-platform-tools
+: 1717829403:0;echo "ANDROID_SDK"
+: 1717829853:0;echo "ANDROID_HOME"
+: 1717829857:0;echo ANDROID_HOME
+: 1717829885:0;source .zshenv
+: 1717829915:0;sdkamanger
+: 1717829923:0;sudo chmod -R 755 /opt/android-sdk
+: 1717829952:0;sudo chown -R $USER:$USER /opt/android-sdk
+: 1717830211:0;sdkmanager avd
+: 1717830259:0;emulator -avd myDevice
+: 1717830499:0;echo $ANDROID_AVD_HOME
+: 1717830505:0;echo $ANDROID_SDK_HOME
+: 1717830576:0;avdmanager devices
+: 1717830608:0;cd /opt
+: 1717830614:0;flutter config --android-sdk /opt/android-sdk
+: 1717830662:0;sdkmanager "system-images;android-30;google_apis;x86"
+: 1717830769:0;flutter emulator -l
+: 1717830772:0;flutter emulator list
+: 1717830831:0;avdmanager create avd -n myDevice -k "system-images;android-30;google_apis;x86"
+: 1717830863:0;avdmanager list
+: 1717830870:0;avdmanager list device
+: 1717830959:0;android list avd
+: 1717831018:0;flutter config
+: 1717831061:0;flutter emulators --launch /home/sankalp/.config/.android/avd/myDevice.ini
+: 1717831085:0;flutter emulators --launch /home/sankalp/.config/.android/avd/myDevice.avd
+: 1717831142:0;sudo flutter config --android-avd /home/sankalp/.config/.android/avd
+: 1717831149:0;flutter config --android-avd /home/sankalp/.config/.android/avd
+: 1717831170:0;flutter config --l
+: 1717831172:0;flutter config --list
+: 1717831198:0;sdkmanager emulator
+: 1717831259:0;flutter emulators --list
+: 1717831263:0;flutter emulators list
+: 1717831419:0;sudo rm -rf /tmp/*
+: 1717831480:0;sdkmanager --list
+: 1717831515:0;cd /opt/
+: 1717831516:0;cd android-sdk
+: 1717831543:0;sudo rm -rf android-27 android-30
+: 1717831553:0;sdkmanager "system-images;android-27;google_apis_playstore;x86"
+: 1717831702:0;flutter emulators --create myDevice
+: 1717831720:0;flutter emulator --launch myDevice
+: 1717831748:0;avdmanager create avd -n myDevice -k "system-images;android-27;google_apis_playstore;x86"
+: 1717831757:0;avdmanager create avd -n Device -k "system-images;android-27;google_apis_playstore;x86"
+: 1717831846:0;emulator @Device
+: 1717831889:0;avdmanager delete avd -n myDevice
+: 1717831903:0;emulator @flutter_emulator
+: 1717831915:0;avdmanager delete avd -n flutter_emulator
+: 1717831930:0;avdmanager delete avd -n Device
+: 1717831986:0;cd system-images
+: 1717831992:0;sudo rm -rf android-27
+: 1717832039:0;echo $ANDROID_HOME
+: 1717832421:0;paru -Rns android-sdk android-sdk-build-tools android-sdk-cmdline-tools-latest android-platform android-sdk-platform-tools
+: 1717832427:0;cd /opt/android-sdk
+: 1717832432:0;sudo rm -rf android-sdk
+: 1717832467:0;paru -Rns flutter-bin
+: 1717832538:0;cd Android
+: 1717832544:0;mkdir cmdline-tools
+: 1717832944:0;sdkmanager --list | grep system-images
+: 1717833299:0;sdkmanager "system-images;android-31;default;x86_64"
+: 1717833450:0;sdkmanager "platforms;android-31"
+: 1717833505:0;sdkmanager "paltform-tools"
+: 1717833535:0;sdkmanager "build-tools;31.0.0"
+: 1717833585:0;sdkmanager "platform-tools"
+: 1717833671:0;sdkmanager "emulator"
+: 1717833731:0;avdmanager create avd -n pixel -k "system-images;android-31;default;x86_64" --device "myDevice"
+: 1717833858:0;flutter config --android-sdk ~/Android
+: 1717833867:0;sdkmanager --licenses\
+
+: 1717833933:0;paru -S android-sdk-platform-tools-common
+: 1717833956:0;sdkmanager --update
+: 1717834043:0;sdkmanager "cmdline-tools;latest"
+: 1717834145:0;flutter doctor --android-licenses
+: 1717834175:0;emulator @pixel
+: 1717834184:0;emulator @myDevice
+: 1717834190:0;emulator list
+: 1717834365:0;emulator -list-avds
+: 1717834392:0;avdmanager create avd -n pixel -k "system-images;android-31;default;x86_64" --device "pixel"
+: 1717834399:0;avdmanager create avd -n pixel -k "system-images;android-31;default;x86_64" --device "pixel" --force
+: 1717834476:0;avdmanager list avd
+: 1717834599:0;emulator -avd /home/yourusername/.config/android/avd/pixel.avd
+: 1717834630:0;ln -sf ~/.config/.android ~/
+: 1717834683:0;flutter devices
+: 1717834687:0;flutter emulators
+: 1717834714:0;flutter emulators --launch pixel
+: 1717834832:0;flutter doctor --verbose
+: 1717834992:0;./gradlew wrapper --gradle-version=7.6.1
+: 1717835151:0;paru -S jdk17-openjdk
+: 1717835194:0;sudo archlinux-java set java-17-openjdk
+: 1717835265:0;emulator -avd pixel
+: 1717835415:0;rm -rf test
+: 1717835424:0;flutter create test
+: 1717835501:0;flutter doctor -v
+: 1717835523:0;cd Practice/flutter
+: 1717835524:0;cd test
+: 1717835528:0;flutter run
+: 1717837043:0;paru -S hugo
+: 1717837051:0;hugo new content posts/flutter_in_archlinux.md
+: 1717837060:0;nvim content/posts/flutter_in_archlinux.md
+: 1717839674:0;cd Project/Github/blog
+: 1717839675:0;cd content
+: 1717839678:0;cd posts
+: 1717839681:0;nvim flutter_in_archlinux.md
+: 1717840368:0;./update-theme.sh
+: 1717840459:0;commit "Updates"
+: 1717843685:0;killall hyprlock
+: 1717862160:0;upgraade
+: 1717864009:0;Q
+: 1717864072:0;sr
+: 1717864085:0;cat ~/.ssh/id_ed25519.pub
+: 1717864090:0;paru -Rns cat
+: 1717864104:0;bat ~/.ssh/id_ed25519.pub
+: 1717864124:0;cleanup
+: 1717864141:0;psa
+: 1717864166:0;pacman
+: 1717864255:0;commit "removed unused aliases from zsh"
+: 1717864463:0;starship toggle username
+: 1717899453:0;cler
+: 1717900518:0;nvim scanner_util.java
+: 1717900849:0;javac scanner_util.java
+: 1717900852:0;java scanner_util
+: 1717900935:0;rm scanner_util.class
+: 1717963155:0;gsettings set org.gnome.desktop.interface icon-theme Tela-circle-black
+: 1717978117:0;cd Practice/dsa
+: 1717978127:0;nvim node.c
+: 1717978162:0;gcc node.c
+: 1717978165:0;./node.c
+: 1717980166:0;xhost +si:localuser:root\
+
+: 1717980477:0;sudo .xa
+: 1717980484:0;sudo ./xampp
+: 1717980725:0;sudo ./xampp start
+: 1717980797:0;sudo nano lampp
+: 1717980887:0;xhost -si:localuser:root
+: 1717980904:0;sudo /opt/lampp/manager-linux-x64.run
+: 1717980927:0;xhost +si:localuser:root
+: 1717981045:0;cd Practice
+: 1717981266:0;sudo rm -rf lampp
+: 1717981295:0;chmod +x xampp-linux-x64-8.2.12-0-installer.run
+: 1717982505:0;sudo nvim /opt/lampp/lampp
+: 1717982547:0;paru -S glibc*
+: 1717982553:0;paru -S glibc
+: 1717982565:0;i libstd
+: 1717982572:0;i libstd*
+: 1717982624:0;paru -S libxcrypt-compat
+: 1717982630:0;sudo /opt/lampp/lampp start
+: 1717982710:0;cd /op
+: 1717982723:0;mkdir php
+: 1717982726:0;sudo mkdir php
+: 1717982742:0;sudo chown -R $USER:$USER /opt/lampp
+: 1717982994:0;cd mysql
+: 1717983007:0;sudo ./lampp start
+: 1717983045:0;paru -S inetutils-hostname
+: 1717983051:0;paru -S inetutils
+: 1717983059:0;i net-tools
+: 1717983081:0;./xampp status
+: 1717983269:0;cp -r ims /opt/lampp/htdocs
+: 1717983363:0;sudo rm -rf ims
+: 1717983410:0;sudo cp -R ims /opt/lampp
+: 1717983489:0;cd /opt/lampp
+: 1717983503:0;./xampp start mysql -u root
+: 1717983507:0;sudo ./xampp start mysql -u root
+: 1717983525:0;./xampp stop
+: 1717983531:0;sudo ./xampp stop
+: 1717983581:0;sudo ./uninstall
+: 1717983625:0;sudo ./xampp-linux-x64-8.2.12-0-installer.run
+: 1717986836:0;nvim ifstatement.java
+: 1717986939:0;cc
+: 1717987069:0;ks
+: 1717987076:0;javac ifstatement.java
+: 1717987080:0;java ifstatement
+: 1717987114:0;nvim ifelsestatement.java
+: 1717987156:0;javac ifelsestatement.java
+: 1717987178:0;java ifelsestatement
+: 1717987201:0;nvim if_elseif_statement.java
+: 1717987233:0;javac if_elseif_statement.java
+: 1717987237:0;java if_elseif_statement
+: 1717987248:0;rm if_elseif_statement.class
+: 1717987254:0;rm ifelsestatement.class
+: 1717987260:0;rm ifstatement.
+: 1717987264:0;rm ifstatement.class
+: 1718013915:0;sudo nano /etc/hostname
+: 1718013939:0;sudo nano /etc/hosts
+: 1718014041:0;notify-send -time 10 "hii" -notify 30 -notifier "notify-send 'Screen will be locked soon.' 'Locking screen in 30 seconds'"\
+
+: 1718014443:0;notify-send "Changing Hyprshade to" "Toggle shader with SUPER+SHIFT+S"
+: 1718014540:0;notify-send "Using wallpaper effect..." "with image" -h int:value:10 -h string:x-dunst-stack-tag:wallpaper\
+
+: 1718014557:0;notify-send "Using wallpaper effect..." "with image" -h int:value:10 -h
+: 1718014559:0;notify-send "Using wallpaper effect..." "with image" -h int:value:10
+: 1718014577:0;notify-send "Using wallpaper effect..." "with image" -h int:value:25
+: 1718014583:0;notify-send "Using wallpaper effect..." "with image" -h int:value:30
+: 1718014586:0;notify-send "Using wallpaper effect..." "with image" -h int:value:50
+: 1718014590:0;notify-send "Using wallpaper effect..." "with image" -h int:value:70
+: 1718014592:0;notify-send "Using wallpaper effect..." "with image" -h int:value:80
+: 1718014595:0;notify-send "Using wallpaper effect..." "with image" -h int:value:90
+: 1718014598:0;notify-send "Using wallpaper effect..." "with image" -h int:value:100
+: 1718014679:0;paru -S alacritty
+: 1718014731:0;r alacritty
+: 1718035141:0;commit "Tweaks"
+: 1718074272:0;nvim nestedifstatement.java
+: 1718074448:0;javac nestedifstatement.java
+: 1718074452:0;java nestedifstatement
+: 1718074464:0;nvim switchcase.java
+: 1718074509:0;rm nestedifstatement.class
+: 1718074515:0;javac switchcase.java
+: 1718074520:0;java switchcase
+: 1718074530:0;rm switchcase.class
+: 1718074559:0;mkdir rajan
+: 1718074572:0;nvim rajan.java
+: 1718075824:0;javac rajan.java
+: 1718075967:0;java rajan
+: 1718088900:0;hyprland --version
+: 1718088907:0;hyprctl version
+: 1718088945:0;paru -Syyu hyprland
+: 1718098558:0;paru -S preload
+: 1718098659:0;cd /etc/modprobe.d
+: 1718098669:0;sudo nano blacklists.conf
+: 1718098734:0;modprobe uvcvideo
+: 1718098749:0;lsmod
+: 1718098862:0;chattr +i /etc/resolv.conf
+: 1718098992:0;sudo chown -R $USER:$USER /etc/resolv.conf
+: 1718099002:0;sudo chown -R toot:root /etc/resolv.conf
+: 1718099005:0;sudo chown -R root:root /etc/resolv.conf
+: 1718099083:0;sudo chattr -i /etc/resolv.conf
+: 1718099087:0;sudo nano /etc/resolv.conf
+: 1718099107:0;sudo chattr +i /etc/resolv.conf
+: 1718099158:0;sudo nano /etc/systemd/journald.conf
+: 1718099182:0;sudo pacman -S intel-media-driver intel-media-sdk
+: 1718099209:0;sudo systemctl enable preload.service
+: 1718099219:0;sudo systemctl start preload.service
+: 1718099232:0;sudo bat /etc/preload.conf
+: 1718099290:0;fa
+: 1718099321:0;systemd-analyze blame
+: 1718099526:0;sudo pacman -S linux-zen linux-zen-headers
+: 1718099806:0;uname -r
+: 1718099827:0;sudo nano /etc/default/grub
+: 1718099916:0;mkgrub
+: 1718100690:0;paru -S hyprcursor
+: 1718101322:0;:
+: 1718102275:0;paru -S obsidian
+: 1718103070:0;reboot
+: 1718105200:0;i floorp-bin
+: 1718105657:0;i falkon
+: 1718105707:0;i midori
+: 1718105811:0;r falkon
+: 1718107125:0;paru -Rns floorp-bin
+: 1718107225:0;paru -Rns qutebrowser
+: 1718129700:0;nvim a.java
+: 1718129740:0;javac a
+: 1718129743:0;javac a.java
+: 1718129746:0;java a
+: 1718129751:0;rm a.class
+: 1718129756:0;rm a.java
+: 1718153729:0;mkdir sam
+: 1718153753:0;nvim sam.java
+: 1718154836:0;javac sam.java
+: 1718154913:0;java sam
+: 1718156286:0;poweroff
+: 1718181337:0;paru -Rns swayosd-git
+: 1718181832:0;chmod +x Brightness.sh
+: 1718181853:0;i brightnessctl
+: 1718181910:0;./Brightness.sh
+: 1718181927:0;./Brightness.sh -inc
+: 1718181942:0;./Brightness.sh --dec
+: 1718181978:0;./Brightness.sh --inc
+: 1718182097:0;nvim Util.sh
+: 1718182295:0;chmod +x Util.sh
+: 1718182320:0;./Util.sh brightness --get
+: 1718182341:0;./Util.sh brightness --inc
+: 1718182443:0;./RunCMD.sh brightness --inc
+: 1718182515:0;./RunCMD.sh brightness --dec
+: 1718182759:0;./RunCMD.sh volume --inc
+: 1718182765:0;./RunCMD.sh volume --dec
+: 1718182867:0;./RunCMD.sh screenshot --now
+: 1718182877:0;./RunCMD.sh screenshot --area
+: 1718183731:0;hyprctl keyword "device:dll07a7:01-044e:120b:enabled" "1"
+: 1718183736:0;hyprctl keyword "device:dll07a7:01-044e:120b:enabled" "0"
+: 1718183766:0;libinput list-devices\
+
+: 1718183770:0;sudo libinput list-devices\
+
+: 1718183852:0;hyprctl keyword "DLL07A7:01 044E:120B:enabled" "0"
+: 1718183907:0;xinput --list --xwayland\
+
+: 1718183910:0;xinput --list --xwayland
+: 1718183931:0;xinput list
+: 1718183958:0;hyprctl keyword "device:SynPS/xwayland-pointer TouchPad:enabled" "0"\
+
+: 1718184151:0;hyprctl keyword "dll07a7:01-044e:120b" "false"
+: 1718184498:0;xinput list | grep -i "touchpad" | grep -o "id=[0-9]*" | grep -o "[0-9]*"
+: 1718184835:0;hyprctl getoption
+: 1718185376:0;ags -r "toggleWidget('meida');"
+: 1718185481:0;i ags-git
+: 1718185621:0;ags --int
+: 1718186066:0;run
+: 1718186124:0;bun run
+: 1718186143:0;cd .config/a
+: 1718186145:0;cd .config/ags
+: 1718186155:0;bun run ./index.js
+: 1718186171:0;bun run ./main.ts
+: 1718186199:0;bun
+: 1718186742:0;cd dotfiles/hypr
+: 1718236409:0;commi
+: 1718236411:0;commit "updates"
+: 1718244639:0;cd sa,
+: 1718244642:0;cd sam
+: 1718244651:0;ls sam
+: 1718260227:0;cd plugins
+: 1718260228:0;cd tools
+: 1718260241:0;nvim oil.lua
+: 1718260454:0;cd dotfiles/nvim
+: 1718260455:0;cd lua
+: 1718260456:0;cd core
+: 1718260459:0;nvim keys.lua
+: 1718262646:0;./auto\ pawword.c
+: 1718262658:0;chmod +x auto\ pawword.exe
+: 1718262659:0;./auto\ pawword.exe
+: 1718262710:0;gcc auto\ pawword.c
+: 1718262714:0;./a.out
+: 1718263136:0;npm install --legacy-peer-deps three
+: 1718263168:0;npm run dev
+: 1718263407:0;sudo cp -R sales_inventory /opt/lampp/htdocs
+: 1718263649:0;sudo rm -rf sales_inventory
+: 1718263711:0;sudo cp -R exam /opt/lampp/htdocs
+: 1718263849:0;cd exam
+: 1718263854:0;qq
+: 1718264009:0;gcc calculator.c
+: 1718264386:0;sudo rm -rf exam
+: 1718264890:0;nvim style.
+: 1718264896:0;nvim style.css
+: 1718264905:0;nvim index.html
+: 1718265340:0;clean
+: 1718265348:0;cleanram
+: 1718266739:0;upgrade
+: 1718267452:0;office.AppImage
+: 1718268093:0;paru -S wps-office
+: 1718269497:0;i wps-office-fonts
+: 1718270964:0;paru -S ttf-google-sans
+: 1718324624:0;i kvantum-qt5
+: 1718324652:0;i qt5-wayland qt6-wayland
+: 1718379598:0;i xdg-desktop-portal-gtk
+: 1718381887:0;pamixer --default-source -m
+: 1718381896:0;pamixer --default-source -u
+: 1718382106:0;./Util.sh volume --toggle-mic
+: 1718382121:0;./RunCMD.sh volume --toggle-mic
+: 1718384881:0;xdg-user-dirs-update
+: 1718386563:0;i jq
+: 1718386754:0;hyprctl monitors | grep -m 1 "height" | awk '{print $2}'
+: 1718430989:0;hyprlock
+: 1718431155:0;./welcome_text.sh
+: 1718431440:0;chmod +x controls.sh
+: 1718431441:0;./controls.sh volume_down
+: 1718431457:0;./controls.sh brightness_up
+: 1718431466:0;./controls.sh brightness_down
+: 1718431509:0;./controls.sh volume_up
+: 1718431544:0;chmod +x rofi-wifi-menu.sh
+: 1718431546:0;./rofi-wifi-menu.sh
+: 1718437021:0;hostname
+: 1718502219:0;ping google.com
+: 1718502755:0;javac arraymatrix.java
+: 1718502778:0;nvim arraymatrix.java
+: 1718502784:0;java arraymatrix
+: 1718507619:0;nvim funciton.php
+: 1718507810:0;nvim index.php
+: 1718507863:0;sudo bat funciton.php
+: 1718556763:0;hyprctl keyword "device[dll07a7:01-044e:120b-touchpad]:enabled" 1
+: 1718556768:0;hyprctl keyword "device[dll07a7:01-044e:120b-touchpad]:enabled" 0
+: 1718556783:0;hyprctl keyword general:border_size 10
+: 1718615362:0;./RunCMD.sh volume --mic-inc
+: 1718615430:0;gcl git clone https://github.com/JaKooLit/Hyprland-Dots.git
+: 1718615435:0;git clone https://github.com/JaKooLit/Hyprland-Dots.git
+: 1718615776:0;./RunCMD.sh toggle_touchpad
+: 1718615901:0;chmod +x a
+: 1718615902:0;./a
+: 1718615908:0;rm a
+: 1718616093:0;hyprctl devices
+: 1718616185:0;paru -Syyu hyprlang
+: 1718616215:0;hyprctl devices -r
+: 1718616254:0;./TouchPad.sh
+: 1718616301:0;hyprctl keyword 'dll07a7:01-044e:120b-touchpad' "false" -r
+: 1718616307:0;hyprctl keyword 'dll07a7:01-044e:120b' "false" -r
+: 1718616345:0;hyprctl keyword '$TOUCHPAD_ENABLED' "true" -r
+: 1718616361:0;./TouchPad.sh 2>error.log
+: 1718616395:0;hyprctl keyword '$TOUCHPAD_ENABLED' "fale"
+: 1718616397:0;hyprctl keyword '$TOUCHPAD_ENABLED' "false"
+: 1718616401:0;hyprctl keyword '$TOUCHPAD_ENABLED' "false" -r
+: 1718616558:0;commit "fix"
+: 1718616774:0;nvim a
+: 1718629893:0;vi
+: 1718629896:0;code
+: 1718629937:0;diff --color
+: 1718629942:0;diff
+: 1718629947:0;i diff
+: 1718629958:0;egrep --color=auto
+: 1718629962:0;grep
+: 1718629977:0;i tree
+: 1718629983:0;tree -C
+: 1718629993:0;tree -C ~/dotfiles
+: 1718630593:0;commit "new module"
+: 1718646332:0;2
+: 1718681356:0;i cmatrix
+: 1718681363:0;cmatrix
+: 1718681381:0;i hollywood
+: 1718681573:0;hollywood
+: 1718681628:0;u hollywood
+: 1718681635:0;r hollywood
+: 1718716241:0;r woeusb
+: 1718716250:0;i wimtools
+: 1718716286:0;i wimlib
+: 1718716327:0;i woeusb
+: 1718716402:0;woeusb
+: 1718716434:0;i gnome-disk-utility
+: 1718731524:0;sudo woeusb --d Win10_22H2_EnglishInternational_x32v1.iso /dev/sdb1
+: 1718731607:0;sudo woeusb --device Win10_22H2_EnglishInternational_x32v1.iso /dev/sdb1
+: 1718731795:0;sudo woeusb --d Win10_22H2_EnglishInternational_x32v1.iso /dev/sdb
+: 1718731804:0;sudo woeusb --device Win10_22H2_EnglishInternational_x32v1.iso /dev/sdb
+: 1718755955:0;nvvim
+: 1718755958:0;vim
+: 1718758384:0;javac unit4.java
+: 1718758422:0;lucy start
+: 1718758463:0;nvim unit4.java
+: 1718758473:0;mv unit4.java dog.java
+: 1718758476:0;nvim dog.java
+: 1718758481:0;javac dog.java
+: 1718758499:0;mv dog.java Dog.java
+: 1718758618:0;java Dog sleeping
+: 1718758721:0;nvim Dog.
+: 1718758777:0;rm dog.java arraymatrix.class Dog.class
+: 1718759115:0;nvim Dog.java
+: 1718759120:0;javac Dog.java
+: 1718759124:0;java Dog
+: 1718759247:0;lucy stop
+: 1718759251:0;lucy kill
+: 1718759263:0;cd rajan
+: 1718759276:0;nvim meow.java
+: 1718937002:0;acpi
+: 1718957745:0;h
+: 1718957755:0;w
+: 1718961276:0;paru -S esbuild
+: 1718961320:0;paru -S aylurs-gtk-shell-git
+: 1718961455:0;paru -S gtk3
+: 1718961466:0;paru -S dart-sass
+: 1718961473:0;i fd
+: 1718961487:0;i gromit-mpx matugen
+: 1718961657:0;npm audit fix
+: 1718962384:0;i cava
+: 1718962416:0;ags -r "toggleWidget('overview');"
+: 1718962431:0;ags -t powermenu
+: 1718962441:0;ags -r "toggleWidget('media')"
+: 1718962469:0;ags -r "toggleWidget('media');"
+: 1718962913:0;r hyprpicker gromit-mpx gnome-bluetooth-3.0
+: 1718964015:0;i ttf-daddytime-mono-nerd
+: 1718964036:0;i uppower
+: 1718964043:0;i upower
+: 1718964435:0;r ttf-daddytime-mono-nerd
+: 1718965938:0;i matugen-bin
+: 1718965963:0;i wlroots ok
+: 1718965965:0;lear
+: 1718966035:0;i ttf-ubuntu-nerd
+: 1718985205:0;r ttf-ubuntu-nerd
+: 1718985397:0;notify-send "Test noicon notification" "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."\
+say "Test normal notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."\
+say -u critical "Test critical notification. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."\
+\
+
+: 1718985416:0;notify-send "Test noicon notification" "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ut mauris quis ante bibendum ..."\
+
+: 1718986899:0;ags -r 'update_capslock()'
+: 1718987893:0;i wallust
+: 1718988092:0;i wlsunset
+: 1718988144:0;ln -sf ~/dotfiles/ags ~/.config
+: 1718990220:0;i ttf-impallari-dancing-script
+: 1718990255:0;i ttf-roboto
+: 1718990266:0;fontconfig
+: 1718990339:0;cd /usr/share/font
+: 1719034754:0;alias
+: 1719038183:0;r ttf-impallari-dancing-script
+: 1719038444:0;cd adobe-source-code-pro
+: 1719038449:0;cd cantarell
+: 1719038455:0;cd droid
+: 1719038465:0;cd croscore
+: 1719038475:0;cd liberation
+: 1719038479:0;cd misc
+: 1719038484:0;cd noto
+: 1719038668:0;
+: 1719038696:0;cd util
+: 1719038727:0;cd gnu-free
+: 1719038764:0;i otf-operator-mono-nerd
+: 1719038790:0;i otf-operator-mono
+: 1719038818:0;r otf-operator-mono-lig
+: 1719039072:0;cd OTF
+: 1719039078:0;cd TTF
+: 1719039244:0;i otf-operator-mono-lig
+: 1719039920:0;sudo cp DancingScript-Regular.otf /usr/share/fonts
+: 1719039925:0;cd /usr/share/fonts
+: 1719040039:0;r ttf-roboto
+: 1719042640:0;ags --init
+: 1719043029:0;./theme.sh
+: 1719043039:0;./theme.sh dark
+: 1719043050:0;./theme.sh dark -d
+: 1719043284:0;ki
+: 1719044996:0;wal -q -i ~/Pictures/wallpapers/wall-20.png
+: 1719045216:0;ags -t AppLauncherWindow
+: 1719045220:0;ags -t "AppLauncherWindow"
+: 1719045223:0;ags -t "ControlCenterWindow"
+: 1719045880:0;waybar
+: 1719045898:0;i swaync
+: 1719045992:0;r matugen-bin
+: 1719045997:0;r gnome-bluetooth-3.0
+: 1719046004:0;r aylurs-gtk-shell-git
+: 1719046278:0;./tgpt
+: 1719046294:0;./zoom.sh
+: 1719046299:0;./zoom.sh zoomin
+: 1719050608:0;swaync
+: 1719050760:0;swaync &
+: 1719104278:0;javac method1.java
+: 1719104280:0;java method1
+: 1719104355:0;nvim method1.java
+: 1719141932:0;chmod +x XMT2_Linux_20.7.28.run
+: 1719144233:0;cd Downloads
+: 1719144234:0;./XMT2_Linux_20.7.28.run
+: 1719144574:0;rm XMT2_Linux_20.7.28.run
+: 1719146970:0;py student.py
+: 1719147181:0;py atm.py
+: 1719147444:0;py run.py
+: 1719147878:0;sudo cp -R college /opt/lampp/htdocs
+: 1719147885:0;xhost si:localuser:root
+: 1719148286:0;cd htdocs
+: 1719148289:0;sudo rm -rf college
+: 1719148317:0;cd /opt/lampp/
+: 1719148318:0;sudo cp -R newProj /opt/lampp/htdocs
+: 1719148459:0;sudo rm -rf newProj
+: 1719148461:0;.
+: 1719148462:0;...
+: 1719148463:0;..
+: 1719148465:0;sudo ./manager-linux-x64.run
+: 1719148604:0;fastfetch
+: 1719189640:0;:w
+: 1719190077:0;javac matrix1.java
+: 1719190417:0;java matrix1
+: 1719191255:0;mkdir anmol
+: 1719191258:0;cd anmol
+: 1719191270:0;nvim anmol.java
+: 1719192370:0;javac anmol.java
+: 1719192497:0;java anmol
+: 1719192543:0;:q
+: 1719192565:0;waybar &
+: 1719192644:0;nvim matrix1.
+: 1719192650:0;nvim matrix1.java
+: 1719215357:0;i aylurs-gtk-shell
+: 1719217902:0;i gnome-bluetooth-3.0
+: 1719218379:0;iwgtk
+: 1719218386:0;i iwd
+: 1719219022:0;curl -fsSL https://bun.sh/install | bash
+: 1719219153:0;ags -t sidebar
+: 1719219199:0;py generate.py
+: 1719219334:0;nmtui
+: 1719219404:0;pip install --break-system-packages https://github.com/T-Dynamos/materialyoucolor-python/archive/master.zip
+: 1719219427:0;clwar
+: 1719219641:0;python -o "$HOME/dotfiles/material-colors/generate.py" --image ~/Pictures/wallpapers/wall-05.jpg --color-scheme dark
+: 1719219709:0;python -O "$HOME/dotfiles/material-colors/generate.py" --image ~/Pictures/wallpapers/wall-05.jpg --color-scheme dark
+: 1719219814:0;i python-pywal
+: 1719219950:0;./wallpaper.sh select
+: 1719220038:0;i python-pillow
+: 1719220043:0;py -O "$HOME/dotfiles/material-colors/generate.py" --image "~/Pictures/wallpapers/wall-05.jpg" --color-scheme "dark"
+: 1719220113:0;r python-pillow
+: 1719220181:0;wal -q -i ~/Pictures/wallpapers/wall-05.jpg
+: 1719220827:0;notify-send "Notification Popup Example" "Lorem ipsum dolor sit amet, qui minim labore adipisicing \n Lorem ipsum dolor sit amet, qui minim labore adipisicing \n Lorem ipsum dolor sit amet, qui minim labore adipisicing" --critical
+: 1719221464:0;r python-pywal
+: 1719223240:0;./toggle-theme.sh
+: 1719223387:0;lscpu | awk -F ': +' '/Model name/ {sub(" @ .*", "", $2); print $2}'
+: 1719223577:0;i python-pywayland
+: 1719223593:0;i python-setproctitle
+: 1719223597:0;pipx install setproctitle
+: 1719224433:0;sensors | grep -i 'core ' | awk '{sum+=$3; count+=1} END {if (count > 0) print sum/count; else print "Undefined"}'
+: 1719224454:0;i lm_sensors
+: 1719225627:0;gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+: 1719225634:0;gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+: 1719225990:0;i wl-clipboard
+: 1719226035:0;paru -S yay
+: 1719226071:0;yay -S wl-gammarelay
+: 1719226103:0;git clone https://github.com/jeremija/wl-gammarelay.git
+: 1719226108:0;cd wl-gammarelay
+: 1719226114:0;make
+: 1719226131:0;sudo make install PREFIX=/usr
+: 1719226147:0;sudo make install
+: 1719226153:0;cd bin
+: 1719226155:0;ll
+: 1719226162:0;rm -rf wl-gammarelay
+: 1719226173:0;i iwgtk
+: 1719226232:0;r iwgtk
+: 1719226712:0;a
+: 1719226789:0;hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | tail -n1 | cut -c1-2 | tr 'A-Z' 'a-z'
+: 1719229561:0;ags -t media
+: 1719229690:0;i gvfs
+: 1719230041:0;./night-light.sh get
+: 1719230048:0;hyprshade
+: 1719230051:0;hyprshade on
+: 1719230060:0;r hyprshade
+: 1719230068:0;i wl-gammarelay-rs
+: 1719230179:0;l
+: 1719230183:0;./night-light.sh -get
+: 1719230313:0;wl-gammarelay-rs watch {g}
+: 1719230321:0;wl-gammarelay-rs
+: 1719230338:0;./night-light.sh
+: 1719230580:0;sudo systemctl start wl-gammarelay-rs
+: 1719230586:0;sudo systemctl enable wl-gammarelay-rs
+: 1719230688:0;i wl-gammarelay-git
+: 1719230699:0;i wl-gammarelay
+: 1719231015:0;./night-light.sh --toggle
+: 1719231075:0;./night-light.sh --set
+: 1719231083:0;./night-light.sh --smooth
+: 1719231195:0;./night-light.sh --togglecl
+: 1719231204:0;py wayland-idle-inhibitor.py 2<error
+: 1719231276:0;killall hypridle
+: 1719231342:0;py wayland-idle-inhibitor.py
+: 1719231405:0;hypridle
+: 1719232104:0;i hyprshade
+: 1719232139:0;unlock
+: 1719232146:0;i hyprpicker
+: 1719232463:0;ags -t cliphsit
+: 1719236044:0;i ttf-google-sans
+: 1719246427:0;r ttf-google-sans
+: 1719246537:0;killall swaync
+: 1719247027:0;sudo cp ProductSans-Regular.ttf /usr/share/fonts
+: 1719247186:0;update-fc
+: 1719249247:0;[A]
+: 1719249329:0;notify-send "Notification Popup Example" "Lorem ipsum dolor sit amet, qui minim labore adipisicing \n Lorem ipsum dolor sit amet, qui minim labore adipisicing \n Lorem ipsum dolor sit amet, qui minim labore adipisicing" -u critical
+: 1719249898:0;wl-gammarelay-rs &
+: 1719250030:0;i discord
+: 1719251085:0;./RunCMD.sh power_profile
+: 1719251734:0;ags -t TaskBar
+: 1719251740:0;ags -t wifi
+: 1719251755:0;ags -t notificationPopups
+: 1719276100:0;cd /opt/lampp/htdocs
+: 1719276104:0;cd php
+: 1719276108:0;nvim method.php
+: 1719280070:0;cd Practice/java_projects
+: 1719280105:0;nvim variable1.java
+: 1719280217:0;javac variable1.java
+: 1719280294:0;java variable1
+: 1719298364:0;pkill ags
+: 1719298376:0;pkill || ags
+: 1719298668:0;nvim a.py
+: 1719298679:0;py a.py
+: 1719298684:0;rm a.py
+: 1719300799:0;killall waybar
+: 1719302551:0;i wf-recorder
+: 1719303816:0;i gammastep
+: 1719303939:0;gammastep
+: 1719303972:0;chmod +x record-script.sh
+: 1719303986:0;killall wf-recorder
+: 1719303994:0;./record-script.sh
+: 1719307355:0;r swaync
+: 1719307447:0;ags -t applauncher
+: 1719308712:0;ags -r "volume_toggle()"
+: 1719308820:0;notify-send "Notification Popup Example" "Lorem ipsum dolor sit amet, qui minim labore adipisicing \n Lorem ipsum dolor sit amet, qui minim labore adipisicing \n Lorem ipsum dolor sit amet, qui minim labore adipisicing"
+: 1719308971:0;./cliphist.sh
+: 1719308979:0;./cliphist.sh --get
+: 1719308988:0;./cliphist.sh --copy-by-id
+: 1719309210:0;[A]
+: 1719309313:0;clear
+: 1719309633:0;ags -t cliphist
+: 1719309773:0;ags -r "volume_changed()"
+: 1719310855:0;ags -r overview
+: 1719310917:0;ags -t overview
+: 1719311239:0;ags -t Dock
+: 1719311275:0;killall mov
+: 1719311279:0;killall mvp
+: 1719312877:0;nvim wallpaper.sh
+: 1719312967:0;chmod +x wallpaper.sh
+: 1719313095:0;ags -t WallSelectorWindow
+: 1719313286:0;rm wallpaper.sh
+: 1719313287:0;cd
+: 1719313291:0;cd .local/bin
+: 1719313313:0;chmod +x noti_test.sh
+: 1719313417:0;./noti_test.sh
+: 1719313469:0;nvim noti_test.sh
+: 1719314119:0;chmod +x ags
+: 1719314120:0;./ags
+: 1719314183:0;u
+: 1719314200:0;hyprctl reload
+: 1719314275:0;./ags 2>error.log
+: 1719314521:0;./initial-boot.sh
+: 1719314852:0;ln -sf .bun/bin/bun /usr/bin/bun
+: 1719314856:0;sudo ln -sf .bun/bin/bun /usr/bin/bun
+: 1719315089:0;esbuild
+: 1719315338:0;cd /usr/bin
+: 1719315344:0;sudo rm bun
+: 1719315359:0;c
+: 1719315674:0;i esbuild
+: 1719315886:0;killall ags
+: 1719315888:0;ags
+: 1719315987:0;ags &
+: 1719316342:0;commit "update"
+: 1719316344:0;push
+: 1719316550:0;ls
+: 1719316718:0;git clone -b master git clone git@github.com:S4NKALP/hyprland.git
+: 1719316729:0;git clone -b master git@github.com:S4NKALP/hyprland.git
+: 1719316839:0;noti_test.sh
+: 1719316950:0;nvim
+: 1719316960:0;btop
+: 1719316964:0;htop
+: 1719317070:0;bc
+: 1719317073:0;r bc
+: 1719317076:0;q
+: 1719317238:0;sudo cp /usr/share/fonts/DancingScript-Regular.otf ~/
+: 1719317910:0;cd /usr/share/fonts

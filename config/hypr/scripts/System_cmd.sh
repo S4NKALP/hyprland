@@ -47,10 +47,30 @@ sys_poweroff() {
 		poweroff
 	fi
 }
+sys_lock() {
+    if _need_confirm "Lock screen?"; then
+        pidof hyprlock || hyprlock -q
+    fi
+}
+sys_logout() {
+    if _need_confirm "Logout?"; then
+        loginctl kill-session $XDG_SESSION_ID
+    fi
+}
+sys_suspend() {
+    if _need_confirm "Suspend system?"; then
+        systemctl suspend
+    fi
+}
+sys_hibernate() {
+    if _need_confirm "Hibernate system?"; then
+        systemctl hibernate
+    fi
+}
 
 #######################################################
 #                                                     #
-#               Reload Waybar, Rofi, Swaync           #
+#                   Reload ags rofi                   #
 #                                                     #
 #######################################################
 #  (SHIFT ALT R)
@@ -59,7 +79,7 @@ reload_all() {
         [ -e "$1" ]
     }
 
-    processes=("waybar" "rofi" "swaync" "ags")
+    processes=("ags" "rofi")
 
     for process in "${processes[@]}"; do
         pid=$(pidof "$process")
@@ -67,35 +87,10 @@ reload_all() {
             pkill "$process"
         fi
     done
-
+    # quit ags
+    ags -q
     sleep 0.3
     ags &
-    sleep 0.3
-    waybar &
-    sleep 0.5
-    swaync > /dev/null 2>&1 &
-}
-
-######################################
-#                                    #
-#           Reload Waybar            #
-#                                    #
-######################################
-
-reload_waybar() {
-	_ps=(waybar rofi)
-	for _prs in "${_ps[@]}"; do
-		if pidof "${_prs}" >/dev/null; then
-			pkill "${_prs}"
-		fi
-	done
-
-	sleep 0.1
-	# Relaunch waybar
-	if [[ -z $1 ]]; then
-		waybar &
-	fi
-	notify-send -u low -i $reload "Reload Waybar"
 
 }
 
@@ -108,16 +103,6 @@ reload_waybar() {
 reload_hypr() {
 	hyprctl reload
 	notify-send -u low -i $reload 'Reload Hyprland'
-}
-
-######################################
-#                                    #
-#       lockscreen(hyprlock)         #
-#                                    #
-######################################
-
-lock_screen() {
-    hyprlock
 }
 
 ######################################
@@ -149,7 +134,7 @@ battery_notify() {
             FULL_CHARGE_NOTIFIED=1    # Set the state to indicate that the full charge notification has been sent
         fi
 
-        if [ "$PERCENT" -le 20 ] && [ "$LOW_BATTERY_NOTIFIED" -eq 0 ]; then     # Check if the battery percentage is less than or equal to 20% and low battery notification has not been sent
+        if [ "$PERCENT" -le 40 ] && [ "$LOW_BATTERY_NOTIFIED" -eq 0 ]; then     # Check if the battery percentage is less than or equal to 20% and low battery notification has not been sent
             notify-send -u critical "🪫 Low Battery" "Plug in the charger"    # Send low battery notification
             LOW_BATTERY_NOTIFIED=1  # Set the state to indicate that the low battery notification has been sent
         fi
@@ -188,4 +173,116 @@ done
 if [ "$executed" == false ]; then
   echo "None of the specified files were found. Install a Polkit"
 fi
+}
+
+
+######################################
+#                                                                                          #
+#                                     SymLink                                      #
+#                                                                                          #
+######################################
+
+symlink() {
+    # Define cache directory
+    cache_dir="$HOME/.cache/swww/"
+
+    # Get a list of monitor outputs
+    monitor_outputs=($(ls "$cache_dir"))
+
+    # Initialize variables
+    ln_success=false
+    current_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
+    echo $current_monitor
+    cache_file="$cache_dir$current_monitor"
+    echo $cache_file
+
+    if [ -f "$cache_file" ]; then
+        # Read wallpaper path from cache file
+        wallpaper_path=$(cat "$cache_file")
+        echo $wallpaper_path
+
+        # Symlink wallpaper to the location accessible by Rofi
+        if ln -sf "$wallpaper_path" "$HOME/dotfiles/hypr/wallpaper_effects/.wallpaper_current"; then
+            ln_success=true  # Set the flag to true upon successful execution
+        fi
+
+        # Copy the wallpaper for wallpaper effects (optional)
+        # cp -r "$wallpaper_path" "$HOME/.config/hypr/wallpaper_effects/.wallpaper_current"
+    fi
+
+    # Check if symlink was successful
+    if [ "$ln_success" = true ]; then
+        echo 'Symlink successful'
+    fi
+}
+
+######################################
+#                                                                                           #
+#                                   Wallpaper Effect                         #
+#                                                                                         #
+######################################
+
+
+apply_wallpaper_effects() {
+    current_wallpaper="$HOME/dotfiles/hypr/wallpaper_effects/.wallpaper_current"
+    wallpaper_output="$HOME/dotfiles/hypr/wallpaper_effects/.wallpaper_modified"
+    focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
+    iDIR="$HOME/dotfiles/hypr/assets/"
+    SWWW_PARAMS="--transition-fps 60 --transition-type wipe --transition-duration 2"
+
+    declare -A effects=(
+        ["Black & White"]="magick $current_wallpaper -colorspace gray -sigmoidal-contrast 10,40% $wallpaper_output"
+        ["Blurred"]="magick $current_wallpaper -blur 0x5 $wallpaper_output"
+        ["Solarize"]="magick $current_wallpaper -solarize 80% $wallpaper_output"
+        ["Sepia Tone"]="magick $current_wallpaper -sepia-tone 65% $wallpaper_output"
+        ["Negate"]="magick $current_wallpaper -negate $wallpaper_output"
+        ["Charcoal"]="magick $current_wallpaper -charcoal 0x5 $wallpaper_output"
+        ["Edge Detect"]="magick $current_wallpaper -edge 1 $wallpaper_output"
+        ["Emboss"]="magick $current_wallpaper -emboss 0x5 $wallpaper_output"
+        ["Sharpen"]="magick $current_wallpaper -sharpen 0x5 $wallpaper_output"
+        ["Oil Paint"]="magick $current_wallpaper -paint 4 $wallpaper_output"
+        ["Vignette"]="magick $current_wallpaper -vignette 0x5 $wallpaper_output"
+        ["Posterize"]="magick $current_wallpaper -posterize 4 $wallpaper_output"
+        ["Polaroid"]="magick $current_wallpaper -polaroid 0 $wallpaper_output"
+        ["No Effects"]="no-effects"
+    )
+
+    no_effects() {
+        swww img -o "$focused_monitor" "$current_wallpaper" $SWWW_PARAMS &
+        wait $!
+        notify-send -u low -i "$iDIR/bell.png" "No wallpaper effects"
+        cp $current_wallpaper $wallpaper_output
+    }
+
+    main() {
+        options="No Effects"
+        for effect in "${!effects[@]}"; do
+            if [ "$effect" != "No Effects" ]; then
+                options+="\n$effect"
+            fi
+        done
+
+        choice=$(echo -e "$options" | rofi -i -dmenu)
+        if [[ -n "$choice" && "${effects[$choice]+exists}" ]]; then
+            if [ "$choice" == "No Effects" ]; then
+                no_effects
+            else
+                notify-send -u normal -i "$iDIR/bell.png" "Applying $choice effects"
+                eval "${effects[$choice]}"
+                sleep 1
+                swww img -o "$focused_monitor" "$wallpaper_output" $SWWW_PARAMS &
+                wait $!
+                notify-send -u low -i "$iDIR/bell.png" "$choice effects applied"
+            fi
+        else
+            echo "Effects not recognized."
+        fi
+    }
+
+    if pidof rofi > /dev/null; then
+        pkill rofi
+        exit 0
+    fi
+
+    main
 }

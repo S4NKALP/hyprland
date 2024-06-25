@@ -98,15 +98,13 @@ change_layout() {
 ######################################
 
 random_wall() {
-  swww query || swww init
-  PICS=("${wallDIR}"/*.{jpg,jpeg,png,gif})  # Array of image files in wallDIR
+focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
 
-  if [[ ${#PICS[@]} -gt 0 ]]; then
-    RANDOMPICS=${PICS[RANDOM % ${#PICS[@]}]}  # Select a random image
-    swww img "${RANDOMPICS}" ${SWWW_PARAMS}   # Set the randomly selected wallpaper
-  else
-    echo "No images found in ${wallDIR}"
-  fi
+PICS=($(find ${wallDIR} -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \)))
+RANDOMPICS=${PICS[ $RANDOM % ${#PICS[@]} ]}
+
+swww query || swww-daemon --format xrgb && swww img -o $focused_monitor ${RANDOMPICS} $SWWW_PARAMS
+$RunCMD symlink
 }
 
 
@@ -117,13 +115,15 @@ random_wall() {
 ######################################
 
 auto_wall() {
+  focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
   INTERVAL=1800   # This controls (in seconds) when to switch to the next image
-  while true; do
+ while true; do
     find "$wallDIR" -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \) -print0 \
       | shuf -z -n 1 \
-      | xargs -0 -I {} swww img "{}" ${SWWW_PARAMS} &&
-    sleep $INTERVAL
-  done
+      | xargs -0 -I {} swww img -o $focused_monitor "{}" ${SWWW_PARAMS} &&
+            $RunCMD symlink
+			sleep $INTERVAL
+		done
 }
 
 ######################################
@@ -133,6 +133,7 @@ auto_wall() {
 ######################################
 
 select_wall() {
+    focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
     build_theme() {
         rows="$1"
         cols="$2"
@@ -150,47 +151,14 @@ select_wall() {
             choice=$(find "$wallDIR" -type f -maxdepth 1 -printf "%f\n" | shuf -n1)
         fi
         wallpaper="$wallDIR/${choice#*icon\x1f}"
-        swww img $SWWW_PARAMS1 "$wallpaper"
+        swww img -o $focused_monitor $SWWW_PARAMS1 "$wallpaper"
+        $RunCMD symlink
     else
         echo "No wallpaper selected. Exiting."
         exit 0
     fi
 }
 
-######################################
-#                                    #
-#            Waybar Layout           #
-#                                    #
-######################################
-
-#waybar_layout() {
-#    menu() {
-#        find "$config_dir" -maxdepth 1 -type f -exec basename {} \; | sort
-#    }
-#    apply_config() {
-#        ln -sf "$config_dir/$1" "$waybar_config"
-#        restart_waybar_if_needed
-#    }
-#restart_waybar_if_needed() {
-#    if pgrep -x "waybar" >/dev/null; then
-#        pkill waybar
-#        sleep 0.1
-#    fi
-#    $RunCMD reload_waybar &
-#}
-#    main() {
-#        choice=$(menu | rofi -dmenu -p "  Choose Waybar Layout")
-#
-#        [[ -z "$choice" ]] && { echo "No option selected. Exiting."; exit 0; }
-#
-#        case $choice in
-#            "no panel") pkill -x waybar || true ;;
-#            *) apply_config "$choice" ;;
-#        esac
-#    }
-#    pgrep -x rofi && { pkill rofi; exit 0; }
-#    main
-#}
 
 ######################################
 #                                    #
@@ -211,9 +179,9 @@ gamemode() {
 }
 
 ######################################
-#                                    #
-#            Toggle Opaque           #
-#                                    #
+#                                                                                           #
+#                                       Toggle Opaque                        #
+#                                                                                          #
 ######################################
 
 enable_opaque() {
@@ -226,49 +194,25 @@ disable_opaque() {
 }
 
 ######################################
-#     Keyboard Layout Switcher       #
-#                                    #
+#                       Keyboard Layout Switcher                   #
+#                                                                                          #
 ######################################
 
 kb_changer() {
-if [ ! -f "$layout_f" ]; then
-  default_layout=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2 | cut -d ',' -f 1 2>/dev/null)
-  if [ -z "$default_layout" ]; then
-    default_layout="us" # Default to 'us' layout if Settings.conf or 'kb_layout' is not found
-  fi
-  echo "$default_layout" > "$layout_f"
-fi
-current_layout=$(cat "$layout_f")
-if [ -f "$settings_file" ]; then   # Read keyboard layout settings from Settings.conf
-  kb_layout_line=$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2)
-  IFS=',' read -ra layout_mapping <<< "$kb_layout_line"
-fi
-layout_count=${#layout_mapping[@]}
-for ((i = 0; i < layout_count; i++)); do  # Find the index of the current layout in the mapping
-  if [ "$current_layout" == "${layout_mapping[i]}" ]; then
-    current_index=$i
-    break
-  fi
-done
-next_index=$(( (current_index + 1) % layout_count ))  # Calculate the index of the next layout
-new_layout="${layout_mapping[next_index]}"
-hyprctl switchxkblayout input:kb_layout "$next_index"   # Update the keyboard layout
-echo "$new_layout" > "$layout_f"
-notify-send -u low -i "$notif" "Keyboad Layout Changed to $new_layout"
+    current_layout=$(cat "$layout_f")
+
+    [ -f "$settings_file" ] && IFS=',' read -ra layout_mapping <<< "$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2)"
+
+    for i in "${!layout_mapping[@]}"; do
+        [ "$current_layout" == "${layout_mapping[i]}" ] && new_layout="${layout_mapping[((i + 1) % ${#layout_mapping[@]})]}" && break
+    done
+
+    hyprctl switchxkblayout "at-translated-set-2-keyboard" "$new_layout" && echo "$new_layout" > "$layout_f"
+
+    hyprctl devices -j | jq -r '.keyboards[].name' | while read -r name; do
+        hyprctl switchxkblayout "$name" next || { notify-send -u low -t 2000 'Keyboard layout' 'Error: Layout change failed'; exit 1; }
+    done
+
+    notify-send -u low -i "$notif" "Keyboard language changed to $new_layout"
 }
 
-######################################
-
-######################################
-#                                    #
-#            Cursor Zoom             #
-#                                    #
-######################################
-
-cz() {
-if [ $(hyprctl -j getoption misc:cursor_zoom_factor | jq '.float' | sed 's/\..*$//') == 1 ]; then
-  $(hyprctl keyword misc:cursor_zoom_factor 2) &> /dev/null
-else
-  $(hyprctl keyword misc:cursor_zoom_factor 1) &> /dev/null
-fi
-}

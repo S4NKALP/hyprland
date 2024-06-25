@@ -7,28 +7,6 @@ source "$CONFIG_FILE"
 
 ######################################
 #                                    #
-#       Toggle touchpad state        #
-#                                    #
-######################################
-
-toggle_touchpad() {
-  local status_file="$STATUS_FILE"
-  local action
-
-  if [[ ! -e "$status_file" ]] || ! $(<"$status_file"); then
-    echo "1" > "$status_file"
-    action="enabled"
-  else
-    echo "0" > "$status_file"
-    action="disabled"
-  fi
-
-  notify-send -u low -i "$notif" "Touchpad $action"
-  hyprctl keyword "device:$HYPRLAND_DEVICE:enabled" "$(cat "$status_file")"
-}
-
-######################################
-#                                    #
 #       Toggle wifi state            #
 #                                    #
 ######################################

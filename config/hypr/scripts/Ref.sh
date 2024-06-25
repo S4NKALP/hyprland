@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# For TouchPad
-HYPRLAND_DEVICE="dll07a7:01-044e:120b"
-DIR=$HOME/.cache
-STATUS_FILE="$DIR/touchpad.status"
-
 # For Notification icon
 notif="$HOME/dotfiles/hypr/assets/bell.png"
 reload="$HOME/dotfiles/hypr/assets/reload.svg"
@@ -39,9 +34,6 @@ settings_file="$HOME/dotfiles/hypr/UserConfigs/UserSettings.conf"
 configs="$HOME/dotfiles/hypr/configs"
 UserConfigs="$HOME/dotfiles/hypr/UserConfigs"
 
+iDIR="$HOME/dotfiles/hypr/assets"
 
-# For Waybar Layout
-config_dir="$HOME/dotfiles/waybar/configs"
-waybar_config="$HOME/dotfiles/waybar/config"
 RunCMD="$SCRIPTSDIR/RunCMD.sh"
-
