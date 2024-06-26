@@ -13,6 +13,7 @@ pkg=(
     tumbler
     polkit-gnome
     jq
+    xdg-dbus-proxy
 
     ## Kernel
     linux-headers
@@ -65,6 +66,7 @@ pkg=(
     unzip
     zip
     unrar
+    xarchiver
     rofi-lbonn-wayland-git
     network-manager-applet
     cava
@@ -128,6 +130,12 @@ pkg=(
     bun-bin
     dart-sass
     sass
+
+    ## python
+    python-pillow
+    python-pip
+    python-pywayland
+
 )
 # Creating a new `packages` array
 packages=(
