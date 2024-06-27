@@ -1,8 +1,7 @@
 @import "./colors.css";
 
 window.bar {
-    /*background-color: @surface;*/
-    background-color: transparent;
+    background-color: @surface;
     padding: 6px;
 }
 
@@ -490,14 +489,21 @@ window.notification-popups box.notifications {
     color: @onSurface;
 }
 
-.bar_wifi {
+.bar_applets {
     background-color: @surfaceContainer;
     border-radius: 100px;
     padding: 2px 10px 2px 10px;
+    margin: 0px;
 }
 
-.bar_wifi image {
+.bar_applets image {
     color: @onSurface;
+}
+
+.bar_applets button {
+    color: @onSurface;
+    margin: 0px;
+    padding: 0px;
 }
 
 /* -----------------------------------------------------
@@ -630,7 +636,7 @@ window.notification-popups box.notifications {
 }
 
 .system_scale.backlight {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .system_scale.brightness slider {
@@ -891,7 +897,7 @@ switch slider {
     min-height: 8px;
     min-width: 16px;
     transition: all 0.2s ease-in-out;
-    transition-property: min-height, min-width, color, background-color, border-color, margin;
+    transition-property: color, background-color, border-color;
 }
 
 switch:disabled {
@@ -940,4 +946,3 @@ switch:checked:hover, switch:checked:active {
 switch:checked:hover slider, switch:checked:active slider {
     background-color: @primaryContainer;
 }
-
