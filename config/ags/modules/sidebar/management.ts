@@ -1,27 +1,15 @@
+const { Gtk } = imports.gi;
 
 const notifications = await Service.import("notifications")
 const network = await Service.import('network')
+const powerProfiles = await Service.import('powerprofiles')
 import { OpenSettings } from "apps/settings/main.ts";
 import { WINDOW_NAME } from "./main.ts"
+import { bluetooth_enabled, idle_inhibitor, night_light, screen_recorder, icons } from "variables.ts";
 
-const { Gtk } = imports.gi;
-const GLib = imports.gi.GLib;
-const Gio = imports.gi.Gio;
-
-const idle_inhibitor = Variable(false);
-const night_light = Variable(false);
-const screen_recorder = Variable(false);
 const currentPage = Variable(0);
-export const bluetooth_enabled = Variable('off', {
-    poll: [1000, `${App.configDir}/scripts/bluetooth.sh --get`]
-})
 
-const powerProfiles = await Service.import('powerprofiles');
-const icons = {
-    'performance': ' ',
-    'balanced': ' ',
-    'power-saver': '󰡵 '
-};
+
 
 function WifiIndicator() {
     return Widget.Box({
@@ -121,9 +109,11 @@ function IconAndName({ label, icon, padding = "0.3em", arrow = false }) {
     return box
 }
 
+// for ScreenRecorder
 function isScreenRecordingOn() {
-    let state = Utils.execAsync('bash -c "pidof wf-recorder > /dev/null; echo $?"');
-    return state == "0";
+    return Utils.execAsync('bash -c "pidof wf-recorder > /dev/null; echo $?"').then(state => {
+        return state.trim() == "0";
+});
 }
 
 let recordingStartTime = null;
@@ -150,9 +140,10 @@ function stopRecordingTimer(button) {
     clearInterval(recordingInterval);
     recordingStartTime = null;
     recordingInterval = null;
-    button.label = 'Start Recording';
+    button.label = '󰑋 Screen Recorder';
 }
 
+// Widget
 function Page1() {
     return Widget.Box({
         orientation: Gtk.Orientation.VERTICAL,
@@ -236,7 +227,6 @@ function Page1() {
                     })
                 ]
             }),
-
             Widget.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
                 spacing: 2.5,
@@ -247,27 +237,34 @@ function Page1() {
                         class_name: screen_recorder.bind()
                             .as(bool => bool ? "management_button active" : "management_button"),
                         on_clicked: (self) => {
-                            let isRecording = isScreenRecordingOn();
+                            isScreenRecordingOn().then(isRecording => {
+                                if (isRecording) {
+                                    stopRecordingTimer(self);
+                                } else {
+                                    startRecordingTimer(self);
+                                }
+                                self.toggleClassName("active-button", !isRecording);
+                                self.toggleClassName("recording", !isRecording);
 
-                            if (isRecording) {
-                                stopRecordingTimer(self);
-                            } else {
-                                startRecordingTimer(self);
-                            }
-                            self.toggleClassName("active-button", !isRecording);
-                            self.toggleClassName("recording", !isRecording);
-
-                            Utils.execAsync(['bash', '-c', 'mkdir -p ~/Videos/Screenrecordings; pkill wf-recorder; if [ $? -ne 0 ]; then wf-recorder -f ~/Videos/Screenrecordings/recording_"$(date +\'%b-%d-%Y-%I:%M:%S-%P\')".mp4 -g "$(slurp)" --pixel-format yuv420p; fi']).catch(logError);
+                                Utils.execAsync(['bash', '-c', 'mkdir -p ~/Videos/Screenrecordings; pkill wf-recorder; if [ $? -ne 0 ]; then wf-recorder -f ~/Videos/Screenrecordings/recording_"$(date +\'%b-%d-%Y-%I:%M:%S-%P\')".mp4 -g "$(slurp)" --pixel-format yuv420p; fi'])
+                                    .catch(logError)
+                                    .then(() => {
+                                        isScreenRecordingOn().then(newIsRecording => {
+                                            if (!newIsRecording) {
+                                                stopRecordingTimer(self);
+                                            }
+                                        })
+                                    });
+                                });
                             },
-                        child: IconAndName({
+                            child: IconAndName({
                             label: "Screen Recorder",
                             icon: "󰑋",
-                            setup: self=>{
-                                self.label = 'Start Recording';
+                            setup: self => {
+                            self.label = '󰑋 Screen Recorder';
                             }
                         })
                     }),
-
                     Widget.Button({
                         hexpand: true,
                         class_name: night_light.bind()
