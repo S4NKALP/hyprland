@@ -122,15 +122,35 @@ function IconAndName({ label, icon, padding = "0.3em", arrow = false }) {
 }
 
 function isScreenRecordingOn() {
-    // Check if wf-recorder is running
-    // Bash command outputs 0 if yes or 1 if no
-    let state = Utils.execAsync('bash -c "pidof wf-recorder > /dev/null; echo $?"')
-    if (state == "0"){
-        return true
-    }
-    else{
-        return false
-    }
+    let state = Utils.execAsync('bash -c "pidof wf-recorder > /dev/null; echo $?"');
+    return state == "0";
+}
+
+let recordingStartTime = null;
+let recordingInterval = null;
+
+function formatTime(ms) {
+    let totalSeconds = Math.floor(ms / 1000);
+    let hours = Math.floor(totalSeconds / 3600);
+    let minutes = Math.floor((totalSeconds % 3600) / 60);
+    let seconds = totalSeconds % 60;
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function startRecordingTimer(button) {
+    recordingStartTime = Date.now();
+    recordingInterval = setInterval(() => {
+        let elapsedTime = Date.now() - recordingStartTime;
+        button.label = formatTime(elapsedTime);
+    }, 1000);
+}
+
+function stopRecordingTimer(button) {
+    clearInterval(recordingInterval);
+    recordingStartTime = null;
+    recordingInterval = null;
+    button.label = 'Start Recording';
 }
 
 function Page1() {
@@ -216,6 +236,7 @@ function Page1() {
                     })
                 ]
             }),
+
             Widget.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
                 spacing: 2.5,
@@ -226,20 +247,24 @@ function Page1() {
                         class_name: screen_recorder.bind()
                             .as(bool => bool ? "management_button active" : "management_button"),
                         on_clicked: (self) => {
-                            screen_recorder.setValue(!screen_recorder.value)
-                        // Adjust indicator
-                        let isRecording = isScreenRecordingOn()
-                        self.toggleClassName("active-button", !isRecording) // Toggles active indicator
-                        self.toggleClassName("recording", !isRecording) // Toggles active indicator
+                            let isRecording = isScreenRecordingOn();
 
-                        // Starts screen recorder if not running
-                        // Stops screen recorder if running
-                        Utils.execAsync(['bash', '-c', 'mkdir ~/Videos/Screenrecordings; pkill wf-recorder; if [ $? -ne 0 ]; then wf-recorder -f ~/Videos/Screenrecordings/recording_"$(date +\'%b-%d-%Y-%I:%M:%S-%P\')".mp4 -g "$(slurp)" --pixel-format yuv420p; fi']).catch(logError);
-                        },
+                            if (isRecording) {
+                                stopRecordingTimer(self);
+                            } else {
+                                startRecordingTimer(self);
+                            }
+                            self.toggleClassName("active-button", !isRecording);
+                            self.toggleClassName("recording", !isRecording);
+
+                            Utils.execAsync(['bash', '-c', 'mkdir -p ~/Videos/Screenrecordings; pkill wf-recorder; if [ $? -ne 0 ]; then wf-recorder -f ~/Videos/Screenrecordings/recording_"$(date +\'%b-%d-%Y-%I:%M:%S-%P\')".mp4 -g "$(slurp)" --pixel-format yuv420p; fi']).catch(logError);
+                            },
                         child: IconAndName({
                             label: "Screen Recorder",
-                            icon: "",
-                            setup: self=>{}
+                            icon: "󰑋",
+                            setup: self=>{
+                                self.label = 'Start Recording';
+                            }
                         })
                     }),
 

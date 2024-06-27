@@ -2,7 +2,8 @@
 // Import
 import Gdk from 'gi://Gdk';
 // widgets
-import { Bar, BarCornerTopLeft, BarCornerTopRight } from './modules/bar.ts';
+//import { Bar, BarCornerTopLeft, BarCornerTopRight } from './modules/bar.ts';
+import { Bar } from './modules/bar.ts';
 import { Notifications } from "./modules/notificationPopups.ts"
 import { applauncher } from "./modules/applauncher.js"
 import { media } from "./modules/media.ts"
@@ -25,8 +26,8 @@ function forMonitorsAsync(widget: (index: number) => Promise<Window<any, any>>) 
 
 const Windows = () => [
     forMonitors(Notifications),
-    forMonitors(BarCornerTopLeft),
-    forMonitors(BarCornerTopRight),
+    //forMonitors(BarCornerTopLeft),
+    //forMonitors(BarCornerTopRight),
     media,
     applauncher,
     cliphist,

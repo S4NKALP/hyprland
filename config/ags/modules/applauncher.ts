@@ -78,7 +78,7 @@ function AppItem(app: Application): Box<any, any> {
 
     button.connect('clicked', () => {
         clickCount++;
-        if (clickCount === 2) {
+        if (clickCount === 1) {
             incrementLaunchCount(app.name);
             App.closeWindow(WINDOW_NAME);
             app.launch();
