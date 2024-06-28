@@ -78,7 +78,7 @@ function getIconNameFromClass(windowClass: string) {
     return Utils.lookUpIcon(icon) ? icon : "image-missing";
 }
 
-const dispatch = (ws) => hyprland.messageAsync(`dispatch workspace ${ws}`);
+const dispatch = (ws: string) => hyprland.messageAsync(`dispatch workspace ${ws}`).catch(print);
 
 function Workspaces() {
 	return EventBox({
