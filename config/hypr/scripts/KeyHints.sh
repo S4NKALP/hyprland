@@ -48,8 +48,12 @@ yad --width=$dynamic_width --height=$dynamic_height \
 " W" "Choose wallpaper" "(Wallpaper Menu)" \
 " Shift W" "Choose wallpaper effects" "(imagemagick + swww)" \
 "SHIFT ALT W" "Random wallpaper" "(via swww)" \
+" H" "Hide/UnHide Waybar" "waybar" \
+" ALT R" "Reload Waybar swaync Rofi" "CHECK NOTIFICATION FIRST!!!" \
 " Print" "screenshot" "(grim)" \
 " Z" "screenshot region" "(grim + slurp)" \
+"CTRL ALT P" "power-menu" "(wlogout)" \
+"CTRL ALT L" "screen lock" "(hyprlock)" \
 "CTRL ALT Del" "Hyprland Exit" "(SAVE YOUR WORK!!!)" \
 " SHIFT Space" "Fullscreen" "Toggles to full screen" \
 " Space" "Toggle Dwindle | Master Layout" "Hyprland Layout" \

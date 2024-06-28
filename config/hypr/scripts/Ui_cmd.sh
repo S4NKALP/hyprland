@@ -1,8 +1,10 @@
 #!/bin/bash
 
-# Source the configuration file.
-CONFIG_FILE=~/dotfiles/hypr/scripts/Ref.sh
-source "$CONFIG_FILE"
+notif="$HOME/dotfiles/hypr/assets/bell.png"
+
+
+
+# For Keyboard Layout Switcher
 
 
 ######################################
@@ -43,22 +45,6 @@ toggle_animation() {
 
 }
 
-######################################
-#                                    #
-#           Rainbow Border           #
-#                                    #
-######################################
-
-rainbow_border() {
-  function random_hex() {
-    random_hex=("0xff$(openssl rand -hex 3)")
-    echo $random_hex
-}
-hyprctl keyword general:col.active_border $(random_hex)  $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
-
-hyprctl keyword general:col.inactive_border $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex) $(random_hex)  270deg
-}
-
 ################################################
 #                                              #
 #      Change Layout Master to Dwindle         #
@@ -93,28 +79,17 @@ change_layout() {
 
 ######################################
 #                                    #
-#         Random Wallpaper           #
-#                                    #
-######################################
-
-random_wall() {
-focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
-
-PICS=($(find ${wallDIR} -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" \)))
-RANDOMPICS=${PICS[ $RANDOM % ${#PICS[@]} ]}
-
-swww query || swww-daemon --format xrgb && swww img -o $focused_monitor ${RANDOMPICS} $SWWW_PARAMS
-$RunCMD symlink
-}
-
-
-######################################
-#                                    #
 #       Auto Wallpaper Changer       #
 #                                    #
 ######################################
 
 auto_wall() {
+  wallDIR="$HOME/Pictures/wallpapers"
+  FPS=60
+  TYPE="random"
+  DURATION=1
+  BEZIER=".43,1.19,1,.4"
+  SWWW_PARAMS="--transition-fps ${FPS} --transition-type ${TYPE} --transition-duration ${DURATION} --transition-bezier ${BEZIER}"
   focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
   INTERVAL=1800   # This controls (in seconds) when to switch to the next image
  while true; do
@@ -126,38 +101,6 @@ auto_wall() {
 		done
 }
 
-######################################
-#                                    #
-#        Wallpaper Selector          #
-#                                    #
-######################################
-
-select_wall() {
-    focused_monitor=$(hyprctl monitors | awk '/^Monitor/{name=$2} /focused: yes/{print name}')
-    build_theme() {
-        rows="$1"
-        cols="$2"
-        icon_size="$2"
-        echo "element{orientation:vertical;}element-text{horizontal-align:0.5;}element-icon{size:${icon_size}.0000em;}listview{lines:${rows};columns:${cols};}"
-    }
-    if [ ! -d "$wallDIR" ]; then
-        echo "Error: Wallpaper directory not found." >&2
-        exit 1
-    fi
-    images=$(find "$wallDIR" -maxdepth 1 -type f -printf "%f\x00icon\x1f$wallDIR/%f\n" | sort -n)
-    choice=$(echo -en "$images\nRandom Choice" | rofi -dmenu -i -show-icons -theme-str "$(build_theme 3 5 6)" -p "󰸉  Wallpaper")
-    if [ -n "$choice" ]; then
-        if [ "$choice" = "Random Choice" ]; then
-            choice=$(find "$wallDIR" -type f -maxdepth 1 -printf "%f\n" | shuf -n1)
-        fi
-        wallpaper="$wallDIR/${choice#*icon\x1f}"
-        swww img -o $focused_monitor $SWWW_PARAMS1 "$wallpaper"
-        $RunCMD symlink
-    else
-        echo "No wallpaper selected. Exiting."
-        exit 0
-    fi
-}
 
 
 ######################################
@@ -199,6 +142,8 @@ disable_opaque() {
 ######################################
 
 kb_changer() {
+    layout_f="$HOME/.cache/kb_layout"
+    settings_file="$HOME/dotfiles/hypr/UserConfigs/UserSettings.conf"
     current_layout=$(cat "$layout_f")
 
     [ -f "$settings_file" ] && IFS=',' read -ra layout_mapping <<< "$(grep 'kb_layout=' "$settings_file" | cut -d '=' -f 2)"
