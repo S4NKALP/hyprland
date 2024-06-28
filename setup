@@ -135,6 +135,7 @@ pkg=(
     python-pillow
     python-pip
     python-pywayland
+    python-pyxdg
 
 )
 # Creating a new `packages` array
