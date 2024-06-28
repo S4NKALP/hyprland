@@ -1,0 +1,59 @@
+env:
+  es2022: true
+extends:
+  - eslint:recommended
+  - plugin:@typescript-eslint/recommended
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: 2022
+  sourceType: module
+  project: ./tsconfig.json
+  warnOnUnsupportedTypeScriptVersion: false
+root: true
+ignorePatterns:
+  - types/
+plugins:
+  - "@typescript-eslint"
+rules:
+  "@typescript-eslint/ban-ts-comment":
+    - "off"
+  "@typescript-eslint/no-non-null-assertion":
+    - "off"
+  # "@typescript-eslint/no-explicit-any":
+  #   - "off"
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - varsIgnorePattern: (^unused|_$)
+      argsIgnorePattern: ^(unused|_)
+  "@typescript-eslint/no-empty-interface":
+    - "off"
+  indent:
+    - error
+    - 2
+    - SwitchCase: 1
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+    - avoidEscape: true
+  semi:
+    - error
+    - never
+  no-trailing-spaces:
+    - error
+globals:
+  pkg: readonly
+  ags: readonly
+  ARGV: readonly
+  imports: readonly
+  print: readonly
+  console: readonly
+  logError: readonly
+
+  App: writable
+  Utils: writable
+  Widget: writable
+  Service: writable
+  Variable: writable

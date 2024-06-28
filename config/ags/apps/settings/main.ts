@@ -1,6 +1,7 @@
 import { RegularWindow } from "apps/window";
 import { Network } from "./network";
 import { Bluetooth } from "./bluetooth";
+import { Wallpapers } from "./wallpapers";
 import { Widget as WidgetType } from "types/widgets/widget";
 const hyprland = await Service.import("hyprland")
 import Gtk from "gi://Gtk?version=3.0"
@@ -38,7 +39,8 @@ function Settings(cur_tab: string) {
         transition: "crossfade",
         children: {
             "network": Page(Network(), "Network"),
-            "bluetooth": Page(Bluetooth(), "Bluetooth")
+            "bluetooth": Page(Bluetooth(), "Bluetooth"),
+            "wallpaper": Page(Wallpapers(), "Wallpapers")
         }
     })
     const Row = (name: string, label: string, icon: string = "image-missing") => Widget.Button({
@@ -59,14 +61,16 @@ function Settings(cur_tab: string) {
         children: [
             Row("network", "Network", "network-wireless-signal-excellent-symbolic"),
             Row("bluetooth", "Bluetooth", "bluetooth-active-symbolic"),
-            Widget.Separator()
+            Widget.Separator(),
+            Row("wallpaper", "Wallpapers", "folder-pictures-symbolic"),
+            Widget.Separator(),
         ]
     })
     return Widget.Box({
         hexpand: true,
         vexpand: true,
         vertical: false,
-        css: "background-color: #111418",
+        css: "background-color: @surface",
         children: [
             Widget.Box({
                 class_name: "full_sidebar",
