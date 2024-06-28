@@ -73,7 +73,7 @@ export const Notification = (notification: NotificationType, dismiss = true) => 
                                     }),
                                     Widget.Label({
                                         class_name: "notification-time",
-                                        label: GLib.DateTime.new_from_unix_local(notification.time).format("%I:%M %p"),
+                                        label: GLib.DateTime.new_from_unix_local(notification.time).format("%H:%M"),
                                     }),
                                     Widget.Button({
                                         class_name: "standard_icon_button",
@@ -99,7 +99,6 @@ export const Notification = (notification: NotificationType, dismiss = true) => 
                                 wrap_mode: Pango.WrapMode.WORD_CHAR,
                                 xalign: 0,
                                 wrap: true,
-                                // HACK: remove linebreaks, so lines property works properly
                                 label: notification.body.replace(/(\r\n|\n|\r)/gm, " "),
                             }),
                             notification.hints.value ?
@@ -206,21 +205,24 @@ export function NotificationPopups(
             return
         const original = list.children.find(n => n.attribute.id === id);
         const replace = original?.attribute.id;
+        let notification;
         if (!replace) {
-            const notification = revealer(n, false, dismiss);
+            notification = revealer(n, false, dismiss);
             notification.attribute.count = 1;
             list.pack_end(notification, false, false, 0)
         }
         else if (original) {
-            const notification = revealer(n, true, dismiss);
+            notification = revealer(n, true, dismiss);
             notification.attribute.count++;
             original.destroy()
             list.pack_end(notification, false, false, 0)
         }
         if (timeout)
-            setTimeout(() => {
-                onDismissed(_, id)
-            }, 5000)
+            Utils.timeout(7500, () => {
+                if (notification !== null && !notification.disposed) {
+                    onDismissed(_, id)
+                }
+            })
     }
 
     function onDismissed(_: any, id: number) {
@@ -243,7 +245,7 @@ export function Notifications(monitor = 0) {
         monitor,
         name: `notifications${monitor}`,
         class_name: "notification-popups",
-        anchor: ["bottom", "right"],
+        anchor: ["top", "right"],
         type: Gtk.WindowType.POPUP,
         child: Widget.Box({
             css: "min-width: 2px; min-height: 2px;",
