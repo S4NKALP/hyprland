@@ -91,45 +91,79 @@ separator {
  * Workspaces
  * ----------------------------------------------------- */
 
-.workspaces {
-    border-radius: 16px;
-    font-weight: bold;
-    font-style: normal;
-    font-size: 16px;
-    color: @onSurface;
-    background: @surfaceContainer;
+.outer-workspace {
+	background-color: rgba(255, 255, 255, 0.05);
+	border-radius: 20px;
+	margin: 2px;
+	padding: 2px 0px;
 }
 
-.workspaces * {
-    transition: all 0.35s ease-in-out;
-    transition-property: background-color, color, min-width;
+.workspace {
+	background-color:  rgba(255, 255, 255, 0.15);
+	padding: 0;
 }
 
-.workspaces button {
-    padding: 0px 5px;
-    margin: 4px 3px;
-    border-radius: 16px;
-    border: 0px;
-    color: @onSurface;
+.workspace button {
+	background-color: transparent;
+	padding: 0px 6px;
 }
 
-.workspaces button.active {
-    color: @onSecondaryContainer;
-    background: @secondaryContainer;
-    border-radius: 16px;
-    min-width: 40px;
+.workspace.first {
+	border-radius: 20px 0 0 20px;
+}
+.workspace.last {
+	border-radius: 0 20px 20px 0;
 }
 
-.workspaces button:hover {
-    color: @onSurface;
-    background: @surfaceContainerHighest;
-    border-radius: 16px;
+.workspace.normal,
+.workspace button.normal {
+	background-color: transparent;
+
 }
 
-.workspaces button.active:hover {
-    color: @onPrimaryContainer;
-    background: @primaryContainer;
-    border-radius: 16px;
+.workspace button.normal:hover {
+	border-radius: 20px;
+	background-color: rgba(200, 62, 255, 1);
+	color: #1e1e2e;
+}
+
+.workspace button.focused {
+	background-color: #cba6f7;;
+	color: #1e1e2e;
+	font-weight: bold;
+	border-radius: 20px;
+}
+
+.workspace button.focused:hover {
+	border-radius: 20px;
+	color: #cba6f7;
+	background-color: #1e1e2e;
+}
+
+.workspace button.occupied {
+	color: #cba6f7;;
+}
+
+.workspaces button.occupied:hover {
+	border-radius: 20px;
+	background-color: #cba6f7;;
+	color: #1e1e2e;
+}
+
+.workspace.occupied-single {
+	border-radius: 20px;
+}
+
+.workspace.occupied-start {
+	border-radius: 20px 0 0 20px;
+}
+
+.workspace.occupied-middle {
+	border-radius: 0px;
+}
+
+.workspace.occupied-end {
+	border-radius: 0px 20px 20px 0px;
 }
 
 /* -----------------------------------------------------
