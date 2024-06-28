@@ -15,6 +15,7 @@ import Icon from "types/widgets/icon.js"
 import { FileEnumerator, FileInfo } from "types/@girs/gio-2.0/gio-2.0.cjs"
 const mpris = await Service.import("mpris")
 const bluetooth = await Service.import("bluetooth")
+const { Box, Button, EventBox } = Widget;
 
 
 function checkKeymap() {
@@ -77,50 +78,104 @@ function getIconNameFromClass(windowClass: string) {
     return Utils.lookUpIcon(icon) ? icon : "image-missing";
 }
 
-const dispatch = (ws: string) => hyprland.messageAsync(`dispatch workspace ${ws}`).catch(print);
-
+const dispatch = (ws) => hyprland.messageAsync(`dispatch workspace ${ws}`);
 
 function Workspaces() {
-    const activeId = hyprland.active.workspace.bind("id");
-    let workspaceButtons = new Map();
+	return EventBox({
+		onScrollUp: () => dispatch("+1"),
+		onScrollDown: () => dispatch("-1"),
+		className: "workspaces",
+		child: Box({
+			className: "outer-workspace",
+			children: Array.from({ length: 9 }, (_, i) => i + 1).map(
+				(i, index, array) =>
+					Box({
+						attribute: i,
+						className:
+							index === 0
+								? "workspace first"
+								: index === array.length - 1
+								? "workspace last"
+								: "workspace",
+					})
+			),
+		}).hook(hyprland, (self) => {
+			let previousWorkspace = {};
+			previousWorkspace.className = "";
+			self.children.forEach((box, index, array) => {
+				const isActive = hyprland.active.workspace.id === box.attribute;
+				const isOccupied = hyprland.workspaces.some(
+					(item) => item.id === box.attribute
+				);
+				let buttonClassName;
+				if (isActive) {
+					buttonClassName = "focused";
+					box.className = "workspace focused";
+				} else if (isOccupied) {
+					buttonClassName = "occupied";
+					box.className = "workspace occupied";
+				} else {
+					buttonClassName = "normal";
+					box.className = "workspace normal";
+				}
 
-    function createWorkspaceButton(id: Number) {
-        const button = Widget.Button({
-            on_clicked: () => dispatch(`${id}`),
-            child: Widget.Label(`${id}`),
-            class_name: activeId.as(i => `${i === id ? "active" : ""}`),
-        });
-        return button;
-    }
+				if (isOccupied || isActive) {
+					if (index === 0) box.toggleClassName("occupied-start", true);
+					else if (
+						index === 8 &&
+						previousWorkspace.className.indexOf("occupied-start") === -1
+					)
+						box.toggleClassName("occupied-single", true);
+					else if (
+						index === 8 &&
+						previousWorkspace.className.indexOf("occupied-middle") === -1
+					)
+						box.toggleClassName("occupied-end", true);
+					else if (
+						previousWorkspace.className.indexOf("occupied-start") !== -1
+					) {
+						box.toggleClassName("occupied-end", true);
+					} else if (
+						previousWorkspace.className.indexOf("occupied-end") !== -1
+					) {
+						previousWorkspace.toggleClassName("occupied-middle", true);
+						previousWorkspace.toggleClassName("occupied-end", false);
+						box.toggleClassName("occupied-end", true);
+					} else {
+						box.toggleClassName("occupied-start", true);
+					}
+				} else {
+					if (previousWorkspace.className.indexOf("occupied-start") !== -1) {
+						previousWorkspace.toggleClassName("occupied-start", false);
+						previousWorkspace.toggleClassName("occupied-single", true);
+					}
+				}
 
-    function updateWorkspaceButtons(workspaces: Workspace[]): Array<Button<any, any>> {
-        workspaces.sort((a, b) => a.id - b.id);
+				if (index === 0) {
+					box.toggleClassName("first", true);
+				} else if (index === array.length - 1) {
+					box.toggleClassName("last", true);
+				}
 
-        const updatedButtons = new Map();
+				box.child = Button({
+					className: buttonClassName,
+					label: box.attribute.toString(),
+					onClicked: () => dispatch(box.attribute),
+					setup: (self) => {
+						if (index === 0) {
+							self.toggleClassName("first", true);
+						} else if (index === array.length - 1) {
+							self.toggleClassName("last", true);
+						}
+					},
+				});
 
-        workspaces.forEach(({ id }) => {
-            if (workspaceButtons.has(id)) {
-                updatedButtons.set(id, workspaceButtons.get(id));
-            } else {
-                updatedButtons.set(id, createWorkspaceButton(id));
-            }
-        });
-        if (workspaceButtons != updatedButtons)
-            workspaceButtons = updatedButtons;
+				// Pass current workspace attributes as previousWorkspace
+				previousWorkspace = box;
+			});
+		}),
+	});
 
-        return Array.from(workspaceButtons.values());
-    }
-
-    const workspaceButtonsArray = hyprland.bind("workspaces").as(updateWorkspaceButtons);
-
-    return Widget.EventBox({
-        onScrollUp: () => dispatch('+1'),
-        onScrollDown: () => dispatch('-1'),
-        child: Widget.Box({
-            children: workspaceButtonsArray,
-            class_name: "workspaces",
-        }),
-    });
 }
 
 
