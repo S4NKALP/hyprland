@@ -73,7 +73,7 @@ export const Notification = (notification: NotificationType, dismiss = true) => 
                                     }),
                                     Widget.Label({
                                         class_name: "notification-time",
-                                        label: GLib.DateTime.new_from_unix_local(notification.time).format("%H:%M"),
+                                        label: GLib.DateTime.new_from_unix_local(notification.time).format("%I:%M %p"),
                                     }),
                                     Widget.Button({
                                         class_name: "standard_icon_button",
@@ -112,7 +112,7 @@ export const Notification = (notification: NotificationType, dismiss = true) => 
             })
         }),
         Widget.Box({
-            halign: Gtk.Align.END,
+            hpack: "end",
             class_name: "notification-actions",
             children: notification.actions.map(action => Widget.Button({
                 child: Widget.Label(action.label),
@@ -245,6 +245,7 @@ export function Notifications(monitor = 0) {
         monitor,
         name: `notifications${monitor}`,
         class_name: "notification-popups",
+        //anchor: ["top", "right"],
         anchor: ["bottom", "right"],
         type: Gtk.WindowType.POPUP,
         child: Widget.Box({
