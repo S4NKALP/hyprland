@@ -139,6 +139,8 @@ chmod +x setup
 - [blog](https://github.com/S4NKALP/blog) — Blog
 <hr>
 
+Most of files are taken from [koeqaife](https://github.com/koeqaife/)
+
 <div align="center">
 
 <strong>⭐ hit the star button if you found this useful ⭐</strong><br>
