@@ -381,7 +381,7 @@ function Page2() {
                         }),
                         on_primary_click: () => {
                             OpenSettings()
-                            App.CloseWindow(WINDOW_NAME);
+                            App.closeWindow(WINDOW_NAME);
                         }
                     }),
                     Widget.Box({
