@@ -17,7 +17,8 @@ export const icons = {
 };
 
 
-const wallpaper_cache_file = `${GLib.get_home_dir()}/.cache/current_wallpaper`
+export const wallpaper_cache_file = `${GLib.get_home_dir()}/.cache/current_wallpaper`
+
 Utils.readFileAsync(wallpaper_cache_file)
     .then(out => { current_wallpaper.setValue(out.trim()); })
     .catch(err => {
