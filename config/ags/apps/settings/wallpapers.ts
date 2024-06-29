@@ -112,6 +112,28 @@ const Wallpaper = (image: string, name: string) => Widget.Button({
     })
 });
 
+function CacheThumbnails() {
+    Utils.execAsync(`mkdir -p ${GLib.get_home_dir()}/.cache/thumbnails/wallpaper`)
+        .catch(print)
+    const link_directory = `${App.configDir}/wallpaper`;
+    const original_directory = `${GLib.get_home_dir()}/wallpaper`;
+    const extensions = [".jpg", ".jpeg", ".png"];
+    const fileList = listFilesByExtensions(link_directory, extensions);
+    fileList.forEach((value, index) => {
+        const path = `${original_directory}/${value}`
+        const cache_file = `${GLib.get_home_dir()}/.cache/thumbnails/wallpaper/${value}`;
+        Utils.idle(() => {
+            Utils.readFileAsync(cache_file)
+                .catch(() => {
+                    Utils.execAsync(`magick ${path} -resize x32 -gravity Center -extent 1:1 ${cache_file}`)
+                        .catch(print)
+                })
+        })
+    })
+}
+
+CacheThumbnails()
+
 const WallpaperList = () => {
     Utils.execAsync(`mkdir -p ${GLib.get_home_dir()}/.cache/thumbnails/wallpaper`)
         .then();
@@ -140,9 +162,7 @@ const WallpaperList = () => {
         ]
     });
 
-    Utils.interval(30000, () => {
-        box.attribute.update(box);
-    }, box);
+    box.attribute.update(box)
 
     return box;
 };
