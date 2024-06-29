@@ -10,12 +10,12 @@ export const bluetooth_enabled = Variable('off', {
 })
 
 
-export const icons = {
-    'performance': ' ',
-    'balanced': ' ',
-    'power-saver': '󰡵 '
-};
-
+export const cpu_name = await Utils.execAsync(`${App.configDir}/scripts/system.sh --cpu-name`);
+export const gpu_name = await Utils.execAsync(`${App.configDir}/scripts/system.sh --gpu-name`);
+export const cpu_cores = await Utils.execAsync(`${App.configDir}/scripts/system.sh --cpu-cores`);
+export const amount_of_ram = await Utils.execAsync(`${App.configDir}/scripts/system.sh --ram`);
+export const kernel_name = await Utils.execAsync(`${App.configDir}/scripts/system.sh --kernel`);
+export const hostname = await Utils.execAsync(`${App.configDir}/scripts/system.sh --hostname`);
 
 export const wallpaper_cache_file = `${GLib.get_home_dir()}/.cache/current_wallpaper`
 

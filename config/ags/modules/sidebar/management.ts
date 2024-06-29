@@ -5,7 +5,7 @@ const network = await Service.import('network')
 const powerProfiles = await Service.import('powerprofiles')
 import { OpenSettings } from "apps/settings/main.ts";
 import { WINDOW_NAME } from "./main.ts"
-import { bluetooth_enabled, idle_inhibitor, night_light, screen_recorder, icons } from "variables.ts";
+import { bluetooth_enabled, idle_inhibitor, night_light, screen_recorder } from "variables.ts";
 
 const currentPage = Variable(0);
 
@@ -44,7 +44,7 @@ function WifiIndicator() {
                 label: "Internet",
             }),
             Widget.Box({
-                halign: Gtk.Align.END,
+                hpack: "end",
                 hexpand: true,
                 child: Widget.Label({
                     label: "",
@@ -95,7 +95,7 @@ function IconAndName({ label, icon, padding = "0.3em", arrow = false }) {
     })
     if (arrow) {
         const arrow = Widget.Box({
-            halign: Gtk.Align.END,
+            hpack: "end",
             hexpand: true,
             child: Widget.Label({
                 label: "",
@@ -184,7 +184,7 @@ function Page1() {
                                 .then(out => { bluetooth_enabled.setValue(out) })
                         },
                         on_secondary_click: () => {
-                            Utils.execAsync("blueman-manager")
+                            OpenSettings("bluetooth")
                             App.closeWindow(WINDOW_NAME)
                         }
                     })
@@ -333,8 +333,17 @@ function Page2() {
                         class_name: "management_button",
                         child: Widget.Box({
                             children: [
-                                Widget.Label({
-                                    label: powerProfiles.bind('active_profile').as(x => icons[x])
+                                IconAndName({
+                                    icon: powerProfiles.bind('active_profile').as(profile => {
+                                        switch (profile) {
+                                        case 'balanced':
+                                            return '';
+                                        case 'performance':
+                                            return '';
+                                        default:
+                                        return '';
+                                        }
+                                        })
                                 }),
                                 Widget.Label({
                                     label: powerProfiles.bind('active_profile').as(x => x.toUpperCase())
@@ -352,11 +361,39 @@ function Page2() {
                                 default:
                                     powerProfiles.active_profile = 'power-saver';
                                     break;
-                            };
-                        },
+                            }
+                        }
                     }),
                 ]
-            })
+            }),
+            Widget.Box({
+                orientation: Gtk.Orientation.HORIZONTAL,
+                spacing: 2.5,
+                hexpand: true,
+                children: [
+                    Widget.Button({
+                        hexpand: true,
+                        class_name: "management_button",
+                        child: IconAndName({
+                            label: "Settings",
+                            icon: "",
+                            arrow: true,
+                        }),
+                        on_primary_click: () => {
+                            OpenSettings()
+                            App.CloseWindow(WINDOW_NAME);
+                        }
+                    }),
+                    Widget.Box({
+                        hexpand: true,
+                        class_name: "management_button",
+                        child: IconAndName({
+                        label: "soon",
+                        icon: "",
+                        })
+                    })
+                ]
+            }),
         ]
     })
 }
@@ -401,7 +438,7 @@ export function Management() {
                 Widget.Box({
                     children: dotButtons,
                     class_name: "dotbuttons_box",
-                    halign: Gtk.Align.CENTER,
+                    hpack: "center",
                 })
             ]
         })

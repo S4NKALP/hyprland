@@ -1,14 +1,15 @@
-const { GLib } = imports.gi;
 const WINDOW_NAME = "cliphist"
 import popupwindow from './misc/popupwindow.ts';
 import Box from 'types/widgets/box.js';
 const { Gtk } = imports.gi;
+
 
 type EntryObject = {
     id: string;
     content: string;
     entry: string;
 };
+
 
 function ClipHistItem(entry: string) {
     let [id, ...content] = entry.split('\t');
@@ -22,13 +23,13 @@ function ClipHistItem(entry: string) {
             vpack: "center",
             truncate: "end",
         })
-    });
+    })
 
     button.connect('clicked', () => {
         clickCount++;
-        if (clickCount === 1) {
+        if (clickCount === 2) {
             App.closeWindow(WINDOW_NAME);
-            Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`);
+            Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`)
             clickCount = 0;
         }
     });
@@ -44,11 +45,12 @@ function ClipHistItem(entry: string) {
             button,
             Widget.Separator({
                 class_name: "entry_divider",
-                orientation: Gtk.Orientation.HORIZONTAL,
-            }),
-        ],
-    });
+                orientation: Gtk.Orientation.HORIZONTAL
+            })
+        ]
+    })
 }
+
 
 function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
     let output: string;
@@ -65,8 +67,8 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
         output = await Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --get`)
             .then(str => str)
             .catch(err => {
-                print(err);
-                return "";
+                print(err)
+                return ""
             });
         entries = output.split('\n').filter(line => line.trim() !== '');
         clipHistItems = entries.map(entry => {
@@ -82,13 +84,11 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
         hexpand: true,
         class_name: "cliphistory_entry",
         placeholder_text: "Search",
-        on_change: ({ text }) => {
-            const lowerCaseText = (text ?? "").toLowerCase();
-            widgets.forEach(item => {
-                item.visible = item.attribute.content.toLowerCase().includes(lowerCaseText);
-            });
-        },
-    });
+
+        on_change: ({ text }) => widgets.forEach(item => {
+            item.visible = item.attribute.content.match(text ?? "")
+        }),
+    })
 
     return Widget.Box({
         vertical: true,
@@ -99,22 +99,27 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
             entry,
             Widget.Scrollable({
                 hscroll: "never",
-                css: `min-width: ${width}px; min-height: ${height}px;`,
+                css: `min-width: ${width}px;`
+                    + `min-height: ${height}px;`,
                 child: list,
             }),
         ],
         setup: self => self.hook(App, (_, windowName, visible) => {
-            if (windowName !== WINDOW_NAME) return;
+            if (windowName !== WINDOW_NAME)
+                return
+
             if (visible) {
-                repopulate();
-                entry.text = "";
+                repopulate()
+                entry.text = ""
             }
         }),
-    });
+    })
 }
+
 
 export const cliphist = popupwindow({
     name: WINDOW_NAME,
+
     class_name: "cliphistory",
     visible: false,
     keymode: "exclusive",
@@ -123,5 +128,6 @@ export const cliphist = popupwindow({
         height: 500,
         spacing: 0,
     }),
-    anchor: ["bottom", "right"],
-});
+    //anchor: ["top", "right"]
+    anchor: ["bottom", "right"]
+})
