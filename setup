@@ -419,7 +419,6 @@ CONFIG_DIRS=(
     "qimgv"
     "qt5ct"
     "qt6ct"
-    "rofi"
     "startship"
     "Thunar"
     "tmux"
