@@ -91,6 +91,9 @@ pkg=(
     ttf-ibm-plex
     ttf-liberation
     ttf-firacode-nerd
+    ttf-opensans
+    ttf-roboto
+    ttf-meslo-nerd
     noto-fonts
     gnu-free-fonts
     bibata-cursor-theme-bin
