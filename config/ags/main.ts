@@ -10,6 +10,7 @@ import { media } from "./modules/media.ts"
 import { cliphist } from "./modules/cliphist.ts"
 import { emoji } from "./modules/emoji.ts"
 import { sidebar } from "./modules/sidebar/main.ts"
+import { cheatsheet } from './modules/cheatsheet.ts';
 import {} from 'apps/settings/main.ts';
 import Window from 'types/widgets/window';
 const GLib = imports.gi.GLib;
@@ -32,6 +33,7 @@ const Windows = () => [
     media,
     applauncher,
     cliphist,
+    cheatsheet,
     emoji,
     sidebar,
 ];
