@@ -67,7 +67,6 @@ pkg=(
     zip
     unrar
     xarchiver
-    rofi-lbonn-wayland-git
     network-manager-applet
     cava
     fastfetch
