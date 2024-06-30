@@ -1,7 +1,7 @@
 const WINDOW_NAME = "cliphist"
 import popupwindow from './misc/popupwindow.ts';
 import Box from 'types/widgets/box.js';
-const { Gtk } = imports.gi;
+import Gtk from "gi://Gtk?version=3.0"
 
 
 type EntryObject = {
@@ -27,7 +27,7 @@ function ClipHistItem(entry: string) {
 
     button.connect('clicked', () => {
         clickCount++;
-        if (clickCount === 2) {
+        if (clickCount === 1) {
             App.closeWindow(WINDOW_NAME);
             Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`)
             clickCount = 0;

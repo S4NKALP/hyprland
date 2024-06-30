@@ -8,6 +8,7 @@ import { Notifications } from "./modules/notificationPopups.ts"
 import { applauncher } from "./modules/applauncher.js"
 import { media } from "./modules/media.ts"
 import { cliphist } from "./modules/cliphist.ts"
+import { emoji } from "./modules/emoji.ts"
 import { sidebar } from "./modules/sidebar/main.ts"
 import {} from 'apps/settings/main.ts';
 import Window from 'types/widgets/window';
@@ -31,6 +32,7 @@ const Windows = () => [
     media,
     applauncher,
     cliphist,
+    emoji,
     sidebar,
 ];
 

@@ -3,7 +3,7 @@ import { NotificationPopups, Notification } from "modules/notificationPopups";
 import Box from "types/widgets/box";
 
 const notifications = await Service.import("notifications")
-const { Gtk, Gdk } = imports.gi;
+
 
 type NotificationsBoxType = {
     exclude?: string[],

@@ -342,6 +342,25 @@ window.notification-popups box.notifications {
  * Clipboard history
  * ----------------------------------------------------- */
 
+.emoji_box {
+    border-radius: 24px;
+    background-color: @background;
+    border: 2px solid;
+    border-color: @outlineVariant;
+    padding: 11px;
+}
+
+.emoji_entry {
+    background-color: @surfaceContainerHigh;
+    color: @onSurface;
+    border: none;
+    outline: none;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    padding: 5px;
+    padding-left: 25px;
+}
+
  .cliphistory_box {
     border-radius: 24px;
     background-color: @background;
@@ -396,6 +415,7 @@ window.notification-popups box.notifications {
     color: @onSurface;
     font-weight: normal;
 }
+
 
 /* -----------------------------------------------------
  * Media player

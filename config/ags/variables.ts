@@ -16,6 +16,7 @@ export const cpu_cores = await Utils.execAsync(`${App.configDir}/scripts/system.
 export const amount_of_ram = await Utils.execAsync(`${App.configDir}/scripts/system.sh --ram`);
 export const kernel_name = await Utils.execAsync(`${App.configDir}/scripts/system.sh --kernel`);
 export const hostname = await Utils.execAsync(`${App.configDir}/scripts/system.sh --hostname`);
+export const current_os = await Utils.execAsync(`${App.configDir}/scripts/system.sh --os`);
 
 export const wallpaper_cache_file = `${GLib.get_home_dir()}/.cache/current_wallpaper`
 
