@@ -13,20 +13,6 @@ button {
     background: transparent;
 }
 
-trough {
-}
-
-/* slider {
-    background-color: @primary;
-    background-image: -gtk-scaled(url("sun-alt-svgrepo-com.png"));
-    background-size: 100px 100px;
-    color: @primary;
-    min-height: 10px;
-    min-width: 10px;
-    border-radius: 100px;
-} */
-
-
 highlight {
     border-radius: 100px;
 }
@@ -36,7 +22,7 @@ highlight {
     outline: none;
     transition: 0.2s ease-in-out;
     transition-property: border-color, background-color, color;
-    font-family: "Product Sans", Roboto, "Font Awesome 6 Free", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Product Sans", Roboto, "Font Awesome 6 Free", Helvetica, Arial, sans-serif;
 }
 
 .corner {
@@ -60,6 +46,18 @@ tooltip label {
     font-weight: normal;
 }
 
+menu {
+    background: @surfaceContainer;
+}
+
+menuitem {
+    color: @onSurface
+}
+
+menuitem:disabled {
+    color: mix(@onSurface, transparent, 0.38)
+}
+
 menu separator {
     color: @outline;
 }
@@ -80,11 +78,7 @@ separator {
 .modules-left,
 .modules-center,
 .modules-right {
-    /* background-color: @surface; */
-    /* border-radius: 25px 25px 25px 25px; */
     padding: 6px;
-    /* border: solid 2px; */
-    /* color: @outlineVariant; */
 }
 
 /* -----------------------------------------------------
@@ -92,19 +86,18 @@ separator {
  * ----------------------------------------------------- */
 
 .outer-workspace {
-	background-color: rgba(255, 255, 255, 0.05);
+	background-color: @surfaceContainer;
 	border-radius: 20px;
 	margin: 2px;
 	padding: 2px 0px;
 }
 
 .workspace {
-	background-color:  rgba(255, 255, 255, 0.15);
+	background-color:  @onSecondary;
 	padding: 0;
 }
 
 .workspace button {
-	background-color: transparent;
 	padding: 0px 6px;
 }
 
@@ -123,31 +116,31 @@ separator {
 
 .workspace button.normal:hover {
 	border-radius: 20px;
-	background-color: rgba(200, 62, 255, 1);
-	color: #1e1e2e;
+	background-color: @onSecondaryContainer;
+	color: @primary;
 }
 
 .workspace button.focused {
-	background-color: #cba6f7;;
-	color: #1e1e2e;
+	background-color: @secondary;
+	color: @surface;
 	font-weight: bold;
 	border-radius: 20px;
 }
 
 .workspace button.focused:hover {
 	border-radius: 20px;
-	color: #cba6f7;
-	background-color: #1e1e2e;
+	color: @primary;
+	background-color: @secondaryContainer;
 }
 
 .workspace button.occupied {
-	color: #cba6f7;;
+	color: @primary;;
 }
 
 .workspaces button.occupied:hover {
 	border-radius: 20px;
-	background-color: #cba6f7;;
-	color: #1e1e2e;
+	background-color: @secondaryContainer;;
+	color: @primary;
 }
 
 .workspace.occupied-single {
@@ -165,6 +158,7 @@ separator {
 .workspace.occupied-end {
 	border-radius: 0px 20px 20px 0px;
 }
+
 
 /* -----------------------------------------------------
  * Clock
@@ -622,7 +616,6 @@ window.notification-popups box.notifications {
     background-color: @surfaceContainerLow;
     border-radius: 24px 24px 0px 0px;
     transition: all 0.25s ease-in-out;
-    /* border-radius: 0px 0px 24px 24px; */
 }
 
 .notifications_sidebar_scrollable .notification {
@@ -662,7 +655,6 @@ window.notification-popups box.notifications {
     margin-right: 0px;
     margin-top: -16px;
     margin-bottom: -16px;
-
 }
 
 .system_scale.backlight slider {
@@ -670,7 +662,7 @@ window.notification-popups box.notifications {
 }
 
 .system_scale.backlight {
-    margin-bottom: 28px;
+    margin-bottom: 25px;
 }
 
 .system_scale.brightness slider {
@@ -769,17 +761,6 @@ window.notification-popups box.notifications {
 .dotbutton.active label {
     color: @secondary;
 }
-
-/*
-.notifications_menu {
-    padding: 0px;
-    min-width: 50px;
-}
-
-.notifications_menu_item {
-    padding-right: 35px;
-    margin: 0px;
-} */
 
 /* -----------------------------------------------------
  * Buttons
