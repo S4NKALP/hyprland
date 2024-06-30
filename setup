@@ -74,6 +74,7 @@ pkg=(
     tmux
     lazygit
     btop
+    lshw
 
     ## Bluetooth
     bluez
