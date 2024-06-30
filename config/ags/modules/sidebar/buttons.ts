@@ -1,4 +1,4 @@
-const { Gtk, GLib } = imports.gi;
+const { GLib } = imports.gi;
 const lock_command = `hyprlock`;
 const logout_command = `loginctl kill-session $XDG_SESSION_ID`;
 const shutdown_command = `systemctl poweroff`;

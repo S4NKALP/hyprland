@@ -1,6 +1,6 @@
 import { Binding } from "types/service"
 const GLib = imports.gi.GLib;
-import { cpu_cores, cpu_name, kernel_name, amount_of_ram, gpu_name, hostname } from "variables";
+import { cpu_cores, cpu_name, kernel_name, amount_of_ram, gpu_name, hostname, current_os } from "variables";
 
 type StringOrBinding = string | Binding<any, any, string> | null;
 
@@ -52,6 +52,7 @@ export function Info() {
                 Utils.execAsync(`xdg-open "${repo_link}"`).catch(print)
             }),
             Widget.Separator(),
+            Row("OS", current_os),
             Row("DE", current_de!),
             Row("Kernel", kernel_name),
             Row("CPU", `${cpu_name} (${cpu_cores} Cores)`),

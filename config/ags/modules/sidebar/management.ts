@@ -1,4 +1,3 @@
-const { Gtk } = imports.gi;
 
 const notifications = await Service.import("notifications")
 const network = await Service.import('network')
@@ -6,6 +5,8 @@ const powerProfiles = await Service.import('powerprofiles')
 import { OpenSettings } from "apps/settings/main.ts";
 import { WINDOW_NAME } from "./main.ts"
 import { bluetooth_enabled, idle_inhibitor, night_light, screen_recorder } from "variables.ts";
+
+import Gtk from "gi://Gtk?version=3.0"
 
 const currentPage = Variable(0);
 
