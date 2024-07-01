@@ -5,6 +5,7 @@ import { timeout } from "resource:///com/github/Aylur/ags/utils.js";
 import GLib from "gi://GLib";
 import Pango from "gi://Pango";
 import Label from "types/widgets/label";
+import { MaterialIcon } from "icons";
 
 const notifications = await Service.import("notifications")
 import Gtk from "gi://Gtk?version=3.0"
@@ -73,11 +74,11 @@ export const Notification = (notification: NotificationType, dismiss = true) => 
                                     }),
                                     Widget.Label({
                                         class_name: "notification-time",
-                                        label: GLib.DateTime.new_from_unix_local(notification.time).format("%I:%M %p"),
+                                        label: GLib.DateTime.new_from_unix_local(notification.time).format("%H:%M"),
                                     }),
                                     Widget.Button({
-                                        class_name: "standard_icon_button",
-                                        child: Widget.Icon("window-close-symbolic"),
+                                        class_name: "standard_icon_button notification-close",
+                                        child: MaterialIcon("close"),
                                         on_clicked: () => {
                                             if (dismiss) {
                                                 notification.dismiss();

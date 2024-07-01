@@ -1,8 +1,8 @@
-
 import { NotificationsBox } from "./notifications.ts"
 import { SystemBox } from "./system.ts"
 let shown = Variable("Messages");
 import Gtk from "gi://Gtk?version=3.0"
+import { MaterialIcon } from "icons.ts";
 
 
 type ButtonType = {
@@ -22,13 +22,9 @@ function Button({ page, label, icon }: ButtonType) {
             children: [
                 Widget.Box({
                     orientation: Gtk.Orientation.VERTICAL,
-                    hpack: "end",
+                    hpack: "center",
                     class_name: "container",
-                    child: Widget.Label({
-                        hpack: "center",
-                        label: icon,
-                        class_name: "awesome_icon icon"
-                    }),
+                    child: MaterialIcon(icon, "20px"),
                 }),
                 Widget.Label({
                     label: label,
@@ -63,17 +59,17 @@ export function Navigation() {
             Button({
                 page: "Messages",
                 label: "Messages",
-                icon: ""
+                icon: "chat"
             }),
             Button({
                 page: "Notifications",
                 label: "Notifs",
-                icon: ""
+                icon: "notifications"
             }),
             Button({
                 page: "System",
                 label: "System",
-                icon: ""
+                icon: "info"
             })
         ]
     })
