@@ -372,7 +372,6 @@ function OpenSideBar() {
         class_name: "filled_tonal_button awesome_icon",
         on_primary_click: () => {
             App.toggleWindow("sidebar")
-            // Utils.execAsync(["ags", "-t", "sidebar"])
         },
 
         on_secondary_click: () => {
@@ -403,6 +402,9 @@ function TaskBar() {
                 if (item.class == "com.github.Aylur.ags") {
                     if (item.initialTitle == "Settings") {
                         icon = "emblem-system-symbolic"
+                    }
+                    else if (item.initialTitle == "Emoji Picker") {
+                        icon = "face-smile-symbolic"
                     }
                 }
                 else
@@ -537,10 +539,12 @@ export const BarCornerTopLeft = (monitor = 0) => Widget.Window({
     name: `bar_corner_tl${monitor}`,
     class_name: "transparent",
     layer: 'top',
-    anchor: ['top', 'left'],
+    //anchor: ['top', 'left'],
+    anchor: ['bottom', 'left'],
     exclusivity: 'normal',
     visible: true,
-    child: RoundedCorner('top_left', { className: 'corner', }),
+    //child: RoundedCorner('top_left', { className: 'corner', }),
+    child: RoundedCorner('bottom_left', { className: 'corner', }),
     setup: enableClickThrough,
 });
 
@@ -549,10 +553,12 @@ export const BarCornerTopRight = (monitor = 0) => Widget.Window({
     name: `bar_corner_tr${monitor}`,
     class_name: "transparent",
     layer: 'top',
-    anchor: ['top', 'right'],
+    //anchor: ['top', 'right'],
+    anchor: ['bottom', 'right'],
     exclusivity: 'normal',
     visible: true,
-    child: RoundedCorner('top_right', { className: 'corner', }),
+    //child: RoundedCorner('top_right', { className: 'corner', }),
+    child: RoundedCorner('bottom_right', { className: 'corner', }),
     setup: enableClickThrough,
 });
 
