@@ -85,80 +85,42 @@ separator {
  * Workspaces
  * ----------------------------------------------------- */
 
-.outer-workspace {
-	background-color: @surfaceContainer;
-	border-radius: 20px;
-	margin: 2px;
-	padding: 2px 0px;
+.workspaces {
+    border-radius: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
+    color: @onSurface;
+    background: @surfaceContainer;
 }
 
-.workspace {
-	background-color:  @onSecondary;
-	padding: 0;
+.workspaces * {
+    transition: all 0.35s ease-in-out;
+    transition-property: background-color, color, min-width;
 }
 
-.workspace button {
-	padding: 0px 6px;
+.workspaces button {
+    padding: 0px 5px;
+    margin: 4px 3px;
+    border-radius: 16px;
+    border: 0px;
 }
 
-.workspace.first {
-	border-radius: 20px 0 0 20px;
-}
-.workspace.last {
-	border-radius: 0 20px 20px 0;
+.workspaces button label {
+    color: @onSurface;
+    font-weight: bold;
 }
 
-.workspace.normal,
-.workspace button.normal {
-	background-color: transparent;
-
+.workspaces button:hover {
+    color: @onSurface;
+    background: @surfaceContainerHighest;
 }
 
-.workspace button.normal:hover {
-	border-radius: 20px;
-	background-color: @onSecondaryContainer;
-	color: @primary;
+.workspaces button.active {
+    color: @onSecondaryContainer;
+    background: @secondaryContainer;
+    min-width: 40px;
 }
-
-.workspace button.focused {
-	background-color: @secondary;
-	color: @surface;
-	font-weight: bold;
-	border-radius: 20px;
-}
-
-.workspace button.focused:hover {
-	border-radius: 20px;
-	color: @primary;
-	background-color: @secondaryContainer;
-}
-
-.workspace button.occupied {
-	color: @primary;;
-}
-
-.workspaces button.occupied:hover {
-	border-radius: 20px;
-	background-color: @secondaryContainer;;
-	color: @primary;
-}
-
-.workspace.occupied-single {
-	border-radius: 20px;
-}
-
-.workspace.occupied-start {
-	border-radius: 20px 0 0 20px;
-}
-
-.workspace.occupied-middle {
-	border-radius: 0px;
-}
-
-.workspace.occupied-end {
-	border-radius: 0px 20px 20px 0px;
-}
-
 
 /* -----------------------------------------------------
  * Clock
@@ -401,7 +363,6 @@ window.notification-popups box.notifications {
     font-weight: normal;
 }
 
-
 /* -----------------------------------------------------
  * Media player
  * ----------------------------------------------------- */
@@ -514,7 +475,6 @@ window.notification-popups box.notifications {
 .awesome_icon {
     font-family: "Font Awesome 6 Free";
 }
-
 
 .battery {
     background-color: @surfaceContainer;
@@ -681,7 +641,7 @@ window.notification-popups box.notifications {
 }
 
 .system_scale.backlight {
-    margin-bottom: 28px;
+    margin-bottom: 25px;
 }
 
 .system_scale.brightness slider {
@@ -816,7 +776,7 @@ window.notification-popups box.notifications {
     color: @onSecondaryContainer;
     border-radius: 100px;
     min-width: 35px;
-    padding-right: 6px;
+    padding: 0px;
 }
 
 .filled_tonal_button label, .filled_tonal_button .icon,
@@ -1119,7 +1079,6 @@ switch:checked:hover slider, switch:checked:active slider {
 .cheatsheet .category .awesome_icon.key {
     padding: 4px;
 }
-
 
 /* -----------------------------------------------------
  * Material
