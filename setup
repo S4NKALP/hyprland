@@ -141,7 +141,6 @@ pkg=(
     python-pip
     python-pywayland
     python-pyxdg
-    python-pywlroots
 
 )
 # Creating a new `packages` array
