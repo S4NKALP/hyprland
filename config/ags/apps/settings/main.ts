@@ -19,9 +19,13 @@ export async function OpenSettings(cur_tab: string = "network") {
             return (client.class == "com.github.Aylur.ags" && client.title == "Settings")
         })
         if (_client && _current_workspace != _client.workspace.id) {
-            current_window.destroy();
-            current_window = undefined;
-            SettingsWindow(cur_tab);
+            current_tab.setValue(cur_tab)
+            print("a")
+            current_window.hide()
+            current_window.show()
+            // current_window.destroy();
+            // current_window = undefined;
+            // SettingsWindow(cur_tab);
         }
         else
             current_tab.setValue(cur_tab)
@@ -124,8 +128,11 @@ export const SettingsWindow = (cur_tab: string) => {
         default_width: 850,
         class_name: "settings",
         child: Settings(cur_tab),
-        setup(win) {
+        setup(win: any) {
             current_window = win;
+            win.keybind("Escape", () => {
+                win.close()
+            })
         },
         visible: true,
     });

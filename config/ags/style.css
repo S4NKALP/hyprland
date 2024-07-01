@@ -401,28 +401,6 @@ window.notification-popups box.notifications {
     font-weight: normal;
 }
 
-/* -----------------------------------------------------
- * Emoji
- * -----------------------------------------------------*/
-
-.emoji_box {
-    border-radius: 24px;
-    background-color: @background;
-    border: 2px solid;
-    border-color: @outlineVariant;
-    padding: 11px;
-}
-
-.emoji_entry {
-    background-color: @surfaceContainerHigh;
-    color: @onSurface;
-    border: none;
-    outline: none;
-    border-radius: 100px;
-    margin-bottom: 16px;
-    padding: 5px;
-    padding-left: 25px;
-}
 
 /* -----------------------------------------------------
  * Media player
@@ -537,9 +515,6 @@ window.notification-popups box.notifications {
     font-family: "Font Awesome 6 Free";
 }
 
-.material_icon {
-    font-family: "Material Symbols Outlined", "Material Symbols Sharp";
-}
 
 .battery {
     background-color: @surfaceContainer;
@@ -840,8 +815,7 @@ window.notification-popups box.notifications {
     background-color: @secondaryContainer;
     color: @onSecondaryContainer;
     border-radius: 100px;
-    padding: 0px;
-    padding-left: 6px;
+    min-width: 35px;
     padding-right: 6px;
 }
 
@@ -1144,4 +1118,14 @@ switch:checked:hover slider, switch:checked:active slider {
 
 .cheatsheet .category .awesome_icon.key {
     padding: 4px;
+}
+
+
+/* -----------------------------------------------------
+ * Material
+ * ----------------------------------------------------- */
+
+.material_icon {
+    all: unset;
+    font-family: "Material Symbols Outlined", "Material Symbols Sharp";
 }

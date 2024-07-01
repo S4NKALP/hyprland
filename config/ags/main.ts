@@ -2,13 +2,13 @@
 // Import
 import Gdk from 'gi://Gdk';
 // widgets
-//import { Bar, BarCornerTopLeft, BarCornerTopRight } from './modules/bar.ts';
+import { Bar, BarCornerTopLeft, BarCornerTopRight } from './modules/bar.ts';
 import { Bar } from './modules/bar.ts';
 import { Notifications } from "./modules/notificationPopups.ts"
 import { applauncher } from "./modules/applauncher.js"
 import { media } from "./modules/media.ts"
 import { cliphist } from "./modules/cliphist.ts"
-import { emoji } from "./modules/emoji.ts"
+import {} from 'apps/emoji/main.ts';
 import { sidebar } from "./modules/sidebar/main.ts"
 import { cheatsheet } from './modules/cheatsheet.ts';
 import {} from 'apps/settings/main.ts';
@@ -28,13 +28,12 @@ function forMonitorsAsync(widget: (index: number) => Promise<Window<any, any>>) 
 
 const Windows = () => [
     forMonitors(Notifications),
-    //forMonitors(BarCornerTopLeft),
-    //forMonitors(BarCornerTopRight),
+    forMonitors(BarCornerTopLeft),
+    forMonitors(BarCornerTopRight),
     media,
     applauncher,
     cliphist,
     cheatsheet,
-    emoji,
     sidebar,
 ];
 
