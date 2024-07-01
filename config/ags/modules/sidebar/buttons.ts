@@ -1,4 +1,7 @@
+import { MaterialIcon } from "icons";
+
 const { GLib } = imports.gi;
+
 const lock_command = `hyprlock`;
 const logout_command = `loginctl kill-session $XDG_SESSION_ID`;
 const shutdown_command = `systemctl poweroff`;
@@ -9,10 +12,7 @@ function LockButton({ icon, ...props }) {
     let clickCount = 0;
     let button = Widget.Button({
         tooltip_text: "Lock",
-        child: Widget.Label({
-            label: icon,
-            class_name: "awesome_icon"
-        }),
+        child: MaterialIcon(icon, "20px"),
         class_name: "outline_button",
         ...props,
     })
@@ -37,10 +37,7 @@ function SuspendButton({ icon, ...props }) {
     let clickCount = 0;
     let button = Widget.Button({
         tooltip_text: "Suspend",
-        child: Widget.Label({
-            label: icon,
-            class_name: "awesome_icon"
-        }),
+        child: MaterialIcon(icon, "20px"),
         class_name: "outline_button",
         ...props,
     })
@@ -67,10 +64,7 @@ function LogoutButton({ icon, ...props }) {
     let clickCount = 0;
     let button = Widget.Button({
         tooltip_text: "Logout",
-        child: Widget.Label({
-            label: icon,
-            class_name: "awesome_icon"
-        }),
+        child: MaterialIcon(icon, "20px"),
         class_name: "outline_button",
         ...props,
     })
@@ -95,10 +89,7 @@ function RebootButton({ icon, ...props }) {
     let clickCount = 0;
     let button = Widget.Button({
         tooltip_text: "Reboot",
-        child: Widget.Label({
-            label: icon,
-            class_name: "awesome_icon"
-        }),
+        child: MaterialIcon(icon, "20px"),
         class_name: "outline_button",
         ...props,
     })
@@ -123,10 +114,7 @@ function ShutdownButton({ icon, ...props }) {
     let clickCount = 0;
     let button = Widget.Button({
         tooltip_text: "Shutdown",
-        child: Widget.Label({
-            label: icon,
-            class_name: "awesome_icon"
-        }),
+        child: MaterialIcon(icon, "20px"),
         class_name: "outline_button",
         ...props,
     })
@@ -154,23 +142,23 @@ export function Buttons() {
         spacing: 5,
         children: [
             LockButton({
-                icon: "",
+                icon: "lock",
                 hexpand: true,
             }),
             SuspendButton({
-                icon: "",
+                icon: "clear_night",
                 hexpand: true,
             }),
             LogoutButton({
-                icon: "",
+                icon: "logout",
                 hexpand: true,
             }),
             RebootButton({
-                icon: "",
+                icon: "restart_alt",
                 hexpand: true,
             }),
             ShutdownButton({
-                icon: "",
+                icon: "power_settings_new",
                 hexpand: true,
             })
         ]

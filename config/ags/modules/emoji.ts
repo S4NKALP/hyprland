@@ -140,7 +140,7 @@ function Emoji({ width = 500, height = 500, spacing = 12 }) {
         setup: self => self.hook(App, (_, windowName, visible) => {
             if (windowName !== WINDOW_NAME) return;
             if (visible && emojisCache.length === 0) {
-                loadEmojis(`${App.configDir}/emojis.json`)
+                loadEmojis(`${App.configDir}/assets/emojis.json`)
                     .then(emojis => {
                         emojisCache = emojis;
                         list.children = emojis.map(entry => EmojiItem(entry));

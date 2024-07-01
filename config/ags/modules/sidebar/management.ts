@@ -5,6 +5,7 @@ const powerProfiles = await Service.import('powerprofiles')
 import { OpenSettings } from "apps/settings/main.ts";
 import { WINDOW_NAME } from "./main.ts"
 import { bluetooth_enabled, idle_inhibitor, night_light, screen_recorder } from "variables.ts";
+import { MaterialIcon } from "icons.ts";
 
 import Gtk from "gi://Gtk?version=3.0"
 
@@ -16,11 +17,7 @@ function WifiIndicator() {
     return Widget.Box({
         css: "padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;",
         children: [
-            Widget.Label({
-                label: "\udb82\udd28",
-                class_name: "awesome_icon",
-                css: `font-weight: bold; font-size: 20px; margin-right: 0.60em;`,
-            }),
+             MaterialIcon("signal_wifi_4_bar", "20px"),
             Widget.Box({
                 visible: network.wifi.bind('enabled'),
                 orientation: Gtk.Orientation.VERTICAL,
@@ -47,10 +44,8 @@ function WifiIndicator() {
             Widget.Box({
                 hpack: "end",
                 hexpand: true,
-                child: Widget.Label({
-                    label: "",
-                    class_name: "awesome_icon",
-                    css: `font-weight: normal; font-size: 15px;`,
+                child: MaterialIcon("chevron_right", "20px", {
+                    class_name: "material_icon icon arrow"
                 })
             })
         ],
@@ -60,9 +55,7 @@ function WifiIndicator() {
 const WiredIndicator = () => Widget.Box({
     css: "padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;",
     children: [
-        Widget.Icon({
-            icon: network.wired.bind('icon_name'),
-        }),
+        MaterialIcon("settings_ethernet", "20px"),
         Widget.Label({
             label: "Internet",
         }),
@@ -83,11 +76,7 @@ function IconAndName({ label, icon, padding = "0.3em", arrow = false }) {
     let box = Widget.Box({
         css: "padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 5px;",
         children: [
-            Widget.Label({
-                label: icon,
-                class_name: "awesome_icon",
-                css: `font-weight: bold; font-size: 20px; margin-right: ${padding};`,
-            }),
+            MaterialIcon(icon, "20px"),
             Widget.Label({
                 label: label,
                 justification: "center",
@@ -98,10 +87,8 @@ function IconAndName({ label, icon, padding = "0.3em", arrow = false }) {
         const arrow = Widget.Box({
             hpack: "end",
             hexpand: true,
-            child: Widget.Label({
-                label: "",
-                class_name: "awesome_icon",
-                css: `font-weight: normal; font-size: 15px;`,
+            child: MaterialIcon("chevron_right", "20px", {
+                class_name: "material_icon icon arrow"
             })
         })
         // @ts-ignore
@@ -133,7 +120,10 @@ function startRecordingTimer(button) {
     recordingStartTime = Date.now();
     recordingInterval = setInterval(() => {
         let elapsedTime = Date.now() - recordingStartTime;
-        button.label = formatTime(elapsedTime);
+        button.child = IconAndName({
+            label: formatTime(elapsedTime),
+            icon: "stop_circle"
+        });
     }, 1000);
 }
 
@@ -141,7 +131,11 @@ function stopRecordingTimer(button) {
     clearInterval(recordingInterval);
     recordingStartTime = null;
     recordingInterval = null;
-    button.label = '󰑋 Screen Recorder';
+    button.label = 'Screen Recorder';
+    button.child = IconAndName({
+        label: "Screen Recorder",
+        icon: "screen_record"
+    });
 }
 
 // Widget
@@ -177,7 +171,7 @@ function Page1() {
                             ),
                         child: IconAndName({
                             label: "Bluetooth",
-                            icon: "󰂯",
+                            icon: "bluetooth",
                             arrow: true,
                         }),
                         on_primary_click: () => {
@@ -202,7 +196,7 @@ function Page1() {
                             .as(bool => bool ? "management_button active" : "management_button"),
                         child: IconAndName({
                             label: "Idle inhibitor",
-                            icon: ""
+                            icon: "schedule"
                         }),
                         onClicked: () => {
                             idle_inhibitor.setValue(!idle_inhibitor.value)
@@ -223,7 +217,8 @@ function Page1() {
                         },
                         child: IconAndName({
                             label: "Do Not Disturb",
-                            icon: ""
+                            icon: notifications.bind("dnd")
+                                .as((bool) => bool ? "do_not_disturb_on" : "do_not_disturb_off")
                         })
                     })
                 ]
@@ -234,37 +229,42 @@ function Page1() {
                 hexpand: true,
                 children: [
                     Widget.Button({
-                        hexpand: true,
-                        class_name: screen_recorder.bind()
-                            .as(bool => bool ? "management_button active" : "management_button"),
-                        on_clicked: (self) => {
+                    hexpand: true,
+                    class_name: screen_recorder.bind()
+                        .as(bool => bool ? "management_button active" : "management_button"),
+                    child: IconAndName({
+                        label: "Screen Recorder",
+                        icon: "screen_record"
+                        }),
+                        onClicked: (self) => {
                             isScreenRecordingOn().then(isRecording => {
                                 if (isRecording) {
                                     stopRecordingTimer(self);
-                                } else {
-                                    startRecordingTimer(self);
-                                }
-                                self.toggleClassName("active-button", !isRecording);
-                                self.toggleClassName("recording", !isRecording);
-
-                                Utils.execAsync(['bash', '-c', 'mkdir -p ~/Videos/Screenrecordings; pkill wf-recorder; if [ $? -ne 0 ]; then wf-recorder -f ~/Videos/Screenrecordings/recording_"$(date +\'%b-%d-%Y-%I:%M:%S-%P\')".mp4 -g "$(slurp)" --pixel-format yuv420p; fi'])
-                                    .catch(logError)
-                                    .then(() => {
-                                        isScreenRecordingOn().then(newIsRecording => {
-                                            if (!newIsRecording) {
-                                                stopRecordingTimer(self);
-                                            }
-                                        })
-                                    });
+                                    } else {
+                                        startRecordingTimer(self);
+                                        }
+                                        self.toggleClassName("active-button", !isRecording);
+                                        self.toggleClassName("recording", !isRecording);
+                            Utils.execAsync(['bash', '-c', 'mkdir -p ~/Videos/Screenrecordings; pkill wf-recorder; if [ $? -ne 0 ]; then wf-recorder -f ~/Videos/Screenrecordings/recording_"$(date +\'%b-%d-%Y-%I:%M:%S-%P\')".mp4 -g "$(slurp)" --pixel-format yuv420p; fi'])
+                            .catch(logError)
+                            .then(() => {
+                                isScreenRecordingOn().then(newIsRecording => {
+                                    if (!newIsRecording) {
+                                    stopRecordingTimer(self);
+                                    }
                                 });
-                            },
-                            child: IconAndName({
-                            label: "Screen Recorder",
-                            icon: "󰑋",
-                            setup: self => {
-                            self.label = '󰑋 Screen Recorder';
-                            }
-                        })
+                            });
+                        });
+                    },
+                    setup: (self) => {
+                        isScreenRecordingOn().then(isRecording => {
+                            if (isRecording) {
+                                startRecordingTimer(self);
+                                self.addClassName("active-button");
+                                self.addClassName("recording");
+                                }
+                            });
+                        }
                     }),
                     Widget.Button({
                         hexpand: true,
@@ -272,7 +272,7 @@ function Page1() {
                             .as(mode => mode ? "management_button active" : "management_button"),
                         child: IconAndName({
                             label: "Night Light",
-                            icon: ""
+                            icon: "nightlight"
                         }),
                         onClicked: () => {
                             night_light.setValue(!night_light.value)
@@ -317,7 +317,7 @@ function Page2() {
                         class_name: "management_button",
                         child: IconAndName({
                             label: "Color picker",
-                            icon: "",
+                            icon: "colorize",
                             arrow: true,
                         }),
                         on_primary_click: () => {
@@ -338,11 +338,11 @@ function Page2() {
                                     icon: powerProfiles.bind('active_profile').as(profile => {
                                         switch (profile) {
                                         case 'balanced':
-                                            return '';
+                                            return 'balance';
                                         case 'performance':
-                                            return '';
+                                            return 'bolt';
                                         default:
-                                        return '';
+                                        return 'eco';
                                         }
                                         })
                                 }),
@@ -377,7 +377,7 @@ function Page2() {
                         class_name: "management_button",
                         child: IconAndName({
                             label: "Settings",
-                            icon: "",
+                            icon: "settings",
                             arrow: true,
                         }),
                         on_primary_click: () => {
