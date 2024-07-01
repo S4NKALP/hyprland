@@ -508,11 +508,11 @@ echo "│   Setting GTK and icon themes...     │"
 echo "└──────────────────────────────────────┘"
 echo ""
 simulate_output "Setting GTK and icon themes..."
-simulate_output "[   \e[32mOK\e[0m   ] GTK theme set to 'Dracula'"
-simulate_output "[   \e[32mOK\e[0m   ] Icon theme set to 'Dracula'"
+simulate_output "[   \e[32mOK\e[0m   ] GTK theme set to 'Darker'"
+simulate_output "[   \e[32mOK\e[0m   ] Icon theme set to 'Tela-circle-black'"
 simulate_output "[   \e[32mOK\e[0m   ] curosr theme set to 'Bibata'"
-gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
-gsettings set org.gnome.desktop.interface icon-theme "Dracula"
+gsettings set org.gnome.desktop.interface gtk-theme "Darker"
+gsettings set org.gnome.desktop.interface icon-theme "Tela-circle-black"
 gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice"
 
 echo ""
@@ -532,7 +532,7 @@ echo ""
 simulate_output "Setting some files as executable..."
 simulate_output "[   \e[32mOK\e[0m   ] Granted execute permissions to scripts"
 sudo chmod +x ~/dotfiles/hypr/scripts/*
-
+sudo sensors-detect --auto > /dev/null
 
 echo ""
 echo ""
