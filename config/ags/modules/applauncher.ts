@@ -78,7 +78,7 @@ function AppItem(app: Application): Box<any, any> {
 
     button.connect('clicked', () => {
         clickCount++;
-        if (clickCount === 1) {
+        if (clickCount === 2) {
             incrementLaunchCount(app.name);
             App.closeWindow(WINDOW_NAME);
             app.launch();
@@ -144,7 +144,7 @@ const Applauncher = ({ width = 500, height = 500, spacing = 12 }) => {
         margin_left: 14,
         children: [
             entry,
-
+            Widget.Separator(),
             Widget.Scrollable({
                 hscroll: "never",
                 css: `min-width: ${width}px;`
@@ -175,5 +175,6 @@ export const applauncher = popupwindow({
         height: 500,
         spacing: 0,
     }),
+    //anchor: ["top", "left"]
     anchor: ["bottom", "left"]
 })
