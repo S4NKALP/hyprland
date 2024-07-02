@@ -27,7 +27,7 @@ function ClipHistItem(entry: string) {
 
     button.connect('clicked', () => {
         clickCount++;
-        if (clickCount === 1) {
+        if (clickCount === 2) {
             App.closeWindow(WINDOW_NAME);
             Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`)
             clickCount = 0;
@@ -97,6 +97,7 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
         margin_right: 14,
         children: [
             entry,
+            Widget.Separator(),
             Widget.Scrollable({
                 hscroll: "never",
                 css: `min-width: ${width}px;`
