@@ -79,7 +79,7 @@ const Wallpaper = (image: string, name: string) => Widget.Button({
                 vpack: "center",
                 class_name: "image",
                 setup(self) {
-                    const cache_file = `${GLib.get_home_dir()}/.cache/thumbnails/wallpaper/${name}`;
+                    const cache_file = `${GLib.get_home_dir()}/.cache/thumbnails/wallpapers/${name}`;
                     Utils.readFileAsync(cache_file)
                         .catch(() => {
                             Utils.execAsync(`magick ${image} -resize x32 -gravity Center -extent 1:1 ${cache_file}`)
@@ -113,15 +113,14 @@ const Wallpaper = (image: string, name: string) => Widget.Button({
 });
 
 function CacheThumbnails() {
-    Utils.execAsync(`mkdir -p ${GLib.get_home_dir()}/.cache/thumbnails/wallpaper`)
+    Utils.execAsync(`mkdir -p ${GLib.get_home_dir()}/.cache/thumbnails/wallpapers`)
         .catch(print)
-    const link_directory = `${App.configDir}/wallpaper`;
-    const original_directory = `${GLib.get_home_dir()}/wallpaper`;
+    const original_directory = `${GLib.get_home_dir()}/Pictures/wallpapers`;
     const extensions = [".jpg", ".jpeg", ".png"];
-    const fileList = listFilesByExtensions(link_directory, extensions);
+    const fileList = listFilesByExtensions(original_directory, extensions);
     fileList.forEach((value, index) => {
         const path = `${original_directory}/${value}`
-        const cache_file = `${GLib.get_home_dir()}/.cache/thumbnails/wallpaper/${value}`;
+        const cache_file = `${GLib.get_home_dir()}/.cache/thumbnails/wallpapers/${value}`;
         Utils.idle(() => {
             Utils.readFileAsync(cache_file)
                 .catch(() => {
@@ -135,12 +134,11 @@ function CacheThumbnails() {
 CacheThumbnails()
 
 const WallpaperList = () => {
-    Utils.execAsync(`mkdir -p ${GLib.get_home_dir()}/.cache/thumbnails/wallpaper`)
+    Utils.execAsync(`mkdir -p ${GLib.get_home_dir()}/.cache/thumbnails/wallpapers`)
         .then();
-    const link_directory = `${App.configDir}/wallpaper`;
     const original_directory = `${GLib.get_home_dir()}/Pictures/wallpapers`;
     const extensions = [".jpg", ".jpeg", ".png"];
-    let fileList = listFilesByExtensions(link_directory, extensions);
+    let fileList = listFilesByExtensions(original_directory, extensions);
     let [l_fileList, r_fileList] = splitListInHalf(fileList);
     const box = Widget.Box({
         vertical: false,
