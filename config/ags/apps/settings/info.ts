@@ -11,8 +11,8 @@ const Row = (
     on_primary_click: any = empty_func, on_secondary_click: any = empty_func
 ) => Widget.EventBox({
     class_name: "row",
-    on_primary_click: on_primary_click,
-    on_secondary_click: on_secondary_click,
+    on_primary_click_release: on_primary_click,
+    on_secondary_click_release: on_secondary_click,
     child: Widget.Box({
         class_name: "row",
         vpack: "start",
@@ -39,21 +39,21 @@ const Row = (
     })
 })
 
-const repo_link = "https://github.com/S4NKALP/hyprland"
+const repo_link = "https://github.com/koeqaife/hyprland-material-you"
 const current_de = GLib.getenv("DESKTOP_SESSION");
 
 export function Info() {
     const box = Widget.Box({
         vertical: true,
         children: [
-            Row("Dotfiles", "hyprland"),
-            Row("Author", "S4NKALP (Discord)"),
+            Row("Dotfiles", "Material You"),
+            Row("Author", "mrdan__ (Discord)"),
             Row("Repo", repo_link, () => {
                 Utils.execAsync(`xdg-open "${repo_link}"`).catch(print)
             }),
             Widget.Separator(),
-            Row("OS", current_os),
             Row("DE", current_de!),
+            Row("OS", current_os),
             Row("Kernel", kernel_name),
             Row("CPU", `${cpu_name} (${cpu_cores} Cores)`),
             Row("GPU", `${gpu_name}`),

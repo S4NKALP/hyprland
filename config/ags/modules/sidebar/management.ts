@@ -149,17 +149,17 @@ function Page1() {
             Widget.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
                 hexpand: true,
-                spacing: 2.5,
+                spacing: 5,
                 children: [
                     Widget.Button({
                         hexpand: true,
                         class_name: network.wifi.bind("enabled")
                             .as(enabled => enabled ? "management_button active" : "management_button"),
                         child: NetworkIndicator(),
-                        on_primary_click: () => {
+                        on_primary_click_release: () => {
                             network.toggleWifi();
                         },
-                        on_secondary_click: () => {
+                        on_secondary_click_release: () => {
                             App.closeWindow(WINDOW_NAME);
                             App.openWindow("network");
                         }
@@ -174,11 +174,11 @@ function Page1() {
                             icon: "bluetooth",
                             arrow: true,
                         }),
-                        on_primary_click: () => {
+                        on_primary_click_release: () => {
                             Utils.execAsync(`${App.configDir}/scripts/bluetooth.sh --toggle`)
                                 .then(out => { bluetooth_enabled.setValue(out) })
                         },
-                        on_secondary_click: () => {
+                        on_secondary_click_release: () => {
                             OpenSettings("bluetooth")
                             App.closeWindow(WINDOW_NAME)
                         }
@@ -187,7 +187,7 @@ function Page1() {
             }),
             Widget.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                spacing: 2.5,
+                spacing: 5,
                 hexpand: true,
                 children: [
                     Widget.Button({
@@ -225,7 +225,7 @@ function Page1() {
             }),
             Widget.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                spacing: 2.5,
+                spacing: 5,
                 hexpand: true,
                 children: [
                     Widget.Button({
@@ -310,7 +310,7 @@ function Page2() {
         children: [
             Widget.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                spacing: 2.5,
+                spacing: 5,
                 children: [
                     Widget.Button({
                         hexpand: true,
@@ -320,7 +320,7 @@ function Page2() {
                             icon: "colorize",
                             arrow: true,
                         }),
-                        on_primary_click: () => {
+                        on_clicked: () => {
                             App.closeWindow(WINDOW_NAME);
                             Utils.execAsync("sleep 0.5")
                                 .then(() =>
@@ -369,7 +369,7 @@ function Page2() {
             }),
             Widget.Box({
                 orientation: Gtk.Orientation.HORIZONTAL,
-                spacing: 2.5,
+                spacing: 5,
                 hexpand: true,
                 children: [
                     Widget.Button({
@@ -380,7 +380,7 @@ function Page2() {
                             icon: "settings",
                             arrow: true,
                         }),
-                        on_primary_click: () => {
+                        on_clicked: () => {
                             OpenSettings()
                             App.closeWindow(WINDOW_NAME);
                         }
