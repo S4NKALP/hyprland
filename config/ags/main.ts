@@ -74,11 +74,6 @@ Utils.monitorFile(
 )
 
 Utils.monitorFile(
-    `${GLib.get_home_dir()}/.cache/material/colors.json`,
-    ReloadCSS
-)
-
-Utils.monitorFile(
     `${GLib.get_home_dir()}/.config/gtk-3.0/gtk.css`,
     ReloadGtkCSS
 )
