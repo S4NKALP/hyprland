@@ -42,7 +42,6 @@ function Settings(cur_tab: string) {
         children: {
             "network": Page(Network(), "Network"),
             "bluetooth": Page(Bluetooth(), "Bluetooth"),
-            "theme": Page(Theme(), "Theme"),
             "wallpaper": Page(Wallpapers(), "Wallpapers"),
             "info": Page(Info(), "Info"),
             "apps": Page(Apps(), "Apps")
