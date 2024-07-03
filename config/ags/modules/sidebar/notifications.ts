@@ -4,7 +4,6 @@ import Box from "types/widgets/box";
 
 const notifications = await Service.import("notifications")
 
-
 type NotificationsBoxType = {
     exclude?: string[],
     include?: string[]
@@ -66,7 +65,7 @@ export function NotificationsBox({ exclude = [], include = [] }: NotificationsBo
     return Widget.EventBox({
         vexpand: true,
         hexpand: true,
-        on_secondary_click: (_, event) => {
+        on_secondary_click_release: (_, event) => {
             menu.popup_at_pointer(event)
         },
         child: Widget.Scrollable({

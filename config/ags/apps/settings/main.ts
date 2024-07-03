@@ -20,12 +20,8 @@ export async function OpenSettings(cur_tab: string = "network") {
         })
         if (_client && _current_workspace != _client.workspace.id) {
             current_tab.setValue(cur_tab)
-            print("a")
             current_window.hide()
             current_window.show()
-            // current_window.destroy();
-            // current_window = undefined;
-            // SettingsWindow(cur_tab);
         }
         else
             current_tab.setValue(cur_tab)
@@ -46,6 +42,7 @@ function Settings(cur_tab: string) {
         children: {
             "network": Page(Network(), "Network"),
             "bluetooth": Page(Bluetooth(), "Bluetooth"),
+            "theme": Page(Theme(), "Theme"),
             "wallpaper": Page(Wallpapers(), "Wallpapers"),
             "info": Page(Info(), "Info"),
             "apps": Page(Apps(), "Apps")
@@ -59,7 +56,7 @@ function Settings(cur_tab: string) {
                 Widget.Label(label)
             ]
         }),
-        class_name: current_tab.bind().as(c => c == name ? "row active" : "row")
+        class_name: current_tab.bind().as(c => c == name ? "sidebar_row active" : "sidebar_row")
     })
     const sidebar = Widget.Box({
         vertical: true,
