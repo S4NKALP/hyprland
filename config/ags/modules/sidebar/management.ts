@@ -442,6 +442,14 @@ export function Management() {
                     hpack: "center",
                 })
             ]
-        })
+        }),
+        setup: (self) => {
+            for (let page in pageNames) {
+                // @ts-expect-error
+                self.keybind(`${Number(page.replace("page", ""))+1}`, () => {
+                    currentPage.setValue(Number(page.replace("page", "")));
+                })
+            }
+        }
     })
 }
