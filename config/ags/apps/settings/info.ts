@@ -42,15 +42,15 @@ const Row = (
         })
     });
 
-const repo_link = "https://github.com/koeqaife/hyprland-material-you";
+const repo_link = "https://github.com/S4NKALP/hyprland";
 const current_de = GLib.getenv("DESKTOP_SESSION");
 
 export function Info() {
     const box = Widget.Box({
         vertical: true,
         children: [
-            Row("Dotfiles", "Material You"),
-            Row("Author", "mrdan__ (Discord)"),
+            Row("Dotfiles", "hyprland"),
+            Row("Author", "S4NKALP (Discord)"),
             Row("Repo", repo_link, () => {
                 Utils.execAsync(`xdg-open "${repo_link}"`).catch(print);
             }),
