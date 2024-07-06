@@ -2,15 +2,15 @@
 
 monitor() {
     old_status=$(bluetoothctl show | grep "Powered: " | awk '{print $2}')
-    
+
     while true; do
         status=$(bluetoothctl show | grep "Powered: " | awk '{print $2}')
-        
+
         if [ "$status" != "$old_status" ]; then
             echo $status
             old_status=$status
         fi
-        
+
         sleep 1
     done
 }

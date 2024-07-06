@@ -68,10 +68,10 @@ for
 - **Terminal Emulator**: [kitty](https://sw.kovidgoyal.net/kitty/) :cat:
 - **Panel**: [AGS](https://aylur.github.io/ags-docs/) :shaved_ice:
 - **Text Editor**: [neovim](https://neovim.io/) / [geany](https://www.geany.org/) :keyboard:
-- **App Launcher**: [rofi](https://davatorium.github.io/rofi/) / [AGS](https://aylur.github.io/ags-docs/) :rocket:
+- **App Launcher**: [AGS](https://aylur.github.io/ags-docs/) :rocket:
 - **File Manager**: [yazi](https://yazi-rs.github.io/) / [Thunar](https://github.com/neilbrown/thunar) :open_file_folder:
 - **Browser**: [firefox](https://www.mozilla.org/) :globe_with_meridians:
-- **Colorscheme**: [Darker](https://github.com/S4NKALP/hyprland/tree/main/assets/Darker) :art:
+- **Colorscheme**: [adw](https://github.com/lassekongo83/adw-gtk3) :art:
 
 ---
 
@@ -100,13 +100,11 @@ for
     Windows + E: Thunar File Manager
     Windows + D: Application Launcher
     Windows + C: Close Program
-    ALT + C: Xmenu
-    ALT + M: Online Music Player
     Windows + W: Wallpaper Picker
     Windows + Space: Change Screen Layout Style
     PrtSc: Taking Screentshot
-    ALT + F1: Change Keyboard Layout
-    Windows + F1: For Keybinds
+    ALT + F3: Change Keyboard Layout
+    ALT + F1: For Keybinds
 
 Other keybinds can be found in ~/dotfiles/hypr/UserConfigs/UserKeybinds.conf
 or in ~/dotfiles/hypr/configs/Keybinds.conf
