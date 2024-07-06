@@ -1,11 +1,5 @@
-/*
-Generated with Gradience
-
-Issues caused by theming should be reported to Gradience repository, and not to upstream
-
-https://github.com/GradienceTeam/Gradience
-*/
-
+@import "../../.cache/material/colors.css";
+/* */
 @define-color theme_fg_color #AEE5FA;
 @define-color theme_text_color #AEE5FA;
 @define-color theme_bg_color #1a1b26;
@@ -36,7 +30,7 @@ https://github.com/GradienceTeam/Gradience
 @define-color wm_button_close_hover_bg #a9b1d6;
 @define-color wm_button_close_active_bg #c7c7c7;
 @define-color content_view_bg #1a1b26;
-@define-color placeholder_text_color silver;
+@define-color placeholder_text_color @onSurface;
 @define-color text_view_bg #1d1d1d;
 @define-color budgie_tasklist_indicator_color #90D1F6;
 @define-color budgie_tasklist_indicator_color_active #90D1F6;
@@ -92,43 +86,167 @@ https://github.com/GradienceTeam/Gradience
 @define-color BLACK_500 #393634;
 @define-color BLACK_700 #33302F;
 @define-color BLACK_900 #2B2928;
-@define-color accent_bg_color #69D3FF;
-@define-color accent_fg_color #003546;
-@define-color accent_color #69D3FF;
-@define-color destructive_bg_color #FFB4AB;
-@define-color destructive_fg_color #690005;
-@define-color destructive_color #FFB4AB;
-@define-color success_bg_color #81C995;
-@define-color success_fg_color rgba(0, 0, 0, 0.87);
-@define-color warning_bg_color #FDD633;
-@define-color warning_fg_color rgba(0, 0, 0, 0.87);
-@define-color error_bg_color #FFB4AB;
-@define-color error_fg_color #690005;
-@define-color window_bg_color #0A151A;
-@define-color window_fg_color #D9E4EB;
-@define-color view_bg_color #0A151A;
-@define-color view_fg_color #D9E4EB;
+@define-color accent_bg_color @primary;
+@define-color accent_fg_color @onPrimary;
+@define-color accent_color @primary;
+@define-color destructive_bg_color @error;
+@define-color destructive_fg_color @onError;
+@define-color destructive_color @error;
+@define-color success_bg_color #C5E1A5;
+@define-color success_fg_color #33691E;
+@define-color warning_bg_color #FFE082;
+@define-color warning_fg_color #E65100;
+@define-color error_bg_color @error;
+@define-color error_fg_color @onError;
+@define-color window_bg_color @background;
+@define-color window_fg_color @foreground;
+@define-color view_bg_color @surface;
+@define-color view_fg_color @onSurface;
 @define-color headerbar_bg_color mix(@dialog_bg_color, @window_bg_color, 0.5);
-@define-color headerbar_fg_color #CDE5FF;
-@define-color headerbar_border_color #2E4961;
+@define-color headerbar_fg_color @onSecondaryContainer;
+@define-color headerbar_border_color @secondaryContainer;
 @define-color headerbar_backdrop_color @headerbar_bg_color;
 @define-color headerbar_shade_color rgba(0, 0, 0, 0.09);
-@define-color card_bg_color #0A151A;
-@define-color card_fg_color #CDE5FF;
+@define-color card_bg_color @surfaceContainerLowest;
+@define-color card_fg_color @onSecondaryContainer;
 @define-color card_shade_color rgba(0, 0, 0, 0.09);
-@define-color dialog_bg_color #2E4961;
-@define-color dialog_fg_color #CDE5FF;
-@define-color popover_bg_color #2E4961;
-@define-color popover_fg_color #CDE5FF;
+@define-color dialog_bg_color @surfaceContainer;
+@define-color dialog_fg_color @onSecondaryContainer;
+@define-color popover_bg_color @surfaceContainer;
+@define-color popover_fg_color @onSecondaryContainer;
 @define-color thumbnail_bg_color #1a1b26;
 @define-color thumbnail_fg_color #AEE5FA;
 @define-color shade_color rgba(0, 0, 0, 0.36);
 @define-color scrollbar_outline_color rgba(0, 0, 0, 0.5);
-@define-color sidebar_bg_color @window_bg_color;
-@define-color sidebar_fg_color @window_fg_color;
+@define-color sidebar_bg_color @surface;
+@define-color sidebar_fg_color @onSurface;
 @define-color sidebar_border_color @sidebar_bg_color;
 @define-color sidebar_backdrop_color @sidebar_bg_color;
 
 .navigation-sidebar {
-background-color: #0A151A;
+    background-color: @sidebar_bg_color;
+}
+
+.navigation-sidebar row {
+    border-radius: 100px;
+}
+
+.navigation-sidebar label {
+    color: @outline;
+}
+
+.navigation-sidebar row:selected {
+    background-color: @secondaryContainer;
+}
+
+.navigation-sidebar row:selected label {
+    color: @onSecondaryContainer;
+    background-color: transparent;
+}
+
+.navigation-sidebar row:active {
+    background-color: mix(@secondaryContainer, @onSecondaryContainer, 0.1);
+}
+
+.navigation-sidebar row:active label {
+    color: @onSecondaryContainer;
+    background-color: transparent;
+}
+
+tooltip {
+    background-color: @surfaceContainer;
+    color: @foreground;
+    border-radius: 11px;
+    border: 0px solid;
+}
+
+menu * {
+    border-radius: 0px;
+}
+
+menu separator {
+    color: @outline;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 0px;
+}
+
+menu {
+    padding: 8px 0px 8px 0px;
+    background-color: @surfaceContainer;
+}
+
+separator {
+    color: @outline;
+}
+
+button, combobox, entry {
+    border-radius: 100px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 0px;
+}
+
+* {
+    box-shadow: none;
+    transition: all 0.2s ease-in-out;
+}
+
+
+switch {
+	border: 2px solid;
+    border-radius: 100px;
+    border-color: @outline;
+    background-color: @surfaceContainerHighest;
+}
+
+switch slider {
+    border-radius: 100px;
+    background-color: @outline;
+}
+
+switch:disabled {
+	background-color: mix(@surfaceContainerHighest, transparent, 0.38);
+    border-color: mix(@onSurface, transparent, 0.38);
+}
+
+switch:disabled slider {
+    background-color: mix(@onSurface, transparent, 0.38);
+}
+
+switch:hover {
+    background-color: mix(@surfaceContainerHighest, @onSurface, 0.08);
+}
+
+switch:hover slider {
+    background-color: @onSurfaceVariant;
+}
+
+switch:checked {
+	background-color: @primary;
+    border-color: transparent;
+}
+
+switch:checked slider {
+    background-color: @onPrimary;
+    border-color: transparent;
+}
+
+switch:checked:disabled {
+	background-color: mix(@onSurface, transparent, 0.38);
+    border-color: transparent;
+}
+
+switch:checked:disabled slider {
+    background-color: mix(@surface, transparent, 0.38);
+}
+
+switch:checked:hover {
+	background-color: @primary;
+}
+
+switch:checked:hover slider {
+    background-color: @primaryContainer;
 }

@@ -1,4 +1,4 @@
-@import "./colors.css";
+@import "../../.cache/material/colors.css";
 
 window.bar {
     background-color: @surface;
@@ -68,11 +68,11 @@ menu {
 }
 
 menuitem {
-    color: @onSurface
+    color: @onSurface;
 }
 
 menuitem:disabled {
-    color: mix(@onSurface, transparent, 0.38)
+    color: mix(@onSurface, transparent, 0.38);
 }
 
 menu separator {
@@ -124,19 +124,22 @@ separator {
 }
 
 .workspaces button label {
-    color: @onSurface;
+    color: @onSurfaceVariant;
     font-weight: bold;
 }
 
 .workspaces button:hover {
     color: @onSurface;
-    background: @surfaceContainerHighest;
+    background-color: mix(@onSurface, @surface, 0.85);
 }
 
 .workspaces button.active {
-    color: @onSecondaryContainer;
     background: @secondaryContainer;
     min-width: 40px;
+}
+
+.workspaces button.active label {
+    color: @onSecondaryContainer;
 }
 
 /* -----------------------------------------------------
@@ -165,7 +168,6 @@ separator {
  * Tray
  * ----------------------------------------------------- */
 
-
 .tray {
     background-color: @surfaceContainer;
     border-radius: 16px;
@@ -188,7 +190,6 @@ separator {
 window.notification-popups box.notifications {
     padding: 14px;
 }
-
 
 .notification-icon {
     min-width: 68px;
@@ -231,8 +232,8 @@ window.notification-popups box.notifications {
 }
 
 .notification-actions .notification-action-button {
-    margin: 0 .4em;
-    margin-top: .8em;
+    margin: 0 0.4em;
+    margin-top: 0.8em;
 }
 
 .notification-action-button {
@@ -302,7 +303,7 @@ window.notification-popups box.notifications {
 }
 
 .application_container:hover {
-    background-color: mix(@onSurface, @surface, 0.92)
+    background-color: mix(@onSurface, @surface, 0.92);
 }
 
 .application_container:focus {
@@ -322,7 +323,7 @@ window.notification-popups box.notifications {
 }
 
 .application_label {
-    color: @onSurface
+    color: @onSurface;
 }
 
 .application_icon {
@@ -370,7 +371,7 @@ window.notification-popups box.notifications {
 }
 
 .clip_container:hover {
-    background-color: mix(@onSurface, @surface, 0.92)
+    background-color: mix(@onSurface, @surface, 0.92);
 }
 
 .clip_container:focus {
@@ -450,12 +451,12 @@ window.notification-popups box.notifications {
 }
 
 .player .icon {
-    color: @foreground
+    color: @foreground;
 }
 
 .player scale.position {
     padding: 0;
-    margin-bottom: .3em;
+    margin-bottom: 0.3em;
     margin-left: 10px;
 }
 
@@ -475,7 +476,7 @@ window.notification-popups box.notifications {
 .player button {
     min-height: 1em;
     min-width: 1em;
-    padding: .3em;
+    padding: 0.3em;
     padding-top: 0px;
     padding-bottom: 0px;
     color: @onSecondary;
@@ -528,9 +529,11 @@ window.notification-popups box.notifications {
 
 .battery label {
     color: @onSurface;
+    font-size: 16px;
+    font-weight: 300;
 }
 
-.battery image {
+.battery .icon {
     color: @onSurface;
 }
 
@@ -624,7 +627,7 @@ window.notification-popups box.notifications {
 }
 
 .management_button.active label {
-    color: @onPrimary
+    color: @onPrimary;
 }
 
 .management_button.active .icon {
@@ -646,11 +649,11 @@ window.notification-popups box.notifications {
 }
 
 .management_button.waiting label {
-    color: @onError
+    color: @onError;
 }
 
 .management_button.waiting .icon {
-    color: @onError
+    color: @onError;
 }
 
 .management_button.waiting {
@@ -708,15 +711,15 @@ window.notification-popups box.notifications {
 }
 
 .system_scale.backlight slider {
-    background-image: -gtk-scaled(url("../hypr/assets/svg/brightness-onPrimary.svg"));
+    background-image: -gtk-scaled(url("../../.cache/material/svg/brightness-onPrimary.svg"));
 }
 
 .system_scale.backlight {
-    margin-bottom: 29px;
+    margin-bottom: 25px;
 }
 
 .system_scale.brightness slider {
-    background-image: -gtk-scaled(url("../hypr/assets/svg/dark-onPrimary.svg"));
+    background-image: -gtk-scaled(url("../../.cache/material/svg/dark-onPrimary.svg"));
 }
 
 .system_scale {
@@ -770,11 +773,11 @@ window.notification-popups box.notifications {
 }
 
 .usage_box label {
-    color: @onSurface
+    color: @onSurface;
 }
 
 .info_box label {
-    color: @onSurface
+    color: @onSurface;
 }
 
 .usage_bar_point {
@@ -807,7 +810,8 @@ window.notification-popups box.notifications {
     color: @surfaceContainerHigh;
 }
 
-.dotbutton:hover {}
+.dotbutton:hover {
+}
 
 .dotbutton.active label {
     color: @secondary;
@@ -983,7 +987,6 @@ filled_button.disabled .awesome_icon,
  * Navigation bar
  * ----------------------------------------------------- */
 
-
 .navigation {
     background-color: @surfaceContainer;
     padding-top: 3px;
@@ -1049,7 +1052,6 @@ filled_button.disabled .awesome_icon,
 /* -----------------------------------------------------
  * Switch
  * ----------------------------------------------------- */
-
 
 switch {
     border: 2px solid;
@@ -1122,7 +1124,6 @@ switch:checked:active slider {
     background-color: @primaryContainer;
 }
 
-
 /* -----------------------------------------------------
  * Cheatsheet
  * ----------------------------------------------------- */
@@ -1159,8 +1160,11 @@ switch:checked:active slider {
     background-color: @surfaceContainerLowest;
     padding-left: 4px;
     padding-right: 4px;
+    min-width: 15px;
+    font-size: 15px;
     color: @onSurface;
     border-radius: 4px;
+    border: 1px solid @outlineVariant;
 }
 
 .cheatsheet .category .plus {
@@ -1184,6 +1188,11 @@ switch:checked:active slider {
     margin-left: 7px;
     margin-right: 7px;
     font-size: 17px;
+}
+
+.cheatsheet .category .material_icon {
+    margin-left: 7px;
+    font-weight: 400;
 }
 
 .cheatsheet .category .awesome_icon.key {

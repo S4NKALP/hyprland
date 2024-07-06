@@ -54,6 +54,7 @@ pkg=(
     grim
     slurp
     clipshit
+    wl-clipboard
     swww
     kitty
     imagemagick
@@ -68,15 +69,22 @@ pkg=(
     unrar
     xarchiver
     network-manager-applet
-    cava
     fastfetch
     tmux
-    lazygit
     btop
+    lm_sensors
+    fwupd
     lshw
+    gum
+    libdbusmenu-gtk3
+    libxdg-basedir
+    cpio
+    cmake
+    meson
 
     ## Bluetooth
     bluez
+    bluez-libs
     bluez-utils
 
 
@@ -89,10 +97,7 @@ pkg=(
     ## Tweaker
     gtk-engine-murrine
     nwg-look
-    kvantum
-    qt5ct
-    lxappearance
-    qt6ct
+    pywal-16-color
 
     ## fonts
     adobe-source-code-pro-fonts
@@ -116,10 +121,13 @@ pkg=(
     fontconfig
     ttf-meslo-nerd
     ttf-google-sans
+    ttf-opensans
     ttf-roboto
 
     #hyprland
     hyprland
+    adw-gtk3
+    adw-gtk-theme
     bibata-cursor-theme-bin
     hyprpicker
     power-profile-daemon
@@ -141,6 +149,8 @@ pkg=(
     python-pip
     python-pywayland
     python-pyxdg
+    python-materialyoucolor-git
+    python-numpy
 
 )
 # Creating a new `packages` array
@@ -383,19 +393,12 @@ for font in $HOME/hyrpland/assets/fonts/*; do
         sudo cp -r "$file" /usr/share/fonts
     fi
 done
-echo "Copying Darker theme..."
-for font in $HOME/hyrpland/assets/Darker; do
-    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
-        sudo cp -r "$file" /usr/share/themes
-    fi
-done
 
 sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
 sudo cp -r $HOME/hyprland/wallpapers/* $HOME/Pictures/wallpapers
 simulate_output "[   \e[32mOK\e[0m   ] Copied .zshevn dotfiles to $HOME"
 simulate_output "[   \e[32mOK\e[0m   ] Copied binn dotfiles to $HOME/.local/bin"
 simulate_output "[   \e[32mOK\e[0m   ] Copied font dotfiles to usr/share/fonts"
-simulate_output "[   \e[32mOK\e[0m   ] Copied Darker theme dotfiles to /usr/share/themes"
 simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/dotfiles/"
 simulate_output "[   \e[32mOK\e[0m   ] Copied config to $HOME/Pictures/wallpapers"
 
@@ -409,24 +412,19 @@ DOTFILES_DIR="$HOME/dotfiles"
 CONFIG_DIRS=(
     "ags"
     "btop"
-    "cava"
     "fastfetch"
     "geany"
-    "gtk-2.0"
     "gtk-3.0"
     "gtk-4.0"
     "hypr"
     "kitty"
-    "Kvantum"
-    "lazygit"
     "mpv"
     "npm"
     "qimgv"
-    "qt5ct"
-    "qt6ct"
     "startship"
     "Thunar"
     "tmux"
+    "wal"
     "yazi"
     "zathura"
     "zsh"
@@ -451,6 +449,30 @@ done
 echo ""
 echo ""
 
+install_tela_nord_icons() {
+    echo ":: Installing Tela Nord icons..."
+    mkdir -p /tmp/install
+    cd /tmp/install
+    git clone https://github.com/vinceliuice/Tela-icon-theme
+    cd Tela-icon-theme
+    ./install.sh nord
+    cd $HOME/dotfiles
+}
+
+setup_colors() {
+    echo ":: Setting colors"
+    python -O $HOME/dotfiles/material-colors/generate.py --color "#0000FF"
+}
+
+remove_gtk_buttons() {
+    echo ":: Remove window close and minimize buttons in GTK"
+    gsettings set org.gnome.desktop.wm.preferences button-layout ':'
+}
+
+setup_sensors() {
+    sudo sensors-detect --auto > /dev/null
+}
+
 #-- Enabling the service -----------------------------------------
 echo "┌──────────────────────────────────────┐"
 echo "│   Powerprofile enabled ...           │"
@@ -473,7 +495,6 @@ sudo systemctl enable --now bluetooth.service &>>$INSTLOG
 simulate_output "==> Starting Bluetooth..."
 simulate_output "    -> Running bluez"
 simulate_output "    -> Running bluez-utils"
-simulate_output "    -> Running blueman"
 simulate_output "[   \e[32mOK\e[0m   ] Started Bluetooth service"
 sleep 2
 
@@ -507,12 +528,12 @@ echo "│   Setting GTK and icon themes...     │"
 echo "└──────────────────────────────────────┘"
 echo ""
 simulate_output "Setting GTK and icon themes..."
-simulate_output "[   \e[32mOK\e[0m   ] GTK theme set to 'Darker'"
-simulate_output "[   \e[32mOK\e[0m   ] Icon theme set to 'Tela-circle-black'"
+simulate_output "[   \e[32mOK\e[0m   ] GTK theme set to 'adw-gtk3-dark'"
+simulate_output "[   \e[32mOK\e[0m   ] Icon theme set to 'Tela-nord-dark'"
 simulate_output "[   \e[32mOK\e[0m   ] curosr theme set to 'Bibata'"
-gsettings set org.gnome.desktop.interface gtk-theme "Darker"
-gsettings set org.gnome.desktop.interface icon-theme "Tela-circle-black"
-gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Ice"
+gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
+gsettings set org.gnome.desktop.interface icon-theme "Tela-nord-dark"
+gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Orginal-Classic"
 
 echo ""
 echo ""
