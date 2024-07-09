@@ -150,7 +150,3 @@ If you have any questions, issues, or suggestions, feel free to let us know by o
 <div align ="center">
     <strong>Thank you for your support as well🦊</strong>
 </div>
-<br>
-
->Most of files are taken from [koeqaife](https://github.com/koeqaife/)
-
