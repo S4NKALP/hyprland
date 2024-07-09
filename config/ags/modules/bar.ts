@@ -18,6 +18,7 @@ const bluetooth = await Service.import("bluetooth");
 import Gtk from "gi://Gtk?version=3.0";
 import { MaterialIcon } from "icons.js";
 import config from "services/configuration.ts";
+import { toggleAppsWindow, toggleMediaWindow } from "./sideleft/main.js";
 
 function checkKeymap() {
     const layout = Utils.execAsync(`hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | tail -n1 | cut -c1-2 | tr 'A-Z' 'a-z'`)
@@ -250,9 +251,21 @@ function AppLauncher() {
     const button = Widget.Button({
         class_name: "filled_tonal_button",
         on_clicked: () => {
-            App.toggleWindow("applauncher");
+            toggleAppsWindow();
         },
         child: MaterialIcon("search")
+    });
+
+    return button;
+}
+
+function OpenSideLeft() {
+    const button = Widget.Button({
+        class_name: "filled_tonal_button",
+        on_clicked: () => {
+            App.toggleWindow("sideleft");
+        },
+        child: MaterialIcon("dock_to_right")
     });
 
     return button;
@@ -321,7 +334,7 @@ function MediaPlayer() {
     const button = Widget.Button({
         class_name: "filled_tonal_button",
         on_primary_click_release: () => {
-            App.toggleWindow("media");
+            toggleMediaWindow();
         },
         on_secondary_click_release: () => {
             Utils.execAsync(["playerctl", "play-pause"]).catch(print);
@@ -337,7 +350,6 @@ function MediaPlayer() {
         } else {
             self.visible = false;
             self.tooltip_text = "Unknown";
-            App.closeWindow("media");
         }
     });
 
@@ -384,7 +396,7 @@ function TaskBar() {
 
         clients.forEach((item) => {
             let widget = globalWidgets.find((w) => w.attribute.pid === item.pid);
-            if (item.class == "kitty") {
+            if (item.class == "Alacritty") {
                 return;
             }
             if (widget) {
@@ -410,7 +422,6 @@ function TaskBar() {
             }
         });
         return globalWidgets;
-
     }
 
     return Widget.Box({
@@ -467,7 +478,7 @@ function Left() {
         class_name: "modules-left",
         hpack: "start",
         spacing: 8,
-        children: [AppLauncher(), MediaPlayer(), TaskBar()]
+        children: [AppLauncher(), OpenSideLeft(), MediaPlayer(), TaskBar()]
     });
 }
 
