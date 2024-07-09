@@ -10,33 +10,27 @@ type NotificationsBoxType = {
 };
 
 const NotificationNoReveal = (notification: NotificationType, visible = false, dismiss = true) => {
-    type BoxAttrs = {
-        destroyWithAnims: any;
-        count: number;
-        id: number;
-    };
-
     const _notification = Notification(notification, dismiss);
-
-    let box: Box<any, BoxAttrs>;
 
     const destroyWithAnims = () => {
         box.destroy();
     };
-    box = Widget.Box({
+
+    let box: Box<any, { destroyWithAnims: any; count: number; id: number }> = Widget.Box({
         hexpand: true,
         attribute: {
-            destroyWithAnims: destroyWithAnims,
+            destroyWithAnims,
             count: 0,
-            id: notification.id
+            id: notification.id,
         },
-        children: [_notification]
+        children: [_notification],
     });
+
     return box;
 };
 
 export function NotificationsBox({ exclude = [], include = [] }: NotificationsBoxType) {
-    const popups = NotificationPopups(false, { exclude: exclude, include: include }, false, NotificationNoReveal);
+    const popups = NotificationPopups(false, { exclude, include }, false, NotificationNoReveal);
 
     const menu = Widget.Menu({
         class_name: "notifications_menu",
@@ -44,19 +38,19 @@ export function NotificationsBox({ exclude = [], include = [] }: NotificationsBo
             Widget.MenuItem({
                 child: Widget.Label({
                     label: "Close all",
-                    hpack: "start"
+                    hpack: "start",
                 }),
                 class_name: "notifications_menu_item",
                 on_activate: () => {
-                    for (let n of notifications.notifications) {
+                    notifications.notifications.forEach((n) => {
                         if (n) {
                             n.dismiss();
                             n.close();
                         }
-                    }
-                }
-            })
-        ]
+                    });
+                },
+            }),
+        ],
     });
 
     return Widget.EventBox({
@@ -69,7 +63,7 @@ export function NotificationsBox({ exclude = [], include = [] }: NotificationsBo
             class_name: "notifications_sidebar_scrollable",
             hscroll: "never",
             child: popups,
-            hexpand: true
-        })
+            hexpand: true,
+        }),
     });
 }

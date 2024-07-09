@@ -8,12 +8,11 @@ type EntryObject = {
     content: string;
     entry: string;
 };
-// ·
 
 function ClipHistItem(entry: string) {
-    let [id, ...content] = entry.split("\t");
+    const [id, ...content] = entry.split("\t");
     let clickCount = 0;
-    let button = Widget.Button({
+    const button = Widget.Button({
         class_name: "clip_container",
         child: Widget.Box({
             children: [
@@ -78,31 +77,33 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
     });
 
     async function repopulate() {
-        output = await Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --get`)
-            .then((str) => str)
-            .catch((err) => {
-                print(err);
-                return "";
-            });
+        try {
+            output = await Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --get`);
+        } catch (err) {
+            print(err);
+            output = "";
+        }
+
         entries = output.split("\n").filter((line) => line.trim() !== "");
         clipHistItems = entries.map((entry) => {
-            let [id, ...content] = entry.split("\t");
+            const [id, ...content] = entry.split("\t");
             return { id: id.trim(), content: content.join(" ").trim(), entry: entry };
         });
         widgets = clipHistItems.map((item) => ClipHistItem(item.entry));
         list.children = widgets;
     }
-    repopulate();
 
     const entry = Widget.Entry({
         hexpand: true,
         class_name: "cliphistory_entry",
         placeholder_text: "Search",
-
-        on_change: ({ text }) =>
+        on_change: ({ text }) => {
+            const searchText = text.toLowerCase();
             widgets.forEach((item) => {
-                item.visible = item.attribute.content.match(text ?? "");
-            })
+                const content = item.attribute.content.toLowerCase();
+                item.visible = content.includes(searchText);
+            });
+        }
     });
 
     return Widget.Box({
@@ -115,7 +116,7 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
             Widget.Separator(),
             Widget.Scrollable({
                 hscroll: "never",
-                css: `min-width: ${width}px;` + `min-height: ${height}px;`,
+                css: `min-width: ${width}px; min-height: ${height}px;`,
                 child: list
             })
         ],
@@ -133,7 +134,6 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
 
 export const cliphist = popupwindow({
     name: WINDOW_NAME,
-
     class_name: "cliphistory",
     visible: false,
     keymode: "exclusive",

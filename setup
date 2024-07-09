@@ -143,6 +143,11 @@ pkg=(
     bun-bin
     dart-sass
     sass
+    gtksourceview3
+    gtksourceviewmm
+    gtkmm3
+    tinyxml2
+    cairomm
 
     ## python
     python-pillow
