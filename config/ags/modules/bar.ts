@@ -396,7 +396,7 @@ function TaskBar() {
 
         clients.forEach((item) => {
             let widget = globalWidgets.find((w) => w.attribute.pid === item.pid);
-            if (item.class == "Alacritty") {
+            if (item.class == "kitty") {
                 return;
             }
             if (widget) {
