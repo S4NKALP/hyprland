@@ -136,6 +136,8 @@ chmod +x setup
 
 ### 🧰 Tools Used
 
+> I got a lot of the code for AGS from [koeqaife/hyprland-material-you](https://github.com/koeqaife/hyprland-material-you)
+
 - [nvim](https://github.com/S4NKALP/nvim) — Personalized Editor
 - [blog](https://github.com/S4NKALP/blog) — Blog
 <hr>
