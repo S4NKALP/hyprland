@@ -1,8 +1,8 @@
-import popupwindow from "../misc/popupwindow.js";
+import popupwindow from "../misc/popupwindow.ts";
 import Gtk from "gi://Gtk?version=3.0";
 import { MaterialIcon } from "icons.ts";
-import { WeatherBox } from "./weather.js";
-import { Media } from "./players.js";
+import { WeatherBox } from "./weather.ts";
+import { Media } from "./players.ts";
 import { Applauncher } from "./applauncher.ts";
 import { geminiPage } from "./gemini.ts";
 
@@ -31,13 +31,14 @@ type ButtonType = {
     page: string;
     label: string;
     icon?: string;
-    icon_widget?: Gtk.Widget
+    icon_widget?: Gtk.Widget;
 };
 
 function Button({ page, label, icon, icon_widget }: ButtonType) {
     return Widget.Button({
         class_name: `navigation_button _${page}`,
         hexpand: true,
+        vpack: "start",
         child: Widget.Box({
             orientation: Gtk.Orientation.VERTICAL,
             class_name: "container_outer",
@@ -48,7 +49,7 @@ function Button({ page, label, icon, icon_widget }: ButtonType) {
                         hpack: "center",
                         class_name: "container"
                     }),
-                    overlay: (icon) ? MaterialIcon(icon!, "20px") : icon_widget!,
+                    overlay: icon ? MaterialIcon(icon!, "20px") : icon_widget!,
                     pass_through: true
                 }),
                 Widget.Label({
@@ -111,7 +112,7 @@ function Navigation() {
                     size: 20,
                     class_name: "icon"
                 })
-            })
+            }),
         ]
     });
     return Widget.Box({

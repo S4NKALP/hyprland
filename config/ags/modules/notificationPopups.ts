@@ -37,9 +37,9 @@ export const Notification = (notification: NotificationType, dismiss = true) =>
         vertical: true,
         children: [
             Widget.EventBox({
-                on_primary_click_release: (box) => {
-                    // @ts-ignore
-                    const label: Label<any> = box.child.children[1].children[1];
+                on_primary_click: (box) => {
+                    // @ts-expect-error
+                    const label: Label<any> = box.child.children[1]!.children[1]!;
                     if (label.lines < 0) {
                         label.lines = 3;
                         label.truncate = "end";
@@ -73,7 +73,7 @@ export const Notification = (notification: NotificationType, dismiss = true) =>
                                         }),
                                         Widget.Label({
                                             class_name: "notification-time",
-                                            label: GLib.DateTime.new_from_unix_local(notification.time).format("%I:%M %p")
+                                            label: GLib.DateTime.new_from_unix_local(notification.time).format("%H:%M")
                                         }),
                                         Widget.Button({
                                             class_name: "standard_icon_button notification-close",
