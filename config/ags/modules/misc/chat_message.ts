@@ -6,9 +6,9 @@ const { execAsync, exec } = Utils;
 import { MaterialIcon } from "icons.ts";
 import md2pango from "./md2pango.ts";
 import { theme } from "variables.ts";
+import Pango10 from "gi://Pango?version=1.0";
 
 const LATEX_DIR = `${GLib.get_user_cache_dir()}/ags/media/latex`;
-const CUSTOM_SCHEME_ID = `custom${theme.value == "dark" ? "" : "-light"}`;
 const USERNAME = GLib.get_user_name();
 
 function substituteLang(str) {
@@ -29,10 +29,11 @@ const HighlightedCode = (content, lang) => {
         wrap_mode: Gtk.WrapMode.NONE
     });
     const langManager = GtkSource.LanguageManager.get_default();
-    let displayLang = langManager.get_language(substituteLang(lang)); // Set your preferred language
+    let displayLang = langManager.get_language(substituteLang(lang));
     if (displayLang) {
         buffer.set_language(displayLang);
     }
+    const CUSTOM_SCHEME_ID = `custom${theme.value == "dark" ? "" : "-light"}`;
     const schemeManager = GtkSource.StyleSchemeManager.get_default();
     buffer.set_style_scheme(schemeManager.get_scheme(CUSTOM_SCHEME_ID));
     buffer.set_text(content, -1);
@@ -46,6 +47,7 @@ const TextBlock = (content = "") =>
         useMarkup: true,
         xalign: 0,
         wrap: true,
+        wrap_mode: Pango10.WrapMode.WORD_CHAR,
         selectable: true,
         label: content
     });
@@ -53,6 +55,7 @@ const TextBlock = (content = "") =>
 Utils.execAsync(["bash", "-c", `rm -rf ${LATEX_DIR}`])
     .then(() => Utils.execAsync(["bash", "-c", `mkdir -p ${LATEX_DIR}`]))
     .catch(print);
+
 const Latex = (content = "") => {
     const latexViewArea = Box({
         // vscroll: 'never',
@@ -193,7 +196,7 @@ const Divider = () =>
         class_name: "divider"
     });
 
-const MessageContent = (content) => {
+export const MessageContent = (content) => {
     const contentBox = Box({
         vertical: true,
         attribute: {
