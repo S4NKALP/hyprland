@@ -37,7 +37,7 @@ const WeatherKey = () =>
                     on_accept: (self) => {
                         if (self.text!.length == 32) {
                             self.css = "border: 2px solid; border-color: #66BB6A";
-                            Utils.timeout(1000, () => {
+                            Utils.timeout(100, () => {
                                 self.css = "border: 2px solid; border-color: transparent";
                             });
                             conf.set_value("weather", self.text!);
