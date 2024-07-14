@@ -429,7 +429,12 @@ function TaskBar() {
     return Widget.Box({
         class_name: "tray",
         spacing: 5,
-        children: hyprland.bind("clients").as(Clients)
+        setup: (self) => {
+            self.hook(hyprland, () => {
+                self.children = Clients(hyprland.clients);
+                self.visible = self.children.length > 0;
+            });
+        }
     });
 }
 
