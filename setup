@@ -164,13 +164,20 @@ packages=(
 )
 #-- function -----------------------------------------
 install_software() {
-    echo -en "\e[90mInstalling\e[0m \e[97m$1\e[0m..."
-    paru -S --noconfirm $1 &>>$INSTLOG &
-    show_progress $!
+    package_name=$1
+    if pacman -Q $package_name &>/dev/null; then
+        echo -e "\e[90m$package_name is already installed. Skipping installation.\e[0m"
+    else
+        echo -en "\e[90mInstalling\e[0m \e[97m$package_name\e[0m..."
+        paru -S --noconfirm $package_name &>>$INSTLOG &
+        show_progress $!
+    fi
 }
+
 installed() {
     echo -en "Installed package \e[97m$1\e[0m."
 }
+
 #-- express -----------------------------------------
 clear
 echo -e "\033[1;34m"
@@ -388,16 +395,17 @@ for file in $HOME/hyrpland/misc/.zshevn; do
 done
 echo "Copying bin ..."
 for binn in $HOME/hyrpland/misc/bin/*; do
-    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
-        sudo cp -r "$file" $HOME/.local/bin
+    if [ "$(basename "$binn")" != "." ] && [ "$(basename "$binn")" != ".." ]; then
+        sudo cp -r "$binn" $HOME/.local/bin
     fi
 done
 echo "Copying fonts..."
 for font in $HOME/hyrpland/assets/fonts/*; do
-    if [ "$(basename "$file")" != "." ] && [ "$(basename "$file")" != ".." ]; then
-        sudo cp -r "$file" /usr/share/fonts
+    if [ "$(basename "$font")" != "." ] && [ "$(basename "$font")" != ".." ]; then
+        sudo cp -r "$font" /usr/share/fonts
     fi
 done
+
 
 sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
 sudo cp -r $HOME/hyprland/wallpapers/* $HOME/Pictures/wallpapers
@@ -557,6 +565,7 @@ echo ""
 simulate_output "Setting some files as executable..."
 simulate_output "[   \e[32mOK\e[0m   ] Granted execute permissions to scripts"
 sudo chmod +x ~/dotfiles/hypr/scripts/*
+sudo chmod +x ~/dotfiles/ags/scripts/*
 sudo sensors-detect --auto > /dev/null
 
 echo ""
