@@ -106,7 +106,7 @@ separator {
 
 .outer-workspace {
 	background-color: @surfaceContainerHigh;
-	border-radius: 20px;
+	border-radius: 16px;
 }
 
 .workspace {
@@ -121,10 +121,10 @@ separator {
 }
 
 .workspace.first {
-	border-radius: 20px 0 0 20px;
+	border-radius: 16px 0 0 16px;
 }
 .workspace.last {
-	border-radius: 0 20px 20px 0;
+	border-radius: 0 16px 16px 0;
 }
 
 .workspace.normal,
@@ -134,7 +134,7 @@ separator {
 }
 
 .workspace button.normal:hover {
-	border-radius: 20px;
+	border-radius: 16px;
 	background-color: @secondary;
 	color: @surfaceDim;
 }
@@ -145,11 +145,11 @@ separator {
 	font-weight: bold;
 	padding-left: 4px;
 	padding-right: 4px;
-	border-radius: 20px;
+	border-radius: 16px;
 }
 
 .workspace button.focused:hover {
-	border-radius: 20px;
+	border-radius: 16px;
 	color: @primary;
 	background-color: mix(@onSurface, @surface, 0.85);
 }
@@ -159,17 +159,17 @@ separator {
 }
 
 .workspaces button.occupied:hover {
-	border-radius: 20px;
+	border-radius: 16px;
 	background-color: mix(@onSurface, @surface, 0.85);
 	color: @surfaceDim;
 }
 
 .workspace.occupied-single {
-	border-radius: 20px;
+	border-radius: 16px;
 }
 
 .workspace.occupied-start {
-	border-radius: 20px 0 0 20px;
+	border-radius: 16px 0 0 16px;
 }
 
 .workspace.occupied-middle {
@@ -177,7 +177,7 @@ separator {
 }
 
 .workspace.occupied-end {
-	border-radius: 0px 20px 20px 0px;
+	border-radius: 0px 16px 16px 0px;
 }
 
 /* -----------------------------------------------------
@@ -302,8 +302,6 @@ window.notification-popups box.notifications {
 .cliphistory_box {
     border-radius: 24px;
     background-color: @background;
-    border: 2px solid;
-    border-color: @outlineVariant;
 }
 
 .cliphistory_box separator {
