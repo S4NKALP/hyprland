@@ -4,6 +4,7 @@ import { MaterialIcon } from "icons.ts";
 import { WeatherBox } from "./weather.ts";
 import { Media } from "./players.ts";
 import { Applauncher } from "./applauncher.ts";
+import { cliphist } from "./cliphist.ts";
 import { geminiPage } from "./gemini.ts";
 
 export const WINDOW_NAME = "sideleft";
@@ -23,7 +24,14 @@ export function toggleMediaWindow() {
         shown.setValue("media");
     }
 }
+export function toggleClipsWindow() {
+    if (shown.value == "clips" && sideleft.visible) App.closeWindow(WINDOW_NAME); else {
+        App.openWindow(WINDOW_NAME);
+        shown.setValue("clips");
+    }
+}
 
+globalThis.toggleClipsWindow = toggleClipsWindow;
 globalThis.toggleMediaWindow = toggleMediaWindow;
 globalThis.toggleAppsWindow = toggleAppsWindow;
 
@@ -75,6 +83,7 @@ function Navigation() {
             weather: WeatherBox(),
             media: Media(),
             apps: Applauncher(),
+            clips: cliphist(),
             gemini: geminiPage
         },
         hexpand: true,
@@ -103,6 +112,11 @@ function Navigation() {
                 page: "apps",
                 label: "Apps",
                 icon: "search"
+            }),
+            Button({
+                page: "clips",
+                label: "Clipboard",
+                icon: "content_paste_search",
             }),
             Button({
                 page: "gemini",
