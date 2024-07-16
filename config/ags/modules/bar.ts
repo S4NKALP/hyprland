@@ -414,10 +414,14 @@ function MediaPlayer() {
 
 
 function KeyboardLayout() {
-    const widget = Widget.Label({
+    const widget = Widget.Button({
         class_name: "keyboard",
         //visible: keyboard_layout.bind().as((c) => c != "none"),
-        label: keyboard_layout.bind()
+        label: keyboard_layout.bind(),
+        on_primary_click_release: () => {
+            Utils.execAsync(`${GLib.get_home_dir()}/dotfiles/hypr/scripts/RunCMD.sh kb_changer`);
+        },
+
     });
     return widget;
 }
