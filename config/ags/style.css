@@ -104,44 +104,80 @@ separator {
  * Workspaces
  * ----------------------------------------------------- */
 
-.workspaces {
-    border-radius: 16px;
-    font-weight: bold;
-    font-style: normal;
-    font-size: 16px;
-    color: @onSurface;
-    background: @surfaceContainer;
+.outer-workspace {
+	background-color: @surfaceContainerHigh;
+	border-radius: 20px;
 }
 
-.workspaces * {
-    transition: all 0.35s ease-in-out;
-    transition-property: background-color, color, min-width;
+.workspace {
+	background-color: @surfaceVariant;
+	/* padding: 0; */
 }
 
-.workspaces button {
-    padding: 0px 5px;
-    margin: 4px 3px;
-    border-radius: 16px;
-    border: 0px;
+.workspace button {
+	background-color: transparent;
+	padding-left: 4px;
+	padding-right: 4px;
 }
 
-.workspaces button label {
-    color: @onSurfaceVariant;
-    font-weight: bold;
+.workspace.first {
+	border-radius: 20px 0 0 20px;
+}
+.workspace.last {
+	border-radius: 0 20px 20px 0;
 }
 
-.workspaces button:hover {
-    color: @onSurface;
-    background-color: mix(@onSurface, @surface, 0.85);
+.workspace.normal,
+.workspace button.normal {
+	background-color: transparent;
+	color: @surfaceDim;
 }
 
-.workspaces button.active {
-    background: @secondaryContainer;
-    min-width: 40px;
+.workspace button.normal:hover {
+	border-radius: 20px;
+	background-color: @secondary;
+	color: @surfaceDim;
 }
 
-.workspaces button.active label {
-    color: @onSecondaryContainer;
+.workspace button.focused {
+	background-color: @secondary;
+	color: @background;
+	font-weight: bold;
+	padding-left: 4px;
+	padding-right: 4px;
+	border-radius: 20px;
+}
+
+.workspace button.focused:hover {
+	border-radius: 20px;
+	color: @primary;
+	background-color: mix(@onSurface, @surface, 0.85);
+}
+
+.workspace button.occupied {
+	color: @primary;
+}
+
+.workspaces button.occupied:hover {
+	border-radius: 20px;
+	background-color: mix(@onSurface, @surface, 0.85);
+	color: @surfaceDim;
+}
+
+.workspace.occupied-single {
+	border-radius: 20px;
+}
+
+.workspace.occupied-start {
+	border-radius: 20px 0 0 20px;
+}
+
+.workspace.occupied-middle {
+	border-radius: 0px;
+}
+
+.workspace.occupied-end {
+	border-radius: 0px 20px 20px 0px;
 }
 
 /* -----------------------------------------------------
