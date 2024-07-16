@@ -2,22 +2,64 @@ const WINDOW_NAME = "cliphist";
 import popupwindow from "./misc/popupwindow.ts";
 import Box from "types/widgets/box.js";
 import Gtk from "gi://Gtk?version=3.0";
+const { Gio } = imports.gi;
 
 type EntryObject = {
-    id: string;
-    content: string;
-    entry: string;
+    original: string;
+    text: string;
+    index: number;
 };
 
-function ClipHistItem(entry: string) {
-    const [id, ...content] = entry.split("\t");
+async function getClipboardHistory(): Promise<EntryObject[]> {
+    try {
+        const process = new Gio.Subprocess({
+            argv: ['bash', '-c', 'cliphist list | iconv -f UTF-8 -t UTF-8//IGNORE'],
+            flags: Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
+        });
+
+        process.init(null);
+
+        const [success, stdout, stderr] = process.communicate_utf8(null, null);
+        if (!success) {
+            return [];
+        }
+
+        const sanitizedOutput = stdout.replace(/[^\u0000-\u007F]/g, "");
+
+        return sanitizedOutput
+            .split("\n")
+            .filter((line) => line.trim() !== "")
+            .map((entry) => {
+                const [index, text] = entry.split("\t").map((s) => s.trim());
+                return { original: entry, text, index: Number(index) };
+            });
+    } catch {
+        return [];
+    }
+}
+
+async function copyById(id: number) {
+    try {
+        const entry = await Utils.execAsync(`cliphist decode ${id}`);
+
+        const process = new Gio.Subprocess({
+            argv: ['bash', '-c', `echo "${entry.trim()}" | wl-copy`],
+            flags: Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
+        });
+
+        process.init(null);
+        process.communicate_utf8(null, null);
+    } catch {}
+}
+
+function ClipHistItem(entry: EntryObject) {
     let clickCount = 0;
     const button = Widget.Button({
         class_name: "clip_container",
         child: Widget.Box({
             children: [
                 Widget.Label({
-                    label: id,
+                    label: entry.index.toString(),
                     class_name: "clip_id",
                     xalign: 0,
                     vpack: "center"
@@ -29,7 +71,7 @@ function ClipHistItem(entry: string) {
                     vpack: "center"
                 }),
                 Widget.Label({
-                    label: content.join(" ").trim(),
+                    label: entry.text,
                     class_name: "clip_label",
                     xalign: 0,
                     vpack: "center",
@@ -39,11 +81,11 @@ function ClipHistItem(entry: string) {
         })
     });
 
-    button.connect("clicked", () => {
+    button.connect("clicked", async () => {
         clickCount++;
-        if (clickCount === 2) {
+        if (clickCount === 1) {
             App.closeWindow(WINDOW_NAME);
-            Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`);
+            await copyById(entry.index);
             clickCount = 0;
         }
     });
@@ -53,7 +95,7 @@ function ClipHistItem(entry: string) {
     });
 
     return Widget.Box({
-        attribute: { content: content.join(" ").trim() },
+        attribute: { content: entry.text },
         orientation: Gtk.Orientation.VERTICAL,
         children: [
             button,
@@ -66,9 +108,6 @@ function ClipHistItem(entry: string) {
 }
 
 function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
-    let output: string;
-    let entries: string[];
-    let clipHistItems: EntryObject[];
     let widgets: Box<any, any>[];
 
     const list = Widget.Box({
@@ -77,19 +116,8 @@ function ClipHistWidget({ width = 500, height = 500, spacing = 12 }) {
     });
 
     async function repopulate() {
-        try {
-            output = await Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --get`);
-        } catch (err) {
-            print(err);
-            output = "";
-        }
-
-        entries = output.split("\n").filter((line) => line.trim() !== "");
-        clipHistItems = entries.map((entry) => {
-            const [id, ...content] = entry.split("\t");
-            return { id: id.trim(), content: content.join(" ").trim(), entry: entry };
-        });
-        widgets = clipHistItems.map((item) => ClipHistItem(item.entry));
+        const clipHistItems = await getClipboardHistory();
+        widgets = clipHistItems.map((item) => ClipHistItem(item));
         list.children = widgets;
     }
 
@@ -142,6 +170,5 @@ export const cliphist = popupwindow({
         height: 500,
         spacing: 0
     }),
-    //anchor: ["top", "right"]
     anchor: ["bottom", "right"]
 });
