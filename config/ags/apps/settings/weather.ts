@@ -82,7 +82,7 @@ const WeatherLocationKey = () =>
                     text: conf.config.weather_location_id,
                     on_accept: (self) => {
                         self.css = "border: 2px solid; border-color: #66BB6A";
-                        Utils.timeout(1000, () => {
+                        Utils.timeout(100, () => {
                             self.css = "border: 2px solid; border-color: transparent";
                         });
                         conf.set_value("weather_location_id", self.text!);

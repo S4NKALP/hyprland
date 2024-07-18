@@ -21,6 +21,20 @@ async function getClipboardHistory() {
     }
 }
 
+async function clearClipboardHistory() {
+    try {
+        const process = new Gio.Subprocess({
+            argv: ['bash', '-c', 'cliphist wipe'],
+            flags: Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
+        });
+
+        process.init(null);
+        await process.communicate_utf8(null, null);
+    } catch (error) {
+        // Handle error silently or log to a file if needed
+    }
+}
+
 async function copyById(id) {
     try {
         const command = `${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`;
@@ -93,9 +107,8 @@ export const cliphist = () => {
 
             if (entries.length > 0) {
                 list.children = entries.map(ClipHistItem);
-            } else {
-                list.children = [Widget.Label({ label: "No history available", class_name: "no_history" })];
             }
+
         } catch (error) {
             list.children = [Widget.Label({ label: "Error loading history", class_name: "error_loading" })];
         }
@@ -115,13 +128,30 @@ export const cliphist = () => {
         }
     });
 
+    const clearButton = Widget.Button({
+        label: "Clear",
+        class_name: "clear_history_button",
+        on_clicked: async () => {
+            await clearClipboardHistory();
+            repopulate();
+        }
+    });
+
+    const searchBox = Widget.Box({
+        orientation: Gtk.Orientation.HORIZONTAL,
+        children: [
+            entry,
+            clearButton
+        ]
+    });
+
     return Widget.Box({
         vertical: true,
         class_name: "cliphistory_box",
         margin_top: 14,
         margin_right: 14,
         children: [
-            entry,
+            searchBox,
             Widget.Separator(),
             Widget.Scrollable({
                 hscroll: "never",

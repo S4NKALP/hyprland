@@ -106,7 +106,7 @@ separator {
 
 .outer-workspace {
 	background-color: @surfaceContainerHigh;
-	border-radius: 16px;
+	border-radius: 20px;
 }
 
 .workspace {
@@ -116,15 +116,15 @@ separator {
 
 .workspace button {
 	background-color: transparent;
-	padding-left: 4px;
-	padding-right: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
 }
 
 .workspace.first {
-	border-radius: 16px 0 0 16px;
+	border-radius: 20px 0 0 20px;
 }
 .workspace.last {
-	border-radius: 0 16px 16px 0;
+	border-radius: 0 20px 20px 0;
 }
 
 .workspace.normal,
@@ -134,7 +134,7 @@ separator {
 }
 
 .workspace button.normal:hover {
-	border-radius: 16px;
+	border-radius: 20px;
 	background-color: @secondary;
 	color: @surfaceDim;
 }
@@ -143,13 +143,13 @@ separator {
 	background-color: @secondary;
 	color: @background;
 	font-weight: bold;
-	padding-left: 4px;
-	padding-right: 4px;
-	border-radius: 16px;
+	padding-left: 8px;
+	padding-right: 8px;
+	border-radius: 20px;
 }
 
 .workspace button.focused:hover {
-	border-radius: 16px;
+	border-radius: 20px;
 	color: @primary;
 	background-color: mix(@onSurface, @surface, 0.85);
 }
@@ -159,17 +159,17 @@ separator {
 }
 
 .workspaces button.occupied:hover {
-	border-radius: 16px;
+	border-radius: 20px;
 	background-color: mix(@onSurface, @surface, 0.85);
 	color: @surfaceDim;
 }
 
 .workspace.occupied-single {
-	border-radius: 16px;
+	border-radius: 20px;
 }
 
 .workspace.occupied-start {
-	border-radius: 16px 0 0 16px;
+	border-radius: 20px 0 0 20px;
 }
 
 .workspace.occupied-middle {
@@ -177,7 +177,7 @@ separator {
 }
 
 .workspace.occupied-end {
-	border-radius: 0px 16px 16px 0px;
+	border-radius: 0px 20px 20px 0px;
 }
 
 /* -----------------------------------------------------
@@ -368,6 +368,31 @@ window.notification-popups box.notifications {
 .clip_label {
     color: @onSurface;
     font-weight: normal;
+}
+
+.clear_history_button {
+    background-color: @surfaceContainerHigh;
+    color: @onSurface;
+    border: none;
+    outline: none;
+    margin: 8px;
+    border-radius: 100px;
+    font-size: 13px;
+}
+
+.clear_history_button:hover {
+    background-color: mix(@onSurface, @surface, 0.92);
+}
+
+.clear_history_button:focus {
+    background-color: mix(@onSurface, @surface, 0.8);
+    border: 0px solid;
+    border: none;
+    outline: none;
+}
+
+.clear_history_button:active {
+    background-image: radial-gradient(circle, mix(@onSurface, @surface, 0.78) 10%, transparent 0%);
 }
 
 /* -----------------------------------------------------
