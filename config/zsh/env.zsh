@@ -19,16 +19,6 @@ export EDITOR="nvim"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export ANDROID=$HOME/Android
-export PATH=$ANDROID/cmdline-tools/tools:$PATH
-export PATH=$ANDROID/cmdline-tools/tools/bin:$PATH
-export PATH=$ANDROID/platform-tools:$PATH# Android SDK
-export PATH=$ANDROID/emulator:$PATH
-export ANDROID_SDK=$HOME/ANDROID
-export PATH=$ANDROID_SDK:$PATH# Flutter
-export FLUTTER=$ANDROID/flutter
-export PATH=$FLUTTER/bin:$PATH
-
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
