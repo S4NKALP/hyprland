@@ -35,25 +35,6 @@ async function clearClipboardHistory() {
     }
 }
 
-async function copyById(id) {
-    try {
-        const command = `${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`;
-        const entry = await Utils.execAsync(command);
-
-        if (!entry) return;
-
-        const process = new Gio.Subprocess({
-            argv: ['bash', '-c', `echo "${entry.trim()}" | wl-copy`],
-            flags: Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
-        });
-
-        process.init(null);
-        await process.communicate_utf8(null, null);
-    } catch (error) {
-        // Handle error silently or log to a file if needed
-    }
-}
-
 function ClipHistItem(entry) {
     const [id, ...content] = entry.split("\t");
     let clickCount = 0;
@@ -61,9 +42,25 @@ function ClipHistItem(entry) {
         class_name: "clip_container",
         child: Widget.Box({
             children: [
-                Widget.Label({ label: id, class_name: "clip_id", xalign: 0, vpack: "center" }),
-                Widget.Label({ label: "・", class_name: "dot_divider", xalign: 0, vpack: "center" }),
-                Widget.Label({ label: content.join(" ").trim(), class_name: "clip_label", xalign: 0, vpack: "center", truncate: "end" })
+                Widget.Label({
+                    label: id,
+                    class_name: "clip_id",
+                    xalign: 0,
+                    vpack: "center"
+                }),
+                Widget.Label({
+                    label: "・",
+                    class_name: "dot_divider",
+                    xalign: 0,
+                    vpack: "center"
+                }),
+                Widget.Label({
+                    label: content.join(" ").trim(),
+                    class_name: "clip_label",
+                    xalign: 0,
+                    vpack: "center",
+                    truncate: "end"
+                })
             ]
         })
     });
@@ -71,9 +68,9 @@ function ClipHistItem(entry) {
     button.connect("clicked", async () => {
         try {
             clickCount++;
-            if (clickCount === 2) {
-                await copyById(id);
+            if (clickCount === 1) {
                 App.closeWindow(WINDOW_NAME);
+                Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`);
                 clickCount = 0;
             }
         } catch (error) {
@@ -90,14 +87,20 @@ function ClipHistItem(entry) {
         orientation: Gtk.Orientation.VERTICAL,
         children: [
             button,
-            Widget.Separator({ class_name: "clip_divider", orientation: Gtk.Orientation.HORIZONTAL })
+            Widget.Separator({
+                class_name: "clip_divider",
+                orientation: Gtk.Orientation.HORIZONTAL
+            })
         ]
     });
 }
 
 export const cliphist = () => {
     const list = Widget.Box({ vertical: true, vexpand: true });
-    const loadingIndicator = Widget.Label({ label: "Loading...", class_name: "loading" });
+    const loadingIndicator = Widget.Label({
+        label: "Loading...",
+        class_name: "loading"
+    });
     list.children = [loadingIndicator];
 
     async function repopulate() {
@@ -110,7 +113,11 @@ export const cliphist = () => {
             }
 
         } catch (error) {
-            list.children = [Widget.Label({ label: "Error loading history", class_name: "error_loading" })];
+            list.children = [Widget.Label ({
+                label: "Error loading history",
+                class_name: "error_loading"
+                })
+            ];
         }
     }
 
