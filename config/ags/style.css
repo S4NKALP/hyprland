@@ -135,13 +135,13 @@ separator {
 
 .workspace button.normal:hover {
 	border-radius: 20px;
-	background-color: @secondary;
+	background-color: @primary;
 	color: @surfaceDim;
 }
 
 .workspace button.focused {
-	background-color: @secondary;
-	color: @background;
+	background-color: @outline;
+	color: @secondary;
 	font-weight: bold;
 	padding-left: 8px;
 	padding-right: 8px;
