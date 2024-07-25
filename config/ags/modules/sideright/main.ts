@@ -1,4 +1,4 @@
-import popupwindow from '../misc/popupwindow.js';
+import popupwindow from '../misc/popupwindow.ts';
 import { SideBar } from './sidebar.ts'
 
 export const WINDOW_NAME = "sidebar"
