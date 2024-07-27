@@ -30,8 +30,15 @@ export function toggleClipsWindow() {
         shown.setValue("clips");
     }
 }
+export function toggleChatsWindow() {
+    if (shown.value == "gemini" && sideleft.visible) App.closeWindow(WINDOW_NAME); else {
+        App.openWindow(WINDOW_NAME);
+        shown.setValue("gemini");
+    }
+}
 
 globalThis.toggleClipsWindow = toggleClipsWindow;
+globalThis.toggleChatsWindow = toggleChatsWindow;
 globalThis.toggleMediaWindow = toggleMediaWindow;
 globalThis.toggleAppsWindow = toggleAppsWindow;
 

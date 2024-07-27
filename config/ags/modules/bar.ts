@@ -20,6 +20,7 @@ import { MaterialIcon } from "icons.js";
 import config from "services/configuration.ts";
 import { toggleAppsWindow, toggleMediaWindow } from "./sideleft/main.js";
 
+
 function checkKeymap() {
     const layout = Utils.execAsync(`hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | tail -n1 | cut -c1-2 | tr 'A-Z' 'a-z'`)
         .then(out => { return out })
@@ -94,99 +95,44 @@ function getIconNameFromClass(windowClass: string) {
 const dispatch = (ws: string) => hyprland.messageAsync(`dispatch workspace ${ws}`).catch(print);
 
 function Workspaces() {
-    return EventBox({
+    const activeId = hyprland.active.workspace.bind("id");
+    let workspaceButtons = new Map();
+
+    function createWorkspaceButton(id: Number) {
+        const button = Widget.Button({
+            on_clicked: () => dispatch(`${id}`),
+            child: Widget.Label(`${id}`),
+            class_name: activeId.as((i) => `${i === id ? "active" : ""}`)
+        });
+        return button;
+    }
+
+    function updateWorkspaceButtons(workspaces: Workspace[]): Array<Button<any, any>> {
+        workspaces.sort((a, b) => a.id - b.id);
+
+        const updatedButtons = new Map();
+
+        workspaces.forEach(({ id }) => {
+            if (workspaceButtons.has(id)) {
+                updatedButtons.set(id, workspaceButtons.get(id));
+            } else {
+                updatedButtons.set(id, createWorkspaceButton(id));
+            }
+        });
+        if (workspaceButtons != updatedButtons) workspaceButtons = updatedButtons;
+
+        return Array.from(workspaceButtons.values());
+    }
+
+    const workspaceButtonsArray = hyprland.bind("workspaces").as(updateWorkspaceButtons);
+
+    return Widget.EventBox({
         onScrollUp: () => dispatch("+1"),
         onScrollDown: () => dispatch("-1"),
-        className: "workspaces",
-        child: Box({
-            className: "outer-workspace",
-            children: Array.from({ length: 9 }, (_, i) => i + 1).map(
-                (i, index, array) =>
-                    Box({
-                        attribute: i,
-                        className:
-                            index === 0
-                                ? "workspace first"
-                                : index === array.length - 1
-                                ? "workspace last"
-                                : "workspace",
-                    })
-            ),
-        }).hook(hyprland, (self) => {
-            let previousWorkspace = {};
-            previousWorkspace.className = "";
-            self.children.forEach((box, index, array) => {
-                const isActive = hyprland.active.workspace.id === box.attribute;
-                const isOccupied = hyprland.workspaces.some(
-                    (item) => item.id === box.attribute
-                );
-                let buttonClassName;
-                if (isActive) {
-                    buttonClassName = "focused";
-                    box.className = "workspace focused";
-                } else if (isOccupied) {
-                    buttonClassName = "occupied";
-                    box.className = "workspace occupied";
-                } else {
-                    buttonClassName = "normal";
-                    box.className = "workspace normal";
-                }
-
-                if (isOccupied || isActive) {
-                    if (index === 0) box.toggleClassName("occupied-start", true);
-                    else if (
-                        index === 8 &&
-                        previousWorkspace.className.indexOf("occupied-start") === -1
-                    )
-                        box.toggleClassName("occupied-single", true);
-                    else if (
-                        index === 8 &&
-                        previousWorkspace.className.indexOf("occupied-middle") === -1
-                    )
-                        box.toggleClassName("occupied-end", true);
-                    else if (
-                        previousWorkspace.className.indexOf("occupied-start") !== -1
-                    ) {
-                        box.toggleClassName("occupied-end", true);
-                    } else if (
-                        previousWorkspace.className.indexOf("occupied-end") !== -1
-                    ) {
-                        previousWorkspace.toggleClassName("occupied-middle", true);
-                        previousWorkspace.toggleClassName("occupied-end", false);
-                        box.toggleClassName("occupied-end", true);
-                    } else {
-                        box.toggleClassName("occupied-start", true);
-                    }
-                } else {
-                    if (previousWorkspace.className.indexOf("occupied-start") !== -1) {
-                        previousWorkspace.toggleClassName("occupied-start", false);
-                        previousWorkspace.toggleClassName("occupied-single", true);
-                    }
-                }
-
-                if (index === 0) {
-                    box.toggleClassName("first", true);
-                } else if (index === array.length - 1) {
-                    box.toggleClassName("last", true);
-                }
-
-                box.child = Button({
-                    className: buttonClassName,
-                    label: isActive ? `•` : box.attribute.toString(),
-                    onClicked: () => dispatch(box.attribute),
-                    setup: (self) => {
-                        if (index === 0) {
-                            self.toggleClassName("first", true);
-                        } else if (index === array.length - 1) {
-                            self.toggleClassName("last", true);
-                        }
-                    },
-                });
-
-                // Pass current workspace attributes as previousWorkspace
-                previousWorkspace = box;
-            });
-        }),
+        child: Widget.Box({
+            children: workspaceButtonsArray,
+            class_name: "workspaces"
+        })
     });
 }
 
@@ -263,6 +209,7 @@ function BatteryLabel() {
             self.hook(battery, () => {
                 self.children[0].label = getClosestBatteryLevel(battery.percent, battery.charging);
                 self.visible = (battery.percent < 100 && battery.available) || config.config.always_show_battery;
+                self.toggleClassName("critical", battery.percent < 15);
             });
             self.hook(config, () => {
                 if (config.config.always_show_battery) {
@@ -274,6 +221,7 @@ function BatteryLabel() {
         }
     });
 }
+
 
 function SysTray() {
     return Widget.Box({
@@ -562,7 +510,7 @@ function Right() {
         class_name: "modules-right",
         hpack: "end",
         spacing: 8,
-        children: [volumeIndicator(), KeyboardLayout(), BatteryLabel(), SysTray(), Applets(), Clock(), OpenSideBar()]
+        children: [/*Recorder,*/ volumeIndicator(), KeyboardLayout(), BatteryLabel(), SysTray(), Applets(), Clock(), OpenSideBar()]
     });
 }
 
