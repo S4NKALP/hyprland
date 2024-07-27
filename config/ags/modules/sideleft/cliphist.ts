@@ -4,6 +4,7 @@ const GLib = imports.gi.GLib;
 import Box from "types/widgets/box";
 import { WINDOW_NAME } from "modules/sideleft/main";
 
+// Function to get clipboard history
 async function getClipboardHistory() {
     try {
         const process = new Gio.Subprocess({
@@ -21,6 +22,7 @@ async function getClipboardHistory() {
     }
 }
 
+// Function to clear clipboard history
 async function clearClipboardHistory() {
     try {
         const process = new Gio.Subprocess({
@@ -35,32 +37,46 @@ async function clearClipboardHistory() {
     }
 }
 
+// Function to show image preview
+async function showImagePreview(id, format, width, height) {
+    try {
+        const file = await Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --save-by-id ${id}`);
+        const _widthPx = Number(width);
+        const heightPx = Number(height);
+        const maxWidth = 400;
+        const widthPx = (_widthPx / heightPx) * 150;
+
+        let css = `background-image: url("${file}");`;
+
+        if (widthPx > maxWidth) {
+            const newHeightPx = (150 / widthPx) * maxWidth;
+            css += `min-height: ${newHeightPx}px; min-width: ${maxWidth}px;`;
+        } else {
+            css += `min-height: 150px; min-width: ${widthPx}px;`;
+        }
+
+        return css;
+    } catch (error) {
+        // Handle error silently or log to a file if needed
+        return '';
+    }
+}
+
+// Function to create a clipboard history item
 function ClipHistItem(entry) {
-    const [id, ...content] = entry.split("\t");
+    const [id, ..._content] = entry.split("\t");
+    const content = _content.join(" ").trim();
+    const matches = content.match(/\[\[ binary data (\d+) (KiB|MiB) (\w+) (\d+)x(\d+) \]\]/);
+    let _show_image = false;
+
     let clickCount = 0;
     const button = Widget.Button({
         class_name: "clip_container",
         child: Widget.Box({
             children: [
-                Widget.Label({
-                    label: id,
-                    class_name: "clip_id",
-                    xalign: 0,
-                    vpack: "center"
-                }),
-                Widget.Label({
-                    label: "・",
-                    class_name: "dot_divider",
-                    xalign: 0,
-                    vpack: "center"
-                }),
-                Widget.Label({
-                    label: content.join(" ").trim(),
-                    class_name: "clip_label",
-                    xalign: 0,
-                    vpack: "center",
-                    truncate: "end"
-                })
+                Widget.Label({ label: id, class_name: "clip_id", xalign: 0, vpack: "center" }),
+                Widget.Label({ label: "・", class_name: "dot_divider", xalign: 0, vpack: "center" }),
+                Widget.Label({ label: content, class_name: "clip_label", xalign: 0, vpack: "center", truncate: "end" })
             ]
         })
     });
@@ -68,9 +84,9 @@ function ClipHistItem(entry) {
     button.connect("clicked", async () => {
         try {
             clickCount++;
-            if (clickCount === 1) {
+            if (clickCount === 2) {
                 App.closeWindow(WINDOW_NAME);
-                Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`);
+                await Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --copy-by-id ${id}`);
                 clickCount = 0;
             }
         } catch (error) {
@@ -82,8 +98,32 @@ function ClipHistItem(entry) {
         clickCount = 0;
     });
 
+    if (matches) {
+        const format = matches[3];
+        const width = matches[4];
+        const height = matches[5];
+        if (format === "png") {
+            button.toggleClassName("with_image", true);
+            button.connect("clicked", async () => {
+                if (!_show_image) {
+                    const css = await showImagePreview(id, format, width, height);
+                    const box = button.child;
+                    box.children[2].destroy(); // Remove text label
+                    const icon = Widget.Box({
+                        vpack: "center",
+                        css: css,
+                        class_name: "preview"
+                    });
+                    // @ts-expect-error
+                    box.children = [...box.children, icon];
+                    _show_image = true;
+                }
+            });
+        }
+    }
+
     return Widget.Box({
-        attribute: { content: content.join(" ").trim() },
+        attribute: { content: content },
         orientation: Gtk.Orientation.VERTICAL,
         children: [
             button,
@@ -95,6 +135,7 @@ function ClipHistItem(entry) {
     });
 }
 
+// Main export function for clipboard history widget
 export const cliphist = () => {
     const list = Widget.Box({ vertical: true, vexpand: true });
     const loadingIndicator = Widget.Label({
@@ -111,13 +152,11 @@ export const cliphist = () => {
             if (entries.length > 0) {
                 list.children = entries.map(ClipHistItem);
             }
-
         } catch (error) {
-            list.children = [Widget.Label ({
+            list.children = [Widget.Label({
                 label: "Error loading history",
                 class_name: "error_loading"
-                })
-            ];
+            })];
         }
     }
 
@@ -146,10 +185,7 @@ export const cliphist = () => {
 
     const searchBox = Widget.Box({
         orientation: Gtk.Orientation.HORIZONTAL,
-        children: [
-            entry,
-            clearButton
-        ]
+        children: [entry, clearButton]
     });
 
     return Widget.Box({

@@ -73,7 +73,7 @@ export const Notification = (notification: NotificationType, dismiss = true) =>
                                         }),
                                         Widget.Label({
                                             class_name: "notification-time",
-                                            label: GLib.DateTime.new_from_unix_local(notification.time).format("%H:%M")
+                                            label: GLib.DateTime.new_from_unix_local(notification.time).format("%I:%M %P")
                                         }),
                                         Widget.Button({
                                             class_name: "standard_icon_button notification-close",

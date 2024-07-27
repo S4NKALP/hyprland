@@ -60,7 +60,7 @@ export type WeatherJson = {
 
 export const theme = Variable("dark");
 export const main_color = Variable("#000000");
-export const current_wallpaper = Variable(`${GLib.get_home_dir()}/Pictures/wallpapers/1.jpg`);
+export const current_wallpaper = Variable(`${GLib.get_home_dir()}/Pictures/wallpapers/default.png`);
 // @ts-expect-error
 export const weather: VariableType<WeatherJson> = Variable({ no_data: true });
 const reload = () => {
@@ -73,7 +73,7 @@ const reload = () => {
             })
             .catch(print);
 }
-Utils.interval(100, reload);
+Utils.interval(150, reload);
 configuration.connect("changed", reload)
 
 export const idle_inhibitor = Variable(false);
@@ -104,6 +104,17 @@ export const custom_color_file = `${GLib.get_home_dir()}/dotfiles/.settings/cust
 export const generation_scheme_file = `${GLib.get_home_dir()}/dotfiles/.settings/generation-scheme`;
 export const color_scheme_file = `${GLib.get_home_dir()}/dotfiles/.settings/color-scheme`;
 export const wallpaper_cache_file = `${GLib.get_home_dir()}/.cache/current_wallpaper`;
+
+function checkBrightness() {
+    const get = Utils.execAsync(`${App.configDir}/scripts/brightness.sh --get`)
+        .then((out) => Number(out.trim()))
+        .catch(print);
+    return get;
+}
+
+export const current_brightness = Variable(100, {
+    poll: [500, checkBrightness]
+});
 
 function readFiles() {
     Utils.readFileAsync(custom_color_file)

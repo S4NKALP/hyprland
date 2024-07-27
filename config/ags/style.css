@@ -104,80 +104,44 @@ separator {
  * Workspaces
  * ----------------------------------------------------- */
 
-.outer-workspace {
-	background-color: @surfaceContainerHigh;
-	border-radius: 20px;
+.workspaces {
+    border-radius: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-size: 16px;
+    color: @onSurface;
+    background: @surfaceContainer;
 }
 
-.workspace {
-	background-color: @surfaceVariant;
-	/* padding: 0; */
+.workspaces * {
+    transition: all 0.35s ease-in-out;
+    transition-property: background-color, color, min-width;
 }
 
-.workspace button {
-	background-color: transparent;
-	padding-left: 8px;
-	padding-right: 8px;
+.workspaces button {
+    padding: 0px 5px;
+    margin: 4px 3px;
+    border-radius: 16px;
+    border: 0px;
 }
 
-.workspace.first {
-	border-radius: 20px 0 0 20px;
-}
-.workspace.last {
-	border-radius: 0 20px 20px 0;
+.workspaces button label {
+    color: @onSurfaceVariant;
+    font-weight: bold;
 }
 
-.workspace.normal,
-.workspace button.normal {
-	background-color: transparent;
-	color: @surfaceDim;
+.workspaces button:hover {
+    color: @onSurface;
+    background-color: mix(@onSurface, @surface, 0.85);
 }
 
-.workspace button.normal:hover {
-	border-radius: 20px;
-	background-color: @primary;
-	color: @surfaceDim;
+.workspaces button.active {
+    background: @secondaryContainer;
+    min-width: 40px;
 }
 
-.workspace button.focused {
-	background-color: @outline;
-	color: @secondary;
-	font-weight: bold;
-	padding-left: 8px;
-	padding-right: 8px;
-	border-radius: 20px;
-}
-
-.workspace button.focused:hover {
-	border-radius: 20px;
-	color: @primary;
-	background-color: mix(@onSurface, @surface, 0.85);
-}
-
-.workspace button.occupied {
-	color: @primary;
-}
-
-.workspaces button.occupied:hover {
-	border-radius: 20px;
-	background-color: mix(@onSurface, @surface, 0.85);
-	color: @surfaceDim;
-}
-
-.workspace.occupied-single {
-	border-radius: 20px;
-}
-
-.workspace.occupied-start {
-	border-radius: 20px 0 0 20px;
-}
-
-.workspace.occupied-middle {
-	border-radius: 0px;
-}
-
-.workspace.occupied-end {
-	border-radius: 0px 20px 20px 0px;
+.workspaces button.active label {
+    color: @onSecondaryContainer;
 }
 
 /* -----------------------------------------------------
@@ -352,6 +316,13 @@ window.notification-popups box.notifications {
     font-feature-settings: "tnum";
 }
 
+.clip_container .preview {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+}
+
 .clip_container .dot_divider {
     font-weight: 900;
     font-size: 12px;
@@ -368,6 +339,10 @@ window.notification-popups box.notifications {
 .clip_label {
     color: @onSurface;
     font-weight: normal;
+}
+
+.clip_container.with_image .clip_label {
+    color: @tertiary;
 }
 
 .clear_history_button {
@@ -437,6 +412,14 @@ window.notification-popups box.notifications {
 
 .battery .icon {
     color: @onSurface;
+}
+
+.battery.critical {
+    background-color: @error;
+}
+
+.battery.critical label, .battery.critical .icon {
+    color: @onError;
 }
 
 .bar_applets {
@@ -1577,6 +1560,56 @@ switch:checked:active slider {
     }
 }
 
+
+/* -----------------------------------------------------
+ * Popups
+ * ----------------------------------------------------- */
+.popups {
+    background-color: transparent;
+}
+
+.popups .popup {
+    background-color: @surfaceContainer;
+    margin-bottom: 14px;
+    padding: 4px;
+    border-radius: 14px;
+}
+
+.popup_slider {
+    min-width: 150px;
+}
+
+.popup .icon {
+    margin-left: 4px;
+}
+
+.popup_slider slider {
+    color: @onPrimary;
+    background-color: @primary;
+    background-size: 20px 20px;
+    min-width: 5px;
+    min-height: 14px;
+    border-radius: 100px;
+    padding: 0px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: -16px;
+    margin-bottom: -16px;
+    box-shadow: -4px 0px 0px 1px @surfaceContainer, 4px 0px 0px 1px @surfaceContainer;
+}
+
+.popup_slider trough {
+    background-color: @secondaryContainer;
+    min-height: 10px;
+    margin-right: 4px;
+}
+
+.popup_slider highlight {
+    border-radius: 100px 0px 0px 100px;
+    background-color: @primary;
+}
 
 /* -----------------------------------------------------
  * Material
