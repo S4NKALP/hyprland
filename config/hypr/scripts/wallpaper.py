@@ -7,10 +7,9 @@ import subprocess
 import asyncio
 import random as _random
 import colorsys
-
+import json
 
 lock_file_path = '/tmp/wallpaper.lock'
-
 
 def acquire_lock():
     global lock_file
@@ -23,24 +22,17 @@ def acquire_lock():
         print("Another instance of the script is already running.")
         sys.exit(1)
 
-
 def release_lock():
     fcntl.flock(lock_file, fcntl.LOCK_UN)
     lock_file.close()
     os.remove(lock_file_path)
 
-
 def hue_to_numeric_hex(hue):
     hue = hue / 360.0
-
     rgb = colorsys.hls_to_rgb(hue, 0.5, 1.0)
-
     hex_color_str = '#{:02x}{:02x}{:02x}'.format(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
-
     numeric_hex_color = int(hex_color_str.lstrip('#'), 16)
-
     return numeric_hex_color
-
 
 parser = argparse.ArgumentParser()
 group = parser.add_mutually_exclusive_group(required=True)
@@ -60,6 +52,17 @@ status = args.status
 
 HOME = os.path.expanduser("~")
 
+# Load configuration from JSON file
+config_file = f"{HOME}/dotfiles/ags/assets/settings.json"  # Path to your JSON configuration file
+
+with open(config_file, 'r') as f:
+    config = json.load(f)
+
+color_scheme = config.get("color-scheme", "dark")
+custom_color = config.get("custom-color", "none")
+generation_scheme = config.get("generation-scheme", "tonalSpot")
+transition_type = config.get("swww-anim", "wipe")
+
 module_path = f'{HOME}/dotfiles/material-colors'
 sys.path.append(module_path)
 
@@ -73,22 +76,15 @@ spec.loader.exec_module(GENERATOR)   # type: ignore
 cache_file = f"{HOME}/.cache/current_wallpaper"
 square = f"{HOME}/.cache/square_wallpaper.png"
 png = f"{HOME}/.cache/current_wallpaper.png"
-color_scheme_file = f"{HOME}/dotfiles/.settings/color-scheme"
-custom_color_file = f"{HOME}/dotfiles/.settings/custom-color"
-generation_scheme_file = f"{HOME}/dotfiles/.settings/generation-scheme"
-swww_animation_file = f"{HOME}/dotfiles/.settings/swww-anim"
-
 
 def current_state(str: str):
     with open(status, 'w') as f:
         f.write(str)
 
-
 def send_notify(label: str, desc: str):
     if not notify:
         return
     subprocess.run(["notify-send", label, desc])
-
 
 def state(name: str | None, label: str | None, desc: str | None):
     if name is not None:
@@ -96,25 +92,11 @@ def state(name: str | None, label: str | None, desc: str | None):
     if label is not None:
         send_notify(label, desc or "")
 
-
 def join(*args):
     return os.path.join(*args)
 
-
 async def main():
-    global color_scheme, custom_color
     state("init", None, None)
-    with open(color_scheme_file) as f:
-        color_scheme = f.read().strip()
-
-    with open(custom_color_file) as f:
-        custom_color = f.read().strip()
-
-    with open(generation_scheme_file) as f:
-        generation_scheme = f.read().strip()
-
-    with open(swww_animation_file) as f:
-        swww_animation = f.read().strip()
 
     new_wallpaper = f"{HOME}/Pictures/wallpapers/1.jpg"
 
@@ -141,11 +123,6 @@ async def main():
     # -----------------------------------------------------
     # Set the new wallpaper
     # -----------------------------------------------------
-
-    transition_type = "wipe"
-    # transition_type = "outer"
-    # transition_type = "random"
-
     wallpaper_engine = "swww"  # Default wallpaper engine
 
     state("changing", "Changing wallpaper...", with_image)
@@ -198,7 +175,6 @@ async def main():
     await asyncio.gather(square_task, png_task)
     state("finish", "Wallpaper procedure complete!", with_image)
 
-
 async def png_image(wallpaper: str):
     _from = (".jpg", "jpeg")
     if not wallpaper.endswith(_from):
@@ -220,7 +196,6 @@ async def png_image(wallpaper: str):
     else:
         print(":: JPG successfully converted to PNG!")
 
-
 async def square_image(wallpaper):
     with_image = f"with image {wallpaper}"
     state(None, "Creating square version...", with_image)
@@ -237,7 +212,6 @@ async def square_image(wallpaper):
         print(f":: Error while processing image: {stderr.decode()}")
     else:
         print(":: Square image created!")
-
 
 if __name__ == "__main__":
     acquire_lock()
