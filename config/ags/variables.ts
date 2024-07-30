@@ -72,9 +72,9 @@ const reload = () => {
                 weather.setValue(JSON.parse(out));
             })
             .catch(print);
-}
+};
 Utils.interval(150, reload);
-configuration.connect("changed", reload)
+configuration.connect("changed", reload);
 
 export const idle_inhibitor = Variable(false);
 export const cur_uptime = Variable("error");
@@ -100,7 +100,7 @@ export const kernel_name = await Utils.execAsync(`${App.configDir}/scripts/syste
 export const hostname = await Utils.execAsync(`${App.configDir}/scripts/system.sh --hostname`);
 export const current_os = await Utils.execAsync(`${App.configDir}/scripts/system.sh --os`);
 
-export const settings_file = `${GLib.get_home_dir()}/dotfiles/ags/assets/settings.json`;
+export const settings_file = `${GLib.get_home_dir()}/dotfiles/.settings/settings.json`;
 export const wallpaper_cache_file = `${GLib.get_home_dir()}/.cache/current_wallpaper`;
 
 function checkBrightness() {
@@ -113,7 +113,6 @@ function checkBrightness() {
 export const current_brightness = Variable(100, {
     poll: [500, checkBrightness]
 });
-
 
 function readSettingsFile() {
     Utils.readFileAsync(settings_file)

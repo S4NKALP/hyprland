@@ -10,8 +10,6 @@ import colorsys
 import json
 
 lock_file_path = '/tmp/wallpaper.lock'
-settings_file_path = os.path.expanduser('~/dotfiles/.settings/settings.json')
-
 
 def acquire_lock():
     global lock_file
@@ -24,27 +22,17 @@ def acquire_lock():
         print("Another instance of the script is already running.")
         sys.exit(1)
 
-
 def release_lock():
     fcntl.flock(lock_file, fcntl.LOCK_UN)
     lock_file.close()
     os.remove(lock_file_path)
 
-
 def hue_to_numeric_hex(hue):
     hue = hue / 360.0
     rgb = colorsys.hls_to_rgb(hue, 0.5, 1.0)
-    hex_color_str = '#{:02x}{:02x}{:02x}'.format(
-        int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255)
-    )
+    hex_color_str = '#{:02x}{:02x}{:02x}'.format(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
     numeric_hex_color = int(hex_color_str.lstrip('#'), 16)
     return numeric_hex_color
-
-
-def load_settings():
-    with open(settings_file_path, 'r') as file:
-        return json.load(file)
-
 
 parser = argparse.ArgumentParser()
 group = parser.add_mutually_exclusive_group(required=True)
@@ -64,6 +52,17 @@ status = args.status
 
 HOME = os.path.expanduser("~")
 
+# Load configuration from JSON file
+config_file = f"{HOME}/dotfiles/ags/assets/settings.json"  # Path to your JSON configuration file
+
+with open(config_file, 'r') as f:
+    config = json.load(f)
+
+color_scheme = config.get("color-scheme", "dark")
+custom_color = config.get("custom-color", "none")
+generation_scheme = config.get("generation-scheme", "tonalSpot")
+transition_type = config.get("swww-anim", "wipe")
+
 module_path = f'{HOME}/dotfiles/material-colors'
 sys.path.append(module_path)
 
@@ -78,17 +77,14 @@ cache_file = f"{HOME}/.cache/current_wallpaper"
 square = f"{HOME}/.cache/square_wallpaper.png"
 png = f"{HOME}/.cache/current_wallpaper.png"
 
-
-def current_state(state_str: str):
+def current_state(str: str):
     with open(status, 'w') as f:
-        f.write(state_str)
-
+        f.write(str)
 
 def send_notify(label: str, desc: str):
     if not notify:
         return
     subprocess.run(["notify-send", label, desc])
-
 
 def state(name: str | None, label: str | None, desc: str | None):
     if name is not None:
@@ -96,25 +92,13 @@ def state(name: str | None, label: str | None, desc: str | None):
     if label is not None:
         send_notify(label, desc or "")
 
-
 def join(*args):
     return os.path.join(*args)
 
-
 async def main():
-    global color_scheme, custom_color, generation_scheme, swww_animation, wallpaper_engine, hyprpaper_tpl
-
     state("init", None, None)
 
-    settings = load_settings()
-    color_scheme = settings['color-scheme']
-    custom_color = settings['custom-color']
-    generation_scheme = settings['generation-scheme']
-    swww_animation = settings['swww-anim']
-    wallpaper_engine = settings['wallpaper-engine']
-    hyprpaper_tpl = settings['hyprpaper-tpl']
-
-    new_wallpaper = f"{HOME}/Picutres/wallpapers/default.jpg"
+    new_wallpaper = f"{HOME}/Pictures/wallpapers/1.jpg"
 
     if random:
         files = [f for f in os.listdir(f"{HOME}/Pictures/wallpapers") if f.endswith(('.png', '.jpg', '.jpeg'))]
@@ -139,16 +123,14 @@ async def main():
     # -----------------------------------------------------
     # Set the new wallpaper
     # -----------------------------------------------------
-
-    transition_type = swww_animation
+    wallpaper_engine = "swww"  # Default wallpaper engine
 
     state("changing", "Changing wallpaper...", with_image)
     print(":: Changing wallpaper...")
-
     if wallpaper_engine == "swww":
         print(":: Using swww")
 
-        cursor_pos = subprocess.getoutput('hyprctl cursorpos').replace(", ", ",")
+        cursor_pos = subprocess.getoutput('hyprctl cursorpos')
 
         subprocess.run([
             'swww', 'img', new_wallpaper,
@@ -156,24 +138,8 @@ async def main():
             '--transition-fps', '60',
             '--transition-type', transition_type,
             '--transition-duration', '0.7',
-            '--transition-pos', cursor_pos
+            '--transition-pos', cursor_pos.replace(",",",")
         ])
-
-    elif wallpaper_engine == "hyprpaper":
-        print(":: Using hyprpaper")
-
-        subprocess.run(['killall', 'hyprpaper'])
-
-        output = hyprpaper_tpl.replace('WALLPAPER', new_wallpaper)
-        hyprpaper_conf_file = os.path.expanduser('~/dotfiles/hypr/hyprpaper.conf')
-
-        with open(hyprpaper_conf_file, 'w') as file:
-            file.write(output)
-
-        subprocess.run([
-            "hyprctl", "dispatch", "exec", "hyprpaper"
-        ])
-
     else:
         print(":: Wallpaper Engine disabled")
 
@@ -209,7 +175,6 @@ async def main():
     await asyncio.gather(square_task, png_task)
     state("finish", "Wallpaper procedure complete!", with_image)
 
-
 async def png_image(wallpaper: str):
     _from = (".jpg", "jpeg")
     if not wallpaper.endswith(_from):
@@ -231,7 +196,6 @@ async def png_image(wallpaper: str):
     else:
         print(":: JPG successfully converted to PNG!")
 
-
 async def square_image(wallpaper):
     with_image = f"with image {wallpaper}"
     state(None, "Creating square version...", with_image)
@@ -248,7 +212,6 @@ async def square_image(wallpaper):
         print(f":: Error while processing image: {stderr.decode()}")
     else:
         print(":: Square image created!")
-
 
 if __name__ == "__main__":
     acquire_lock()

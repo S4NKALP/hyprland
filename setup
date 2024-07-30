@@ -130,6 +130,7 @@ pkg=(
     adw-gtk-theme
     bibata-cursor-theme-bin
     hyprpicker
+    hyprpaper
     power-profile-daemon
     hyprlock
     pyprland
@@ -441,6 +442,7 @@ CONFIG_DIRS=(
     "yazi"
     "zathura"
     "zsh"
+    "electron-flags.conf"
 )
 # Install .config directories
 for dir in "${CONFIG_DIRS[@]}"; do

@@ -10,7 +10,6 @@ import colorsys
 import json
 
 lock_file_path = '/tmp/wallpaper.lock'
-settings_file_path = os.path.expanduser('~/dotfiles/.settings/settings.json')
 
 
 def acquire_lock():
@@ -33,17 +32,14 @@ def release_lock():
 
 def hue_to_numeric_hex(hue):
     hue = hue / 360.0
+
     rgb = colorsys.hls_to_rgb(hue, 0.5, 1.0)
-    hex_color_str = '#{:02x}{:02x}{:02x}'.format(
-        int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255)
-    )
+
+    hex_color_str = '#{:02x}{:02x}{:02x}'.format(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
+
     numeric_hex_color = int(hex_color_str.lstrip('#'), 16)
+
     return numeric_hex_color
-
-
-def load_settings():
-    with open(settings_file_path, 'r') as file:
-        return json.load(file)
 
 
 parser = argparse.ArgumentParser()
@@ -78,10 +74,22 @@ cache_file = f"{HOME}/.cache/current_wallpaper"
 square = f"{HOME}/.cache/square_wallpaper.png"
 png = f"{HOME}/.cache/current_wallpaper.png"
 
+settings_file = f"{HOME}/dotfiles/ags/assets/settings.json"
 
-def current_state(state_str: str):
+# Read settings from the JSON file
+with open(settings_file) as f:
+    settings = json.load(f)
+
+color_scheme = settings.get("color-scheme")
+custom_color = settings.get("custom-color")
+generation_scheme = settings.get("generation-scheme")
+swww_animation = settings.get("swww-anim")
+wallpaper_engine = settings.get("wallpaper-engine")
+
+
+def current_state(str: str):
     with open(status, 'w') as f:
-        f.write(state_str)
+        f.write(str)
 
 
 def send_notify(label: str, desc: str):
@@ -102,19 +110,10 @@ def join(*args):
 
 
 async def main():
-    global color_scheme, custom_color, generation_scheme, swww_animation, wallpaper_engine, hyprpaper_tpl
-
+    global color_scheme, custom_color
     state("init", None, None)
 
-    settings = load_settings()
-    color_scheme = settings['color-scheme']
-    custom_color = settings['custom-color']
-    generation_scheme = settings['generation-scheme']
-    swww_animation = settings['swww-anim']
-    wallpaper_engine = settings['wallpaper-engine']
-    hyprpaper_tpl = settings['hyprpaper-tpl']
-
-    new_wallpaper = f"{HOME}/Picutres/wallpapers/default.jpg"
+    new_wallpaper = f"{HOME}/Pictures/wallpapers/default.jpg"
 
     if random:
         files = [f for f in os.listdir(f"{HOME}/Pictures/wallpapers") if f.endswith(('.png', '.jpg', '.jpeg'))]
@@ -141,10 +140,11 @@ async def main():
     # -----------------------------------------------------
 
     transition_type = swww_animation
+    # transition_type = "outer"
+    # transition_type = "random"
 
     state("changing", "Changing wallpaper...", with_image)
     print(":: Changing wallpaper...")
-
     if wallpaper_engine == "swww":
         print(":: Using swww")
 
@@ -163,8 +163,12 @@ async def main():
         print(":: Using hyprpaper")
 
         subprocess.run(['killall', 'hyprpaper'])
+        hyprpaper_tpl_file = os.path.expanduser('~/dotfiles/.settings/hyprpaper.tpl')
 
-        output = hyprpaper_tpl.replace('WALLPAPER', new_wallpaper)
+        with open(hyprpaper_tpl_file, 'r') as file:
+            wal_tpl = file.read()
+
+        output = wal_tpl.replace('WALLPAPER', new_wallpaper)
         hyprpaper_conf_file = os.path.expanduser('~/dotfiles/hypr/hyprpaper.conf')
 
         with open(hyprpaper_conf_file, 'w') as file:
