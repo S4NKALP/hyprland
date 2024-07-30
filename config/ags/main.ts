@@ -30,6 +30,7 @@ const Windows = () => [
     forMonitors(BarCornerTopRight),
     sideright,
     sideleft,
+    cheatsheet,
     forMonitors(popups)
 ];
 

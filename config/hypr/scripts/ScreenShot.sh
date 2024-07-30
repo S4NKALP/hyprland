@@ -43,7 +43,7 @@ shotarea() {
     local tmpfile=$(mktemp)
     local area=$(slurp)
     if [[ -z "$area" ]]; then
-        notify-send -u low -i "$iDIR/picture.png" 'No area selected'
+        notify-send -u low -i "$iDIR/cancel.svg" 'No area selected'
         rm "$tmpfile"
         return
     fi

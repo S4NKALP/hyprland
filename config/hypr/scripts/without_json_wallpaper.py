@@ -7,10 +7,9 @@ import subprocess
 import asyncio
 import random as _random
 import colorsys
-import json
+
 
 lock_file_path = '/tmp/wallpaper.lock'
-settings_file_path = os.path.expanduser('~/dotfiles/.settings/settings.json')
 
 
 def acquire_lock():
@@ -33,17 +32,14 @@ def release_lock():
 
 def hue_to_numeric_hex(hue):
     hue = hue / 360.0
+
     rgb = colorsys.hls_to_rgb(hue, 0.5, 1.0)
-    hex_color_str = '#{:02x}{:02x}{:02x}'.format(
-        int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255)
-    )
+
+    hex_color_str = '#{:02x}{:02x}{:02x}'.format(int(rgb[0] * 255), int(rgb[1] * 255), int(rgb[2] * 255))
+
     numeric_hex_color = int(hex_color_str.lstrip('#'), 16)
+
     return numeric_hex_color
-
-
-def load_settings():
-    with open(settings_file_path, 'r') as file:
-        return json.load(file)
 
 
 parser = argparse.ArgumentParser()
@@ -77,11 +73,15 @@ spec.loader.exec_module(GENERATOR)   # type: ignore
 cache_file = f"{HOME}/.cache/current_wallpaper"
 square = f"{HOME}/.cache/square_wallpaper.png"
 png = f"{HOME}/.cache/current_wallpaper.png"
+color_scheme_file = f"{HOME}/dotfiles/.settings/color-scheme"
+custom_color_file = f"{HOME}/dotfiles/.settings/custom-color"
+generation_scheme_file = f"{HOME}/dotfiles/.settings/generation-scheme"
+swww_animation_file = f"{HOME}/dotfiles/.settings/swww-anim"
 
 
-def current_state(state_str: str):
+def current_state(str: str):
     with open(status, 'w') as f:
-        f.write(state_str)
+        f.write(str)
 
 
 def send_notify(label: str, desc: str):
@@ -102,19 +102,21 @@ def join(*args):
 
 
 async def main():
-    global color_scheme, custom_color, generation_scheme, swww_animation, wallpaper_engine, hyprpaper_tpl
-
+    global color_scheme, custom_color
     state("init", None, None)
+    with open(color_scheme_file) as f:
+        color_scheme = f.read().strip()
 
-    settings = load_settings()
-    color_scheme = settings['color-scheme']
-    custom_color = settings['custom-color']
-    generation_scheme = settings['generation-scheme']
-    swww_animation = settings['swww-anim']
-    wallpaper_engine = settings['wallpaper-engine']
-    hyprpaper_tpl = settings['hyprpaper-tpl']
+    with open(custom_color_file) as f:
+        custom_color = f.read().strip()
 
-    new_wallpaper = f"{HOME}/Picutres/wallpapers/default.jpg"
+    with open(generation_scheme_file) as f:
+        generation_scheme = f.read().strip()
+
+    with open(swww_animation_file) as f:
+        swww_animation = f.read().strip()
+
+    new_wallpaper = f"{HOME}/Pictures/wallpapers/1.jpg"
 
     if random:
         files = [f for f in os.listdir(f"{HOME}/Pictures/wallpapers") if f.endswith(('.png', '.jpg', '.jpeg'))]
@@ -141,14 +143,17 @@ async def main():
     # -----------------------------------------------------
 
     transition_type = swww_animation
+    # transition_type = "outer"
+    # transition_type = "random"
+
+    wallpaper_engine = "swww"  # Default wallpaper engine
 
     state("changing", "Changing wallpaper...", with_image)
     print(":: Changing wallpaper...")
-
     if wallpaper_engine == "swww":
         print(":: Using swww")
 
-        cursor_pos = subprocess.getoutput('hyprctl cursorpos').replace(", ", ",")
+        cursor_pos = subprocess.getoutput('hyprctl cursorpos')
 
         subprocess.run([
             'swww', 'img', new_wallpaper,
@@ -156,24 +161,8 @@ async def main():
             '--transition-fps', '60',
             '--transition-type', transition_type,
             '--transition-duration', '0.7',
-            '--transition-pos', cursor_pos
+            '--transition-pos', cursor_pos.replace(",",",")
         ])
-
-    elif wallpaper_engine == "hyprpaper":
-        print(":: Using hyprpaper")
-
-        subprocess.run(['killall', 'hyprpaper'])
-
-        output = hyprpaper_tpl.replace('WALLPAPER', new_wallpaper)
-        hyprpaper_conf_file = os.path.expanduser('~/dotfiles/hypr/hyprpaper.conf')
-
-        with open(hyprpaper_conf_file, 'w') as file:
-            file.write(output)
-
-        subprocess.run([
-            "hyprctl", "dispatch", "exec", "hyprpaper"
-        ])
-
     else:
         print(":: Wallpaper Engine disabled")
 
