@@ -4,13 +4,12 @@ const systemtray = await Service.import("systemtray");
 const audio = await Service.import("audio");
 const network = await Service.import("network");
 const { GLib, Gio } = imports.gi;
-const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 import { OpenSettings } from "apps/settings/main.ts";
 import { enableClickThrough } from "./misc/clickthrough.js";
 import { RoundedCorner } from "./misc/cairo_roundedcorner.js";
 import { Client, Workspace } from "types/service/hyprland.js";
-const { Box, Button, EventBox } = Widget;
+import Button from "types/widgets/button.js";
 import Icon from "types/widgets/icon.js";
 import { FileEnumerator, FileInfo } from "types/@girs/gio-2.0/gio-2.0.cjs";
 const mpris = await Service.import("mpris");
@@ -19,20 +18,12 @@ import Gtk from "gi://Gtk?version=3.0";
 import { MaterialIcon } from "icons.js";
 import config from "services/configuration.ts";
 import { toggleAppsWindow, toggleMediaWindow } from "./sideleft/main.js";
+import { Variable as VariableType } from "types/variable";
 
-
-function checkKeymap() {
-    const layout = Utils.execAsync(`hyprctl devices -j | jq -r '.keyboards[] | select(.main == true) | .active_keymap' | tail -n1 | cut -c1-2 | tr 'A-Z' 'a-z'`)
-        .then(out => { return out })
-        .catch(err => { print(err); return "en" });
-    return layout;
-}
-
-const keyboard_layout = Variable("en")
-keyboard_layout.setValue(await checkKeymap())
+const keyboard_layout = Variable("none");
 hyprland.connect("keyboard-layout", (hyprland, keyboardname, layoutname) => {
-    keyboard_layout.setValue(layoutname.trim().toLowerCase().substr(0, 2))
-})
+    keyboard_layout.setValue(layoutname.trim().toLowerCase().substr(0, 2));
+});
 
 const MATERIAL_SYMBOL_SIGNAL_STRENGTH = {
     "network-wireless-signal-excellent-symbolic": "signal_wifi_4_bar",
@@ -42,13 +33,26 @@ const MATERIAL_SYMBOL_SIGNAL_STRENGTH = {
     "network-wireless-signal-none-symbolic": "signal_wifi_0_bar"
 };
 
-const time = Variable("", {
-    poll: [1000, 'date "+%I:%M %p"']
-});
+const time = Variable("");
+const date = Variable("");
 
-const date = Variable("", {
-    poll: [1000, 'date "+%Y-%m-%d"']
-});
+function getCurrentDateAndTime() {
+    const _date = new Date();
+
+    const year = _date.getFullYear();
+    const month = String(_date.getMonth() + 1).padStart(2, "0");
+    const day = String(_date.getDate()).padStart(2, "0");
+
+    const hours = String(_date.getHours()).padStart(2, "0");
+    const minutes = String(_date.getMinutes()).padStart(2, "0");
+
+    const formattedDate = `${year}-${month}-${day}`;
+    const formattedTime = `${hours}:${minutes}`;
+
+    if (time.value != formattedTime) time.setValue(formattedTime);
+    if (date.value != formattedDate) date.setValue(formattedDate);
+}
+Utils.interval(1000, getCurrentDateAndTime);
 
 function getIconNameFromClass(windowClass: string) {
     let formattedClass = windowClass.replace(/\s+/g, "-").toLowerCase();
@@ -92,45 +96,72 @@ function getIconNameFromClass(windowClass: string) {
     return Utils.lookUpIcon(icon) ? icon : "image-missing";
 }
 
+function workspaces_ids_are_equal(arr1: Workspace[] | undefined, arr2: Workspace[] | undefined): boolean {
+    if (!arr1 || !arr2) return false;
+    if (arr1.length !== arr2.length) return false;
+
+    return arr1.every((value, index) => {
+        return value.id === arr2[index].id;
+    });
+}
+
 const dispatch = (ws: string) => hyprland.messageAsync(`dispatch workspace ${ws}`).catch(print);
 
 function Workspaces() {
-    const activeId = hyprland.active.workspace.bind("id");
-    let workspaceButtons = new Map();
+    let workspaceButtons = new Map<Number, any>();
+    let _old_workspaces: Workspace[];
+    const workspaceButtonsArray: VariableType<Button<any, any>[] | any> = Variable([]);
 
     function createWorkspaceButton(id: Number) {
-        const button = Widget.Button({
+        return Widget.Button({
             on_clicked: () => dispatch(`${id}`),
             child: Widget.Label(`${id}`),
-            class_name: activeId.as((i) => `${i === id ? "active" : ""}`)
+            attribute: { id: id },
+            class_name: "workspace"
         });
-        return button;
     }
 
-    function updateWorkspaceButtons(workspaces: Workspace[]): Array<Button<any, any>> {
+    function updateWorkspaceButtons() {
+        const workspaces = hyprland.workspaces;
+        if (workspaces_ids_are_equal(workspaces, _old_workspaces)) {
+            return;
+        }
         workspaces.sort((a, b) => a.id - b.id);
-
-        const updatedButtons = new Map();
+        const updatedButtons = new Map<Number, any>();
 
         workspaces.forEach(({ id }) => {
-            if (workspaceButtons.has(id)) {
-                updatedButtons.set(id, workspaceButtons.get(id));
-            } else {
-                updatedButtons.set(id, createWorkspaceButton(id));
+            if (!workspaceButtons.has(id)) {
+                workspaceButtons.set(id, createWorkspaceButton(id));
             }
+            updatedButtons.set(id, workspaceButtons.get(id));
         });
-        if (workspaceButtons != updatedButtons) workspaceButtons = updatedButtons;
 
-        return Array.from(workspaceButtons.values());
+        workspaceButtons = updatedButtons;
+        _old_workspaces = workspaces;
+        workspaceButtonsArray.setValue(Array.from(workspaceButtons.values()));
     }
 
-    const workspaceButtonsArray = hyprland.bind("workspaces").as(updateWorkspaceButtons);
+    function activeWorkspace() {
+        workspaceButtons.forEach((workspace, key) => {
+            workspace.toggleClassName("active", workspace.attribute.id == hyprland.active.workspace.id);
+        });
+    }
+
+    updateWorkspaceButtons();
+    activeWorkspace();
+    hyprland.connect("notify::workspaces", () => {
+        activeWorkspace();
+        updateWorkspaceButtons();
+    });
+    hyprland.connect("notify::active", () => {
+        activeWorkspace();
+    });
 
     return Widget.EventBox({
         onScrollUp: () => dispatch("+1"),
         onScrollDown: () => dispatch("-1"),
         child: Widget.Box({
-            children: workspaceButtonsArray,
+            children: workspaceButtonsArray.bind(),
             class_name: "workspaces"
         })
     });
@@ -221,7 +252,6 @@ function BatteryLabel() {
         }
     });
 }
-
 
 function SysTray() {
     return Widget.Box({
@@ -360,20 +390,14 @@ function MediaPlayer() {
     return button;
 }
 
-
 function KeyboardLayout() {
-    const widget = Widget.Button({
+    const widget = Widget.Label({
         class_name: "keyboard",
-        //visible: keyboard_layout.bind().as((c) => c != "none"),
-        label: keyboard_layout.bind(),
-        on_primary_click_release: () => {
-            Utils.execAsync(`${GLib.get_home_dir()}/dotfiles/hypr/scripts/RunCMD.sh kb_changer`);
-        },
-
+        visible: keyboard_layout.bind().as((c) => c != "none"),
+        label: keyboard_layout.bind()
     });
     return widget;
 }
-
 
 function OpenSideBar() {
     const button = Widget.Button({
@@ -402,29 +426,30 @@ function TaskBar() {
         const currentClientIds = clients.map((client) => client.pid);
         globalWidgets = globalWidgets.filter((widget) => currentClientIds.includes(widget.attribute.pid));
 
-        clients.forEach((item) => {
-            let widget = globalWidgets.find((w) => w.attribute.pid === item.pid);
-            if (item.class == "kitty") {
-                return;
-            }
+        clients.forEach((client) => {
+            if (client.class === "Alacritty") return;
+
+            let widget = globalWidgets.find((w) => w.attribute.pid === client.pid);
             if (widget) {
-                widget.tooltip_markup = item.title;
+                widget.tooltip_markup = client.title;
             } else {
                 let icon: string | undefined;
-                if (item.class == "com.github.Aylur.ags") {
-                    if (item.initialTitle == "Settings") {
-                        icon = "emblem-system-symbolic";
-                    } else if (item.initialTitle == "Emoji Picker") {
-                        icon = "face-smile-symbolic";
-                    }
-                } else icon = getIconNameFromClass(item.class);
+                if (client.class === "com.github.Aylur.ags") {
+                    icon =
+                        client.initialTitle === "Settings"
+                            ? "emblem-system-symbolic"
+                            : client.initialTitle === "Emoji Picker"
+                            ? "face-smile-symbolic"
+                            : undefined;
+                } else {
+                    icon = getIconNameFromClass(client.class);
+                }
+
                 widget = Widget.Button({
-                    attribute: { pid: item.pid },
-                    child: Widget.Icon({ icon: icon }),
-                    tooltip_markup: item.title,
-                    on_clicked: (self) => {
-                        focus(item);
-                    }
+                    attribute: { pid: client.pid },
+                    child: Widget.Icon({ icon }),
+                    tooltip_markup: client.title,
+                    on_clicked: () => focus(client)
                 });
                 globalWidgets.push(widget);
             }
@@ -510,7 +535,7 @@ function Right() {
         class_name: "modules-right",
         hpack: "end",
         spacing: 8,
-        children: [/*Recorder,*/ volumeIndicator(), KeyboardLayout(), BatteryLabel(), SysTray(), Applets(), Clock(), OpenSideBar()]
+        children: [volumeIndicator(), KeyboardLayout(), BatteryLabel(), SysTray(), Applets(), Clock(), OpenSideBar()]
     });
 }
 
