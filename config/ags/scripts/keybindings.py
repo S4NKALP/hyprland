@@ -15,12 +15,15 @@ variables_dict: dict[str, str] = {}
 
 category_pattern = r"\n#! @(\w+): (.+)"
 variable_pattern = r"\n\$(\w+)\s*=\s*(.*)"
+text = ""
 bindings: dict[str, dict[str, str]] = {}
 
 
-def extract_category_and_description(line: str) -> tuple[str | None, str | None, tuple | None]:
-    pattern2 = r'bind\s*=\s*.*! @description:\s*"((?:[^"]|\\")*)"\s*;\s*@(\w+);\s*@replace\s*"([^"]*)"\s*>\s*"([^"]*)";.*'
-    pattern = r'bind\s*=\s*.*! @description:\s*"((?:[^"]|\\")*)"\s*;\s*@(\w+);.*'
+def extract_category_and_description(
+    line: str
+) -> tuple[str | None, str | None, tuple | None]:
+    pattern2 = r'bind\s*=\s*.*! @description:\s*"((?:[^"]|\\")*)"\s*;\s*@(\w+);\s*@replace\s*"([^"]*)"\s*>\s*"([^"]*)";.*' # noqa
+    pattern = r'bind\s*=\s*.*! @description:\s*"((?:[^"]|\\")*)"\s*;\s*@(\w+);.*' # noqa
 
     match = re.search(pattern, line)
     match2 = re.search(pattern2, line)
@@ -66,9 +69,20 @@ def load_categories(content: str):
 
     for key, value in matches:
         categories_dict[key] = value
-        if value not in bindings:
-            bindings[value] = {}
+        bindings[value] = {}
     return content
+
+
+def load_sources(file: str):
+    with open(file) as f:
+        content = f.read()
+    for line in content.split("\n"):
+        line = line.replace(" = ", "=")
+        if not line.startswith("source="):
+            continue
+        file = os.path.expanduser(line.replace("source=", ""))
+        if file not in files:
+            files.append(file)
 
 
 def load_variables(content: str):
@@ -80,12 +94,13 @@ def load_variables(content: str):
     content_lines = content.split("\n")
     content_lines = [
         line for line in content_lines if not line.startswith("$")
-    ]
+        ]
     content = "\n".join(content_lines)
     return content
 
 
 def load_file(file: str):
+    global text
     with open(file) as f:
         content = f.read()
 
@@ -94,34 +109,42 @@ def load_file(file: str):
 
     # remove comments
     content = re.sub(r'^#.*$\n', '', content, flags=re.MULTILINE)
-    return content
+    text += f"\n{content}"
 
 
 def load():
-    global bindings
+    global text, bindings
+    text = re.sub(r"\$(\w+)", replace_variable, text)
+    for line in text.split('\n'):
+        if not line.replace(" ", "").startswith("bind="):
+            continue
+
+        description, category, replace = extract_category_and_description(line)
+        if category is None or description is None:
+            continue
+
+        binding = extract_binding(line)
+        if binding is None:
+            continue
+
+        category_name = categories_dict[category]
+        if category_name not in bindings:
+            bindings[category_name] = {}
+
+        if replace is not None:
+            binding = binding.replace(*replace)
+
+        bindings[category_name][binding.strip()] = description.strip()
+
+
+while True:
+    old_list = files
     for file in files:
-        content = load_file(file)
-        for line in content.split('\n'):
-            if not line.replace(" ", "").startswith("bind="):
-                continue
+        load_sources(file)
+    if old_list == files:
+        break
 
-            description, category, replace = extract_category_and_description(line)
-            if category is None or description is None:
-                continue
-
-            binding = extract_binding(line)
-            if binding is None:
-                continue
-
-            category_name = categories_dict[category]
-            if category_name not in bindings:
-                bindings[category_name] = {}
-
-            if replace is not None:
-                binding = binding.replace(*replace)
-
-            bindings[category_name][binding.strip()] = description.strip()
-
-
+for file in files:
+    load_file(file)
 load()
 print(json.dumps(bindings, indent=4))
