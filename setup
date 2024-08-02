@@ -97,7 +97,6 @@ pkg=(
     ## Tweaker
     gtk-engine-murrine
     nwg-look
-    pywal-16-color
 
     ## fonts
     adobe-source-code-pro-fonts
