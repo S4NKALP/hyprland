@@ -125,7 +125,7 @@ function Navigation() {
                 label: "Clipboard",
                 icon: "content_paste_search",
             }),
-            Button({
+                Button({
                 page: "gemini",
                 label: "Gemini",
                 icon_widget: Widget.Icon({
