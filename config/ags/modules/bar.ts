@@ -20,6 +20,7 @@ import config from "services/configuration.ts";
 import { toggleAppsWindow, toggleMediaWindow } from "./sideleft/main.js";
 import { Variable as VariableType } from "types/variable";
 
+
 const keyboard_layout = Variable("none");
 hyprland.connect("keyboard-layout", (hyprland, keyboardname, layoutname) => {
     keyboard_layout.setValue(layoutname.trim().toLowerCase().substr(0, 2));
