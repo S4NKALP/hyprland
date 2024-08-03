@@ -51,8 +51,6 @@ pkg=(
 
     #Tools
     zsh
-    grim
-    slurp
     clipshit
     wl-clipboard
     swww
@@ -130,6 +128,7 @@ pkg=(
     bibata-cursor-theme-bin
     hyprpicker
     hyprpaper
+    hyprshot
     power-profile-daemon
     hyprlock
     pyprland
