@@ -437,7 +437,6 @@ CONFIG_DIRS=(
     "startship"
     "Thunar"
     "tmux"
-    "wal"
     "yazi"
     "zathura"
     "zsh"
