@@ -25,7 +25,7 @@ value = (args.browser or args.filemanager or
 
 u = os.path.expanduser
 
-CONFIG_FILE = u("~/dotfiles/hypr/conf/apps.conf")
+CONFIG_FILE = u("~/dotfiles/hypr/UserConfigs/Apps.conf")
 JSON_CONFIG_FILE = u("~/dotfiles/.settings/apps.json")
 
 with open(CONFIG_FILE) as f:
