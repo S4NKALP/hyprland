@@ -10,15 +10,16 @@ notif="$HOME/dotfiles/hypr/assets/bell.png"
 ######################################
 
 toggle_animation() {
-	STATE=$(hyprctl -j getoption animations:enabled | jq ".int")
-	if [ "${STATE}" = "1" ]; then
-		hyprctl keyword animations:enabled 0
-		noti_n "Disable animation"
-	else
-		hyprctl keyword animations:enabled 1
-		noti_n "Enable animation"
-	fi
-
+	cache_file="/tmp/toggle_animation"
+if [ -f $cache_file ]; then
+    hyprctl keyword animations:enabled true
+    ags -r 'enableAnimations(true)'
+    rm $cache_file
+else
+    hyprctl keyword animations:enabled false
+    ags -r 'enableAnimations(false)'
+    touch $cache_file
+fi
 }
 
 ################################################
