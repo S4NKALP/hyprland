@@ -4,6 +4,7 @@ import Gdk from "gi://Gdk";
 // widgets
 import { Bar, BarCornerTopLeft, BarCornerTopRight } from "./modules/bar.ts";
 import { Notifications } from "./modules/notificationPopups.ts";
+import { cliphist } from "./modules/cliphist.ts";
 import { sideright } from "./modules/sideright/main.ts";
 import { sideleft } from "./modules/sideleft/main.ts";
 import {} from "apps/settings/main.ts";
@@ -12,6 +13,7 @@ import { cheatsheet } from "modules/cheatsheet.ts";
 import Window from "types/widgets/window";
 import { popups } from "modules/popups.ts";
 import { start_battery_warning_service } from "services/battery_warning.ts";
+import { audio_popup } from "./modules/audio.ts"
 import Gtk from "gi://Gtk?version=3.0";
 const GLib = imports.gi.GLib;
 
@@ -29,10 +31,12 @@ const Windows = () => [
     forMonitors(Notifications),
     forMonitors(BarCornerTopLeft),
     forMonitors(BarCornerTopRight),
+    cliphist,
     sideright,
     cheatsheet,
     sideleft,
     forMonitors(popups),
+    audio_popup
 ];
 
 App.config({
@@ -68,4 +72,3 @@ globalThis.ReloadColors = ReloadColors;
 globalThis.enableAnimations = enableAnimations;
 
 start_battery_warning_service();
-

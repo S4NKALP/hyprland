@@ -6,6 +6,7 @@ import Revealer from "types/widgets/revealer";
 import Box from "types/widgets/box";
 import Slider from "types/widgets/slider";
 import { Binding } from "types/service";
+import { audio_popup } from "./audio";
 
 const brightnessIcons = [
     "brightness_1",
@@ -130,6 +131,7 @@ const volume_popup = () =>
         },
         (self) => {
             audio.speaker.connect("notify::volume", (_) => {
+                if (audio_popup.visible) return;
                 self.attribute.count++;
                 if (self.attribute.count > 0) self.reveal_child = true;
                 Utils.timeout(1500, () => {
@@ -152,7 +154,7 @@ export const popups = (monitor = 0) => {
             children: [_backlight_popup, _volume_popup]
         }),
         class_name: "popups",
-        anchor: ["bottom"],
+        anchor: ["top"],
         visible: true
     });
 };
