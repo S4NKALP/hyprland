@@ -4,7 +4,6 @@ const GLib = imports.gi.GLib;
 import Box from "types/widgets/box";
 import { WINDOW_NAME } from "modules/sideleft/main";
 
-// Function to get clipboard history
 async function getClipboardHistory() {
     try {
         const process = new Gio.Subprocess({
@@ -22,7 +21,6 @@ async function getClipboardHistory() {
     }
 }
 
-// Function to clear clipboard history
 async function clearClipboardHistory() {
     try {
         const process = new Gio.Subprocess({
@@ -33,11 +31,9 @@ async function clearClipboardHistory() {
         process.init(null);
         await process.communicate_utf8(null, null);
     } catch (error) {
-        // Handle error silently or log to a file if needed
     }
 }
 
-// Function to show image preview
 async function showImagePreview(id, format, width, height) {
     try {
         const file = await Utils.execAsync(`${App.configDir}/scripts/cliphist.sh --save-by-id ${id}`);
@@ -57,12 +53,10 @@ async function showImagePreview(id, format, width, height) {
 
         return css;
     } catch (error) {
-        // Handle error silently or log to a file if needed
         return '';
     }
 }
 
-// Function to create a clipboard history item
 function ClipHistItem(entry) {
     const [id, ..._content] = entry.split("\t");
     const content = _content.join(" ").trim();
@@ -90,7 +84,6 @@ function ClipHistItem(entry) {
                 clickCount = 0;
             }
         } catch (error) {
-            // Handle error silently or log to a file if needed
         }
     });
 
@@ -108,13 +101,12 @@ function ClipHistItem(entry) {
                 if (!_show_image) {
                     const css = await showImagePreview(id, format, width, height);
                     const box = button.child;
-                    box.children[2].destroy(); // Remove text label
+                    box.children[2].destroy();
                     const icon = Widget.Box({
                         vpack: "center",
                         css: css,
                         class_name: "preview"
                     });
-                    // @ts-expect-error
                     box.children = [...box.children, icon];
                     _show_image = true;
                 }
@@ -135,7 +127,6 @@ function ClipHistItem(entry) {
     });
 }
 
-// Main export function for clipboard history widget
 export const cliphist = () => {
     const list = Widget.Box({ vertical: true, vexpand: true });
     const loadingIndicator = Widget.Label({
@@ -147,7 +138,7 @@ export const cliphist = () => {
     async function repopulate() {
         try {
             const entries = await getClipboardHistory();
-            list.children = []; // Clear loading indicator
+            list.children = [];
 
             if (entries.length > 0) {
                 list.children = entries.map(ClipHistItem);
@@ -166,26 +157,24 @@ export const cliphist = () => {
         hexpand: true,
         class_name: "cliphistory_entry",
         placeholder_text: "Search",
-        on_change: ({ text }) => {
+        on_change: async ({ text }) => {
             const searchText = text.toLowerCase();
-            list.children.forEach((item) => {
-                item.visible = item.attribute.content.toLowerCase().includes(searchText);
-            });
-        }
-    });
 
-    const clearButton = Widget.Button({
-        label: "Clear",
-        class_name: "clear_history_button",
-        on_clicked: async () => {
-            await clearClipboardHistory();
-            repopulate();
+            if (searchText.trim() === '/clear') {
+                await clearClipboardHistory();
+                await repopulate();
+                entry.text = '';
+            } else {
+                list.children.forEach((item) => {
+                    item.visible = item.attribute.content.toLowerCase().includes(searchText);
+                });
+            }
         }
     });
 
     const searchBox = Widget.Box({
         orientation: Gtk.Orientation.HORIZONTAL,
-        children: [entry, clearButton]
+        children: [entry]
     });
 
     return Widget.Box({
