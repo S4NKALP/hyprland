@@ -47,11 +47,7 @@
 
 
 <figure>
-  <img src="assets/Rice.png" alt="hyprland" width="300">
-  <img src="assets/Rice 1.png" alt="rice" width="300">
-  <img src="assets/Rice 2.png" alt="rice" width="300">
-  <img src="assets/Rice 3.png" alt="rice" width="300">
-  <img src="assets/Rice 4.png" alt="rice" width="300">
+  <img src="assets/Rice.png" alt="hyprland" width="500">
   <br/>
 </figure>
 
@@ -176,7 +172,17 @@ Other keybinds can be found in ~/dotfiles/hypr/UserConfigs/UserKeybinds.conf
 or in ~/dotfiles/hypr/configs/Keybinds.conf
 
 ```
-
+<div>
+<details>
+    <summary>📸 Screenshots</summary>
+    <img src = "assets/Rice1.png">
+    <img src = "assets/Rice2.png">
+    <img src = "assets/Rice3.png">
+    <img src = "assets/Rice4.png">
+    <img src = "assets/Rice5.png">
+    <img src = "assets/Rice6.png">
+</details>
+</div>
 
 # :wrench: ‎ <samp>Setup</samp>
 
@@ -214,3 +220,5 @@ If you have any questions, issues, or suggestions, feel free to let us know by o
 <div align ="center">
     <strong>Thank you for your support as well🦊</strong>
 </div>
+
+
