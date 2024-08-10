@@ -44,10 +44,7 @@ pkg=(
     imv
 
     ## Editor
-    geany
-    geany-plugin
     neovim
-
 
     #Tools
     zsh
@@ -97,23 +94,10 @@ pkg=(
     nwg-look
 
     ## fonts
-    adobe-source-code-pro-fonts
-    ttf-fira-code
-    ttf-jetbrains-mono-nerd
-    ttf-jetbrains-mono
     noto-fonts-emoji
-    ttf-droid
     otf-font-awesome
     ttf-font-awesome
-    ttf-cascadia-code-nerd
-    ttf-bitstream-vera
-    ttf-croscore
-    ttf-dejavu
-    ttf-ibm-plex
-    ttf-liberation
     ttf-firacode-nerd
-    noto-fonts
-    gnu-free-fonts
     ttf-material-symbols-variable-git
     fontconfig
     ttf-meslo-nerd
@@ -425,7 +409,6 @@ CONFIG_DIRS=(
     "ags"
     "btop"
     "fastfetch"
-    "geany"
     "gtk-3.0"
     "gtk-4.0"
     "hypr"
