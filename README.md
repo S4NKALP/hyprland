@@ -169,8 +169,8 @@ Setup script execution flow:
     Windows + W: Wallpaper Picker
     Windows + Space: Change Screen Layout Style
     PrtSc: Taking Screentshot
-    ALT + F3: Change Keyboard Layout
-    ALT + F1: For Keybinds
+    Windows + F3: Change Keyboard Layout
+    Windows + Slash: For Keybinds
 
 Other keybinds can be found in ~/dotfiles/hypr/UserConfigs/UserKeybinds.conf
 or in ~/dotfiles/hypr/configs/Keybinds.conf
