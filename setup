@@ -94,10 +94,8 @@ pkg=(
     nwg-look
 
     ## fonts
-    noto-fonts-emoji
     otf-font-awesome
     ttf-font-awesome
-    ttf-firacode-nerd
     ttf-material-symbols-variable-git
     fontconfig
     ttf-meslo-nerd
