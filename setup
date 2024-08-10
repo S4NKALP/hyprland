@@ -101,6 +101,7 @@ pkg=(
     hyprlock
     hypridle
     sddm
+    sddm-theme-corners-git
     xdg-user-dirs
 
     # AGS
@@ -492,7 +493,12 @@ sudo tee /etc/sddm.conf.d/theme.conf <<EOF
 [Theme]
 Current=corners
 EOF
-sudo cp -f ~/dotfiles/extras/theme.conf /usr/share/sddm/themes/corners/
+sudo cp $HOME/dotfiles/sddm/sddm.conf /etc/sddm.conf.d/
+sudo cp $HOME/dotfiles/sddm/sddm.conf /etc/
+sudo chmod 777 /etc/sddm.conf.d/sddm.conf
+sudo chmod 777 /etc/sddm.conf
+sudo chmod -R 777 /usr/share/sddm/themes/corners/
+"$HOME"/dotfiles/sddm/scripts/wallpaper.sh
 simulate_output "Setting theme for sddm..."
 simulate_output "[   \e[32mOK\e[0m   ] SDDM theme set to 'corners'"
 
