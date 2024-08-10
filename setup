@@ -25,10 +25,6 @@ pkg=(
     gvfs-gphoto2
     gvfs-mtp
 
-    ## Document Viewer
-    zathura
-    zathura-pdf-mupdf
-
     wmctrl
     xdg-desktop-portal-gtk
     xsel
@@ -46,6 +42,8 @@ pkg=(
     neovim
 
     #Tools
+    zathura
+    zathura-pdf-mupdf
     zsh
     clipshit
     wl-clipboard
@@ -55,7 +53,6 @@ pkg=(
     yt-dlp
     ffmpegthumbnailer
     mpv-mpris
-    yazi
     playerctl
     wf-recorder
     unzip
@@ -68,8 +65,6 @@ pkg=(
     btop
     lm_sensors
     fwupd
-    lshw
-    gum
     libdbusmenu-gtk3
     libxdg-basedir
     cpio
@@ -87,10 +82,6 @@ pkg=(
     thunar-volman
     thunar-archive-plugin
     file-roller
-
-    ## Tweaker
-    gtk-engine-murrine
-    nwg-look
 
     ## fonts
     otf-font-awesome
@@ -111,7 +102,6 @@ pkg=(
     hyprshot
     power-profile-daemon
     hyprlock
-    pyprland
     hypridle
     sddm
     xdg-user-dirs
@@ -415,8 +405,6 @@ CONFIG_DIRS=(
     "startship"
     "Thunar"
     "tmux"
-    "yazi"
-    "zathura"
     "zsh"
     "electron-flags.conf"
 )
