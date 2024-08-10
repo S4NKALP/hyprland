@@ -33,7 +33,7 @@ const reload = () => {
 const _reload = () => {
     if (sideleft?.visible) reload();
 };
-Utils.interval(1500, _reload);
+Utils.interval(15000, _reload);
 configuration.connect("changed", _reload);
 App.connect("window-toggled", (_, window_name, visible) => {
     if (window_name == "sideleft" && visible) reload();

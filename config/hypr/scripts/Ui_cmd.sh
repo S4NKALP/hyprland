@@ -95,6 +95,6 @@ kb_changer() {
         hyprctl switchxkblayout "$name" next || { notify-send -u low -t 2000 'Keyboard layout' 'Error: Layout change failed'; exit 1; }
     done
 
-    notify-send -u low -i "$notif" "Keyboard language changed to $new_layout"
+    notify-send -u low "Kb_layout" "Changed"
 }
 
