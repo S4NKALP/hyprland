@@ -15,9 +15,6 @@ pkg=(
     jq
     xdg-dbus-proxy
 
-    ## Kernel
-    linux-headers
-
     ## For detecting External device
     udiskie
     mtpfs
