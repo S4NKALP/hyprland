@@ -557,6 +557,15 @@ else
     echo "Setup completed."
     exit
 fi
+echo "┌──────────────────────────────────────┐"
+echo "│   Wallpaper setup                    │"
+echo "└──────────────────────────────────────┘"
+echo ""
+simulate_output "Wallpaper Setup..."
+python -O ~/dotfiles/hypr/scripts/wallpaper.py -R
 echo ""
 echo ""
 echo "Good bye!, now you must reboot the system"
+
+
+
