@@ -381,7 +381,7 @@ for binn in $HOME/hyrpland/misc/bin/*; do
     fi
 done
 echo "Copying fonts..."
-for font in $HOME/hyrpland/assets/fonts/*; do
+for font in $HOME/hyrpland/assets/google-sans/; do
     if [ "$(basename "$font")" != "." ] && [ "$(basename "$font")" != ".." ]; then
         sudo cp -r "$font" /usr/share/fonts
     fi
