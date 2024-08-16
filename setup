@@ -85,6 +85,7 @@ pkg=(
     ttf-font-awesome
     ttf-material-symbols-variable-git
     ttf-meslo-nerd
+    ttf-meso-nerd-font-powerlevel10k
     ttf-google-sans
     ttf-opensans
     ttf-roboto

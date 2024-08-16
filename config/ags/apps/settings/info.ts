@@ -6,9 +6,9 @@ type StringOrBinding = string | Binding<any, any, string> | null;
 
 const empty_func = () => {};
 
-const repo_link = "https://github.com/koeqaife/hyprland-material-you";
+const repo_link = "https://github.com/S4NKALP/hyprland";
 const current_de = GLib.getenv("DESKTOP_SESSION");
-const author = "koeqaife";
+const author = "S4NKALP";
 
 const Row = (
     title: StringOrBinding,
@@ -50,7 +50,7 @@ export function Info() {
     const box = Widget.Box({
         vertical: true,
         children: [
-            Row("Dotfiles", "Material You"),
+            Row("Dotfiles", "Hyprland"),
             Row("Author", author),
             Row("Repo", repo_link, () => {
                 Utils.execAsync(`xdg-open "${repo_link}"`).catch(print);
