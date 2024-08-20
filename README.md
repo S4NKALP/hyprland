@@ -18,11 +18,12 @@
     Not recommended for existing configurations.
 <br>
 
-  <a href="https://github.com/S4NKALP/hyprland/">[Document]</a>
-  ·
-  <a href="https://github.com/S4NKALP/hyprland/issues">[Report a bug]</a>
-  ·
-  <a href="https://github.com/S4NKALP/hyprland/issues">[Suggesting new features.]</a>
+<a href="https://github.com/S4NKALP/hyprland/">[Document]</a>
+·
+<a href="https://github.com/S4NKALP/hyprland/issues">[Report a bug]</a>
+·
+<a href="https://github.com/S4NKALP/hyprland/issues">[Suggesting new features.]</a>
+
 </p>
 
 <br>
@@ -45,12 +46,10 @@
 
 <h3>Hyprland Dots As I use for my daily driver<h3>
 
-
 <figure>
   <img src="assets/Rice.png" alt="hyprland" width="500">
   <br/>
 </figure>
-
 
 </div>
 
@@ -92,6 +91,7 @@ It includes custom settings, aliases, settings for familiar tools, and more to q
 
 
 ```
+
 ```
 
 Setup script execution flow:
@@ -154,7 +154,6 @@ Setup script execution flow:
 - :window: Fluid Animations
 - :sparkles: Ripple Effects
 
-
 ## :keyboard: Keyboard Shortcuts Guide
 
 ```
@@ -172,6 +171,7 @@ Other keybinds can be found in ~/dotfiles/hypr/UserConfigs/UserKeybinds.conf
 or in ~/dotfiles/hypr/configs/Keybinds.conf
 
 ```
+
 <div>
 <details>
     <summary>📸 Screenshots</summary>
@@ -187,14 +187,18 @@ or in ~/dotfiles/hypr/configs/Keybinds.conf
 # :wrench: ‎ <samp>Setup</samp>
 
 <b> ArchInstall </b>
-* Using ArchInstall Script Install Archlinux on bare metal.
-* After Booting into HyprLand, Open terminal and install Aur Helper called Paru
+
+- Using ArchInstall Script Install Archlinux on bare metal.
+- After Booting into HyprLand, Open terminal and install Aur Helper called Paru
+
 ### :package: <samp>Automatic Installation (Arch Linux)</samp>
 
 <figure>
     <img src ="assets/installer.png" alt="installer"
     width="800">
 </figure>
+
+<B>Please clone the repo in `home` directory</B>
 
 ```
 git clone -b AGS https://github.com/S4NKALP/hyprland.git
@@ -220,5 +224,3 @@ If you have any questions, issues, or suggestions, feel free to let us know by o
 <div align ="center">
     <strong>Thank you for your support as well🦊</strong>
 </div>
-
-
