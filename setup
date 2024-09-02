@@ -73,7 +73,6 @@ pkg=(
     bluez-libs
     bluez-utils
 
-
     ## Thunar
     thunar
     thunar-volman
@@ -92,7 +91,6 @@ pkg=(
 
     #hyprland
     hyprland
-    adw-gtk3
     adw-gtk-theme
     bibata-cursor-theme-bin
     hyprpicker
@@ -374,7 +372,6 @@ for font in $HOME/hyrpland/assets/google-sans/; do
     fi
 done
 
-
 sudo cp -r $HOME/hyprland/config/* $HOME/dofiles/
 sudo cp -r $HOME/hyprland/wallpapers/* $HOME/Pictures/wallpapers
 simulate_output "[   \e[32mOK\e[0m   ] Copied .zshevn dotfiles to $HOME"
@@ -448,7 +445,7 @@ remove_gtk_buttons() {
 }
 
 setup_sensors() {
-    sudo sensors-detect --auto > /dev/null
+    sudo sensors-detect --auto >/dev/null
 }
 
 #-- Enabling the service -----------------------------------------
@@ -536,7 +533,7 @@ simulate_output "Setting some files as executable..."
 simulate_output "[   \e[32mOK\e[0m   ] Granted execute permissions to scripts"
 sudo chmod +x ~/dotfiles/hypr/scripts/*
 sudo chmod +x ~/dotfiles/ags/scripts/*
-sudo sensors-detect --auto > /dev/null
+sudo sensors-detect --auto >/dev/null
 
 echo ""
 echo ""
@@ -567,6 +564,3 @@ python -O ~/dotfiles/hypr/scripts/wallpaper.py -R
 echo ""
 echo ""
 echo "Good bye!, now you must reboot the system"
-
-
-
