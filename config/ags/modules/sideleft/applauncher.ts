@@ -6,7 +6,6 @@ const GLib = imports.gi.GLib;
 import Box from "types/widgets/box";
 import Gtk from "gi://Gtk?version=3.0";
 import { Application } from "types/service/applications";
-import { WINDOW_NAME } from "modules/sideleft/main";
 
 const LAUNCH_COUNT_FILE = Gio.File.new_for_path(
     GLib.build_filenamev([GLib.get_home_dir(), ".cache", "launch_counts.json"])
@@ -77,7 +76,6 @@ function AppItem(app: Application): Box<any, any> {
         clickCount++;
         if (clickCount === 2) {
             increment_launch_count(app.name);
-            App.closeWindow(WINDOW_NAME);
             app.launch();
             clickCount = 0;
         }
@@ -107,13 +105,6 @@ export const Applauncher = () => {
         vertical: true
     });
 
-    function repopulate() {
-        applications = query("").map(AppItem);
-        applications = sortApplicationsByLaunchCount(applications);
-        list.children = applications;
-    }
-    repopulate();
-
     const entry = Widget.Entry({
         hexpand: true,
         class_name: "applauncher_entry",
@@ -122,7 +113,7 @@ export const Applauncher = () => {
         on_accept: () => {
             const results = applications.filter((item) => item.visible);
             if (results[0]) {
-                App.closeWindow(WINDOW_NAME);
+
                 results[0].attribute.app.launch();
             }
         },
@@ -132,6 +123,13 @@ export const Applauncher = () => {
                 item.visible = item.attribute.app.match(text ?? "");
             })
     });
+
+    function repopulate() {
+        applications = query("").map(AppItem);
+        applications = sortApplicationsByLaunchCount(applications);
+        list.children = applications;
+    }
+    repopulate();
 
     return Widget.Box({
         vertical: true,
@@ -147,12 +145,13 @@ export const Applauncher = () => {
             })
         ],
         setup: (self) =>
-            self.hook(App, (_, windowName, visible) => {
-                if (windowName !== WINDOW_NAME) return;
+            self.hook(App, (_, visible) => {
+
 
                 if (visible) {
                     repopulate();
                     entry.text = "";
+                    entry.grab_focus();
                 }
             })
     });

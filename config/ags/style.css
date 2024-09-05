@@ -335,7 +335,9 @@ window.notification-popups box.notifications {
 /* -----------------------------------------------------
  * Sideright
  * ----------------------------------------------------- */
-
+.sidebar{
+ background-color: transparent;
+}
 .sidebar_main_box {
     background: @surfaceContainerLowest;
 }
