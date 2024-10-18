@@ -34,7 +34,7 @@ def handle_application_search(launcher, query: str):
 def bake_favorite_slot(launcher, app, **kwargs) -> Button:
     return Button(
         child=Image(pixbuf=app.get_icon_pixbuf(), size=40),
-        style="background-color: transparent; border-radius: 10px; padding: 10px;",
+        name="fav-item",
         tooltip_text=app.description,
         on_clicked=lambda *_: (app.launch(), launcher.set_visible(False)),
         **kwargs,

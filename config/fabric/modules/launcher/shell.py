@@ -39,4 +39,4 @@ class ShellCommandManager:
             Sh.run(cmd)  # Run the shell command
             self.launcher.set_visible(False)  # Close the launcher after execution
         except Exception as e:
-            print(f"Error executing command: {e}")
+            logger.error(f"Error executing command: {e}")
