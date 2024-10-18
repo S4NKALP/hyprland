@@ -88,7 +88,7 @@ class WallpaperManager:
             )
             logger.info(f"Wallpaper applied: {wallpaper_path}")
         except Exception as e:
-            logger.info(f"Error applying wallpaper: {e}")
+            logger.error(f"Error applying wallpaper: {e}")
 
     def apply_wallpaper_random(self):
         script_path = os.path.expanduser("~/dotfiles/hypr/scripts/wallpaper.py")
@@ -99,4 +99,4 @@ class WallpaperManager:
             )
             logger.info("Random wallpaper applied.")
         except Exception as e:
-            logger.info(f"Error applying random wallpaper: {e}")
+            logger.error(f"Error applying random wallpaper: {e}")
