@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-cd ~/fabric/
+cd ~/dotfiles/fabric/
 
-./venv/bin/python main.py
+python main.py
