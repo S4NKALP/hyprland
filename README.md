@@ -20,3 +20,7 @@ This repository contains my personal dotfiles and configuration files. It's curr
 ### How it looks:
 
 New Showcase Coming Soon.
+
+### Credits
+
+will be added soon
