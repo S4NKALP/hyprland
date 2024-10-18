@@ -1,0 +1,450 @@
+
+* {
+  all: unset;
+  color: @foreground;
+  font-size: 16px;
+  font-family: "Product Sans", Roboto, "Font Awesome 6 Free", Helvetica, Arial,
+    sans-serif;
+}
+
+#bar {
+  background-color: @surface;
+  padding: 3px;
+}
+#bar label {
+  font-weight: bold;
+}
+
+#modules_left,
+#modules_center,
+#modules_right {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+#workspaces {
+  border-radius: 16px;
+  font-weight: bold;
+  font-style: normal;
+  color: @onSurface;
+  background: @surfaceContainer;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#workspaces > button {
+  padding: 0px 5px;
+  margin: 4px 0px;
+  margin-right: 3px;
+  border-radius: 100px;
+  min-width: 20px;
+  border: 0px;
+}
+
+
+#workspaces > button:last-child {
+  margin-right: 0px;
+}
+
+#workspaces > button label {
+  color: @onSurface;
+  font-weight: bold;
+}
+
+#workspaces > button:hover {
+  color: @onSurface;
+  background-color: mix(@onSurface, @surface, 0.85);
+}
+
+#workspaces > button.active {
+  background: @secondaryContainer;
+}
+
+#workspaces > button.active label {
+  color: @onSecondaryContainer;
+}
+
+#workspaces > button.empty {
+  color: @onSurfaceVariant;
+  opacity: 0.6;
+}
+
+#datetime {
+  background-color: @surfaceContainer;
+  border-radius: 16px;
+  padding: 2px 10px 0px 10px;
+}
+
+#kb_layout {
+  font-size: 12px;
+}
+
+/* system tray */
+#tray {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 0px 10px;
+}
+
+#tray > button {
+  margin: 0px;
+  padding: 0px;
+}
+
+#tray image {
+  color: @onSurface;
+}
+
+/* menu and menu items (written for the system tray) */
+menu {
+  border-radius: 10px;
+  background-color: @surfaceContainer;
+}
+
+menu > menuitem {
+  border-radius: 0px;
+  padding: 6px;
+  margin-left: 2px;
+  margin-right: 2px;
+  color: @onSurface;
+}
+
+menu > menuitem:first-child {
+  margin-top: 1px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+menu > menuitem:last-child {
+  margin-bottom: 1px;
+  border-radius: 0px 0px 8px 8px;
+}
+
+menu > menuitem:hover {
+  background-color: mix(@onSurface, @surface, 0.85);
+}
+
+tooltip {
+  background-color: @surfaceContainer;
+  border-radius: 11px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+tooltip label {
+  color: @onSurface;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  font-weight: normal;
+}
+
+#logo {
+  background-color: @secondaryContainer;
+  color: @onSecondaryContainer;
+  border-radius: 100px;
+  min-width: 38px;
+  padding: 0px;
+}
+#logo label,
+#logo .icon,
+#logo image {
+  color: @onSecondaryContainer;
+  font-weight: 400;
+  margin: 0px 3px 0px 0px;
+}
+
+#logo:hover {
+  background-color: mix(@secondaryContainer, @onSecondaryContainer, 0.05);
+  box-shadow: 00px 3px 3px -2px rgba(0, 0, 0, 0.2);
+}
+
+#applets {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 2px 10px;
+  margin: 0px;
+}
+
+#applets .icon {
+  color: @onSurface;
+  font-weight: 600;
+}
+
+#applets > button {
+  color: @onSurface;
+  margin: 0px;
+  padding: 0px;
+}
+
+#battery {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 2px 10px;
+}
+
+#battery label {
+  color: @onSurface;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+#battery .icon {
+  color: @onSurface;
+}
+
+#battery.critical {
+  background-color: @error;
+}
+
+#battery.critical label,
+#battery.critical .icon {
+  color: @onError;
+}
+
+#power-event {
+  transition: all 0.1s ease;
+  background-color: @surfaceContainer;
+  border-radius: 999px;
+  padding: 7px;
+}
+
+
+#power-shutdown > *,
+#power-reboot > *,
+#power-logout > *,
+#power-suspend > *,
+#power-lock > *{
+  color: @foreground;
+  padding:4px;
+  margin: 4px;
+  border-radius: 999px;
+}
+
+#power-shutdown:hover > *, #power-shutdown:focus > *,
+#power-reboot:hover > *, #power-reboot:focus > *,
+#power-logout:hover > *, #power-logout:focus > *,
+#power-suspend:hover > *, #power-suspend:focus > *,
+#power-lock:hover > *, #power-lock:focus > *{
+  color: @onSurface;
+  background-color: mix(@onSurface, @surface, 0.85);
+}
+
+#shutdown-confirm > *, #reboot-confirm > *, #logout-confirm > *, #suspend-confirm > * {
+  color: @background;
+  font-size: 20px;
+  font-weight: normal;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 999px;
+  border-radius: 999px;
+}
+
+#shutdown-confirm:hover > *, #reboot-confirm:hover > *, #logout-confirm:hover > *, #suspend-confirm:hover > * {
+  color: @onSurface;
+  background-color: mix(@onSurface, @surface, 0.85);
+}
+
+#confirm-box {
+  background-color: @surfaceContainer;
+  margin: 3px;
+  border-radius: 999px;
+}
+
+#accept, #cancel {
+  color: @foreground;
+  padding: 2px;
+  margin: 4px;
+  border-radius: 999px;
+}
+
+#accept:hover, #cancel:hover {
+  color: @onSurface;
+  background-color: mix(@onSurface, @surface, 0.85);
+}
+
+
+#launcher {
+  margin: 18px;
+  border: 1px solid @outlineVariant;
+  background-color: @surface;
+  border-radius: 24px;
+  padding: 18px;
+}
+
+#launcher button {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  padding: 7px;
+}
+
+
+#launcher button:focus {
+  box-shadow: inset 0 0 0 1px @primary;
+  background-color: @background;
+  color: @foreground;
+}
+
+#launcher button:hover {
+  box-shadow: inset 0 0 0 1px @background;
+  background-color: @background;
+}
+
+#launcher  entry {
+  transition: all 0.1s ease;
+  border-radius: 11px;
+  color: @foreground;
+  background-color:@surfaceContainer;
+  box-shadow: inset 0 0 0 @background;
+  padding: 10px;
+  margin: 12px;
+}
+
+#launcher entry:focus {
+  box-shadow: inset 0 0 0 1px @primary;
+  background-color: @background;
+}
+
+#launcher entry:hover {
+  box-shadow: inset 0 0 0 1px @background;
+  background-color: @background;
+}
+
+#launcher entry selection {
+  color: @outline;
+  background-color: transparent;
+}
+
+#launcher button#app-item {
+  border-radius: 11px;
+  color: @foreground;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  transition: 200ms;
+  padding: 7pt;
+}
+
+#launcher button#app-item:hover #title,
+#launcher  button#app-item:focus #title {
+  color: @primary;
+}
+
+#launcher button#app-item:hover #description,
+#launcher  button#app-item:focus #description {
+  color: @inversePrimary;
+}
+
+#launcher button#app-item:hover image,
+#launcher button#app-item:focus image {
+  -gtk-icon-shadow: 2px 2px @primary;
+}
+
+#launcher button#app-item:active {
+  background-color: @primaryContainer;
+  border-radius: 11px;
+  box-shadow: inset 0 0 0 1px rgba(158, 142, 130, 0.04);
+}
+
+#launcher  button#app-item:active #title {
+  color: @foreground;
+}
+
+#launcher button#emoji-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  padding: 0px;
+}
+
+#launcher button#emoji-item:disabled {
+  color: mix(@onSurface, transparent, 0.38);
+}
+
+#launcher  button#emoji-item label {
+  font-size: 27px;
+}
+
+#launcher button#emoji-item:hover,
+#launcher button#emoji-item:focus {
+  text-shadow: 2px 2px 2px @primary;
+}
+
+#launcher button#cliphist-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+window#launcher button#cliphist-item:disabled {
+  color: mix(@onSurface, transparent, 0.38);
+}
+
+#launcher  button#cliphist-item:hover,
+#launcher button#cliphist-item:focus {
+  text-shadow: 2px 2px 2px @primary;
+}
+
+#launcher button#sh-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+#launcher button#sh-item:disabled {
+  color: mix(@onSurface, transparent, 0.38);
+}
+
+#launcher button#sh-item:hover,
+#launcher button#sh-item:focus {
+  text-shadow: 2pt 2pt 2pt @primary;
+}
+
+#launcher button#help-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+#launcher button#help-item:hover label,
+#launcher button#help-item:focus label{
+  text-shadow: 2px 2px 2px @primary;
+}
+
+#launcher button#wall-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+#launcher button#wall-item:disabled {
+  color: mix(@onSurface, transparent, 0.38);
+}
+
+#launcher button#wall-item:hover,
+#launcher button#wall-item:focus {
+  text-shadow: 10pt 10pt 10pt @primary;
+   background-color: mix(@onSurface, @surface, 0.92);
+}
+
+#launcher button#db-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+#launcher button#db-item:hover label,
+#launcher button#db-item:focus label{
+  text-shadow: 4px 4px 4px @primary;
+/*  margin: 12px;*/
+}
