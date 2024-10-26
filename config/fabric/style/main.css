@@ -1,4 +1,3 @@
-
 * {
   all: unset;
   color: @foreground;
@@ -15,9 +14,16 @@
   font-weight: bold;
 }
 
-#modules_left,
-#modules_center,
-#modules_right {
+#symbol,
+#symbol * {
+  all: unset;
+  margin: 2px;
+  font-size: 18px;
+}
+
+#start-container,
+#center-container,
+#end-container {
   padding-top: 6px;
   padding-bottom: 6px;
   margin-left: 12px;
@@ -25,7 +31,7 @@
 }
 
 #workspaces {
-  border-radius: 16px;
+  border-radius: 100px;
   font-weight: bold;
   font-style: normal;
   color: @onSurface;
@@ -42,7 +48,6 @@
   min-width: 20px;
   border: 0px;
 }
-
 
 #workspaces > button:last-child {
   margin-right: 0px;
@@ -73,15 +78,35 @@
 
 #datetime {
   background-color: @surfaceContainer;
-  border-radius: 16px;
-  padding: 2px 10px 0px 10px;
+  border-radius: 100px;
+  padding: 8px;
 }
 
-#kb_layout {
-  font-size: 12px;
+#battery {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 2px 10px;
 }
 
-/* system tray */
+#battery label {
+  color: @onSurface;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+#battery .icon {
+  color: @onSurface;
+}
+
+#battery.critical {
+  background-color: @error;
+}
+
+#battery.critical label,
+#battery.critical .icon {
+  color: @onError;
+}
+
 #tray {
   background-color: @surfaceContainer;
   border-radius: 100px;
@@ -97,7 +122,24 @@
   color: @onSurface;
 }
 
-/* menu and menu items (written for the system tray) */
+#applets {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 2px 10px;
+  margin: 0px;
+}
+
+#applets .icon {
+  color: @onSurface;
+  font-weight: 900;
+}
+
+#applets > button {
+  color: @onSurface;
+  margin: 0px;
+  padding: 0px;
+}
+
 menu {
   border-radius: 10px;
   background-color: @surfaceContainer;
@@ -141,130 +183,43 @@ tooltip label {
   font-weight: normal;
 }
 
-#logo {
-  background-color: @secondaryContainer;
-  color: @onSecondaryContainer;
+#panel-button {
+  margin: 0px 2px 0px 2px;
+  padding: 0px 5px 0px 5px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: transparent;
+}
+
+#panel-button.activated {
+  background-color: alpha(white, 0.15);
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-color: alpha(white, 0.5);
+}
+
+#taskbar {
   border-radius: 100px;
-  min-width: 38px;
-  padding: 0px;
-}
-#logo label,
-#logo .icon,
-#logo image {
-  color: @onSecondaryContainer;
-  font-weight: 400;
-  margin: 0px 3px 0px 0px;
+  font-weight: bold;
+  font-style: normal;
+  color: @onSurface;
+  background: @surfaceContainer;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
-#logo:hover {
-  background-color: mix(@secondaryContainer, @onSecondaryContainer, 0.05);
-  box-shadow: 00px 3px 3px -2px rgba(0, 0, 0, 0.2);
-}
-
-#applets {
-  background-color: @surfaceContainer;
+#taskbar > button {
+  padding: 0px 5px;
+  margin: 4px 0px;
+  margin-right: 3px;
   border-radius: 100px;
-  padding: 2px 10px 2px 10px;
-  margin: 0px;
+  border: 0px;
 }
-
-#applets .icon {
-  color: @onSurface;
-  font-weight: 600;
+#taskbar > button:last-child {
+  margin-right: 0px;
 }
-
-#applets > button {
-  color: @onSurface;
-  margin: 0px;
-  padding: 0px;
-}
-
-#battery {
-  background-color: @surfaceContainer;
-  border-radius: 100px;
-  padding: 2px 10px 2px 10px;
-}
-
-#battery label {
-  color: @onSurface;
-  font-size: 16px;
-  font-weight: 300;
-}
-
-#battery .icon {
-  color: @onSurface;
-}
-
-#battery.critical {
-  background-color: @error;
-}
-
-#battery.critical label,
-#battery.critical .icon {
-  color: @onError;
-}
-
-#power-event {
-  transition: all 0.1s ease;
-  background-color: @surfaceContainer;
-  border-radius: 999px;
-  padding: 7px;
-}
-
-
-#power-shutdown > *,
-#power-reboot > *,
-#power-logout > *,
-#power-suspend > *,
-#power-lock > *{
-  color: @foreground;
-  padding:4px;
-  margin: 4px;
-  border-radius: 999px;
-}
-
-#power-shutdown:hover > *, #power-shutdown:focus > *,
-#power-reboot:hover > *, #power-reboot:focus > *,
-#power-logout:hover > *, #power-logout:focus > *,
-#power-suspend:hover > *, #power-suspend:focus > *,
-#power-lock:hover > *, #power-lock:focus > *{
-  color: @onSurface;
-  background-color: mix(@onSurface, @surface, 0.85);
-}
-
-#shutdown-confirm > *, #reboot-confirm > *, #logout-confirm > *, #suspend-confirm > * {
-  color: @background;
-  font-size: 20px;
-  font-weight: normal;
-  padding: 4px;
-  margin: 4px;
-  border-radius: 999px;
-  border-radius: 999px;
-}
-
-#shutdown-confirm:hover > *, #reboot-confirm:hover > *, #logout-confirm:hover > *, #suspend-confirm:hover > * {
-  color: @onSurface;
-  background-color: mix(@onSurface, @surface, 0.85);
-}
-
-#confirm-box {
-  background-color: @surfaceContainer;
-  margin: 3px;
-  border-radius: 999px;
-}
-
-#accept, #cancel {
-  color: @foreground;
-  padding: 2px;
-  margin: 4px;
-  border-radius: 999px;
-}
-
-#accept:hover, #cancel:hover {
-  color: @onSurface;
-  background-color: mix(@onSurface, @surface, 0.85);
-}
-
 
 #launcher {
   margin: 18px;
@@ -282,7 +237,6 @@ tooltip label {
   padding: 7px;
 }
 
-
 #launcher button:focus {
   box-shadow: inset 0 0 0 1px @primary;
   background-color: @background;
@@ -294,11 +248,11 @@ tooltip label {
   background-color: @background;
 }
 
-#launcher  entry {
+#launcher entry {
   transition: all 0.1s ease;
   border-radius: 11px;
   color: @foreground;
-  background-color:@surfaceContainer;
+  background-color: @surfaceContainer;
   box-shadow: inset 0 0 0 @background;
   padding: 10px;
   margin: 12px;
@@ -330,12 +284,12 @@ tooltip label {
 }
 
 #launcher button#app-item:hover #title,
-#launcher  button#app-item:focus #title {
+#launcher button#app-item:focus #title {
   color: @primary;
 }
 
 #launcher button#app-item:hover #description,
-#launcher  button#app-item:focus #description {
+#launcher button#app-item:focus #description {
   color: @inversePrimary;
 }
 
@@ -350,13 +304,15 @@ tooltip label {
   box-shadow: inset 0 0 0 1px rgba(158, 142, 130, 0.04);
 }
 
-#launcher  button#app-item:active #title {
+#launcher button#app-item:active #title {
   color: @foreground;
 }
 
-#launcher button#fav-item{
-  border-radius: 10px; 
+#launcher button#fav-item {
+  border-radius: 10px;
   padding: 10px;
+  background-image: none;
+  box-shadow: none;
 }
 
 #launcher button#fav-item:hover image,
@@ -382,7 +338,7 @@ tooltip label {
   color: mix(@onSurface, transparent, 0.38);
 }
 
-#launcher  button#emoji-item label {
+#launcher button#emoji-item label {
   font-size: 27px;
 }
 
@@ -402,7 +358,7 @@ window#launcher button#cliphist-item:disabled {
   color: mix(@onSurface, transparent, 0.38);
 }
 
-#launcher  button#cliphist-item:hover,
+#launcher button#cliphist-item:hover,
 #launcher button#cliphist-item:focus {
   text-shadow: 2px 2px 2px @primary;
 }
@@ -431,113 +387,85 @@ window#launcher button#cliphist-item:disabled {
 }
 
 #launcher button#help-item:hover label,
-#launcher button#help-item:focus label{
+#launcher button#help-item:focus label {
   text-shadow: 2px 2px 2px @primary;
 }
 
+:vars {
+  --accent: #009cd4;
 
-#settings-button {
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    min-width: 250px;
-    background-color: @surfaceContainerLow;
-    border-radius: 24px 0 0 24px;
-    border-right:0.1px solid;
-  }
+  --bg_h: #1d2021;
+  --bg: #1e1e1e;
+  --bg_s: #32302f;
+  --bg1: #3c3836;
+  --bg2: #504945;
+  --bg3: #665c54;
+  --bg4: #7c6f64;
 
-#settings-button:hover {
-    background-color: mix(@onSurface, @surface, 0.92);
+  --fg: #e2e2e0;
+  --fg1: #ebdbb2;
+  --fg2: #d5c4a1;
+  --fg3: #bdae93;
+  --fg4: #a89984;
+
+  --red: #fb4934;
+  --green: #4bbb26;
+  --yellow: #ffe600;
+  --blue: #83a598;
+  --purple: #d3869b;
+  --aqua: #8ec07c;
+  --gray: #928374;
+  --orange: #fe8019;
+
+  --red-dim: #cc2412;
+  --green-dim: #98971a;
+  --yellow-dim: #d79921;
+  --blue-dim: #458588;
+  --purple-dim: #b16286;
+  --aqua-dim: #689d6a;
+  --gray-dim: #a89984;
+  --orange-dim: #d65d0e;
+
+  --placeholder_text_color: rgb(255, 255, 255);
 }
 
-#settings-button:active {
-    background-image: radial-gradient(circle, mix(@onSurface, @surface, 0.9) 10%, transparent 0%);
+#osd-corner {
+  padding-left: 45px;
 }
 
-#hello {
-    border-radius: 100px;
-    padding: 0px;
-    padding-right: 24px;
-    padding-left: 16px;
-    min-height: 56px;
-    background-color: @surfaceContainerLow;
+#osd-icon image {
+  color: @foreground;
 }
 
-#hello:hover {
-    background-color: mix(@onSurface, @surface, 0.92);
+#osd-corner * {
+  background-color: alpha(@background, 0.9);
 }
 
-
-#hello label {
-    color: @onSurfaceVariant;
-    font-weight: normal;
-    font-size: 16px;
-}
-#hello.active label {
-    color: @onSecondaryContainer;
+#osd-progress-bar *.filled {
+  background-color: @foreground;
+  box-shadow: 0px 0px 2px 1px @foreground;
 }
 
-
-
-#settings-content {
-    background-color: @surface;
-    font-weight: normal;
-    padding-left: 16px;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    font-size: 20px;
-    border-bottom: 1px solid;
-    border-radius: 0 24px 24px 0;
-    border-color: @outlineVariant;
-    color: @onSurfaceVariant;
+#osd-progress-bar * {
+  border-radius: 30px;
+  background-color: #202020;
+  transition-property: background-color, box-shadow;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+  /* transition: background-color 0.3s cubic-bezier(.42,0,.58,1); */
+}
+#osd-progress-bar {
+  margin: 10px 5px 10px 5px;
+  border-radius: 30px;
 }
 
-
-
-#row {
-    background: transparent;
-    transition-timing-function: ease-out;
-    outline: none;
-    background-image: radial-gradient(circle, transparent 10%, transparent 0%);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 1000% 1000%;
-    background-color: transparent;
-
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    margin: 0px;
-    border-radius: 0px;
-}
-
-#title {
-    font-weight: normal;
-    font-size: 19px;
-    color: @onSurface;
-}
-
- #description {
-    font-weight: normal;
-    font-size: 14px;
-    color: @onSurfaceVariant;
-}
-
-
-#row:hover {
-    background-color: mix(@onSurface, @surface, 0.92);
-    border-radius: 24px;
-}
-
-#row:active:not(.focused) {
-    transition-duration: 0.3s, 0ms, 0ms, 0.2s, 0.2s, 0.2s;
-    animation: ripple 0.3s ease-out forwards;
-    background-size: 0% 0%;
-    background-image: radial-gradient(circle, mix(@onSurface, @surface, 0.9) 10%, transparent 0%);
-}
-
-#row.focused {
-    background-color: mix(@onSurface, @surface, 0.8);
+#on-screen-display {
+  border-left-width: 5px;
+  border-color: var(--accent);
+  border-style: solid;
+  min-height: 300px;
+  background-color: alpha(@background, 0.9);
+  padding: 20px;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
 }

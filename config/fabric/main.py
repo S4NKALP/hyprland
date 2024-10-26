@@ -1,4 +1,14 @@
-from __init__ import *
+import os
+
+from loguru import logger
+
+from fabric import Application
+from fabric.utils import get_relative_path, monitor_file
+from modules.bar.bar import Bar
+from modules.launcher.launcher import Launcher
+from modules.osd import SystemOSD
+from services.brightness import Brightness
+from services.screen_record import ScreenRecorder
 
 
 def apply_style(app: Application):
@@ -16,15 +26,12 @@ if __name__ == "__main__":
 
     launcher = Launcher()
     launcher.hide()
-
-    setting = Settings()
-    setting.hide()
-
+    systemOverlay = SystemOSD()
     app = Application(
         "fabric-bar",
         bar,
         launcher,
-        setting,
+        systemOverlay,
     )
 
     # Monitor main.css file for changes

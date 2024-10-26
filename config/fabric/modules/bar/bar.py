@@ -1,8 +1,27 @@
-from __init__ import *
+from fabric.hyprland.widgets import Language, WorkspaceButton, Workspaces
+from fabric.system_tray.widgets import SystemTray
+from fabric.utils import FormattedString, bulk_replace
+from fabric.widgets.box import Box
+from fabric.widgets.centerbox import CenterBox
+from fabric.widgets.datetime import DateTime
+from fabric.widgets.wayland import WaylandWindow as Window
+from modules.bar.widgets import (
+    BatteryLabel,
+    Bluetooth,
+    MicrophoneIndicator,
+    PowerProfile,
+    TaskBar,
+    VolumeIndicator,
+    Wifi,
+)
+
+from .glance import OpenAppsBar
 
 
 class Bar(Window):
-    def __init__(self):
+    def __init__(
+        self,
+    ):
         super().__init__(
             layer="top",
             anchor="left bottom right",
@@ -15,8 +34,7 @@ class Bar(Window):
             spacing=4,
             buttons=[WorkspaceButton(id=i, label=str(i)) for i in range(1, 11)],
         )
-
-        self.kb_layout = Language(
+        self.language = Language(
             formatter=FormattedString(
                 "{replace_lang(language)}",
                 replace_lang=lambda lang: bulk_replace(
@@ -26,93 +44,57 @@ class Bar(Window):
                     regex=True,
                 ),
             ),
-            name="kb_layout",
         )
+        self.date_time = DateTime(formatters=["%-I:%M 󰧞 %a %d %b"], name="datetime")
+        self.system_tray = SystemTray(spacing=4, icon_size=18)
 
-        self.clock = DateTime(
-            formatters=["%-I:%M %p %b %-d", "%-I:%M:%S %p %b %-d", "%a %-d %Y"],
-            name="datetime",
-        )
-
-        self.system_tray = SystemTray(name="tray", spacing=4, icon_size=16)
-
-        self.battery = BatteryLabel(name="battery")
-
-        self.ram = RAMUsage()
-
-        self.cpu = CPUUsage()
-
-        self.swap = SwapMemoryUsage()
-
-        self.wifi = Wifi()
-
-        self.bluetooth = Bluetooth()
-
-        self.TaskBar = TaskBar(name="tray", icon_size=16)
-
+        self.TaskBar = TaskBar(icon_size=18)
         self.volume = VolumeIndicator()
-
+        self.wifi = Wifi()
+        self.bluetooth = Bluetooth()
+        self.battery = BatteryLabel(name="battery")
         self.microphone = MicrophoneIndicator()
-
-        self.system_info = Box(
-            name="tray",
-            spacing=4,
-            children=[
-                self.ram,
-                self.swap,
-                self.cpu,
-            ],
-        )
-
-        self.logo = Button(
-            name="logo",
-            child=Label("󰍉"),
-            on_clicked=lambda _: exec_shell_command("fabric_send 'luancher.toggle()"),
-        )
+        self.power = PowerProfile()
+        self.open_apps_bar = OpenAppsBar()
 
         self.applets = Box(
             name="applets",
             spacing=4,
             children=[
-                self.kb_layout,
+                self.language,
+                self.power,
                 self.bluetooth,
                 self.wifi,
                 self.volume,
                 self.microphone,
+                # self.battery,
             ],
         )
-        self.power = PowerMenu()
-
         self.children = CenterBox(
             name="bar",
             start_children=Box(
-                name="modules_left",
+                name="start-container",
                 spacing=8,
                 orientation="h",
-                children=[
-                    self.logo,
-                    self.TaskBar,
-                ],
+                children=self.TaskBar,
             ),
             center_children=Box(
-                name="modules_center",
+                name="center-container",
                 spacing=8,
                 orientation="h",
                 children=[
-                    # self.system_info,
                     self.workspaces,
                 ],
             ),
             end_children=Box(
-                name="modules_right",
+                name="end-container",
                 spacing=8,
                 orientation="h",
                 children=[
                     self.system_tray,
                     self.battery,
                     self.applets,
-                    self.clock,
-                    self.power,
+                    self.date_time,
                 ],
             ),
         )
