@@ -1,6 +1,6 @@
 <div align = "center">
 
-> [!NOTE]
+> [!WARNING]
 > This repository willnot get any update from now. I am switching to [fabric](https://github.com/Fabric-Development/fabric). Check [fabric](https://github.com/S4NKALP/hyprland/tree/fabric) branch for configuration
 
 <h1><a href="https://github.com/S4NKALP/hyprland">Hyprland</a></h1>
