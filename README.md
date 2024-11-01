@@ -1,5 +1,8 @@
 <div align = "center">
 
+> [!NOTE]
+> This repository willnot get any update from now. I am switching to [fabric](https://github.com/Fabric-Development/fabric). Check [fabric](https://github.com/S4NKALP/hyprland/tree/fabric) branch for configuration
+
 <h1><a href="https://github.com/S4NKALP/hyprland">Hyprland</a></h1>
 
 <div align="center"><p>
@@ -212,6 +215,7 @@ chmod +x setup
 - I got a lot of code for AGS from [koeqaife](https://github.com/koeqaife)
 - [nvim](https://github.com/S4NKALP/nvim) — Personalized Editor
 - [blog](https://github.com/S4NKALP/blog) — Blog
+
 <hr>
 
 <div align="center">
