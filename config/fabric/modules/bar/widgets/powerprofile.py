@@ -1,26 +1,20 @@
 from fabric.utils import exec_shell_command, invoke_repeater
 from fabric.widgets.box import Box
-from fabric.widgets.label import Label
+from icon import MaterialIcon
 
 PROFILE_ICONS = {
-    "power-saver": "󰡳",
+    "power-saver": "data_saver_on",
     "balanced": None,
-    "performance": "󰡴",
+    "performance": "mode_heat",
 }
-
 
 class PowerProfile(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.profile_icon = Label(
-            label="󰡳",
-            name="symbol",
-            # style="font-size: 16px; margin-right: 4px;",
-        )
+
+        self.profile_icon = None
 
         invoke_repeater(1000, self.update_power_profile, initial_call=True)
-
-        self.children = (self.profile_icon,)
 
     def update_power_profile(self):
         profile = self.get_power_profile()
@@ -29,12 +23,22 @@ class PowerProfile(Box):
 
     def get_power_profile(self):
         result = exec_shell_command("powerprofilesctl get")
-        return result.strip() if result else "power-saver"
+        return result.strip() or "power-saver"
 
     def update_icon(self, profile):
-        if profile in ["power-saver", "performance"]:
-            icon = PROFILE_ICONS[profile]
-            self.profile_icon.set_label(icon)
-            self.profile_icon.show()
+        icon_name = PROFILE_ICONS.get(profile)
+
+        new_icon = MaterialIcon(icon_name, size="16px") if icon_name else None
+
+        if self.profile_icon:
+            self.remove(self.profile_icon)
+
+        if new_icon:
+            self.profile_icon = new_icon
+            self.add(self.profile_icon)
         else:
-            self.profile_icon.hide()
+            if self.profile_icon:
+                self.profile_icon.hide()
+                self.profile_icon = None
+
+

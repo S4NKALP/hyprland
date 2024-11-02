@@ -1,21 +1,23 @@
-from fabric.hyprland.widgets import Language, WorkspaceButton, Workspaces
+from fabric.hyprland.widgets import Language
 from fabric.system_tray.widgets import SystemTray
-from fabric.utils import FormattedString, bulk_replace
+from fabric.utils import FormattedString, bulk_replace, exec_shell_command
 from fabric.widgets.box import Box
+from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
 from modules.bar.widgets import (
     BatteryLabel,
     Bluetooth,
+    HardwareUsage,
     MicrophoneIndicator,
+    Network,
     PowerProfile,
     TaskBar,
     VolumeIndicator,
-    Wifi,
+    workspace,
 )
-
-from .glance import OpenAppsBar
+from icon import MaterialIcon
 
 
 class Bar(Window):
@@ -29,11 +31,6 @@ class Bar(Window):
             visible=False,
             all_visible=False,
         )
-        self.workspaces = Workspaces(
-            name="workspaces",
-            spacing=4,
-            buttons=[WorkspaceButton(id=i, label=str(i)) for i in range(1, 11)],
-        )
         self.language = Language(
             formatter=FormattedString(
                 "{replace_lang(language)}",
@@ -46,17 +43,28 @@ class Bar(Window):
             ),
         )
         self.date_time = DateTime(formatters=["%-I:%M 󰧞 %a %d %b"], name="datetime")
-        self.system_tray = SystemTray(spacing=4, icon_size=18)
+        self.system_tray = SystemTray(name="tray", spacing=4, icon_size=18)
 
         self.TaskBar = TaskBar(icon_size=18)
         self.volume = VolumeIndicator()
-        self.wifi = Wifi()
+        self.network = Network()
         self.bluetooth = Bluetooth()
         self.battery = BatteryLabel(name="battery")
         self.microphone = MicrophoneIndicator()
         self.power = PowerProfile()
-        self.open_apps_bar = OpenAppsBar()
-
+        self.workspaces = Button(
+            child=workspace,
+            name="workspaces",
+            on_clicked=lambda _: exec_shell_command("wofi --show drun --fork"),
+        )
+        self.logo = Button(
+            child=MaterialIcon("search", size="16px"),
+            name="logo",
+            on_clicked=lambda _: exec_shell_command(
+                "/home/sankalp/fabric/fabric_send 'launcher.toggle()'"
+            ),
+        )
+        self.info = HardwareUsage()
         self.applets = Box(
             name="applets",
             spacing=4,
@@ -64,10 +72,9 @@ class Bar(Window):
                 self.language,
                 self.power,
                 self.bluetooth,
-                self.wifi,
+                self.network,
                 self.volume,
                 self.microphone,
-                # self.battery,
             ],
         )
         self.children = CenterBox(
@@ -76,14 +83,14 @@ class Bar(Window):
                 name="start-container",
                 spacing=8,
                 orientation="h",
-                children=self.TaskBar,
+                children=[self.logo, self.workspaces, self.info],
             ),
             center_children=Box(
                 name="center-container",
                 spacing=8,
                 orientation="h",
                 children=[
-                    self.workspaces,
+                    self.TaskBar,
                 ],
             ),
             end_children=Box(
