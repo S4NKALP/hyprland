@@ -2,64 +2,82 @@ from fabric.audio.service import Audio
 from fabric.utils import exec_shell_command, invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
+from icon import MaterialIcon
 
+VOLUME_ICONS = {
+    "muted": "volume_off",
+    "low": "volume_mute",
+    "medium-low": "volume_down",
+    "medium-high": "volume_up",
+    "high": "volume_up",
+}
 
 class VolumeIndicator(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        audio_service = Audio()
+        self.audio_service = Audio()
+        self.volume_icon_button = self.create_volume_icon()
 
-        self.audio_service = audio_service
-        self.volume_icon = Button(
-            label="󰖁",
-            style="margin-left:6px; font-size:18px;",
-            # name="symbol",
-        )
-
-        # Connect mouse button events to handle clicks
-        self.volume_icon.connect("button-press-event", self.on_button_press)
-
+        self.volume_icon_button.connect("button-press-event", self.on_button_press)
         self.audio_service.connect("changed", self.update_volume_status)
+
         invoke_repeater(1000, self.update_volume_status, initial_call=True)
-        self.children = (self.volume_icon,)
+        self.children = (self.volume_icon_button,)
+
+    def create_volume_icon(self):
+        """Create a button with a Material icon for volume."""
+        icon = MaterialIcon(VOLUME_ICONS["muted"], size="16px")
+        button = Button(child=icon)
+        button.icon_widget = icon
+        return button
 
     def on_button_press(self, widget, event):
         if event.button == 1:
-            self.on_clicked()
+            self.toggle_mute()
         elif event.button == 3:
-            self.on_right_clicked()
-        elif event.button == 2:
-            self.on_middle_clicked()
+            self.open_audio_settings()
 
-    def on_right_clicked(self):
-        exec_shell_command("pavucontrol")
-
-    def on_clicked(self):
+    def toggle_mute(self):
         current_stream = self.audio_service.speaker
         if current_stream:
             current_stream.muted = not current_stream.muted
             self.update_volume_status()
 
-    # def on_middle_clicked(self):
-    #     exec_shell_command("pavucontrol")
+    def open_audio_settings(self):
+        exec_shell_command("pavucontrol")
 
     def update_volume_status(self, *args):
         current_stream = self.audio_service.speaker
         if current_stream:
-            volume_level = current_stream.volume
-            is_muted = current_stream.muted
-
-            if is_muted:
-                self.volume_icon.set_label("󰖁")
-            else:
-                if volume_level == 0:
-                    self.volume_icon.set_label("󰝟")
-                elif volume_level <= 33:
-                    self.volume_icon.set_label("󰕿")
-                elif volume_level <= 66:
-                    self.volume_icon.set_label("󰖀")
-                else:
-                    self.volume_icon.set_label("󰕾")
+            self.update_icon(current_stream)
 
         return True
+
+    def update_icon(self, stream):
+        """Update the icon based on the current stream status."""
+        if stream.muted:
+            icon_name = VOLUME_ICONS["muted"]
+            volume_percentage = 0
+            tooltip_text = "Volume Muted"
+        else:
+            volume_level = stream.volume
+            icon_name = self.get_volume_icon(volume_level)
+            volume_percentage = int(volume_level)
+            tooltip_text = f"Volume: {volume_percentage}%"
+
+        self.volume_icon_button.icon_widget.set_label(icon_name)
+
+        self.volume_icon_button.set_tooltip_text(tooltip_text)
+
+    def get_volume_icon(self, volume_level):
+        """Determine the appropriate icon based on the volume level."""
+        if volume_level == 0:
+            return VOLUME_ICONS["low"]
+        elif volume_level <= 33:
+            return VOLUME_ICONS["medium-low"]
+        elif volume_level <= 66:
+            return VOLUME_ICONS["medium-high"]
+        else:
+            return VOLUME_ICONS["high"]
+

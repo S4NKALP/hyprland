@@ -1,33 +1,35 @@
 from fabric.audio.service import Audio
 from fabric.widgets.box import Box
-from fabric.widgets.label import Label
-
+from icon import MaterialIcon  # Import your MaterialIcon function
 
 class MicrophoneIndicator(Box):
-    def __init__(self, **kwargs):
+    ICON_MUTED = "mic_off"
+    ICON_UNMUTED = "mic"
+
+    def __init__(self,  **kwargs):
         super().__init__(**kwargs)
-        audio_service = Audio()
-        self.audio_service = audio_service
-        self.microphone_icon = Label(
-            label="󰍭",
-            name="symbol",
-            # style="font-size: 16px; margin-left:4px;",
-        )
+        self.audio_service = Audio()
+        self.microphone_icon = self.create_microphone_icon()
 
         self.audio_service.connect("microphone_changed", self.update_microphone_status)
-
         self.update_microphone_status()
 
         self.children = (self.microphone_icon,)
 
+    def create_microphone_icon(self):
+        return MaterialIcon(self.ICON_MUTED, size="16px")
+
     def update_microphone_status(self, *args):
         current_microphone = self.audio_service.microphone
+
         if current_microphone:
             is_muted = current_microphone.muted
+            icon_name = self.ICON_MUTED if is_muted else self.ICON_UNMUTED
 
-            if is_muted:
-                self.microphone_icon.set_visible(True)
-            else:
-                self.microphone_icon.set_visible(False)
+            self.microphone_icon.set_label(icon_name)
+            self.microphone_icon.set_visible(is_muted)
+        else:
+            self.microphone_icon.set_visible(False)
 
         return True
+

@@ -2,24 +2,23 @@ import psutil
 from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.label import Label
-
+from icon import MaterialIcon
 
 class BatteryLabel(Box):
+    ICONS_CHARGING = [
+        "battery_charging_20", "battery_charging_20", "battery_charging_20", "battery_charging_30", "battery_charging_30",
+        "battery_charging_50", "battery_charging_60", "battery_charging_80", "battery_charging_80",
+        "battery_charging_90", "battery_charging_full"
+    ]
+    ICONS_NOT_CHARGING = [
+        "battery_alret", "battery_1_bar", "battery_1_bar", "battery_2_bar", "battery_2_bar",
+        "battery_3_bar", "battery_4_bar", "battery_4_bar", "battery_5_bar",
+        "battery_6_bar", "battery_full"
+    ]
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.battery_icon = Label(
-            label="󰁹",
-            name="symbol",
-            # style="font-size: 16px; margin-right: 4px;",
-        )
-        self.battery_label = Label(
-            label="N/A",
-            style="font-size: 16px; margin-left: 4px;",
-        )
-
         invoke_repeater(1000, self.update_battery_status, initial_call=True)
-
-        self.children = self.battery_icon, self.battery_label
 
     def update_battery_status(self):
         battery = psutil.sensors_battery()
@@ -28,22 +27,17 @@ class BatteryLabel(Box):
             return
 
         battery_percent = round(battery.percent) if battery else 0.0
-        self.battery_label.set_label(f"{(battery_percent or 'N/A')}%")
+        battery_label = Label(label=f"{battery_percent}%")
 
         is_charging = battery.power_plugged if battery else False
+        icons = self.ICONS_CHARGING if is_charging else self.ICONS_NOT_CHARGING
 
-        icons = (
-            ["󰢟", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
-            if is_charging
-            else ["󱃍", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
-        )
-        index = min(max(battery_percent // 10, 0), 9)
+        index = min(max(battery_percent // 10, 0), 10)
+        battery_icon = MaterialIcon(icons[index], size="16px")
 
-        self.battery_icon.set_label(icons[index])
+        self.children = (battery_icon, battery_label)
 
-        if battery_percent == 100:
-            self.hide()
-        else:
-            self.show()
+        self.show() if battery_percent < 100 else self.hide()
 
         return True
+
