@@ -1,19 +1,59 @@
+import json
+import os
+import subprocess
+
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.label import Label
-from services.emoji import EmojiItem, EmojiService
+
+
+class EmojiItem:
+    def __init__(self, str: str, name: str, slug: str, group: str):
+        self.str = str
+        self.name = name
+        self.slug = slug
+        self.group = group
 
 
 class EmojiManager:
     def __init__(self, launcher):
-        self.emoji_service = EmojiService()
         self.launcher = launcher
+        self.emojis = None  # Delay loading until first use
+        self.query_cache = {}
+
+    def load_emojis(self):
+        if self.emojis is None:
+            emoji_path = os.path.expanduser("~/fabric/assets/emoji.json")
+            try:
+                with open(emoji_path, "r") as f:
+                    data = json.load(f)
+                    self.emojis = [
+                        EmojiItem(str, item["name"], item["slug"], item["group"])
+                        for str, item in data.items()
+                    ]
+            except Exception as e:
+                print(f"Error loading emojis: {e}")
+                self.emojis = []
 
     def query_emojis(self, query: str):
-        return self.emoji_service.query(query)
+        # Return cached results if available
+        if query in self.query_cache:
+            return self.query_cache[query]
+
+        self.load_emojis()  # Ensure emojis are loaded
+
+        filtered_emojis = [
+            e
+            for e in self.emojis
+            if query in e.name or query in e.slug or query in e.group
+        ][:44]
+
+        # Cache the results
+        self.query_cache[query] = filtered_emojis
+        return filtered_emojis
 
     def copy_emoji(self, emoji: EmojiItem):
-        self.emoji_service.copy(emoji)
+        subprocess.run(["wl-copy"], input=emoji.str.encode(), check=True)
         self.launcher.set_visible(False)
 
     def show_emojis(self, viewport, query: str):

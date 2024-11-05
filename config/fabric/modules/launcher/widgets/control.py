@@ -4,7 +4,6 @@ from fabric.utils import exec_shell_command
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.label import Label
-from loguru import logger
 from services.inhibit import Inhibit
 
 
@@ -133,7 +132,6 @@ class DesktopButtonManager:
 
         exec_shell_command(command)
         self.show_desktop_buttons()
-        logger.info("Toggled Power Profile to:", command.split()[-1])
 
     def check_power_profile_state(self):
         result = exec_shell_command("powerprofilesctl get")
@@ -145,7 +143,6 @@ class DesktopButtonManager:
         command = "nmcli radio wifi on" if not state else "nmcli radio wifi off"
         exec_shell_command(command)
         self.show_desktop_buttons()
-        logger.info("Toggled Wi-Fi.")
 
     def check_wifi_state(self):
         result = exec_shell_command("nmcli radio wifi")
@@ -156,7 +153,6 @@ class DesktopButtonManager:
         command = "bluetoothctl power on" if not state else "bluetoothctl power off"
         exec_shell_command(command)
         self.show_desktop_buttons()
-        logger.info("Toggled Bluetooth.")
 
     def check_bluetooth_state(self):
         result = exec_shell_command("bluetoothctl show")
@@ -166,7 +162,6 @@ class DesktopButtonManager:
         command = os.path.expanduser("~/fabric/assets/scripts/dark-theme.sh --toggle")
         exec_shell_command(command)
         self.show_desktop_buttons()
-        logger.info("Toggled Dark Mode.")
 
     def check_dark_mode_state(self):
         result = exec_shell_command(
@@ -178,11 +173,6 @@ class DesktopButtonManager:
     def toggle_idle_mode(self, *_):
         self.inhibit_service.toggle()
         self.show_desktop_buttons()
-        logger.info(
-            "Idle mode activated."
-            if self.inhibit_service.is_inhibit
-            else "Idle mode deactivated."
-        )
 
     def toggle_dnd(self, *_):
         current_state = self.check_dnd_state()
@@ -193,7 +183,6 @@ class DesktopButtonManager:
         )
         exec_shell_command(command)
         self.show_desktop_buttons()
-        logger.info("Toggled Do Not Disturb.")
 
     def check_dnd_state(self):
         result = exec_shell_command(
