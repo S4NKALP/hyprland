@@ -22,17 +22,18 @@
 > [!NOTE]
 > This repository is in the alpha stage and primarily for personal use. The organization and configurations may change significantly in the future.
 
+### Features
+
+**TODO**
+
 ### Showcase:
 
-For Now
 <img src ="assets/rice.png">
 
-New Showcase Coming Soon.
-
-### Credits
-
-will be added soon
-
 ### Installation
+
+**TODO**
+
+### Acknowledgements
 
 **TODO**
