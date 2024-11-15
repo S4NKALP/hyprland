@@ -2,7 +2,7 @@ from fabric.audio.service import Audio
 from fabric.utils import exec_shell_command, invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
-from icon import MaterialIcon
+from services.icon import MaterialIcon
 
 VOLUME_ICONS = {
     "muted": "volume_off",
@@ -11,6 +11,7 @@ VOLUME_ICONS = {
     "medium-high": "volume_up",
     "high": "volume_up",
 }
+
 
 class VolumeIndicator(Box):
     def __init__(self, **kwargs):
@@ -26,7 +27,6 @@ class VolumeIndicator(Box):
         self.children = (self.volume_icon_button,)
 
     def create_volume_icon(self):
-        """Create a button with a Material icon for volume."""
         icon = MaterialIcon(VOLUME_ICONS["muted"], size="16px")
         button = Button(child=icon)
         button.icon_widget = icon
@@ -80,4 +80,3 @@ class VolumeIndicator(Box):
             return VOLUME_ICONS["medium-high"]
         else:
             return VOLUME_ICONS["high"]
-

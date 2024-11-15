@@ -1,12 +1,13 @@
 from fabric.utils import exec_shell_command, invoke_repeater
 from fabric.widgets.box import Box
-from icon import MaterialIcon
+from services.icon import MaterialIcon
 
 PROFILE_ICONS = {
     "power-saver": "data_saver_on",
     "balanced": None,
     "performance": "mode_heat",
 }
+
 
 class PowerProfile(Box):
     def __init__(self, **kwargs):
@@ -40,5 +41,3 @@ class PowerProfile(Box):
             if self.profile_icon:
                 self.profile_icon.hide()
                 self.profile_icon = None
-
-

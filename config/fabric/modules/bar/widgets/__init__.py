@@ -1,5 +1,6 @@
 from .battery import *
 from .bluetooth import *
+from .idle_indicator import *
 from .info import *
 from .microphone import *
 from .network import *

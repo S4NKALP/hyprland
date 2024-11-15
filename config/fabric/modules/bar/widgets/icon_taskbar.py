@@ -1,15 +1,12 @@
 import json
-import os
 from typing import TypedDict
 
-from gi.repository import GdkPixbuf, GLib, Gtk
-from loguru import logger
-
 from fabric.hyprland.widgets import get_hyprland_connection
-from fabric.utils import exec_shell_command
+from fabric.utils import DesktopApp, exec_shell_command, get_desktop_applications
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.image import Image
+from gi.repository import GdkPixbuf, GLib, Gtk
 
 
 class PagerClient(TypedDict):
@@ -21,7 +18,7 @@ class PagerClient(TypedDict):
 
 
 class TaskBar(Box):
-    def __init__(self, icon_size: int = 24, **kwargs):
+    def __init__(self, icon_size: int = 18, **kwargs):
         super().__init__(
             orientation="h",
             spacing=7,
@@ -82,7 +79,6 @@ class TaskBar(Box):
             self.set_visible(False)
 
     def get_active_window_address(self) -> str:
-        # Fetch the address of the currently active window
         active_window_info = json.loads(
             self.connection.send_command("j/activewindow").reply.decode()
         )
@@ -97,36 +93,25 @@ class TaskBar(Box):
     def bake_window_icon(
         self, window_class: str, fallback_icon: str = "image-missing"
     ) -> Image:
-        icon_name = self.get_icon_from_desktop_entry(window_class)
+        icon = self.get_application_icon(window_class, fallback_icon)
+        return Image(pixbuf=icon, size=self.icon_size)
 
-        if icon_name:
-            pixbuf = self.load_icon(icon_name)
-        else:
-            pixbuf = self.load_icon(window_class, fallback_icon)
+    def get_application_icon(
+        self, window_class: str, fallback_icon: str
+    ) -> GdkPixbuf.Pixbuf:
+        app = self.get_app_by_window_class(window_class)
+        if app:
+            pixbuf = app.get_icon_pixbuf()
+            if pixbuf:
+                return pixbuf
 
-        return Image(pixbuf=pixbuf, size=self.icon_size)
+        return self.load_icon(fallback_icon)
 
-    def get_icon_from_desktop_entry(self, window_class: str) -> str:
-        for data_dir in GLib.get_system_data_dirs():
-            applications_dir = os.path.join(data_dir, "applications")
-
-            if os.path.isdir(applications_dir):
-                for desktop_file in os.listdir(applications_dir):
-                    if desktop_file.endswith(".desktop"):
-                        file_path = os.path.join(applications_dir, desktop_file)
-                        try:
-                            with open(file_path, "r") as f:
-                                app_name = None
-                                icon_name = None
-                                for line in f:
-                                    if line.startswith("Name="):
-                                        app_name = line.split("=", 2)[1].strip().lower()
-                                    elif line.startswith("Icon=") and app_name:
-                                        icon_name = line.split("=", 2)[1].strip()
-                                        if window_class in app_name:
-                                            return icon_name
-                        except Exception as e:
-                            logger.error(f"Error reading {file_path}: {e}")
+    def get_app_by_window_class(self, window_class: str) -> DesktopApp | None:
+        all_apps = get_desktop_applications()
+        for app in all_apps:
+            if window_class.lower() in (app.display_name or "").lower():
+                return app
         return None
 
     def load_icon(
