@@ -1,12 +1,20 @@
-from fabric.utils import get_desktop_applications, idle_add, remove_handler
+import os
+
+from fabric.utils import (
+    exec_shell_command,
+    exec_shell_command_async,
+    get_desktop_applications,
+    idle_add,
+    remove_handler,
+)
 from fabric.widgets.box import Box
 from fabric.widgets.entry import Entry
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.scrolledwindow import ScrolledWindow
 from fabric.widgets.wayland import WaylandWindow as Window
+from loguru import logger
 from modules.launcher.widgets import (
     ClipboardManager,
-    DesktopButtonManager,
     EmojiManager,
     ShellCommandManager,
     WallpaperManager,
@@ -18,7 +26,6 @@ class Launcher(Window):
     COMMAND_ICONS = {
         "/e": "face-smile-symbolic",
         "/c": "edit-copy-symbolic",
-        "/d": "applications-system-symbolic",
         "/s": "utilities-terminal-symbolic",
         "/w": "image-symbolic",
     }
@@ -43,7 +50,7 @@ class Launcher(Window):
         self.emoji_manager = EmojiManager(self)
         self.shell_command_manager = ShellCommandManager(self)
         self.wallpaper_manager = WallpaperManager()
-        self.desktop_button_manager = DesktopButtonManager(self.get_viewport())
+        self.idle_inhibitor = False
 
     def setup_ui(self):
         self.scrolled_window = self.create_scrolled_window()
@@ -107,9 +114,9 @@ class Launcher(Window):
         command_handlers = {
             "/e": self.show_emojis,
             "/c": self.show_clipboard_history,
-            "/d": self.show_desktop_buttons,
             "/s": self.show_shell_commands,
             "/w": self.show_wallpapers,
+            "/idle": self.toggle_idle_inhibitor,
         }
 
         for command, handler in command_handlers.items():
@@ -136,8 +143,8 @@ class Launcher(Window):
     def reset_search_icon(self):
         self.entry.set_icon_from_icon_name(0, "preferences-system-search-symbolic")
 
-    def show_desktop_buttons(self, query: str):
-        self.desktop_button_manager.show_desktop_buttons(query)
+    # def show_desktop_buttons(self, query: str):
+    # self.desktop_button_manager.show_desktop_buttons(query)
 
     def show_emojis(self, query: str):
         self.emoji_manager.show_emojis(self.get_viewport(), query)
@@ -156,6 +163,26 @@ class Launcher(Window):
             self.wallpaper_manager.apply_wallpaper_random()
         else:
             self.wallpaper_manager.show_wallpaper_thumbnails(self.get_viewport(), query)
+
+    def toggle_idle_inhibitor(self, query: str):
+
+        self.idle_inhibitor = not self.idle_inhibitor
+        script_path = os.path.expanduser(
+            "~/fabric/assets/scripts/wayland-idle-inhibitor.py"
+        )
+
+        if self.idle_inhibitor and not self.check_idle_state():
+            exec_shell_command_async(
+                ["python3", script_path],
+                lambda output: logger.info(f"Idle inhibitor output: {output}"),
+            )
+        else:
+            exec_shell_command("pkill -f wayland-idle-inhibitor.py")
+
+    def check_idle_state(self):
+        return "wayland-idle-inhibitor.py" in exec_shell_command(
+            "pidof wayland-idle-inhibitor.py"
+        )
 
     def toggle(self):
         self.set_visible(not self.is_visible())
