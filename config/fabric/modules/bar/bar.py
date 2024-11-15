@@ -1,16 +1,16 @@
 from fabric.hyprland.widgets import Language
 from fabric.system_tray.widgets import SystemTray
-from fabric.utils import FormattedString, bulk_replace, exec_shell_command
+from fabric.utils import FormattedString, bulk_replace
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
-from icon import MaterialIcon
 from modules.bar.widgets import (
     BatteryLabel,
     Bluetooth,
     HardwareUsage,
+    IdleIndicator,
     MicrophoneIndicator,
     Network,
     PowerProfile,
@@ -44,7 +44,7 @@ class Bar(Window):
         )
         self.date_time = DateTime(formatters=["%-I:%M 󰧞 %a %d %b"], name="datetime")
         self.system_tray = SystemTray(name="tray", spacing=4, icon_size=18)
-        self.TaskBar = TaskBar(icon_size=18)
+        self.taskbar = TaskBar(icon_size=18)
         self.volume = VolumeIndicator()
         self.network = Network()
         self.bluetooth = Bluetooth()
@@ -53,6 +53,7 @@ class Bar(Window):
         self.power = PowerProfile()
         self.workspaces = Button(child=workspace, name="workspaces")
         self.info = HardwareUsage()
+        self.idle = IdleIndicator()
         self.applets = Box(
             name="applets",
             spacing=4,
@@ -63,6 +64,7 @@ class Bar(Window):
                 self.network,
                 self.volume,
                 self.microphone,
+                self.idle,
             ],
         )
         self.children = CenterBox(
@@ -81,7 +83,7 @@ class Bar(Window):
                 spacing=8,
                 orientation="h",
                 children=[
-                    self.TaskBar,
+                    self.taskbar,
                 ],
             ),
             end_children=Box(

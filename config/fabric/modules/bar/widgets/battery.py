@@ -1,19 +1,37 @@
 import psutil
+
 from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.label import Label
-from icon import MaterialIcon
+from services.icon import MaterialIcon
+
 
 class BatteryLabel(Box):
     ICONS_CHARGING = [
-        "battery_charging_20", "battery_charging_20", "battery_charging_20", "battery_charging_30", "battery_charging_30",
-        "battery_charging_50", "battery_charging_60", "battery_charging_80", "battery_charging_80",
-        "battery_charging_90", "battery_charging_full"
+        "battery_charging_20",
+        "battery_charging_20",
+        "battery_charging_20",
+        "battery_charging_30",
+        "battery_charging_30",
+        "battery_charging_50",
+        "battery_charging_60",
+        "battery_charging_80",
+        "battery_charging_80",
+        "battery_charging_90",
+        "battery_charging_full",
     ]
     ICONS_NOT_CHARGING = [
-        "battery_alret", "battery_1_bar", "battery_1_bar", "battery_2_bar", "battery_2_bar",
-        "battery_3_bar", "battery_4_bar", "battery_4_bar", "battery_5_bar",
-        "battery_6_bar", "battery_full"
+        "battery_alert",
+        "battery_1_bar",
+        "battery_1_bar",
+        "battery_2_bar",
+        "battery_2_bar",
+        "battery_3_bar",
+        "battery_4_bar",
+        "battery_4_bar",
+        "battery_5_bar",
+        "battery_6_bar",
+        "battery_full",
     ]
 
     def __init__(self, **kwargs):
@@ -40,4 +58,3 @@ class BatteryLabel(Box):
         self.show() if battery_percent < 100 else self.hide()
 
         return True
-

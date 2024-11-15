@@ -1,17 +1,19 @@
 import psutil
+
 from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
+from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.label import Label
 from fabric.widgets.overlay import Overlay
-from fabric.widgets.circularprogressbar import CircularProgressBar
-from icon import MaterialIcon  # Import your updated MaterialIcon function
+from services.icon import MaterialIcon
+
 
 class HardwareUsage(Button):
     HARDWARE_ITEMS = [
-        ("CPU", "settings_motion_mode"),          # Pass the Material icon name directly
+        ("CPU", "settings_motion_mode"),
         ("Swap", "swap_horiz"),
-        ("RAM", "memory"),
+        ("RAM", "memory_alt"),
     ]
 
     def __init__(self):
@@ -33,16 +35,21 @@ class HardwareUsage(Button):
         return self.box
 
     def _create_progress_bar(self):
-        return CircularProgressBar(name="progress", pie=True, size=30)
+        return CircularProgressBar(
+            name="progress", line_style="round", line_width=1, size=30
+        )
 
     def _pack_items(self, hardware):
-        overlay = Overlay(child=self.progress_bars[hardware], overlays=self.icons[hardware])
+        overlay = Overlay(
+            child=self.progress_bars[hardware], overlays=self.icons[hardware]
+        )
         self.box.pack_start(overlay, False, False, 0)
         self.box.pack_start(self.labels[hardware], False, False, 0)
 
     def _update_labels(self):
         usages = self._get_hardware_usages()
         self._update_progress_bars(usages)
+        return True
 
     def _get_hardware_usages(self):
         return {
@@ -56,4 +63,3 @@ class HardwareUsage(Button):
             self.progress_bars[hardware].value = usage / 100
             self.labels[hardware].set_label(f"{usage}%")
             self.progress_bars[hardware].set_tooltip_text(f"{hardware} Usage: {usage}%")
-

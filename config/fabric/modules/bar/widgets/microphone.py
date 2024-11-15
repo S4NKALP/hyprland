@@ -1,12 +1,13 @@
 from fabric.audio.service import Audio
 from fabric.widgets.box import Box
-from icon import MaterialIcon  # Import your MaterialIcon function
+from services.icon import MaterialIcon  # Import your MaterialIcon function
+
 
 class MicrophoneIndicator(Box):
     ICON_MUTED = "mic_off"
     ICON_UNMUTED = "mic"
 
-    def __init__(self,  **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.audio_service = Audio()
         self.microphone_icon = self.create_microphone_icon()
@@ -32,4 +33,3 @@ class MicrophoneIndicator(Box):
             self.microphone_icon.set_visible(False)
 
         return True
-
