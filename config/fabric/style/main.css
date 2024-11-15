@@ -1,3 +1,4 @@
+@import url(../../.cache/material/colors.css);
 * {
   all: unset;
   color: @foreground;
@@ -13,14 +14,6 @@
 #bar label {
   font-weight: bold;
 }
-
-#symbol,
-#symbol * {
-  all: unset;
-  margin: 2px;
-  font-size: 18px;
-}
-
 #start-container,
 #center-container,
 #end-container {
@@ -30,50 +23,49 @@
   margin-right: 12px;
 }
 
+#progress {
+  color: transparent;
+  background-color: transparent;
+}
+
+#material_icon,
+#material_icon * {
+  all: unset;
+  font-family: "Material Symbols Outlined", "Material Symbols Sharp";
+}
+#progress {
+  border: solid 0px @outlineVariant;
+}
+
+#logo {
+  font-size: 18px;
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 0px;
+  min-width: 35px;
+}
+
+#logo:hover {
+  background-color: mix(@secondaryContainer, @onSecondaryContainer, 0.05);
+  box-shadow: 00px 3px 3px -2px rgba(0, 0, 0, 0.2);
+}
+
+#logo:active {
+  background-image: radial-gradient(
+    circle,
+    mix(@secondaryContainer, @onSecondaryContainer, 0.1) 10%,
+    transparent 0%
+  );
+  box-shadow: none;
+}
+
 #workspaces {
   border-radius: 100px;
   font-weight: bold;
   font-style: normal;
   color: @onSurface;
   background: @surfaceContainer;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-#workspaces > button {
-  padding: 0px 5px;
-  margin: 4px 0px;
-  margin-right: 3px;
-  border-radius: 100px;
-  min-width: 20px;
-  border: 0px;
-}
-
-#workspaces > button:last-child {
-  margin-right: 0px;
-}
-
-#workspaces > button label {
-  color: @onSurface;
-  font-weight: bold;
-}
-
-#workspaces > button:hover {
-  color: @onSurface;
-  background-color: mix(@onSurface, @surface, 0.85);
-}
-
-#workspaces > button.active {
-  background: @secondaryContainer;
-}
-
-#workspaces > button.active label {
-  color: @onSecondaryContainer;
-}
-
-#workspaces > button.empty {
-  color: @onSurfaceVariant;
-  opacity: 0.6;
+  padding: 0px 10px 0px 10px;
 }
 
 #datetime {
@@ -120,6 +112,11 @@
 
 #tray image {
   color: @onSurface;
+}
+
+#progress {
+  color: lighter(@outlineVariant);
+  border: 2px solid @onSecondaryContainer;
 }
 
 #applets {
@@ -234,7 +231,6 @@ tooltip label {
   background-color: transparent;
   background-image: none;
   box-shadow: none;
-  padding: 7px;
 }
 
 #launcher button:focus {
@@ -280,7 +276,7 @@ tooltip label {
   background-image: none;
   box-shadow: none;
   transition: 200ms;
-  padding: 7pt;
+  padding: 7px;
 }
 
 #launcher button#app-item:hover #title,
@@ -347,6 +343,23 @@ tooltip label {
   text-shadow: 2px 2px 2px @primary;
 }
 
+#launcher button#wall-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  padding: 7px;
+}
+
+#launcher button#wall-item:disabled {
+  color: mix(@onSurface, transparent, 0.38);
+}
+
+#launcher button#wall-item:hover,
+#launcher button#wall-item:focus {
+  background-color: mix(@onSurfaceVariant, @surface, 0.9);
+}
+
 #launcher button#cliphist-item {
   border-radius: 11px;
   background-color: transparent;
@@ -354,12 +367,26 @@ tooltip label {
   box-shadow: none;
 }
 
-window#launcher button#cliphist-item:disabled {
+#launcher button#cliphist-item:disabled {
   color: mix(@onSurface, transparent, 0.38);
 }
 
 #launcher button#cliphist-item:hover,
 #launcher button#cliphist-item:focus {
+  text-shadow: 2px 2px 2px @primary;
+}
+
+#launcher button#cliphist-img-item {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  min-width: 70px;
+  min-height: 70px;
+}
+
+#launcher button#cliphist-img-item:hover,
+#launcher button#cliphist-img-item:focus {
   text-shadow: 2px 2px 2px @primary;
 }
 
@@ -389,44 +416,6 @@ window#launcher button#cliphist-item:disabled {
 #launcher button#help-item:hover label,
 #launcher button#help-item:focus label {
   text-shadow: 2px 2px 2px @primary;
-}
-
-:vars {
-  --accent: #009cd4;
-
-  --bg_h: #1d2021;
-  --bg: #1e1e1e;
-  --bg_s: #32302f;
-  --bg1: #3c3836;
-  --bg2: #504945;
-  --bg3: #665c54;
-  --bg4: #7c6f64;
-
-  --fg: #e2e2e0;
-  --fg1: #ebdbb2;
-  --fg2: #d5c4a1;
-  --fg3: #bdae93;
-  --fg4: #a89984;
-
-  --red: #fb4934;
-  --green: #4bbb26;
-  --yellow: #ffe600;
-  --blue: #83a598;
-  --purple: #d3869b;
-  --aqua: #8ec07c;
-  --gray: #928374;
-  --orange: #fe8019;
-
-  --red-dim: #cc2412;
-  --green-dim: #98971a;
-  --yellow-dim: #d79921;
-  --blue-dim: #458588;
-  --purple-dim: #b16286;
-  --aqua-dim: #689d6a;
-  --gray-dim: #a89984;
-  --orange-dim: #d65d0e;
-
-  --placeholder_text_color: rgb(255, 255, 255);
 }
 
 #osd-corner {
@@ -461,11 +450,49 @@ window#launcher button#cliphist-item:disabled {
 
 #on-screen-display {
   border-left-width: 5px;
-  border-color: var(--accent);
+  border-color: @outlineVariant;
   border-style: solid;
   min-height: 300px;
   background-color: alpha(@background, 0.9);
   padding: 20px;
   border-top-left-radius: 50px;
   border-bottom-left-radius: 50px;
+}
+
+#notification {
+  padding: 16px;
+  border: solid 1px @outlineVariant;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  background-color: @surfaceContainerLow;
+  min-width: 400px;
+}
+
+#notification .summary {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#notification .body {
+  color: darker(@foreground);
+  font-weight: normal;
+}
+
+#notification_action_button button.start-action {
+  margin-left: 0;
+}
+
+#notification_action_button button.end-action {
+  margin-right: 0;
+}
+
+#notification_action_button button {
+  padding: 0.6rem;
+  font-weight: 600;
+  border-radius: 3rem;
+  background-color: @outlineVariant;
+}
+
+#notification_action_button button:hover {
+  background-color: lighter(@outlineVariant);
 }

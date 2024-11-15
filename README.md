@@ -21,6 +21,9 @@ This repository contains my personal dotfiles and configuration files. It's curr
 
 ### How it looks:
 
+For Now
+<img src ="assets/rice.png">
+
 New Showcase Coming Soon.
 
 ### Credits
