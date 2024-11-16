@@ -418,45 +418,46 @@ tooltip label {
   text-shadow: 2px 2px 2px @primary;
 }
 
-#osd-corner {
-  padding-left: 45px;
+#osd-container {
+  background: @surfaceContainer;
+  padding: 12px;
+  border-radius: 14px;
+  margin-bottom: 16px;
 }
 
-#osd-icon image {
-  color: @foreground;
+#osd-container scale {
+  min-width: 150px;
 }
 
-#osd-corner * {
-  background-color: alpha(@background, 0.9);
+#osd-container slider {
+  color: @onPrimary;
+  background-color: @primary;
+  background-size: 20px 20px;
+  min-width: 5px;
+  min-height: 14px;
+  border-radius: 100px;
+  padding: 0px;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: -16px;
+  margin-bottom: -16px;
+  box-shadow:
+    -4px 0px 0px 1px @surfaceContainer,
+    4px 0px 0px 1px @surfaceContainer;
 }
 
-#osd-progress-bar *.filled {
-  background-color: @foreground;
-  box-shadow: 0px 0px 2px 1px @foreground;
+#osd-container trough {
+  background: @secondaryContainer;
+  min-height: 10px;
+  margin-right: 4px;
+  border-radius: 100px;
 }
 
-#osd-progress-bar * {
-  border-radius: 30px;
-  background-color: #202020;
-  transition-property: background-color, box-shadow;
-  transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
-  /* transition: background-color 0.3s cubic-bezier(.42,0,.58,1); */
-}
-#osd-progress-bar {
-  margin: 10px 5px 10px 5px;
-  border-radius: 30px;
-}
-
-#on-screen-display {
-  border-left-width: 5px;
-  border-color: @outlineVariant;
-  border-style: solid;
-  min-height: 300px;
-  background-color: alpha(@background, 0.9);
-  padding: 20px;
-  border-top-left-radius: 50px;
-  border-bottom-left-radius: 50px;
+#osd-container highlight {
+  border-radius: 100px 0px 0px 100px;
+  background: @primary;
 }
 
 #notification {

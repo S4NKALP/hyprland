@@ -1,8 +1,9 @@
 import os
 
-from fabric.core.service import Service, Signal, Property
-from fabric.utils import exec_shell_command, exec_shell_command_async, monitor_file
 from gi.repository import GLib
+
+from fabric.core.service import Property, Service, Signal
+from fabric.utils import exec_shell_command, exec_shell_command_async, monitor_file
 
 # In the future, use GUdev to get ehe brightness devices
 
@@ -36,12 +37,10 @@ class Brightness(Service):
     # )
 
     @Signal
-    def screen(self, value: int) -> None:
-        ...
+    def screen(self, value: int) -> None: ...
 
     @Signal
-    def kbd(self, value: int) -> None:
-        ...
+    def kbd(self, value: int) -> None: ...
 
     def __init__(self, **kwargs):
         self.screen_backlight_path = "/sys/class/backlight/" + screen
