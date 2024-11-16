@@ -1,9 +1,10 @@
 import subprocess
 
 import psutil
+
 from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
-from services.icon import MaterialIcon
+from services import MaterialIcon
 
 
 class Network(Box):

@@ -1,6 +1,6 @@
 from fabric.bluetooth import BluetoothClient
 from fabric.widgets.box import Box
-from services.icon import MaterialIcon  # Import your MaterialIcon function
+from services import MaterialIcon  # Import your MaterialIcon function
 
 
 class Bluetooth(Box):
