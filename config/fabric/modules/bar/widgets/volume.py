@@ -2,7 +2,7 @@ from fabric.audio.service import Audio
 from fabric.utils import exec_shell_command, invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
-from services.icon import MaterialIcon
+from services import MaterialIcon
 
 VOLUME_ICONS = {
     "muted": "volume_off",

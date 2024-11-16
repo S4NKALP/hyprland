@@ -6,7 +6,7 @@ from fabric.widgets.button import Button
 from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.label import Label
 from fabric.widgets.overlay import Overlay
-from services.icon import MaterialIcon
+from services import MaterialIcon
 
 
 class HardwareUsage(Button):
