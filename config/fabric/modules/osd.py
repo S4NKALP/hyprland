@@ -1,229 +1,202 @@
-import os
-from typing import Literal
+import time
 
+from fabric import Application
 from fabric.audio import Audio
+from fabric.utils import get_relative_path
 from fabric.widgets.box import Box
 from fabric.widgets.image import Image
-from fabric.widgets.revealer import Revealer
-from fabric.widgets.shapes import Corner
+from fabric.widgets.scale import Scale, ScaleMark
 from fabric.widgets.wayland import WaylandWindow as Window
-from fabric.widgets.widget import Widget
-from gi.repository import GLib
-from services.brightness import Brightness
-
-audio = Audio()
-brightness = Brightness()
-# TODO: use progressbar or custom cairo widget so that I can update the accent color with css
-accent = "#82C480"
+from gi.repository import GLib, GObject
+from services import Brightness
+from snippets import Animator
 
 
-# This is only for OSD, I don' want or need an inhibitor for this
-class PopupWindow(Window):
-    def __init__(
-        self,
-        child: Widget | None = None,
-        transition_type: Literal[
-            "none",
-            "crossfade",
-            "slide-right",
-            "slide-left",
-            "slide-up",
-            "slide-down",
-        ] = "none",
-        transition_duration: int = 100,
-        visible: bool = False,
-        anchor: str = "top right",
-        keyboard_mode: Literal["none", "exclusive", "on-demand"] = "on-demand",
-        timeout: int = 1000,
-        decorations: str = "margin: 1px",
-        **kwargs,
-    ):
-        self.timeout = timeout
-        self.currtimeout = 0
-        self.popup_running = False
-
-        self.revealer = Revealer(
-            child=child,
-            transition_type=transition_type,
-            transition_duration=transition_duration,
-            visible=False,
-        )
-        self.visible = visible
-        super().__init__(
-            layer="overlay",
-            anchor=anchor,
-            all_visible=False,
-            visible=False,
-            exclusive=False,
-            child=Box(style=decorations, children=self.revealer),
-            keyboard_mode=keyboard_mode,
-            **kwargs,
-        )
-        self.set_can_focus = False
-
-        self.revealer.connect(
-            "notify::child-revealed",
-            lambda revealer, is_reveal: (
-                revealer.hide() if not revealer.get_child_revealed() else None
-            ),
-        )
-
-        self.show()
-
-    def toggle_popup(self):
-        if not self.visible:
-            self.revealer.show()
-        self.visible = not self.visible
-        self.revealer.set_reveal_child(self.visible)
-
-    def toggle_popup_offset(self, offset, toggle_width):
-        if not self.visible:
-            self.revealer.show()
-        self.visible = not self.visible
-        self.revealer.set_reveal_child(self.visible)
-        self.revealer.set_margin_start(
-            offset - (self.revealer.get_allocated_width() - toggle_width) / 2
-        )
-
-    def popup_timeout(self):
-        if not self.visible:
-            self.revealer.show()
-        if self.popup_running:
-            self.currtimeout = 0
-            return
-        self.visible = True
-        self.revealer.set_reveal_child(self.visible)
-        self.popup_running = True
-
-        def popup_func():
-            if self.currtimeout >= self.timeout:
-                self.visible = False
-                self.revealer.set_reveal_child(self.visible)
-                self.currtimeout = 0
-                self.popup_running = False
-                return False
-            self.currtimeout += 500
-            return True
-
-        GLib.timeout_add(500, popup_func)
-
-
-class ProgressBar(Box):
-    def __init__(self, progress_ticks: int = 10):
-        self.progress_filled_class = "filled"
-        self.total_progress_ticks = progress_ticks
-        self.visible_progress_ticks = progress_ticks
-        self.tick_boxes = [
-            Box(v_expand=True, h_expand=True) for _ in range(self.total_progress_ticks)
-        ]
-        super().__init__(
-            name="osd-progress-bar",
-            spacing=5,
-            v_expand=True,
-            h_expand=True,
-            orientation="v",
-            children=self.tick_boxes,
-        )
-
-    def set_tick_number(self, ticks: int):
-        self.visible_progress_ticks = ticks
-        for child in super().children:
-            child.set_visible(True)
-        for i in range(self.total_progress_ticks - ticks):
-            super().children[i].set_visible(False)
-
-    def set_progress_filled(self, percent: float):
-        # TODO: rework this later, just to get it working, am sleepy frfr
-        for child in super().children:
-            child.remove_style_class(self.progress_filled_class)
-        for tick in range(int(self.visible_progress_ticks * percent)):
-            super().children[-(tick + 1)].add_style_class(self.progress_filled_class)
-
-
-class SystemOSD(PopupWindow):
+class AnimatedScale(Scale):
     def __init__(self, **kwargs):
-        self.disp_backlight_path = "/sys/class/backlight/intel_backlight/"
-        self.kbd_backlight_path = "/sys/class/leds/tpacpi::kbd_backlight/"
-        self.max_disp_backlight = brightness.max_screen
-        self.max_kbd_backlight = brightness.max_kbd
-        self.brightness = brightness
-        self.disp_backlight = 0
-        self.kbd_backlight = 0
-        self.vol = 0
-        self.progress_bar = ProgressBar(progress_ticks=20)
-        self.overlay_fill_box = Box(name="osd-box")
-        self.icon = Image()
+        super().__init__(**kwargs)
+        self.animator = Animator(
+            bezier_curve=(0.34, 1.56, 0.64, 1.0),
+            duration=0.8,
+            min_value=self.min_value,
+            max_value=self.value,
+            tick_widget=self,
+            notify_value=lambda p, *_: self.set_value(p.value),
+        )
+
+    def animate_value(self, value: float):
+        self.animator.pause()
+        self.animator.min_value = self.value
+        self.animator.max_value = value
+        self.animator.play()
+
+
+class BrightnessOSDContainer(Box):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs, orientation="h", spacing=12, name="osd-container")
+        self.brightness_service = Brightness()
+        self.icon = self._create_icon("display-brightness-symbolic", 28)
+        self.scale = self._create_brightness_scale()
+
+        self.add(self.icon)
+        self.add(self.scale)
+        self.update_brightness()
+
+        self.scale.connect("value-changed", lambda *_: self.update_brightness())
+        self.brightness_service.connect("screen", self.on_brightness_changed)
+
+    def _create_icon(self, icon_name: str, pixel_size: int) -> Image:
+        icon = Image(icon_name=icon_name)
+        icon.set_pixel_size(pixel_size)
+        return icon
+
+    def _create_brightness_scale(self) -> AnimatedScale:
+        return AnimatedScale(
+            marks=(ScaleMark(value=i) for i in range(1, 100, 10)),
+            value=70,
+            min_value=0,
+            max_value=100,
+            increments=(1, 1),
+            orientation="h",
+        )
+
+    def update_brightness(self):
+        current_brightness = self.brightness_service.screen_brightness
+        if current_brightness != 0:
+            normalized_brightness = (
+                current_brightness / self.brightness_service.max_screen
+            ) * 101
+            self.scale.animate_value(normalized_brightness)
+
+    def on_brightness_changed(self, sender, value, *args):
+        normalized_brightness = (value / self.brightness_service.max_screen) * 101
+        self.scale.animate_value(normalized_brightness)
+
+
+class AudioOSDContainer(Box):
+    __gsignals__ = {
+        "volume-changed": (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE, ()),
+    }
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs, orientation="h", spacing=13, name="osd-container")
+        self.audio = Audio()
+        self.icon = self._create_icon("audio-volume-medium-symbolic", 29)
+        self.scale = self._create_audio_scale()
+
+        self.add(self.icon)
+        self.add(self.scale)
+        self.sync_with_audio()
+
+        self.scale.connect("value-changed", self.on_volume_changed)
+        self.audio.connect("notify::speaker", self.on_audio_speaker_changed)
+
+    def _create_icon(self, icon_name: str, pixel_size: int) -> Image:
+        icon = Image(icon_name=icon_name)
+        icon.set_pixel_size(pixel_size)
+        return icon
+
+    def _create_audio_scale(self) -> AnimatedScale:
+        return AnimatedScale(
+            marks=(ScaleMark(value=i) for i in range(1, 100, 10)),
+            value=70,
+            min_value=0,
+            max_value=100,
+            increments=(1, 1),
+            orientation="h",
+        )
+
+    def sync_with_audio(self):
+        if self.audio.speaker:
+            volume = round(self.audio.speaker.volume)
+            self.scale.set_value(volume)
+            self.update_icon(volume)
+
+    def on_volume_changed(self, *_):
+        if self.audio.speaker:
+            volume = self.scale.value
+            if 1 <= volume <= 100:
+                self.audio.speaker.set_volume(volume)
+                self.update_icon(volume)
+                self.emit("volume-changed")
+
+    def on_audio_speaker_changed(self, *_):
+        if self.audio.speaker:
+            self.audio.speaker.connect("notify::volume", self.update_volume)
+            self.update_volume()
+
+    def update_volume(self, *_):
+        if self.audio.speaker and not self.is_hovered():
+            volume = round(self.audio.speaker.volume)
+            self.scale.set_value(volume)
+            self.update_icon(volume)
+
+    def update_icon(self, volume):
+        icon_name = self._get_audio_icon_name(volume)
+        self.icon.set_from_icon_name(icon_name)
+
+    def _get_audio_icon_name(self, volume: int) -> str:
+        if volume >= 81:
+            return "audio-volume-high-symbolic"
+        elif volume < 51:
+            return "audio-volume-low-symbolic"
+        else:
+            return "audio-volume-medium-symbolic"
+
+
+class OSDContainer(Window):
+    def __init__(self, **kwargs):
+        self.audio_container = AudioOSDContainer()
+        self.brightness_container = BrightnessOSDContainer()
+
+        self.main_box = Box(
+            orientation="v",
+            spacing=13,
+            children=[self.audio_container, self.brightness_container],
+        )
 
         super().__init__(
-            transition_duration=150,
-            anchor="right",
-            transition_type="crossfade",
-            keyboard_mode="none",
-            decorations="margin: 1px 0px 1px 1px;",
-            child=Box(
-                orientation="v",
-                h_align="end",
-                children=[
-                    Box(
-                        name="osd-corner",
-                        children=Corner(
-                            h_align="end",
-                            orientation="bottom-right",
-                            size=50,
-                        ),
-                    ),
-                    Box(
-                        name="on-screen-display",
-                        orientation="v",
-                        spacing=10,
-                        h_align="end",
-                        children=[
-                            self.progress_bar,
-                            Box(name="osd-icon", children=self.icon),
-                        ],
-                    ),
-                    Box(
-                        name="osd-corner",
-                        children=Corner(
-                            h_align="end",
-                            orientation="top-right",
-                            size=50,
-                        ),
-                    ),
-                ],
-            ),
             **kwargs,
+            layer="top",
+            anchor="bottom",
+            child=self.main_box,
+            visible=False,
         )
 
-    def update_label_audio(self, *args):
-        icon_name = "-".join(str(audio.speaker.icon_name).split("-")[0:2])
-        self.icon.set_from_icon_name(icon_name + "-symbolic", 50)
-        self.vol = audio.speaker.volume
-        self.progress_bar.set_progress_filled(round(self.vol) / 100)
+        self.audio_container.set_visible(False)
+        self.brightness_container.set_visible(False)
 
-    def update_label_brightness(self):
-        self.icon.set_from_icon_name("display-brightness-symbolic", 50)
-        brightness = self.brightness.screen_brightness / self.max_disp_backlight
-        self.progress_bar.set_progress_filled(brightness)
+        self.last_activity_time = time.time()
 
-    def update_label_keyboard(self, *args):
-        self.icon.set_from_icon_name("keyboard-brightness-symbolic", 50)
-        brightness = (
-            int(
-                os.read(
-                    os.open(self.kbd_backlight_path + "brightness", os.O_RDONLY), 50
-                ),
-            )
-            / self.max_kbd_backlight
+        self.audio_container.audio.connect("notify::speaker", self.show_audio)
+        self.brightness_container.brightness_service.connect(
+            "screen", self.show_brightness
         )
-        self.progress_bar.set_progress_filled(brightness)
+        self.audio_container.connect("volume-changed", self.show_audio)
 
-    def enable_popup(self, type: str):
-        if type == "sound":
-            self.update_label_audio()
-        elif type == "brightness":
-            self.update_label_brightness()
-        elif type == "kbd":
-            self.update_label_keyboard()
+        GLib.timeout_add(100, self.check_inactivity)
 
-        self.popup_timeout()
+    def show_audio(self, *_):
+        self.show_box(self.audio_container)
+        self.reset_inactivity_timer()
+
+    def show_brightness(self, *_):
+        self.show_box(self.brightness_container)
+        self.reset_inactivity_timer()
+
+    def show_box(self, box_to_show):
+        self.audio_container.set_visible(box_to_show == self.audio_container)
+        self.brightness_container.set_visible(box_to_show == self.brightness_container)
+        self.set_visible(True)
+        self.reset_inactivity_timer()
+
+    def start_hide_timer(self):
+        self.set_visible(False)
+
+    def reset_inactivity_timer(self):
+        self.last_activity_time = time.time()
+
+    def check_inactivity(self):
+        if time.time() - self.last_activity_time >= 2:
+            self.start_hide_timer()
+        return True
