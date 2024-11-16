@@ -4,18 +4,13 @@ from loguru import logger
 
 from fabric import Application
 from fabric.utils import get_relative_path, monitor_file
-from modules.bar.bar import Bar
-from modules.launcher.launcher import Launcher
-from modules.notifications import NotificationPopup
-from modules.osd import SystemOSD
-from services.brightness import Brightness
-from services.screen_record import ScreenRecorder
+from modules import Bar, Launcher, NotificationPopup, OSDContainer
+from services import Brightness, ScreenRecorder
 
 
 def apply_style(app: Application):
     logger.info("[Main] CSS applied")
     app.set_stylesheet_from_file(get_relative_path("style/main.css"))
-    # app.set_stylesheet_from_file(f"/home/{os.getlogin()}/.cache/material/colors.css")
 
 
 if __name__ == "__main__":
@@ -26,7 +21,7 @@ if __name__ == "__main__":
     bar = Bar()
     launcher = Launcher()
     launcher.hide()
-    systemOverlay = SystemOSD()
+    systemOverlay = OSDContainer()
     notif = NotificationPopup()
     app = Application(
         "fabric-bar",
