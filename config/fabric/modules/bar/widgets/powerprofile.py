@@ -1,6 +1,6 @@
 from fabric.utils import exec_shell_command, invoke_repeater
 from fabric.widgets.box import Box
-from services import MaterialIcon
+from snippets import MaterialIcon
 
 PROFILE_ICONS = {
     "power-saver": "data_saver_on",
