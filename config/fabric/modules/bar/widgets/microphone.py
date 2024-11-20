@@ -1,6 +1,6 @@
 from fabric.audio.service import Audio
 from fabric.widgets.box import Box
-from services import MaterialIcon
+from snippets import MaterialIcon
 
 
 class MicrophoneIndicator(Box):

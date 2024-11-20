@@ -16,6 +16,7 @@ from modules.bar.widgets import (
     PowerProfile,
     TaskBar,
     VolumeIndicator,
+    Weather,
     workspace,
 )
 
@@ -42,9 +43,10 @@ class Bar(Window):
                 ),
             ),
         )
+
         self.date_time = DateTime(formatters=["%-I:%M 󰧞 %a %d %b"], name="datetime")
         self.system_tray = SystemTray(name="tray", spacing=4, icon_size=18)
-        self.taskbar = TaskBar(icon_size=18)
+        self.taskbar = TaskBar()
         self.volume = VolumeIndicator()
         self.network = Network()
         self.bluetooth = Bluetooth()
@@ -54,6 +56,7 @@ class Bar(Window):
         self.workspaces = Button(child=workspace, name="workspaces")
         self.info = HardwareUsage()
         self.idle = IdleIndicator()
+        self.weather = Weather("Kohalpur")
         self.applets = Box(
             name="applets",
             spacing=4,
@@ -67,6 +70,7 @@ class Bar(Window):
                 self.idle,
             ],
         )
+
         self.children = CenterBox(
             name="bar",
             start_children=Box(
@@ -76,6 +80,7 @@ class Bar(Window):
                 children=[
                     self.workspaces,
                     self.info,
+                    self.weather,
                 ],
             ),
             center_children=Box(

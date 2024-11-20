@@ -1,8 +1,7 @@
-from gi.repository import GLib
-
 from fabric.utils import exec_shell_command
 from fabric.widgets.box import Box
-from services import MaterialIcon
+from gi.repository import GLib
+from snippets import MaterialIcon
 
 
 class IdleIndicator(Box):

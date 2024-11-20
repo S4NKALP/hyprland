@@ -3,7 +3,7 @@ import psutil
 from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.label import Label
-from services import MaterialIcon
+from snippets import MaterialIcon
 
 
 class BatteryLabel(Box):

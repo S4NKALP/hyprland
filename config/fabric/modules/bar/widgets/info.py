@@ -1,12 +1,11 @@
 import psutil
-
 from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.label import Label
 from fabric.widgets.overlay import Overlay
-from services import MaterialIcon
+from snippets import MaterialIcon
 
 
 class HardwareUsage(Button):
