@@ -3,11 +3,12 @@ import subprocess
 
 from fabric.widgets.button import Button
 from fabric.widgets.label import Label
+from snippets import MaterialIcon
 
 CACHE_DIR = os.getenv(
     "XDG_CACHE_HOME", os.path.join(os.path.expanduser("~"), ".cache", "fabric")
 )
-BINS_PATH = os.path.join(CACHE_DIR, "binaries")
+BINS = os.path.join(CACHE_DIR, "binaries")
 
 
 class ShellCommandManager:
@@ -16,14 +17,15 @@ class ShellCommandManager:
         self.reload_binaries()
 
     def reload_binaries(self):
-        """Reload the binaries from the PATH environment variable."""
         paths = os.getenv("PATH", "").split(":")
-        unique_bins = set()
+        bins = []
 
         for path in paths:
-            unique_bins.update(self.list_binaries_in_path(path))
+            bins.extend(self.list_binaries_in_path(path))
 
-        self.save_binaries_to_cache(unique_bins)
+        unique_bins = set(bins)
+        with open(BINS, "w") as f:
+            f.write("\n".join(unique_bins))
 
     def list_binaries_in_path(self, path):
         if not os.path.exists(path):
@@ -37,10 +39,6 @@ class ShellCommandManager:
         except subprocess.CalledProcessError:
             return []
 
-    def save_binaries_to_cache(self, binaries):
-        with open(BINS_PATH, "w") as f:
-            f.write("\n".join(binaries))
-
     def show_shell_commands(self, viewport, search_query: str):
         if not search_query:
             return
@@ -50,9 +48,11 @@ class ShellCommandManager:
 
     def query_binaries(self, filter_str):
         try:
-            with open(BINS_PATH) as f:
-                return [line.strip() for line in f if filter_str in line][:16]
-        except FileNotFoundError:
+            result = subprocess.check_output(
+                f"cat {BINS} | fzf -f {filter_str} | head -n 16", shell=True, text=True
+            )
+            return list(dict.fromkeys(result.splitlines()))  # Deduplicate results
+        except subprocess.CalledProcessError:
             return []
 
     def display_results(self, viewport, results):
@@ -76,3 +76,8 @@ class ShellCommandManager:
             print(e.output)
         finally:
             self.launcher.set_visible(False)
+
+    def icon_button(self):
+        return Button(
+            child=MaterialIcon("terminal"),
+        )

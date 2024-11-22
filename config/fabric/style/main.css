@@ -269,6 +269,24 @@ tooltip label {
   background-color: transparent;
 }
 
+#launcher button#fav-item {
+  border-radius: 10px;
+  padding: 10px;
+  background-image: none;
+  box-shadow: none;
+}
+
+#launcher button#fav-item:hover image,
+#launcher button#fav-item:focus image {
+  -gtk-icon-shadow: 2px 2px @primary;
+}
+
+#launcher button#fav-item:active {
+  background-color: transparent;
+  border-radius: 11px;
+  box-shadow: inset 0 0 0 1px rgba(158, 142, 130, 0.04);
+}
+
 #launcher button#app-item {
   border-radius: 11px;
   color: @foreground;
@@ -304,24 +322,6 @@ tooltip label {
   color: @foreground;
 }
 
-#launcher button#fav-item {
-  border-radius: 10px;
-  padding: 10px;
-  background-image: none;
-  box-shadow: none;
-}
-
-#launcher button#fav-item:hover image,
-#launcher button#fav-item:focus image {
-  -gtk-icon-shadow: 2px 2px @primary;
-}
-
-#launcher button#fav-item:active {
-  background-color: transparent;
-  border-radius: 11px;
-  box-shadow: inset 0 0 0 1px rgba(158, 142, 130, 0.04);
-}
-
 #launcher button#emoji-item {
   border-radius: 11px;
   background-color: transparent;
@@ -335,29 +335,12 @@ tooltip label {
 }
 
 #launcher button#emoji-item label {
-  font-size: 27px;
+  font-size: 26px;
 }
 
 #launcher button#emoji-item:hover,
 #launcher button#emoji-item:focus {
   text-shadow: 2px 2px 2px @primary;
-}
-
-#launcher button#wall-item {
-  border-radius: 11px;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-  padding: 7px;
-}
-
-#launcher button#wall-item:disabled {
-  color: mix(@onSurface, transparent, 0.38);
-}
-
-#launcher button#wall-item:hover,
-#launcher button#wall-item:focus {
-  background-color: mix(@onSurfaceVariant, @surface, 0.9);
 }
 
 #launcher button#cliphist-item {
@@ -367,7 +350,7 @@ tooltip label {
   box-shadow: none;
 }
 
-#launcher button#cliphist-item:disabled {
+window#launcher button#cliphist-item:disabled {
   color: mix(@onSurface, transparent, 0.38);
 }
 
@@ -387,7 +370,32 @@ tooltip label {
 
 #launcher button#cliphist-img-item:hover,
 #launcher button#cliphist-img-item:focus {
+  box-shadow: 2px 2px 2px @primary;
+}
+
+#launcher button#exit-button {
+  /* background-color: red; */
+  border-radius: 100px;
+}
+
+#launcher button#exit-button:active {
   text-shadow: 2px 2px 2px @primary;
+}
+
+#launcher button#power-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+#launcher button#power-item:disabled {
+  color: mix(@onSurface, transparent, 0.38);
+}
+
+#launcher button#power-item:hover,
+#launcher button#power-item:focus {
+  text-shadow: 2pt 2pt 2pt @primary;
 }
 
 #launcher button#sh-item {
@@ -418,6 +426,22 @@ tooltip label {
   text-shadow: 2px 2px 2px @primary;
 }
 
+#launcher button#wall-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  padding: 7px;
+}
+
+#launcher button#wall-item:disabled {
+  color: mix(@onSurface, transparent, 0.38);
+}
+
+#launcher button#wall-item:hover,
+#launcher button#wall-item:focus {
+  box-shadow: 2pt 2pt 2pt @primary;
+}
 #osd-container {
   background: @surfaceContainer;
   padding: 12px;
