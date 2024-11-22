@@ -1,15 +1,17 @@
 import json
 import os
 import subprocess
+from typing import List
 
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.label import Label
+from snippets import MaterialIcon
 
 
 class EmojiItem:
-    def __init__(self, str: str, name: str, slug: str, group: str):
-        self.str = str
+    def __init__(self, emoji_str: str, name: str, slug: str, group: str):
+        self.str = emoji_str
         self.name = name
         self.slug = slug
         self.group = group
@@ -18,37 +20,42 @@ class EmojiItem:
 class EmojiManager:
     def __init__(self, launcher):
         self.launcher = launcher
-        self.emojis = None  # Delay loading until first use
-        self.query_cache = {}
+        self.emojis: List[EmojiItem] = []
+        self.query_cache: dict = {}
 
     def load_emojis(self):
-        if self.emojis is None:
-            emoji_path = os.path.expanduser("~/fabric/assets/emoji.json")
-            try:
-                with open(emoji_path, "r") as f:
-                    data = json.load(f)
-                    self.emojis = [
-                        EmojiItem(str, item["name"], item["slug"], item["group"])
-                        for str, item in data.items()
-                    ]
-            except Exception as e:
-                print(f"Error loading emojis: {e}")
-                self.emojis = []
+        emoji_path = os.path.expanduser("~/fabric/assets/emoji.json")
+        if not os.path.exists(emoji_path):
+            return []
 
-    def query_emojis(self, query: str):
-        # Return cached results if available
+        try:
+            with open(emoji_path, "r") as file:
+                data = json.load(file)
+                return [
+                    EmojiItem(emoji_str, item["name"], item["slug"], item["group"])
+                    for emoji_str, item in data.items()
+                ]
+        except (json.JSONDecodeError, OSError):
+            return []
+
+    def get_emojis(self):
+        if not self.emojis:
+            self.emojis = self.load_emojis()
+        return self.emojis
+
+    def query_emojis(self, query: str) -> List[EmojiItem]:
         if query in self.query_cache:
             return self.query_cache[query]
 
-        self.load_emojis()  # Ensure emojis are loaded
-
+        emojis = self.get_emojis()
         filtered_emojis = [
-            e
-            for e in self.emojis
-            if query in e.name or query in e.slug or query in e.group
-        ][:44]
+            emoji
+            for emoji in emojis
+            if query.lower() in emoji.name.lower()
+            or query.lower() in emoji.slug.lower()
+            or query.lower() in emoji.group.lower()
+        ][:48]
 
-        # Cache the results
         self.query_cache[query] = filtered_emojis
         return filtered_emojis
 
@@ -58,24 +65,30 @@ class EmojiManager:
 
     def show_emojis(self, viewport, query: str):
         filtered_emojis = self.query_emojis(query)
-        row = Box(orientation="h", spacing=10)
+        self._display_emoji_grid(viewport, filtered_emojis)
 
-        for emoji_item in filtered_emojis:
-            button = self.bake_emoji_slot(emoji_item)
+    def _display_emoji_grid(self, viewport, emojis: List[EmojiItem]):
+        row = Box(orientation="h", spacing=10)
+        for emoji in emojis:
+            button = self._create_emoji_button(emoji)
             row.add(button)
 
-            if len(row.children) >= 11:
+            if len(row.children) >= 12:
                 viewport.add(row)
                 row = Box(orientation="h", spacing=10)
 
         if row.children:
             viewport.add(row)
 
-    def bake_emoji_slot(self, emoji: EmojiItem, **kwargs) -> Button:
+    def _create_emoji_button(self, emoji: EmojiItem) -> Button:
         return Button(
             child=Label(label=emoji.str, h_pack="start"),
             tooltip_text=f"Copy {emoji.name}",
             on_clicked=lambda *_: self.copy_emoji(emoji),
             name="emoji-item",
-            **kwargs,
+        )
+
+    def icon_button(self):
+        return Button(
+            child=MaterialIcon("mood"),
         )

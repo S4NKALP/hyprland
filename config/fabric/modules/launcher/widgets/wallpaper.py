@@ -1,14 +1,19 @@
 import os
 from pathlib import Path
 
-from loguru import logger
-
 from fabric.utils import exec_shell_command_async
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
+from loguru import logger
+from snippets import MaterialIcon
 
 
 class WallpaperManager:
+    IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
+    THUMBNAIL_SIZE = "x32"
+    THUMBNAIL_ASPECT_RATIO = "1:1"
+    WALLPAPER_SCRIPT_PATH = os.path.expanduser("~/dotfiles/hypr/scripts/wallpaper.py")
+
     def __init__(self):
         self.wallpaper_dir = Path.home() / "Pictures" / "wallpapers"
         self.thumbnail_dir = (
@@ -17,7 +22,7 @@ class WallpaperManager:
         self.thumbnail_dir.mkdir(parents=True, exist_ok=True)
 
     def show_wallpaper_thumbnails(self, viewport, search_term: str = ""):
-        wallpapers = self._get_wallpapers(search_term)[:24]
+        wallpapers = self._get_wallpapers(search_term)
         self._populate_viewport(viewport, wallpapers)
 
     def _get_wallpapers(self, search_term: str):
@@ -25,22 +30,25 @@ class WallpaperManager:
             f
             for f in self.wallpaper_dir.iterdir()
             if f.is_file()
-            and f.suffix.lower() in {".png", ".jpg", ".jpeg", ".webp"}
-            and (not search_term or search_term.lower() in f.name.lower())
+            and f.suffix.lower() in self.IMAGE_EXTENSIONS
+            and self._matches_search(f, search_term)
         ]
+
+    def _matches_search(self, file, search_term: str):
+        return not search_term or search_term.lower() in file.name.lower()
 
     def _populate_viewport(self, viewport, wallpapers):
         viewport.children.clear()
         row = Box(orientation="h", spacing=10)
 
-        for i, wallpaper in enumerate(wallpapers):
+        for i, wallpaper in enumerate(wallpapers[:27]):  # Limit to 27 wallpapers
             thumbnail_path = self._generate_thumbnail(wallpaper)
             thumbnail_button = self._create_wallpaper_thumbnail(
                 thumbnail_path, wallpaper
             )
             row.add(thumbnail_button)
 
-            if (i + 1) % 8 == 0:
+            if (i + 1) % 9 == 0:
                 viewport.add(row)
                 row = Box(orientation="h", spacing=10)
 
@@ -54,27 +62,26 @@ class WallpaperManager:
         return thumbnail_path
 
     def _create_thumbnail(self, wallpaper_path, thumbnail_path):
+        logger.debug(f"Generating thumbnail for {wallpaper_path}")
         exec_shell_command_async(
             [
                 "magick",
                 str(wallpaper_path),
                 "-resize",
-                "x32",
+                self.THUMBNAIL_SIZE,
                 "-gravity",
                 "Center",
                 "-extent",
-                "1:1",
+                self.THUMBNAIL_ASPECT_RATIO,
                 str(thumbnail_path),
             ],
             lambda *args: logger.debug(args),
         )
 
     def _create_wallpaper_thumbnail(self, thumbnail_path, wallpaper_path):
+        thumbnail_style = self._thumbnail_style(thumbnail_path)
         thumbnail_box = Box(
-            orientation="h",
-            h_align="center",
-            v_align="center",
-            style=self._thumbnail_style(thumbnail_path),
+            orientation="h", h_align="center", v_align="center", style=thumbnail_style
         )
         return Button(
             child=thumbnail_box,
@@ -93,7 +100,6 @@ class WallpaperManager:
         )
 
     def _select_wallpaper(self, wallpaper_path):
-        logger.info(f"Selected wallpaper: {wallpaper_path}")
         self._apply_wallpaper(wallpaper_path)
 
     def _apply_wallpaper(self, wallpaper_path):
@@ -103,12 +109,15 @@ class WallpaperManager:
         self._execute_wallpaper_script("-R")
 
     def _execute_wallpaper_script(self, *args):
-        script_path = os.path.expanduser("~/dotfiles/hypr/scripts/wallpaper.py")
         try:
             exec_shell_command_async(
-                ["python3", script_path, *args],
-                lambda output: logger.info(f"{output}"),
+                ["python3", self.WALLPAPER_SCRIPT_PATH, *args],
+                lambda output: logger.info(f"Wallpaper script output: {output}"),
             )
-            logger.info(f"Wallpaper applied with args: {args}")
-        except Exception as e:
-            logger.error(f"Error applying wallpaper: {e}")
+        except Exception:
+            pass
+
+    def icon_button(self):
+        return Button(
+            child=MaterialIcon("image"),
+        )
