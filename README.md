@@ -1,3 +1,6 @@
+> [!WARNING]
+> This configuration is made by myself, for myself, and with very little concern for other's preferences. This configuration is not meant to be "good", it's just meant to be comfortable for me. Let it also known that this is _VERY_ WIP.
+
 <div align = "center">
 
 <h1><a href="https://github.com/S4NKALP/hyprland">Hyprland</a></h1>
@@ -13,9 +16,6 @@
 ## Overview
 
 <h4>This repository contains my personal dotfiles and configuration files. It's currently in an early, experimental phase and may not be suitable for general use.</h4>
-
-> [!WARNING]
-> This configuration is made by myself, for myself, and with very little concern for other's preferences. This configuration is not meant to be "good", it's just meant to be comfortable for me. Let it also known that this is _VERY_ WIP.
 
 </div>
 
