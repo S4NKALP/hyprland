@@ -6,9 +6,9 @@ from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
+from modules.bar.widgets import Bluetooth  # Weather,
 from modules.bar.widgets import (
     BatteryLabel,
-    Bluetooth,  # Weather,
     HardwareUsage,
     IdleIndicator,
     MicrophoneIndicator,
@@ -79,7 +79,7 @@ class Bar(Window):
                 children=[
                     self.workspaces,
                     self.info,
-                    self.weather,
+                    # self.weather,
                 ],
             ),
             center_children=Box(
