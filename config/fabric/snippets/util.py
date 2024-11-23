@@ -1,6 +1,8 @@
 import json
 import os
+import time
 
+import psutil
 from gi.repository import GLib
 from loguru import logger
 
@@ -25,6 +27,16 @@ def get_profile_picture_path() -> str | None:
         )
         path = None
     return path
+
+
+def get_current_uptime():
+    uptime = time.time() - psutil.boot_time()
+    uptime_hours, remainder = divmod(uptime, 3600)
+    uptime_minutes, _ = divmod(remainder, 60)
+    return (
+        f"Up: {int(uptime_hours)} {'hours' if uptime_hours != 1 else 'hour'}, "
+        f"{int(uptime_minutes)} {'minutes' if uptime_minutes != 1 else 'minute'}"
+    )
 
 
 def username():
