@@ -1,4 +1,41 @@
 {
   "favorite_apps": ["Firefox", "materialgram", "Vesktop", "Spotify", "kitty"],
-  "city": "Kohalpur"
+  "city": "Kohalpur",
+  "commands": [
+    {
+      "command": ":em",
+      "description": "Copy an emoji",
+      "handler": "show_emojis"
+    },
+    {
+      "command": ":sh",
+      "description": "Run executables from PATH",
+      "handler": "show_shell_commands"
+    },
+    {
+      "command": ":wl",
+      "description": "Set the wallpaper",
+      "handler": "show_wallpapers"
+    },
+    {
+      "command": ":nw",
+      "description": "List of available wifi networks",
+      "handler": "show_network"
+    },
+    {
+      "command": ":bt",
+      "description": "Bluetooth",
+      "handler": "show_bluetooth_settings"
+    },
+    {
+      "command": ":ch",
+      "description": "Copy a clipboard history entry",
+      "handler": "show_clipboard_history"
+    },
+    {
+      "command": ":p",
+      "description": "Shutdown and go sleepy time",
+      "handler": "show_powermenu"
+    }
+  ]
 }
