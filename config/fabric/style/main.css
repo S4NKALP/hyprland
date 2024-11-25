@@ -1,4 +1,5 @@
 @import url(../../.cache/material/colors.css);
+
 * {
   all: unset;
   color: @foreground;
@@ -6,6 +7,71 @@
   font-family: "Product Sans", Roboto, "Font Awesome 6 Free", Helvetica, Arial,
     sans-serif;
 }
+
+/*
+ *     ╭───────────────────────────────────────────────────────────────────╮
+ *     │                               other                               │
+ *     ╰───────────────────────────────────────────────────────────────────╯
+*/
+
+menu {
+  border-radius: 10px;
+  background-color: @surfaceContainer;
+}
+
+menu > menuitem {
+  border-radius: 0px;
+  padding: 6px;
+  margin-left: 2px;
+  margin-right: 2px;
+  color: @onSurface;
+}
+
+menu > menuitem:first-child {
+  margin-top: 1px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+menu > menuitem:last-child {
+  margin-bottom: 1px;
+  border-radius: 0px 0px 8px 8px;
+}
+
+menu > menuitem:hover {
+  background-color: mix(@onSurface, @surface, 0.85);
+}
+
+tooltip {
+  background-color: @surfaceContainer;
+  border-radius: 11px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+tooltip label {
+  color: @onSurface;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  font-weight: normal;
+}
+
+#profile-pic {
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 100px;
+  padding: 20px;
+  margin: 4px;
+}
+
+/*
+ *     ╭───────────────────────────────────────────────────────────────────╮
+ *     │                                bar                                │
+ *     ╰───────────────────────────────────────────────────────────────────╯
+*/
 
 #bar {
   background-color: @surface;
@@ -35,28 +101,6 @@
 }
 #progress {
   border: solid 0px @outlineVariant;
-}
-
-#logo {
-  font-size: 18px;
-  background-color: @surfaceContainer;
-  border-radius: 100px;
-  padding: 0px;
-  min-width: 35px;
-}
-
-#logo:hover {
-  background-color: mix(@secondaryContainer, @onSecondaryContainer, 0.05);
-  box-shadow: 00px 3px 3px -2px rgba(0, 0, 0, 0.2);
-}
-
-#logo:active {
-  background-image: radial-gradient(
-    circle,
-    mix(@secondaryContainer, @onSecondaryContainer, 0.1) 10%,
-    transparent 0%
-  );
-  box-shadow: none;
 }
 
 #workspaces {
@@ -137,66 +181,18 @@
   padding: 0px;
 }
 
-menu {
-  border-radius: 10px;
-  background-color: @surfaceContainer;
+#taskbar .activated {
+  border-radius: 100px;
+  background: @surfaceVariant;
 }
 
-menu > menuitem {
-  border-radius: 0px;
-  padding: 6px;
-  margin-left: 2px;
-  margin-right: 2px;
-  color: @onSurface;
+#corner-bottom-left {
+  background-color: @surface;
 }
 
-menu > menuitem:first-child {
-  margin-top: 1px;
-  border-radius: 8px 8px 0px 0px;
+#corner-bottom-right {
+  background-color: @surface;
 }
-
-menu > menuitem:last-child {
-  margin-bottom: 1px;
-  border-radius: 0px 0px 8px 8px;
-}
-
-menu > menuitem:hover {
-  background-color: mix(@onSurface, @surface, 0.85);
-}
-
-tooltip {
-  background-color: @surfaceContainer;
-  border-radius: 11px;
-  outline: none;
-  border: none;
-  box-shadow: none;
-}
-
-tooltip label {
-  color: @onSurface;
-  outline: none;
-  border: none;
-  box-shadow: none;
-  font-weight: normal;
-}
-
-#panel-button {
-  margin: 0px 2px 0px 2px;
-  padding: 0px 5px 0px 5px;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 10px;
-  border-color: transparent;
-}
-
-#panel-button.activated {
-  background-color: alpha(white, 0.15);
-  border-style: solid;
-  border-color: transparent;
-  border-bottom-style: solid;
-  border-bottom-color: alpha(white, 0.5);
-}
-
 #taskbar {
   border-radius: 100px;
   font-weight: bold;
@@ -218,16 +214,23 @@ tooltip label {
   margin-right: 0px;
 }
 
+/*
+ *     ╭───────────────────────────────────────────────────────────────────╮
+ *     │                             launcher                              │
+ *     ╰───────────────────────────────────────────────────────────────────╯
+*/
+
 #launcher {
   margin: 18px;
   border: 1px solid @outlineVariant;
   background-color: @surface;
   border-radius: 24px;
   padding: 18px;
+  min-width: 480px;
 }
 
 #launcher button {
-  border-radius: 11px;
+  border-radius: 100px;
   background-color: transparent;
   background-image: none;
   box-shadow: none;
@@ -236,7 +239,6 @@ tooltip label {
 #launcher button:focus {
   box-shadow: inset 0 0 0 1px @primary;
   background-color: @background;
-  color: @foreground;
 }
 
 #launcher button:hover {
@@ -247,20 +249,15 @@ tooltip label {
 #launcher entry {
   transition: all 0.1s ease;
   border-radius: 11px;
-  color: @foreground;
-  background-color: @surfaceContainer;
-  box-shadow: inset 0 0 0 @background;
   padding: 10px;
   margin: 12px;
 }
 
 #launcher entry:focus {
-  box-shadow: inset 0 0 0 1px @primary;
   background-color: @background;
 }
 
 #launcher entry:hover {
-  box-shadow: inset 0 0 0 1px @background;
   background-color: @background;
 }
 
@@ -289,7 +286,6 @@ tooltip label {
 
 #launcher button#app-item {
   border-radius: 11px;
-  color: @foreground;
   background-color: transparent;
   background-image: none;
   box-shadow: none;
@@ -319,7 +315,6 @@ tooltip label {
 }
 
 #launcher button#app-item:active #title {
-  color: @foreground;
 }
 
 #launcher button#emoji-item {
@@ -335,7 +330,7 @@ tooltip label {
 }
 
 #launcher button#emoji-item label {
-  font-size: 26px;
+  font-size: 24px;
 }
 
 #launcher button#emoji-item:hover,
@@ -427,11 +422,11 @@ window#launcher button#cliphist-item:disabled {
 }
 
 #launcher button#wall-item {
-  border-radius: 11px;
+  border-radius: 0px;
   background-color: transparent;
   background-image: none;
   box-shadow: none;
-  padding: 7px;
+  padding: 5px;
 }
 
 #launcher button#wall-item:disabled {
@@ -442,6 +437,13 @@ window#launcher button#cliphist-item:disabled {
 #launcher button#wall-item:focus {
   box-shadow: 2pt 2pt 2pt @primary;
 }
+
+/*
+ *     ╭───────────────────────────────────────────────────────────────────╮
+ *     │                                osd                                │
+ *     ╰───────────────────────────────────────────────────────────────────╯
+*/
+
 #osd-container {
   background: @surfaceContainer;
   padding: 12px;
@@ -483,6 +485,12 @@ window#launcher button#cliphist-item:disabled {
   border-radius: 100px 0px 0px 100px;
   background: @primary;
 }
+
+/*
+ *     ╭───────────────────────────────────────────────────────────────────╮
+ *     │                           notification                            │
+ *     ╰───────────────────────────────────────────────────────────────────╯
+*/
 
 #notification {
   padding: 16px;
