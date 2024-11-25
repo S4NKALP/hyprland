@@ -77,7 +77,5 @@ class ShellCommandManager:
         finally:
             self.launcher.set_visible(False)
 
-    def icon_button(self):
-        return Button(
-            child=MaterialIcon("terminal"),
-        )
+    def get_shell_buttons(self):
+        return MaterialIcon("terminal")

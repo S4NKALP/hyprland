@@ -13,6 +13,36 @@ class BluetoothMenu:
         self.paired_devices = {}
         self.available_devices = {}
 
+        self.bt_button = Button(
+            child=MaterialIcon("bluetooth"),
+            h_align="center",
+            v_align="center",
+            on_clicked=self.bt_toggle,
+        )
+        self.update_bt_button_style()
+
+        self.scan_button = Button(
+            child=MaterialIcon("refresh"),
+            h_align="center",
+            v_align="center",
+            on_clicked=lambda *_: self.client.toggle_scan(),
+            style=" min-height:50px; min-width:50px;",
+        )
+
+    def bt_toggle(self, *args):
+        self.update_bt_button_style()
+        self.client.toggle_power()
+
+    def update_bt_button_style(self):
+        if self.client.enabled:
+            self.bt_button.set_style(
+                "background-color: transparent; min-height: 50px; min-width: 50px;"
+            )
+        else:
+            self.bt_button.set_style(
+                "background-color: @surfaceVariant;  min-height: 50px; min-width: 50px;"
+            )
+
     def show_bluetooth_menu(self, viewport):
         viewport.children = []
 
@@ -85,7 +115,5 @@ class BluetoothMenu:
 
         self.show_bluetooth_menu(self.launcher.viewport)
 
-    def icon_button(self):
-        return Button(
-            child=MaterialIcon("bluetooth"),
-        )
+    def get_bluetooth_buttons(self):
+        return [self.bt_button, self.scan_button]

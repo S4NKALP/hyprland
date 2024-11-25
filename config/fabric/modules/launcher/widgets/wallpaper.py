@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from fabric.utils import exec_shell_command_async
+from fabric.utils import exec_shell_command, exec_shell_command_async
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from loguru import logger
@@ -20,6 +20,35 @@ class WallpaperManager:
             Path.home() / ".cache" / "fabric" / "thumbnails" / "wallpaper"
         )
         self.thumbnail_dir.mkdir(parents=True, exist_ok=True)
+        self.theme_toggle_button = Button(
+            child=MaterialIcon("contrast"),
+            v_align="center",
+            on_clicked=self.toggle_dark_mode,
+        )
+        self._update_button_style()
+
+    def toggle_dark_mode(self, *_):
+        command = os.path.expanduser("~/fabric/assets/scripts/dark-theme.sh --toggle")
+        exec_shell_command(command)
+        self._update_button_style()
+
+    def check_dark_mode_state(self):
+        result = exec_shell_command(
+            "gsettings get org.gnome.desktop.interface color-scheme"
+        )
+        current_mode = result.strip().replace("'", "")
+        return current_mode == "prefer-dark"
+
+    def _update_button_style(self):
+        """Update the style of the theme toggle button based on current theme"""
+        if self.check_dark_mode_state():  # Dark theme
+            self.theme_toggle_button.set_style(
+                "background-color: @surfaceVariant; border-radius:100px; min-height:50px; min-width:50px;"
+            )
+        else:  # Light theme (white)
+            self.theme_toggle_button.set_style(
+                "background-color: transparent; border-radius:100px; min-height:50px; min-width:50px;"
+            )
 
     def show_wallpaper_thumbnails(self, viewport, search_term: str = ""):
         wallpapers = self._get_wallpapers(search_term)
@@ -117,7 +146,5 @@ class WallpaperManager:
         except Exception:
             pass
 
-    def icon_button(self):
-        return Button(
-            child=MaterialIcon("image"),
-        )
+    def get_wallpaper_buttons(self):
+        return self.theme_toggle_button

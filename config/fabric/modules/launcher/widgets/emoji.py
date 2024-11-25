@@ -88,7 +88,5 @@ class EmojiManager:
             name="emoji-item",
         )
 
-    def icon_button(self):
-        return Button(
-            child=MaterialIcon("mood"),
-        )
+    def get_emoji_buttons(self):
+        return MaterialIcon("mood")
