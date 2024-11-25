@@ -22,7 +22,13 @@ from modules.launcher.widgets import (
     bake_favorite_slot,
     handle_application_search,
 )
-from snippets import get_current_uptime, get_profile_picture_path, read_config, username
+from snippets import (
+    MaterialIcon,
+    get_current_uptime,
+    get_profile_picture_path,
+    read_config,
+    username,
+)
 
 
 class Launcher(Window):
@@ -44,6 +50,7 @@ class Launcher(Window):
         )
         self.commands = self.config.get("commands", [])
         self.command_map = self.build_command_map()
+
         self.setup_ui()
         self.connect("key-press-event", self.on_key_press)
         self.update_uptime_label()
@@ -58,15 +65,23 @@ class Launcher(Window):
         self.network_menu = WifiMenu(self)
 
     def setup_ui(self):
+        self.default_button = Button(
+            child=MaterialIcon("grid_view"),
+            h_align="center",
+            v_align="center",
+        )
         self.scrolled_window = self.create_scrolled_window()
         self.scrolled_revealer = self.create_revealer()
         self.search_entry = self.create_search_entry()
         self.additional_box = self.create_additional_box()
-        self.search_box = Box(spacing=10, orientation="h", children=[self.search_entry])
+        self.search_box = Box(
+            spacing=10,
+            orientation="h",
+            children=[self.search_entry, self.default_button],
+        )
 
         launcher_box = Box(
             orientation="v",
-            size=(580, 0),
             name="launcher",
             children=[
                 self.search_box,
@@ -81,11 +96,12 @@ class Launcher(Window):
 
     def create_search_entry(self):
         entry = Entry(
-            placeholder="Search.....",
+            placeholder="Type ':' to list subcommands",
             h_expand=True,
             notify_text=lambda entry, *_: self.debounce_search(entry.get_text()),
         )
         entry.set_icon_from_icon_name(0, "preferences-system-search-symbolic")
+        entry.props.xalign = 0.1
         return entry
 
     def create_scrolled_window(self):
@@ -98,6 +114,7 @@ class Launcher(Window):
 
     def create_revealer(self):
         return Revealer(
+            style="  transition: min-height 10s cubic-bezier(0.42, 0, 0.58, 1);",
             child=self.scrolled_window,
             transition_duration=300,
             transition_type="slide-down",
@@ -118,7 +135,7 @@ class Launcher(Window):
         )
 
     def get_favorites_box(self):
-        if not hasattr(self, "fav_apps_box"):
+        if not hasattr(self, "fav_apps_box") or self.fav_apps_box is None:
             self.fav_apps_box = Box(spacing=10, orientation="h")
         return self.fav_apps_box
 
@@ -134,6 +151,8 @@ class Launcher(Window):
         )
 
     def load_commands(self):
+        if not self.commands:
+            return {}
         if not hasattr(self, "_command_map"):
             self._command_map = {
                 cmd["command"]: cmd["description"] for cmd in self.commands
@@ -156,6 +175,7 @@ class Launcher(Window):
 
     def arrange_viewport(self, query: str = ""):
         self.get_viewport().children = []
+        dynamic_buttons = []
 
         for command, handler_name in self.command_map.items():
             if query.startswith(command):
@@ -167,11 +187,24 @@ class Launcher(Window):
         if query.startswith(":"):
             self.get_favorites_box().set_visible(False)
             self.additional_box.set_visible(False)
+            self.update_dynamic_button([self.default_button])
             self.show_help(query[1:])
             self.scrolled_revealer.reveal()
             return
 
+        if dynamic_buttons:
+            self.update_dynamic_button(dynamic_buttons)
+
         handle_application_search(self, query)
+
+    def update_dynamic_button(self, new_buttons):
+        if not isinstance(new_buttons, list):
+            new_buttons = [new_buttons]
+        for child in self.search_box.children[1:]:
+            self.search_box.remove(child)
+
+        for new_button in new_buttons:
+            self.search_box.add(new_button)
 
     def on_key_press(self, widget, event):
         from gi.repository import Gdk
@@ -187,6 +220,9 @@ class Launcher(Window):
             for command, description in self.load_commands().items()
             if query.lower() in command[1:].lower()
         ]
+
+        if not filtered_help:
+            return
 
         for command, description in filtered_help:
             button = Button(
@@ -214,25 +250,37 @@ class Launcher(Window):
 
     def show_network(self, *_):
         self.network_menu.show_wifi_menu(self.viewport)
+        dynamic_buttons = self.network_menu.get_wifi_buttons()
+        self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
     def show_emojis(self, query: str):
         self.emoji_manager.show_emojis(self.get_viewport(), query)
+        dynamic_buttons = self.emoji_manager.get_emoji_buttons()
+        self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
     def show_clipboard_history(self, query: str):
         self.clipboard_manager.show_clipboard_history(self.get_viewport(), query)
+        dynamic_buttons = self.clipboard_manager.get_clipboard_buttons()
+        self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
     def show_powermenu(self, query: str = ""):
         self.power_menu.show_power_menu(self.get_viewport(), query)
+        dynamic_buttons = self.power_menu.get_power_buttons()
+        self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
     def show_shell_commands(self, query: str):
         if not query:
+            dynamic_buttons = self.shell_command_manager.get_shell_buttons()
+            self.update_dynamic_button(dynamic_buttons)
             self.scrolled_revealer.unreveal()
             return
         self.shell_command_manager.show_shell_commands(self.get_viewport(), query)
+        dynamic_buttons = self.shell_command_manager.get_shell_buttons()
+        self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
     def show_wallpapers(self, query: str):
@@ -240,11 +288,18 @@ class Launcher(Window):
             self.wallpaper_manager.apply_wallpaper_random()
         else:
             self.wallpaper_manager.show_wallpaper_thumbnails(self.get_viewport(), query)
+        dynamic_buttons = self.wallpaper_manager.get_wallpaper_buttons()
+        self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
     def show_bluetooth_settings(self, *_):
         self.bluetooth_menu.show_bluetooth_menu(self.viewport)
+        dynamic_buttons = self.bluetooth_menu.get_bluetooth_buttons()
+        self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
     def toggle(self):
         self.set_visible(not self.is_visible())
+        if self.is_visible():
+            self.search_entry.set_text("")
+            self.search_entry.grab_focus()

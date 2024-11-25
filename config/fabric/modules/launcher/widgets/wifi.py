@@ -13,20 +13,41 @@ class WifiMenu:
         self.paired_devices = {}
         self.available_devices = {}
 
-        # Connect the event when a new device is added
+        self.wifi_toggle_button = Button(
+            child=MaterialIcon("wifi"),
+            h_align="center",
+            v_align="center",
+            on_clicked=self.toggle_wifi,
+        )
+        self.update_wifi_button_style()
+
+        self.rescan_button = Button(
+            child=MaterialIcon("refresh"),
+            h_align="center",
+            v_align="center",
+            on_clicked=self.scan_for_networks,
+            style=" min-height:50px; min-width:50px;",
+        )
+
         self.client.device_ready.connect(self.on_device_added)
+
+    def update_wifi_button_style(self):
+        if self.check_wifi_state():
+            self.wifi_toggle_button.set_style(
+                "background-color: transparent;  min-height:50px; min-width:50px;"
+            )
+        else:
+            self.wifi_toggle_button.set_style(
+                "background-color: @surfaceVariant;  min-height:50px; min-width:50px;"
+            )
+
+    def check_wifi_state(self):
+        return self.client.wifi_device.enabled if self.client.wifi_device else False
 
     def show_wifi_menu(self, viewport):
         viewport.children = []
 
         devices_box = Box(orientation="v", spacing=5)
-
-        scan_button = Button(
-            child=MaterialIcon("sync"),
-            on_clicked=self.scan_for_networks,
-            name="sh-item",
-        )
-        devices_box.add(scan_button)
 
         # Iterate over the list of available access points
         for ap in self.client.wifi_device.access_points:
@@ -71,7 +92,11 @@ class WifiMenu:
         self.client.wifi_device.scan()
         self.show_wifi_menu(self.launcher.viewport)
 
-    def icon_button(self):
-        return Button(
-            child=MaterialIcon("sync"),
-        )
+    def toggle_wifi(self, button):
+        self.update_wifi_button_style()
+        if self.client.wifi_device:
+            self.client.wifi_device.toggle_wifi()
+        self.show_wifi_menu(self.launcher.viewport)
+
+    def get_wifi_buttons(self):
+        return [self.wifi_toggle_button, self.rescan_button]

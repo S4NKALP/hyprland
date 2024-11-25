@@ -133,7 +133,5 @@ class ClipboardManager:
         self.copy_by_id(clip_id)
         self.launcher.set_visible(False)
 
-    def icon_button(self):
-        return Button(
-            child=MaterialIcon("content_paste"),
-        )
+    def get_clipboard_buttons(self):
+        return MaterialIcon("content_paste")
