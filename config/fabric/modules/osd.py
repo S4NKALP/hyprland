@@ -65,7 +65,7 @@ class AnimatedScale(Scale):
 
 class BaseOSDContainer(Box):
     def __init__(self, icon_name: str, icon_size: str, **kwargs):
-        super().__init__(**kwargs, orientation="h", spacing=12, name="osd-container")
+        super().__init__(**kwargs, orientation="h", spacing=12, name="osd")
         self.icon = self._create_icon(icon_name, icon_size)
         self.scale = self._create_scale()
         self._setup_layout()
