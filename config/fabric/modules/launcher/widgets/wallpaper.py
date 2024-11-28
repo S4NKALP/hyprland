@@ -1,4 +1,5 @@
 import os
+import threading
 from pathlib import Path
 
 from fabric.utils import exec_shell_command, exec_shell_command_async
@@ -10,14 +11,14 @@ from snippets import MaterialIcon
 
 class WallpaperManager:
     IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
-    THUMBNAIL_SIZE = "x32"
+    THUMBNAIL_SIZE = "x64"
     THUMBNAIL_ASPECT_RATIO = "1:1"
     WALLPAPER_SCRIPT_PATH = os.path.expanduser("~/dotfiles/hypr/scripts/wallpaper.py")
 
     def __init__(self):
         self.wallpaper_dir = Path.home() / "Pictures" / "wallpapers"
         self.thumbnail_dir = (
-            Path.home() / ".cache" / "fabric" / "thumbnails" / "wallpaper"
+            Path.home() / ".cache" / "fabric" / "thumbnails" / "wallpapers"
         )
         self.thumbnail_dir.mkdir(parents=True, exist_ok=True)
         self.theme_toggle_button = Button(
@@ -68,18 +69,18 @@ class WallpaperManager:
 
     def _populate_viewport(self, viewport, wallpapers):
         viewport.children.clear()
-        row = Box(orientation="h", spacing=10)
+        row = Box(orientation="h", spacing=10, style="margin:5px;")
 
-        for i, wallpaper in enumerate(wallpapers[:27]):  # Limit to 27 wallpapers
+        for i, wallpaper in enumerate(wallpapers[:24]):  # Limit to 27 wallpapers
             thumbnail_path = self._generate_thumbnail(wallpaper)
             thumbnail_button = self._create_wallpaper_thumbnail(
                 thumbnail_path, wallpaper
             )
             row.add(thumbnail_button)
 
-            if (i + 1) % 9 == 0:
+            if (i + 1) % 6 == 0:
                 viewport.add(row)
-                row = Box(orientation="h", spacing=10)
+                row = Box(orientation="h", spacing=10, style="margin:5px;")
 
         if row.children:
             viewport.add(row)
@@ -87,7 +88,12 @@ class WallpaperManager:
     def _generate_thumbnail(self, wallpaper_path):
         thumbnail_path = self.thumbnail_dir / wallpaper_path.name
         if not thumbnail_path.exists():
-            self._create_thumbnail(wallpaper_path, thumbnail_path)
+            # Run the thumbnail creation in a separate thread
+            threading.Thread(
+                target=self._create_thumbnail,
+                args=(wallpaper_path, thumbnail_path),
+                daemon=True,
+            ).start()
         return thumbnail_path
 
     def _create_thumbnail(self, wallpaper_path, thumbnail_path):
@@ -123,7 +129,7 @@ class WallpaperManager:
     def _thumbnail_style(self, thumbnail_path):
         return (
             f"background-image: url('{thumbnail_path}'); "
-            "min-width: 32px; min-height: 32px; "
+            "min-width: 64px; min-height: 64px; "
             "background-repeat: no-repeat; "
             "background-size: cover; background-position: center;"
         )
