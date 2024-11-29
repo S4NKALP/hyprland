@@ -32,7 +32,7 @@ if __name__ == "__main__":
         osd,
     )
 
-    css_file = monitor_file(get_relative_path("style/main.css"))
+    css_file = monitor_file(get_relative_path("styles"))
     _ = css_file.connect("changed", lambda *_: apply_style(app))
 
     color_css_file = monitor_file(f"/home/{os.getlogin()}/.cache/material/colors.css")
