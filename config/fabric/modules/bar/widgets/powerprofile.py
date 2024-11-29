@@ -1,4 +1,5 @@
-from fabric.utils import exec_shell_command, invoke_repeater
+from fabric import Fabricator
+from fabric.utils import exec_shell_command
 from fabric.widgets.box import Box
 from snippets import MaterialIcon
 
@@ -15,9 +16,9 @@ class PowerProfile(Box):
 
         self.profile_icon = None
 
-        invoke_repeater(1000, self.update_power_profile, initial_call=True)
+        Fabricator(interval=1000, poll_from=self.update_power_profile)
 
-    def update_power_profile(self):
+    def update_power_profile(self, *_):
         profile = self.get_power_profile()
         self.update_icon(profile)
         return True

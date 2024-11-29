@@ -139,7 +139,7 @@ class AudioOSDContainer(Box):
     def on_volume_changed(self, *_):
         if self.audio.speaker:
             volume = self.scale.value
-            if 1 <= volume <= 100:
+            if 0 <= volume <= 100:
                 self.audio.speaker.set_volume(volume)
                 self.update_icon(volume)
                 self.emit("volume-changed")

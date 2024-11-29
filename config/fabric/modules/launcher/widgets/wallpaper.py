@@ -21,12 +21,16 @@ class WallpaperManager:
             Path.home() / ".cache" / "fabric" / "thumbnails" / "wallpapers"
         )
         self.thumbnail_dir.mkdir(parents=True, exist_ok=True)
-        self.theme_toggle_button = Button(
+        self.theme_toggle_button = self.create_theme_toggle_button()
+        self._update_button_style()
+
+    def create_theme_toggle_button(self):
+        button = Button(
             child=MaterialIcon("contrast"),
             v_align="center",
             on_clicked=self.toggle_dark_mode,
         )
-        self._update_button_style()
+        return button
 
     def toggle_dark_mode(self, *_):
         command = os.path.expanduser("~/fabric/assets/scripts/dark-theme.sh --toggle")
@@ -37,19 +41,15 @@ class WallpaperManager:
         result = exec_shell_command(
             "gsettings get org.gnome.desktop.interface color-scheme"
         )
-        current_mode = result.strip().replace("'", "")
-        return current_mode == "prefer-dark"
+        return result.strip().replace("'", "") == "prefer-dark"
 
     def _update_button_style(self):
-        """Update the style of the theme toggle button based on current theme"""
-        if self.check_dark_mode_state():  # Dark theme
-            self.theme_toggle_button.set_style(
-                "background-color: @surfaceVariant; border-radius:100px; min-height:50px; min-width:50px;"
-            )
-        else:  # Light theme (white)
-            self.theme_toggle_button.set_style(
-                "background-color: transparent; border-radius:100px; min-height:50px; min-width:50px;"
-            )
+        style = (
+            "background-color: @surfaceVariant; border-radius:100px; min-height:50px; min-width:50px;"
+            if self.check_dark_mode_state()
+            else "background-color: transparent; border-radius:100px; min-height:50px; min-width:50px;"
+        )
+        self.theme_toggle_button.set_style(style)
 
     def show_wallpaper_thumbnails(self, viewport, search_term: str = ""):
         wallpapers = self._get_wallpapers(search_term)
@@ -71,7 +71,7 @@ class WallpaperManager:
         viewport.children.clear()
         row = Box(orientation="h", spacing=10, style="margin:5px;")
 
-        for i, wallpaper in enumerate(wallpapers[:24]):  # Limit to 27 wallpapers
+        for i, wallpaper in enumerate(wallpapers[:24]):  # Limit to 24 wallpapers
             thumbnail_path = self._generate_thumbnail(wallpaper)
             thumbnail_button = self._create_wallpaper_thumbnail(
                 thumbnail_path, wallpaper
@@ -88,7 +88,6 @@ class WallpaperManager:
     def _generate_thumbnail(self, wallpaper_path):
         thumbnail_path = self.thumbnail_dir / wallpaper_path.name
         if not thumbnail_path.exists():
-            # Run the thumbnail creation in a separate thread
             threading.Thread(
                 target=self._create_thumbnail,
                 args=(wallpaper_path, thumbnail_path),
@@ -128,7 +127,7 @@ class WallpaperManager:
 
     def _thumbnail_style(self, thumbnail_path):
         return (
-            f"background-image: url('{thumbnail_path}'); "
+            f"background-image: url('{thumbnail_path }'); "
             "min-width: 64px; min-height: 64px; "
             "background-repeat: no-repeat; "
             "background-size: cover; background-position: center;"
@@ -149,8 +148,8 @@ class WallpaperManager:
                 ["python3", self.WALLPAPER_SCRIPT_PATH, *args],
                 lambda output: logger.info(f"Wallpaper script output: {output}"),
             )
-        except Exception:
-            pass
+        except Exception as e:
+            logger.error(f"Error executing wallpaper script: {e}")
 
     def get_wallpaper_buttons(self):
         return self.theme_toggle_button
