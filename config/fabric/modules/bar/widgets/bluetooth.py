@@ -1,11 +1,11 @@
 from fabric.bluetooth import BluetoothClient
 from fabric.widgets.box import Box
-from snippets import MaterialIcon  # Import your MaterialIcon function
+from snippets import MaterialIcon
 
 
 class Bluetooth(Box):
-    ICON_ENABLED = "bluetooth"  # Use the appropriate Material icon name
-    ICON_DISABLED = "bluetooth_disabled"  # Use the appropriate Material icon name
+    ICON_ENABLED = "bluetooth"
+    ICON_DISABLED = "bluetooth_disabled"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -31,5 +31,4 @@ class Bluetooth(Box):
         self.add(self.bluetooth_icon)
 
     def on_destroy(self):
-        """Disconnect the Bluetooth client when the widget is destroyed."""
         self.bluetooth_client.disconnect("changed", self.update_bluetooth_status)

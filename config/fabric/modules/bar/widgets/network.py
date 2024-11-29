@@ -1,7 +1,7 @@
 import subprocess
 
 import psutil
-from fabric.utils import invoke_repeater
+from fabric import Fabricator
 from fabric.widgets.box import Box
 from snippets import MaterialIcon
 
@@ -9,13 +9,14 @@ from snippets import MaterialIcon
 class Network(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.update_interval = 5000
+        self.update_interval = 1000
         self.last_status = None
-        invoke_repeater(
-            self.update_interval, self.update_network_status, initial_call=True
+        Fabricator(
+            interval=self.update_interval,
+            poll_from=self.update_network_status,
         )
 
-    def update_network_status(self):
+    def update_network_status(self, *_):
         current_status = self.get_network_status()
         if current_status != self.last_status:
             self.update_icon(current_status)
@@ -68,7 +69,7 @@ class Network(Box):
 
     def is_ethernet_connected(self):
         return any(
-            self._is_interface_up(interface, ["eth"])
+            self._is_interface_up(interface, ["enp", "eth"])
             for interface in psutil.net_if_addrs()
         )
 

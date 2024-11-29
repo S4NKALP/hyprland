@@ -21,5 +21,5 @@ __all__ = [
     "TaskBar",
     "VolumeIndicator",
     "workspace",
-    "Weather",
+    # "Weather",
 ]

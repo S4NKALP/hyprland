@@ -1,6 +1,5 @@
-from fabric.utils import exec_shell_command
+from fabric.utils import exec_shell_command, invoke_repeater
 from fabric.widgets.box import Box
-from gi.repository import GLib
 from snippets import MaterialIcon
 
 
@@ -13,7 +12,7 @@ class IdleIndicator(Box):
 
         self.check_idle_status()
 
-        GLib.timeout_add(1000, self.check_idle_status)
+        invoke_repeater(1000, self.check_idle_status)
 
         self.children = (self.idle_icon,)
 
