@@ -10,7 +10,7 @@ from services import Brightness, ScreenRecorder
 
 def apply_style(app: Application):
     logger.info("[Main] CSS applied")
-    app.set_stylesheet_from_file(get_relative_path("style/main.css"))
+    app.set_stylesheet_from_file(get_relative_path("styles/main.css"))
 
 
 if __name__ == "__main__":
