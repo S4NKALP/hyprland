@@ -19,7 +19,6 @@ from modules.launcher.widgets import (
     ShellCommandManager,
     WallpaperManager,
     WifiMenu,
-    bake_favorite_slot,
     handle_application_search,
 )
 from snippets import (
@@ -50,7 +49,6 @@ class Launcher(Window):
         )
         self.commands = self.config.get("commands", [])
         self.command_map = self.build_command_map()
-
         self.setup_ui()
         self.connect("key-press-event", self.on_key_press)
         self.update_uptime_label()
@@ -79,19 +77,16 @@ class Launcher(Window):
             orientation="h",
             children=[self.search_entry, self.default_button],
         )
-
         launcher_box = Box(
             orientation="v",
             name="launcher",
             children=[
                 self.search_box,
-                self.get_favorites_box(),
                 self.additional_box,
                 self.scrolled_revealer,
             ],
         )
         self.add(launcher_box)
-        self.show_favorites()
         self.show_all()
 
     def create_search_entry(self):
@@ -101,12 +96,12 @@ class Launcher(Window):
             notify_text=lambda entry, *_: self.debounce_search(entry.get_text()),
         )
         entry.set_icon_from_icon_name(0, "preferences-system-search-symbolic")
-        entry.props.xalign = 0.1
         return entry
 
     def create_scrolled_window(self):
         return ScrolledWindow(
             name="launcher-scroll",
+            style="  transition: min-height 50s cubic-bezier(0.42, 0, 0.58, 1);",
             child=self.get_viewport(),
             h_scrollbar_policy="never",
             v_scrollbar_policy="never",
@@ -114,10 +109,9 @@ class Launcher(Window):
 
     def create_revealer(self):
         return Revealer(
-            style="  transition: min-height 10s cubic-bezier(0.42, 0, 0.58, 1);",
+            style="  transition: min-height 50s cubic-bezier(0.42, 0, 0.58, 1);",
             child=self.scrolled_window,
-            transition_duration=300,
-            transition_type="slide-down",
+            transition_type="crossfade",
         )
 
     def create_additional_box(self):
@@ -134,11 +128,6 @@ class Launcher(Window):
             ],
         )
 
-    def get_favorites_box(self):
-        if not hasattr(self, "fav_apps_box") or self.fav_apps_box is None:
-            self.fav_apps_box = Box(spacing=10, orientation="h")
-        return self.fav_apps_box
-
     def get_viewport(self):
         if not hasattr(self, "viewport"):
             self.viewport = Box(spacing=10, orientation="v")
@@ -150,23 +139,8 @@ class Launcher(Window):
             60 * 1000, lambda: self.uptime_label.set_label(get_current_uptime())
         )
 
-    def load_commands(self):
-        if not self.commands:
-            return {}
-        if not hasattr(self, "_command_map"):
-            self._command_map = {
-                cmd["command"]: cmd["description"] for cmd in self.commands
-            }
-        return self._command_map
-
     def build_command_map(self):
         return {cmd["command"]: cmd["handler"] for cmd in self.commands}
-
-    def show_favorites(self):
-        for app_name in self.config.get("favorite_apps", []):
-            app = next((a for a in self.all_apps if a.name == app_name), None)
-            if app:
-                self.get_favorites_box().add(bake_favorite_slot(self, app))
 
     def debounce_search(self, query: str):
         if hasattr(self, "_arranger_handler"):
@@ -174,9 +148,9 @@ class Launcher(Window):
         self._arranger_handler = idle_add(self.arrange_viewport, query, pin=True)
 
     def arrange_viewport(self, query: str = ""):
+
         self.get_viewport().children = []
         dynamic_buttons = []
-
         for command, handler_name in self.command_map.items():
             if query.startswith(command):
                 handler = getattr(self, handler_name, None)
@@ -185,16 +159,11 @@ class Launcher(Window):
                     return
 
         if query.startswith(":"):
-            self.get_favorites_box().set_visible(False)
             self.additional_box.set_visible(False)
             self.update_dynamic_button([self.default_button])
             self.show_help(query[1:])
             self.scrolled_revealer.reveal()
             return
-
-        if dynamic_buttons:
-            self.update_dynamic_button(dynamic_buttons)
-
         handle_application_search(self, query)
 
     def update_dynamic_button(self, new_buttons):
@@ -202,7 +171,6 @@ class Launcher(Window):
             new_buttons = [new_buttons]
         for child in self.search_box.children[1:]:
             self.search_box.remove(child)
-
         for new_button in new_buttons:
             self.search_box.add(new_button)
 
@@ -214,6 +182,9 @@ class Launcher(Window):
             return True
         return False
 
+    def load_commands(self):
+        return {cmd["command"]: cmd["description"] for cmd in self.commands}
+
     def show_help(self, query: str):
         filtered_help = [
             (command, description)
@@ -223,7 +194,6 @@ class Launcher(Window):
 
         if not filtered_help:
             return
-
         for command, description in filtered_help:
             button = Button(
                 child=self.create_help_button_content(command, description),
@@ -247,6 +217,13 @@ class Launcher(Window):
                 ),
             ],
         )
+
+    def toggle(self):
+        self.set_visible(not self.is_visible())
+        if self.is_visible():
+            self.update_dynamic_button(self.default_button)
+            self.search_entry.set_text("")
+            self.search_entry.grab_focus()
 
     def show_network(self, *_):
         self.network_menu.show_wifi_menu(self.viewport)
@@ -297,9 +274,3 @@ class Launcher(Window):
         dynamic_buttons = self.bluetooth_menu.get_bluetooth_buttons()
         self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
-
-    def toggle(self):
-        self.set_visible(not self.is_visible())
-        if self.is_visible():
-            self.search_entry.set_text("")
-            self.search_entry.grab_focus()

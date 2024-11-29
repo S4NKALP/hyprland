@@ -6,14 +6,15 @@ from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
+
 from modules.bar.widgets import (
     BatteryLabel,
     Bluetooth,
-    HardwareUsage,
     IdleIndicator,
     MicrophoneIndicator,
     Network,
     PowerProfile,
+    SystemInfo,
     TaskBar,
     VolumeIndicator,
     workspace,
@@ -53,9 +54,8 @@ class Bar(Window):
         self.microphone = MicrophoneIndicator()
         self.power = PowerProfile()
         self.workspaces = Button(child=workspace, name="workspaces")
-        self.info = HardwareUsage()
+        self.info = SystemInfo()
         self.idle = IdleIndicator()
-        # self.weather = Weather()
         self.applets = Box(
             name="applets",
             spacing=4,

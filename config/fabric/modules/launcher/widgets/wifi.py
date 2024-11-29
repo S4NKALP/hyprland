@@ -14,7 +14,7 @@ class WifiMenu:
         self.available_devices = {}
 
         self.wifi_toggle_button = Button(
-            child=MaterialIcon("wifi"),
+            child=MaterialIcon("signal_wifi_4_bar"),
             h_align="center",
             v_align="center",
             on_clicked=self.toggle_wifi,

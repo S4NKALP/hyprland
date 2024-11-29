@@ -8,8 +8,8 @@ from fabric.widgets.overlay import Overlay
 from snippets import MaterialIcon
 
 
-class HardwareUsage(Button):
-    HARDWARE_ITEMS = [
+class SystemInfo(Button):
+    ICONS = [
         ("CPU", "settings_motion_mode"),
         ("Swap", "swap_horiz"),
         ("RAM", "memory_alt"),
@@ -18,7 +18,7 @@ class HardwareUsage(Button):
 
     def __init__(self):
         super().__init__(child=self._initialize_content())
-        Fabricator(poll_from=self._refresh_hardware_usage, interval=1000)
+        Fabricator(poll_from=self._refresh_system_info, interval=1000)
 
     def _initialize_content(self):
         self.box = Box(orientation="h", name="tray")
@@ -26,21 +26,19 @@ class HardwareUsage(Button):
         self.labels = {}
         self.icons = {}
 
-        for hardware, icon_name in self.HARDWARE_ITEMS:
-            self._create_hardware_item(hardware, icon_name)
+        for system, icon_name in self.ICONS:
+            self._create_system_item(system, icon_name)
 
         return self.box
 
-    def _create_hardware_item(self, hardware, icon_name):
-        self.progress_bars[hardware] = self._create_progress_bar()
-        self.labels[hardware] = self._create_label()
-        self.icons[hardware] = self._create_icon(icon_name)
+    def _create_system_item(self, system, icon_name):
+        self.progress_bars[system] = self._create_progress_bar()
+        self.labels[system] = self._create_label()
+        self.icons[system] = self._create_icon(icon_name)
 
-        overlay = Overlay(
-            child=self.progress_bars[hardware], overlays=self.icons[hardware]
-        )
+        overlay = Overlay(child=self.progress_bars[system], overlays=self.icons[system])
         self.box.pack_start(overlay, False, False, 0)
-        self.box.pack_start(self.labels[hardware], False, False, 0)
+        self.box.pack_start(self.labels[system], False, False, 0)
 
     def _create_progress_bar(self):
         return CircularProgressBar(
@@ -53,9 +51,9 @@ class HardwareUsage(Button):
     def _create_icon(self, icon_name):
         return MaterialIcon(icon_name, size="16px")
 
-    def _refresh_hardware_usage(self, *_):
-        usages = self._retrieve_hardware_data()
-        self._update_hardware_display(usages)
+    def _refresh_system_info(self, *_):
+        usages = self._retrieve_system_data()
+        self._update_tooltip(usages)
         return True
 
     @staticmethod
@@ -70,7 +68,7 @@ class HardwareUsage(Button):
         except Exception:
             return None
 
-    def _retrieve_hardware_data(self):
+    def _retrieve_system_data(self):
         return {
             "CPU": round(psutil.cpu_percent()),
             "RAM": round(psutil.virtual_memory().percent),
@@ -78,14 +76,14 @@ class HardwareUsage(Button):
             "Temp": self._get_device_temperature(),
         }
 
-    def _update_hardware_display(self, usages):
-        for hardware, usage in usages.items():
+    def _update_tooltip(self, usages):
+        for system, usage in usages.items():
             if usage is None:
                 usage = 0
-                self.labels[hardware].set_label("N/A")
+                self.labels[system].set_label("N/A")
             else:
                 usage = int(usage)
 
-            self.progress_bars[hardware].value = usage / 100
-            self.labels[hardware].set_label(f"{usage}")
-            self.progress_bars[hardware].set_tooltip_text(f"{hardware} Usage: {usage}%")
+            self.progress_bars[system].value = usage / 100
+            self.labels[system].set_label(f"{usage}")
+            self.progress_bars[system].set_tooltip_text(f"{system} Usage: {usage}%")
