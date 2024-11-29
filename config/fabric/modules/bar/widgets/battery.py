@@ -1,6 +1,5 @@
 import psutil
-
-from fabric.utils import invoke_repeater
+from fabric import Fabricator
 from fabric.widgets.box import Box
 from fabric.widgets.label import Label
 from snippets import MaterialIcon
@@ -36,9 +35,9 @@ class BatteryLabel(Box):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        invoke_repeater(1000, self.update_battery_status, initial_call=True)
+        Fabricator(interval=1000, poll_from=self.update_battery_status)
 
-    def update_battery_status(self):
+    def update_battery_status(self, *_):
         battery = psutil.sensors_battery()
         if battery is None:
             self.hide()
