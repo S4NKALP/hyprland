@@ -1,0 +1,37 @@
+#notification {
+  padding: 16px;
+  border: solid 1px @outlineVariant;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  background-color: @surfaceContainerLow;
+  min-width: 400px;
+}
+
+#notification .summary {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#notification .body {
+  color: darker(@foreground);
+  font-weight: normal;
+}
+
+#notification_action_button button.start-action {
+  margin-left: 0;
+}
+
+#notification_action_button button.end-action {
+  margin-right: 0;
+}
+
+#notification_action_button button {
+  padding: 0.6rem;
+  font-weight: 600;
+  border-radius: 3rem;
+  background-color: @outlineVariant;
+}
+
+#notification_action_button button:hover {
+  background-color: lighter(@outlineVariant);
+}

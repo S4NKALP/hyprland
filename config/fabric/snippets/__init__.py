@@ -1,7 +1,12 @@
 from .animator import Animator
+from .functions import (
+    get_current_uptime,
+    get_profile_picture_path,
+    read_config,
+    username,
+)
 from .icon import MaterialIcon
 from .icon_resolver import IconResolver
-from .util import get_current_uptime, get_profile_picture_path, read_config, username
 
 __all__ = [
     "Animator",

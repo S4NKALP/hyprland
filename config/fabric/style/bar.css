@@ -1,0 +1,120 @@
+#bar {
+  background-color: @surface;
+  padding: 3px;
+}
+#bar label {
+  font-weight: bold;
+}
+
+#progress {
+  color: transparent;
+  background-color: transparent;
+}
+
+#progress {
+  border: solid 0px @outlineVariant;
+}
+
+#workspaces {
+  border-radius: 100px;
+  font-weight: bold;
+  font-style: normal;
+  color: @onSurface;
+  background: @surfaceContainer;
+  padding: 0px 10px 0px 10px;
+}
+
+#datetime {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 8px;
+}
+
+#battery {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 2px 10px;
+}
+
+#battery label {
+  color: @onSurface;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+#battery .icon {
+  color: @onSurface;
+}
+
+#battery.critical {
+  background-color: @error;
+}
+
+#battery.critical label,
+#battery.critical .icon {
+  color: @onError;
+}
+
+#tray {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 0px 10px;
+}
+
+#tray > button {
+  margin: 0px;
+  padding: 0px;
+}
+
+#tray image {
+  color: @onSurface;
+}
+
+#progress {
+  color: lighter(@outlineVariant);
+  border: 2px solid @onSecondaryContainer;
+}
+
+#applets {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 2px 10px;
+  margin: 0px;
+}
+
+#applets .icon {
+  color: @onSurface;
+  font-weight: 900;
+}
+
+#applets > button {
+  color: @onSurface;
+  margin: 0px;
+  padding: 0px;
+}
+
+#taskbar {
+  border-radius: 100px;
+  font-weight: bold;
+  font-style: normal;
+  color: @onSurface;
+  background: @surfaceContainer;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#taskbar .activated {
+  border-radius: 100px;
+  background: @surfaceVariant;
+}
+
+#taskbar > button {
+  padding: 0px 5px;
+  margin: 4px 0px;
+  margin-right: 3px;
+  border-radius: 100px;
+  border: 0px;
+}
+#taskbar > button:last-child {
+  margin-right: 0px;
+}
