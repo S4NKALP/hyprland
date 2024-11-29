@@ -1,44 +1,15 @@
-from dataclasses import dataclass
-from typing import Iterator, List
+import time
+from typing import Literal
 
 from fabric.audio import Audio
 from fabric.widgets.box import Box
 from fabric.widgets.label import Label
+from fabric.widgets.revealer import Revealer
 from fabric.widgets.scale import Scale, ScaleMark
 from fabric.widgets.wayland import WaylandWindow as Window
 from gi.repository import GLib, GObject
-from services import Brightness
+from services.brightness import Brightness
 from snippets import Animator, MaterialIcon
-
-
-@dataclass
-class IconMapping:
-    threshold: float
-    name: str
-
-
-class BrightnessIcons:
-    MAPPINGS: List[str] = [
-        "brightness_1",
-        "brightness_2",
-        "brightness_3",
-        "brightness_4",
-        "brightness_5",
-        "brightness_6",
-        "brightness_7",
-    ]
-    MAX_BRIGHTNESS: float = 100
-    RATIO: float = 1.6
-
-
-class VolumeIcons:
-    MAPPINGS: List[IconMapping] = [
-        IconMapping(101, "sound_detection_loud_sound"),
-        IconMapping(67, "volume_up"),
-        IconMapping(34, "volume_down"),
-        IconMapping(1, "volume_mute"),
-        IconMapping(0, "volume_off"),
-    ]
 
 
 class AnimatedScale(Scale):
@@ -50,36 +21,36 @@ class AnimatedScale(Scale):
             min_value=self.min_value,
             max_value=self.value,
             tick_widget=self,
-            notify_value=self._update_scale_value,
+            notify_value=lambda p, *_: self.set_value(p.value),
         )
 
-    def animate_value(self, value: float) -> None:
+    def animate_value(self, value: float):
         self.animator.pause()
         self.animator.min_value = self.value
         self.animator.max_value = value
         self.animator.play()
 
-    def _update_scale_value(self, provider: any, *_) -> None:
-        self.set_value(provider.value)
 
-
-class BaseOSDContainer(Box):
-    def __init__(self, icon_name: str, icon_size: str, **kwargs):
+class BrightnessOSDContainer(Box):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs, orientation="h", spacing=12, name="osd")
-        self.icon = self._create_icon(icon_name, icon_size)
-        self.scale = self._create_scale()
-        self._setup_layout()
+        self.brightness_service = Brightness()
+        self.icon = self._create_icon("brightness_7", icon_size="28px")
+        self.scale = self._create_brightness_scale()
 
-    def _setup_layout(self) -> None:
         self.add(self.icon)
         self.add(self.scale)
+        self.update_brightness()
+
+        self.scale.connect("value-changed", lambda *_: self.update_brightness())
+        self.brightness_service.connect("screen", self.on_brightness_changed)
 
     def _create_icon(self, icon_name: str, icon_size: str) -> Label:
         return MaterialIcon(icon_name=icon_name, size=icon_size)
 
-    def _create_scale(self) -> AnimatedScale:
+    def _create_brightness_scale(self) -> AnimatedScale:
         return AnimatedScale(
-            marks=self._create_scale_marks(),
+            marks=(ScaleMark(value=i) for i in range(0, 101, 10)),
             value=70,
             min_value=0,
             max_value=100,
@@ -87,186 +58,183 @@ class BaseOSDContainer(Box):
             orientation="h",
         )
 
-    def _create_scale_marks(self) -> Iterator[ScaleMark]:
-        return (ScaleMark(value=i) for i in range(1, 100, 10))
-
-
-class BrightnessOSDContainer(BaseOSDContainer):
-    def __init__(self, **kwargs):
-        super().__init__(icon_name="brightness_7", icon_size="28px", **kwargs)
-        self.brightness_service = Brightness()
-        self._setup_handlers()
-        self.update_brightness()
-
-    def _setup_handlers(self) -> None:
-        self.scale.connect("value-changed", lambda *_: self.update_brightness())
-        self.brightness_service.connect("screen", self.on_brightness_changed)
-
     def update_brightness(self) -> None:
         current_brightness = self.brightness_service.screen_brightness
         if current_brightness != 0:
             normalized_brightness = self._normalize_brightness(current_brightness)
-            self._update_ui(normalized_brightness)
+            self.scale.animate_value(normalized_brightness)
+        self.update_icon(normalized_brightness)
+
+    def update_icon(self, brightness_percentage: float) -> None:
+        icon_name = self.get_brightness_icon(brightness_percentage)
+        self.icon.set_label(icon_name)
 
     def on_brightness_changed(self, _sender: any, value: float, *_args) -> None:
         normalized_brightness = self._normalize_brightness(value)
-        self._update_ui(normalized_brightness)
+        self.scale.animate_value(normalized_brightness)
+        self.update_icon(normalized_brightness)
 
     def _normalize_brightness(self, brightness: float) -> float:
         return (brightness / self.brightness_service.max_screen) * 100
 
-    def _update_ui(self, brightness: float) -> None:
-        self.scale.animate_value(brightness)
-        self.update_icon(brightness)
-
-    def update_icon(self, brightness_percentage: float) -> None:
-        icon_name = self._calculate_icon_name(brightness_percentage)
-        self.icon.set_label(icon_name)
-
-    def _calculate_icon_name(self, brightness_percentage: float) -> str:
+    def get_brightness_icon(self, brightness_percentage: float) -> str:
+        brightness_icons = [
+            "brightness_1",
+            "brightness_2",
+            "brightness_3",
+            "brightness_4",
+            "brightness_5",
+            "brightness_6",
+            "brightness_7",
+        ]
         thresholds = [
-            BrightnessIcons.MAX_BRIGHTNESS
-            / (BrightnessIcons.RATIO ** (len(BrightnessIcons.MAPPINGS) - i - 1))
-            for i in range(len(BrightnessIcons.MAPPINGS))
+            100 / (1.6 ** (len(brightness_icons) - i - 1))
+            for i in range(len(brightness_icons))
         ]
 
         for i, threshold in enumerate(thresholds):
             if brightness_percentage < threshold:
-                return BrightnessIcons.MAPPINGS[i]
+                return brightness_icons[i]
 
-        return BrightnessIcons.MAPPINGS[-1]
+        return brightness_icons[-1]
 
 
-class AudioOSDContainer(BaseOSDContainer):
+class AudioOSDContainer(Box):
     __gsignals__ = {
         "volume-changed": (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE, ()),
     }
 
     def __init__(self, **kwargs):
-        super().__init__(icon_name="volume_up", icon_size="29px", **kwargs)
+        super().__init__(**kwargs, orientation="h", spacing=13, name="osd")
         self.audio = Audio()
-        self._setup_handlers()
+        self.icon = self._create_icon("volume_up", icon_size="28px")
+        self.scale = self._create_audio_scale()
+
+        self.add(self.icon)
+        self.add(self.scale)
         self.sync_with_audio()
 
-    def _setup_handlers(self) -> None:
         self.scale.connect("value-changed", self.on_volume_changed)
         self.audio.connect("notify::speaker", self.on_audio_speaker_changed)
 
-    def sync_with_audio(self) -> None:
+    def _create_icon(self, icon_name: str, icon_size: str) -> Label:
+        return MaterialIcon(icon_name=icon_name, size=icon_size)
+
+    def _create_audio_scale(self) -> AnimatedScale:
+        return AnimatedScale(
+            marks=(ScaleMark(value=i) for i in range(1, 100, 10)),
+            value=70,
+            min_value=0,
+            max_value=100,
+            increments=(1, 1),
+            orientation="h",
+        )
+
+    def sync_with_audio(self):
         if self.audio.speaker:
             volume = round(self.audio.speaker.volume)
-            self._update_ui(volume)
+            self.scale.set_value(volume)
+            self.update_icon(volume)
 
-    def on_volume_changed(self, *_) -> None:
+    def on_volume_changed(self, *_):
         if self.audio.speaker:
             volume = self.scale.value
             if 1 <= volume <= 100:
                 self.audio.speaker.set_volume(volume)
-                self._update_ui(volume)
+                self.update_icon(volume)
                 self.emit("volume-changed")
 
-    def on_audio_speaker_changed(self, *_) -> None:
+    def on_audio_speaker_changed(self, *_):
         if self.audio.speaker:
             self.audio.speaker.connect("notify::volume", self.update_volume)
             self.update_volume()
 
-    def update_volume(self, *_) -> None:
+    def update_volume(self, *_):
         if self.audio.speaker and not self.is_hovered():
             volume = round(self.audio.speaker.volume)
-            self._update_ui(volume)
+            self.scale.set_value(volume)
+            self.update_icon(volume)
 
-    def _update_ui(self, volume: int) -> None:
-        self.scale.set_value(volume)
-        self.update_icon(volume)
-
-    def update_icon(self, volume: int) -> None:
-        icon_name = self._get_volume_icon(volume)
+    def update_icon(self, volume):
+        icon_name = self._get_audio_icon_name(volume)
         self.icon.set_label(icon_name)
 
-    def _get_volume_icon(self, volume: int) -> str:
-        for mapping in VolumeIcons.MAPPINGS:
-            if volume >= mapping.threshold:
-                return mapping.name
+    def _get_audio_icon_name(self, volume: int) -> str:
+        if volume == 101:
+            return "sound_detection_loud_sound"
+        elif volume >= 67:
+            return "volume_up"
+        elif volume >= 34:
+            return "volume_down"
+        elif volume >= 1:
+            return "volume_mute"
+        else:
+            return "volume_off"
 
 
 class OSDContainer(Window):
     def __init__(self, **kwargs):
         self.audio_container = AudioOSDContainer()
         self.brightness_container = BrightnessOSDContainer()
-        self.is_initial_display = True
-        self.last_activity_time = GLib.get_monotonic_time()
 
-        self.main_box = self._create_main_box()
-        super().__init__(
-            **kwargs,
-            layer="overlay",
-            anchor="bottom",
-            exclusive=False,
-            focusable=False,
-            child=self.main_box,
-            visible=True,
+        self.timeout = 1000
+
+        self.revealer = Revealer(
+            transition_type="slide-up",
+            transition_duration=100,
+            child_revealed=False,
         )
-        self._initialize()
 
-    def _create_main_box(self) -> Box:
-        return Box(
+        self.main_box = Box(
             orientation="v",
             spacing=13,
-            children=[self.audio_container, self.brightness_container],
+            children=[self.revealer],
         )
 
-    def _initialize(self) -> None:
-        self._setup_containers()
-        self._setup_event_handlers()
-        self._setup_timers()
+        super().__init__(
+            layer="overlay",
+            anchor="bottom",
+            child=self.main_box,
+            visible=False,
+            pass_through=True,
+            keyboard_mode="on-demand",
+            **kwargs,
+        )
 
-    def _setup_containers(self) -> None:
-        self.audio_container.set_visible(True)
-        self.brightness_container.set_visible(True)
+        self.last_activity_time = time.time()
 
-    def _setup_event_handlers(self) -> None:
         self.audio_container.audio.connect("notify::speaker", self.show_audio)
         self.brightness_container.brightness_service.connect(
             "screen", self.show_brightness
         )
         self.audio_container.connect("volume-changed", self.show_audio)
 
-    def _setup_timers(self) -> None:
-        GLib.timeout_add_seconds(1, self._check_inactivity)
-        GLib.timeout_add_seconds(1, self._end_initial_display)
+        GLib.timeout_add(100, self.check_inactivity)
 
-    def _end_initial_display(self) -> bool:
-        self.is_initial_display = False
-        self._hide_all()
-        return False
+    def show_audio(self, *_):
+        self.show_box(box_to_show="audio")
+        self.reset_inactivity_timer()
 
-    def _hide_all(self) -> None:
-        self.set_visible(False)
-        self.audio_container.set_visible(False)
-        self.brightness_container.set_visible(False)
+    def show_brightness(self, *_):
+        self.show_box(box_to_show="brightness")
+        self.reset_inactivity_timer()
 
-    def show_audio(self, *_) -> None:
-        if not self.is_initial_display:
-            self._show_container(show_audio=True)
-
-    def show_brightness(self, *_) -> None:
-        if not self.is_initial_display:
-            self._show_container(show_audio=False)
-
-    def _show_container(self, show_audio: bool) -> None:
-        self.audio_container.set_visible(show_audio)
-        self.brightness_container.set_visible(not show_audio)
+    def show_box(self, box_to_show: Literal["audio", "brightness"]):
         self.set_visible(True)
-        self._reset_inactivity_timer()
+        if box_to_show == "audio":
+            self.revealer.children = self.audio_container
+        elif box_to_show == "brightness":
+            self.revealer.children = self.brightness_container
+        self.revealer.set_reveal_child(True)
+        self.reset_inactivity_timer()
 
-    def _reset_inactivity_timer(self) -> None:
-        self.last_activity_time = GLib.get_monotonic_time()
+    def start_hide_timer(self):
+        self.set_visible(False)
 
-    def _check_inactivity(self) -> bool:
-        current_time = GLib.get_monotonic_time()
-        if (
-            not self.is_initial_display
-            and (current_time - self.last_activity_time) / 1_000_000 >= 2
-        ):
-            self.set_visible(False)
+    def reset_inactivity_timer(self):
+        self.last_activity_time = time.time()
+
+    def check_inactivity(self):
+        if time.time() - self.last_activity_time >= (self.timeout / 1000):
+            self.start_hide_timer()
         return True

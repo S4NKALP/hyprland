@@ -21,22 +21,22 @@ if __name__ == "__main__":
     bar = Bar()
     launcher = Launcher()
     launcher.hide()
-    systemOverlay = OSDContainer()
+
+    osd = OSDContainer()
     notif = NotificationPopup()
     app = Application(
         "fabric-bar",
         bar,
         launcher,
         notif,
-        systemOverlay,
+        osd,
     )
-    # Monitor main.css file for changes
-    main_css_file = monitor_file(get_relative_path("style/main.css"))
-    main_css_file.connect("changed", lambda *args: apply_style(app))
 
-    # Monitor colors.css file for changes
+    css_file = monitor_file(get_relative_path("style/main.css"))
+    _ = css_file.connect("changed", lambda *_: apply_style(app))
+
     color_css_file = monitor_file(f"/home/{os.getlogin()}/.cache/material/colors.css")
-    color_css_file.connect("changed", lambda *args: apply_style(app))
+    _ = color_css_file.connect("changed", lambda *_: apply_style(app))
 
     apply_style(app)
 
