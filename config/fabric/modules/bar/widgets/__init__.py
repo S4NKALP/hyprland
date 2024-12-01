@@ -17,7 +17,7 @@ __all__ = [
     "MicrophoneIndicator",
     "Network",
     "PowerProfile",
-    "TaskBar",
     "VolumeIndicator",
     "workspace",
+    "TaskBar",
 ]
