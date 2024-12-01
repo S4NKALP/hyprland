@@ -4,17 +4,23 @@
   border-radius: 20px;
   margin-bottom: 12px;
   background-color: @surfaceContainerLow;
-  min-width: 400px;
 }
 
 #notification .summary {
-  font-size: 20px;
+  font-size: 0.92rem;
   font-weight: bold;
 }
 
 #notification .body {
   color: darker(@foreground);
-  font-weight: normal;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+#notification .close-button:hover {
+  background: alpha(@foreground, 0.2);
+  transition: background 0.15s ease-in-out;
+  border-radius: 100px;
 }
 
 #notification_action_button button.start-action {

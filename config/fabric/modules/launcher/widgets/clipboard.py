@@ -125,7 +125,7 @@ class ClipboardManager:
                 h_align="start",
             ),
             on_clicked=lambda _, clip_id=item["id"]: self.handle_clip_click(clip_id),
-            name="cliphist-item",
+            name="launcher-item",
         )
         viewport.add(label_button)
 

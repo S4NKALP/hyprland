@@ -8,9 +8,7 @@ from loguru import logger
 from snippets import MaterialIcon
 
 IDLE_BUTTON_ACTIVE_STYLE = "background-color: @surfaceVariant; min-width:50px; min-height:50px; border-radius:100px;"
-IDLE_BUTTON_INACTIVE_STYLE = (
-    "background-color: transparent; min-width:50px; min-height:50px;"
-)
+IDLE_BUTTON_INACTIVE_STYLE = "background-color: transparent;"
 
 
 class PowerMenu:
@@ -81,7 +79,7 @@ class PowerMenu:
                     ],
                 ),
                 on_clicked=lambda _, action=option["action"]: action(),
-                name="sh-item",
+                name="launcher-item",
             )
             viewport.add(button)
 

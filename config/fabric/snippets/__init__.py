@@ -6,6 +6,7 @@ from .functions import (
     username,
 )
 from .icon import MaterialIcon
+from .icon_resolver import IconResolver
 
 __all__ = [
     "Animator",
@@ -13,5 +14,6 @@ __all__ = [
     "read_config",
     "get_profile_picture_path",
     "username",
+    "IconResolver",
     "get_current_uptime",
 ]

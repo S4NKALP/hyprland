@@ -1,5 +1,4 @@
 import json
-import os
 from typing import TypedDict
 
 from fabric.hyprland.widgets import get_hyprland_connection
@@ -8,7 +7,7 @@ from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.image import Image
 from gi.repository import GdkPixbuf, GLib, Gtk
-from loguru import logger
+from snippets import IconResolver
 
 
 class PagerClient(TypedDict):
@@ -30,6 +29,7 @@ class TaskBar(Box):
         self.connection = get_hyprland_connection()
         self.icon_size = icon_size
         self.icon_theme = Gtk.IconTheme.get_default()
+        self.icon_resolver = IconResolver()
 
         self.set_visible(False)
         self._icon_cache = {}
@@ -93,37 +93,11 @@ class TaskBar(Box):
     def bake_window_icon(
         self, window_class: str, fallback_icon: str = "image-missing"
     ) -> Image:
-        icon_name = self.get_icon_from_desktop_entry(window_class)
-
-        if icon_name:
+        icon_name = self.icon_resolver.get_icon_name(window_class) or fallback_icon
+        if icon_name not in self._icon_cache:
             pixbuf = self.load_icon(icon_name)
-        else:
-            pixbuf = self.load_icon(window_class, fallback_icon)
-
-        return Image(pixbuf=pixbuf, size=self.icon_size)
-
-    def get_icon_from_desktop_entry(self, window_class: str) -> str:
-        for data_dir in GLib.get_system_data_dirs():
-            applications_dir = os.path.join(data_dir, "applications")
-
-            if os.path.isdir(applications_dir):
-                for desktop_file in os.listdir(applications_dir):
-                    if desktop_file.endswith(".desktop"):
-                        file_path = os.path.join(applications_dir, desktop_file)
-                        try:
-                            with open(file_path, "r") as f:
-                                app_name = None
-                                icon_name = None
-                                for line in f:
-                                    if line.startswith("Name="):
-                                        app_name = line.split("=", 2)[1].strip().lower()
-                                    elif line.startswith("Icon=") and app_name:
-                                        icon_name = line.split("=", 2)[1].strip()
-                                        if window_class in app_name:
-                                            return icon_name
-                        except Exception as e:
-                            logger.error(f"Error reading {file_path}: {e}")
-        return None
+            self._icon_cache[icon_name] = pixbuf
+        return Image(pixbuf=self._icon_cache[icon_name], size=self.icon_size)
 
     def load_icon(
         self, icon_name: str, fallback_icon: str = "image-missing"

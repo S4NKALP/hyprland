@@ -7,23 +7,6 @@
   min-width: 480px;
 }
 
-#launcher button {
-  border-radius: 100px;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-}
-
-#launcher button:focus {
-  box-shadow: inset 0 0 0 1px @primary;
-  background-color: @background;
-}
-
-#launcher button:hover {
-  box-shadow: inset 0 0 0 1px @background;
-  background-color: @background;
-}
-
 #launcher entry {
   transition: all 0.1s ease;
   border-radius: 11px;
@@ -45,22 +28,14 @@
   background-color: transparent;
 }
 
-#launcher button#fav-item {
-  border-radius: 10px;
-  padding: 10px;
-  background-image: none;
-  box-shadow: none;
-}
-
-#launcher button#fav-item:hover image,
-#launcher button#fav-item:focus image {
-  -gtk-icon-shadow: 2px 2px @primary;
-}
-
-#launcher button#fav-item:active {
+#profile-pic {
   background-color: transparent;
-  border-radius: 11px;
-  box-shadow: inset 0 0 0 1px rgba(158, 142, 130, 0.04);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 100px;
+  padding: 20px;
+  margin: 4px;
 }
 
 #launcher button#app-item {
@@ -74,7 +49,7 @@
 
 #launcher button#app-item:hover #title,
 #launcher button#app-item:focus #title {
-  color: @primary;
+  color: @primar;
 }
 
 #launcher button#app-item:hover #description,
@@ -94,6 +69,7 @@
 }
 
 #launcher button#app-item:active #title {
+  color: @foreground;
 }
 
 #launcher button#emoji-item {
@@ -117,22 +93,6 @@
   text-shadow: 2px 2px 2px @primary;
 }
 
-#launcher button#cliphist-item {
-  border-radius: 11px;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-}
-
-window#launcher button#cliphist-item:disabled {
-  color: mix(@onSurface, transparent, 0.38);
-}
-
-#launcher button#cliphist-item:hover,
-#launcher button#cliphist-item:focus {
-  text-shadow: 2px 2px 2px @primary;
-}
-
 #launcher button#cliphist-img-item {
   background-size: cover;
   background-position: center;
@@ -147,57 +107,20 @@ window#launcher button#cliphist-item:disabled {
   box-shadow: 2px 2px 2px @primary;
 }
 
-#launcher button#exit-button {
-  /* background-color: red; */
-  border-radius: 100px;
-}
-
-#launcher button#exit-button:active {
-  text-shadow: 2px 2px 2px @primary;
-}
-
-#launcher button#power-item {
+#launcher button#launcher-item {
   border-radius: 11px;
   background-color: transparent;
   background-image: none;
   box-shadow: none;
 }
 
-#launcher button#power-item:disabled {
+#launcher button#launcher-item:disabled {
   color: mix(@onSurface, transparent, 0.38);
 }
 
-#launcher button#power-item:hover,
-#launcher button#power-item:focus {
+#launcher button#launcher-item:hover,
+#launcher button#launcher-item:focus {
   text-shadow: 2pt 2pt 2pt @primary;
-}
-
-#launcher button#sh-item {
-  border-radius: 11px;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-}
-
-#launcher button#sh-item:disabled {
-  color: mix(@onSurface, transparent, 0.38);
-}
-
-#launcher button#sh-item:hover,
-#launcher button#sh-item:focus {
-  text-shadow: 2pt 2pt 2pt @primary;
-}
-
-#launcher button#help-item {
-  border-radius: 11px;
-  background-color: transparent;
-  background-image: none;
-  box-shadow: none;
-}
-
-#launcher button#help-item:hover label,
-#launcher button#help-item:focus label {
-  text-shadow: 2px 2px 2px @primary;
 }
 
 #launcher button#wall-item {
@@ -215,4 +138,9 @@ window#launcher button#cliphist-item:disabled {
 #launcher button#wall-item:hover,
 #launcher button#wall-item:focus {
   box-shadow: 2pt 2pt 2pt @primary;
+}
+
+.activated {
+  background-color: @surfaceVariant;
+  border-radius: 100px;
 }

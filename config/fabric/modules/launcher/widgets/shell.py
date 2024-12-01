@@ -61,7 +61,7 @@ class ShellCommandManager:
                     h_align="start",
                 ),
                 on_clicked=lambda _, cmd=command: self.execute_command(cmd),
-                name="sh-item",
+                name="launcher-item",
             )
             viewport.add(button)
 

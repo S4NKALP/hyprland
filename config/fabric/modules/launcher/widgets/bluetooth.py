@@ -32,7 +32,6 @@ class BluetoothMenu:
             h_align="center",
             v_align="center",
             on_clicked=lambda *_: self.client.toggle_scan(),
-            style="min-height:50px; min-width:50px;",
         )
 
     def bt_toggle(self, *_):
@@ -41,7 +40,7 @@ class BluetoothMenu:
 
     def update_bt_button_style(self):
         style = (
-            "background-color: transparent; min-height: 50px; min-width: 50px;"
+            "background-color: transparent;"
             if self.client.enabled
             else "background-color: @surfaceVariant; min-height: 50px; min-width: 50px;"
         )
@@ -72,7 +71,7 @@ class BluetoothMenu:
                 ],
             ),
             on_clicked=lambda _, device=device: self.connect_to_device(device),
-            name="sh-item",
+            name="launcher-item",
         )
 
     def connect_to_device(self, device):

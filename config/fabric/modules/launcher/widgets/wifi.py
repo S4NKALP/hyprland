@@ -26,19 +26,16 @@ class WifiMenu:
             h_align="center",
             v_align="center",
             on_clicked=self.scan_for_networks,
-            style=" min-height:50px; min-width:50px;",
         )
 
         self.client.device_ready.connect(self.on_device_added)
 
     def update_wifi_button_style(self):
         if self.check_wifi_state():
-            self.wifi_toggle_button.set_style(
-                "background-color: transparent;  min-height:50px; min-width:50px;"
-            )
+            self.wifi_toggle_button.set_style("background-color: transparent;")
         else:
             self.wifi_toggle_button.set_style(
-                "background-color: @surfaceVariant;  min-height:50px; min-width:50px;"
+                "background-color: @surfaceVariant; border-radius:100px; min-height:50px; min-width:50px;"
             )
 
     def check_wifi_state(self):
@@ -75,7 +72,7 @@ class WifiMenu:
                     self.connect_to_ap(ap, is_connected),
                     self.launcher.set_visible(False),
                 ),
-                name="sh-item",
+                name="launcher-item",
             )
             devices_box.add(device_button)
 
