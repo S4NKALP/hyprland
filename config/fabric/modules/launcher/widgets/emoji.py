@@ -1,7 +1,7 @@
 import json
 import os
 import subprocess
-from typing import List
+from typing import Generator, List
 
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
@@ -23,24 +23,24 @@ class EmojiManager:
         self.emojis: List[EmojiItem] = []
         self.query_cache: dict = {}
 
-    def load_emojis(self):
+    def load_emojis(self) -> Generator[EmojiItem, None, None]:
         emoji_path = os.path.expanduser("~/fabric/assets/emoji.json")
         if not os.path.exists(emoji_path):
-            return []
+            return
 
         try:
             with open(emoji_path, "r") as file:
                 data = json.load(file)
-                return [
-                    EmojiItem(emoji_str, item["name"], item["slug"], item["group"])
-                    for emoji_str, item in data.items()
-                ]
+                for emoji_str, item in data.items():
+                    yield EmojiItem(
+                        emoji_str, item["name"], item["slug"], item["group"]
+                    )
         except (json.JSONDecodeError, OSError):
-            return []
+            return
 
-    def get_emojis(self):
+    def get_emojis(self) -> List[EmojiItem]:
         if not self.emojis:
-            self.emojis = self.load_emojis()
+            self.emojis = list(self.load_emojis())
         return self.emojis
 
     def query_emojis(self, query: str) -> List[EmojiItem]:

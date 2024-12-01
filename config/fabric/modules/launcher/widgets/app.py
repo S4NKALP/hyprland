@@ -37,11 +37,13 @@ def handle_application_search(launcher, query: str):
                             spacing=10,
                             children=[
                                 Label(
+                                    name="title",
                                     label=app.display_name or "Unknown",
                                     h_align="start",
                                     v_align="center",
                                 ),
                                 Label(
+                                    name="description",
                                     label=app.description or "",
                                     justification="left",
                                     line_wrap="char",

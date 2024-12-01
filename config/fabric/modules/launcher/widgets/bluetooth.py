@@ -13,11 +13,8 @@ class BluetoothMenu:
         self.paired_devices = {}
         self.available_devices = {}
 
-        # Initialize buttons
         self.bt_button = self.create_bluetooth_button()
         self.scan_button = self.create_scan_button()
-
-        # Set the initial style based on the Bluetooth state
         self.update_bt_button_style()
 
     def create_bluetooth_button(self):
@@ -38,7 +35,7 @@ class BluetoothMenu:
             style="min-height:50px; min-width:50px;",
         )
 
-    def bt_toggle(self, *args):
+    def bt_toggle(self, *_):
         self.client.toggle_power()
         self.update_bt_button_style()
 

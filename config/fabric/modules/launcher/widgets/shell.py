@@ -14,29 +14,30 @@ BINS = os.path.join(CACHE_DIR, "binaries")
 class ShellCommandManager:
     def __init__(self, launcher):
         self.launcher = launcher
+        self.binaries = set()  # Use a set to store unique binaries
         self.reload_binaries()
 
     def reload_binaries(self):
         paths = os.getenv("PATH", "").split(":")
-        bins = []
+        self.binaries = set()
 
         for path in paths:
-            bins.extend(self.list_binaries_in_path(path))
+            self.binaries.update(self.list_binaries_in_path(path))
 
-        unique_bins = set(bins)
+        # Write unique binaries to the cache file
         with open(BINS, "w") as f:
-            f.write("\n".join(unique_bins))
+            f.write("\n".join(self.binaries))
 
     def list_binaries_in_path(self, path):
         if not os.path.exists(path):
             return []
         try:
-            return (
-                subprocess.check_output(f"ls {path}", shell=True, text=True)
-                .strip()
-                .splitlines()
-            )
-        except subprocess.CalledProcessError:
+            return [
+                entry
+                for entry in os.listdir(path)
+                if os.access(os.path.join(path, entry), os.X_OK)
+            ]
+        except OSError:
             return []
 
     def show_shell_commands(self, viewport, search_query: str):
@@ -46,14 +47,10 @@ class ShellCommandManager:
         results = self.query_binaries(search_query)
         self.display_results(viewport, results)
 
-    def query_binaries(self, filter_str):
-        try:
-            result = subprocess.check_output(
-                f"cat {BINS} | fzf -f {filter_str} | head -n 16", shell=True, text=True
-            )
-            return list(dict.fromkeys(result.splitlines()))  # Deduplicate results
-        except subprocess.CalledProcessError:
-            return []
+    def query_binaries(self, filter_str: str):
+        # Use a generator to filter binaries on demand
+        filtered_bins = (cmd for cmd in self.binaries if filter_str in cmd)
+        return list(dict.fromkeys(filtered_bins))[:16]  # Deduplicate and limit to 16
 
     def display_results(self, viewport, results):
         for command in results:

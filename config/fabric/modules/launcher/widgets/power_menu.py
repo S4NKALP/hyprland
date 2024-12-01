@@ -7,6 +7,11 @@ from fabric.widgets.label import Label
 from loguru import logger
 from snippets import MaterialIcon
 
+IDLE_BUTTON_ACTIVE_STYLE = "background-color: @surfaceVariant; min-width:50px; min-height:50px; border-radius:100px;"
+IDLE_BUTTON_INACTIVE_STYLE = (
+    "background-color: transparent; min-width:50px; min-height:50px;"
+)
+
 
 class PowerMenu:
     def __init__(self, launcher):
@@ -17,11 +22,9 @@ class PowerMenu:
             v_align="center",
             on_clicked=self.toggle_idle_inhibitor,
         )
-        self.idle_button.set_style(
-            "background-color: transparent;min-width:50px; min-height:50px;"
-        )
+        self.idle_button.set_style(IDLE_BUTTON_INACTIVE_STYLE)
 
-    def toggle_idle_inhibitor(self, *args):
+    def toggle_idle_inhibitor(self, *_):
         self.idle_inhibitor = not self.idle_inhibitor
         script_path = os.path.expanduser(
             "~/fabric/assets/scripts/wayland-idle-inhibitor.py"
@@ -32,19 +35,14 @@ class PowerMenu:
                 ["python3", script_path],
                 lambda output: logger.info(f"Idle inhibitor output: {output}"),
             )
-            self.idle_button.set_style(
-                "background-color: @surfaceVariant; min-width:50px; min-height:50px; border-radius:100px;"
-            )
+            self.idle_button.set_style(IDLE_BUTTON_ACTIVE_STYLE)
         else:
             exec_shell_command("pkill -f wayland-idle-inhibitor.py")
-            self.idle_button.set_style(
-                "background-color: transparent;min-width:50px; min-height:50px;"
-            )
+            self.idle_button.set_style(IDLE_BUTTON_INACTIVE_STYLE)
 
     def check_idle_state(self):
-        return "wayland-idle-inhibitor.py" in exec_shell_command(
-            "pidof wayland-idle-inhibitor.py"
-        )
+        pid_check = exec_shell_command("pidof wayland-idle-inhibitor.py")
+        return "wayland-idle-inhibitor.py" in pid_check
 
     def show_power_menu(self, viewport, query: str = ""):
         viewport.children = []
@@ -55,35 +53,24 @@ class PowerMenu:
                 "icon": "power_settings_new",
                 "action": self.shutdown,
             },
-            {
-                "label": "Logout",
-                "icon": "logout",
-                "action": self.logout,
-            },
-            {
-                "label": "Reboot",
-                "icon": "restart_alt",
-                "action": self.reboot,
-            },
-            {
-                "label": "Suspend",
-                "icon": "sleep",
-                "action": self.suspend,
-            },
-            {
-                "label": "Lock",
-                "icon": "lock",
-                "action": self.lock,
-            },
+            {"label": "Logout", "icon": "logout", "action": self.logout},
+            {"label": "Reboot", "icon": "restart_alt", "action": self.reboot},
+            {"label": "Suspend", "icon": "sleep", "action": self.suspend},
+            {"label": "Lock", "icon": "lock", "action": self.lock},
         ]
-        if query:
-            power_options = [
+
+        # Filter power options based on the query using a generator
+        filtered_options = (
+            (
                 option
                 for option in power_options
                 if query.lower() in option["label"].lower()
-            ]
+            )
+            if query
+            else power_options
+        )
 
-        for option in power_options:
+        for option in filtered_options:
             button = Button(
                 child=Box(
                     orientation="h",
