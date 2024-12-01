@@ -1,5 +1,6 @@
 import os
 
+import setproctitle
 from loguru import logger
 
 from fabric import Application
@@ -21,16 +22,10 @@ if __name__ == "__main__":
     bar = Bar()
     launcher = Launcher()
     launcher.hide()
-
     osd = OSDContainer()
     notif = NotificationPopup()
-    app = Application(
-        "fabric-bar",
-        bar,
-        launcher,
-        notif,
-        osd,
-    )
+    app = Application("fabric-bar", bar, launcher, osd)
+    setproctitle.setproctitle("quickbar")
 
     css_file = monitor_file(get_relative_path("styles"))
     _ = css_file.connect("changed", lambda *_: apply_style(app))
