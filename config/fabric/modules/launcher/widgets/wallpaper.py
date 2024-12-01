@@ -47,7 +47,7 @@ class WallpaperManager:
         style = (
             "background-color: @surfaceVariant; border-radius:100px; min-height:50px; min-width:50px;"
             if self.check_dark_mode_state()
-            else "background-color: transparent; border-radius:100px; min-height:50px; min-width:50px;"
+            else "background-color: transparent; border-radius:100px;"
         )
         self.theme_toggle_button.set_style(style)
 

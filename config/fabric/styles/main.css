@@ -12,32 +12,9 @@
     sans-serif;
 }
 
-menu {
-  border-radius: 10px;
-  background-color: @surfaceContainer;
-}
-
-menu > menuitem {
-  border-radius: 0px;
-  padding: 6px;
-  margin-left: 2px;
-  margin-right: 2px;
-  color: @onSurface;
-}
-
-menu > menuitem:first-child {
-  margin-top: 1px;
-  border-radius: 8px 8px 0px 0px;
-}
-
-menu > menuitem:last-child {
-  margin-bottom: 1px;
-  border-radius: 0px 0px 8px 8px;
-}
-
-menu > menuitem:hover {
-  background-color: mix(@onSurface, @surface, 0.85);
-}
+/*
+ * ── tooltip ───────────────────────────────────────────────────────────
+*/
 
 tooltip {
   background-color: @surfaceContainer;
@@ -55,24 +32,9 @@ tooltip label {
   font-weight: normal;
 }
 
-#profile-pic {
-  background-color: transparent;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 100px;
-  padding: 20px;
-  margin: 4px;
-}
-
-#start-container,
-#center-container,
-#end-container {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  margin-left: 12px;
-  margin-right: 12px;
-}
+/*
+ * ── icon ──────────────────────────────────────────────────────────────
+*/
 
 #material_icon,
 #material_icon * {

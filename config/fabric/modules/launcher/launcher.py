@@ -100,7 +100,6 @@ class Launcher(Window):
 
     def create_scrolled_window(self):
         return ScrolledWindow(
-            name="launcher-scroll",
             style="  transition: min-height 50s cubic-bezier(0.42, 0, 0.58, 1);",
             child=self.get_viewport(),
             h_scrollbar_policy="never",
@@ -197,7 +196,7 @@ class Launcher(Window):
         for command, description in filtered_help:
             button = Button(
                 child=self.create_help_button_content(command, description),
-                name="help-item",
+                name="launcher-item",
             )
             self.get_viewport().add(button)
 
@@ -206,13 +205,10 @@ class Launcher(Window):
             orientation="h",
             spacing=10,
             children=[
-                Label(
-                    label=command, h_expand=True, name="command-label", h_align="start"
-                ),
+                Label(label=command, h_expand=True, h_align="start"),
                 Label(
                     label=description,
                     h_expand=True,
-                    name="description-label",
                     h_align="end",
                 ),
             ],

@@ -2,33 +2,48 @@
   background-color: @surface;
   padding: 3px;
 }
+
 #bar label {
   font-weight: bold;
 }
 
-#progress {
-  color: transparent;
-  background-color: transparent;
+/*
+ * ── bar moudles ───────────────────────────────────────────────────────
+*/
+
+#start-container,
+#center-container,
+#end-container {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-left: 12px;
+  margin-right: 12px;
 }
 
-#progress {
-  border: solid 0px @outlineVariant;
-}
+/*
+ * ── workspace ─────────────────────────────────────────────────────────
+*/
 
 #workspaces {
   border-radius: 100px;
-  font-weight: bold;
   font-style: normal;
-  color: @onSurface;
   background: @surfaceContainer;
   padding: 0px 10px 0px 10px;
 }
+
+/*
+ * ── Clock ─────────────────────────────────────────────────────────────
+*/
 
 #datetime {
   background-color: @surfaceContainer;
   border-radius: 100px;
   padding: 8px;
 }
+
+/*
+ * ── battery ───────────────────────────────────────────────────────────
+*/
 
 #battery {
   background-color: @surfaceContainer;
@@ -55,6 +70,10 @@
   color: @onError;
 }
 
+/*
+ * ── tray ──────────────────────────────────────────────────────────────
+*/
+
 #tray {
   background-color: @surfaceContainer;
   border-radius: 100px;
@@ -70,10 +89,35 @@
   color: @onSurface;
 }
 
-#progress {
-  color: lighter(@outlineVariant);
-  border: 2px solid @onSecondaryContainer;
+menu {
+  background-color: @surfaceContainer;
 }
+
+menu > menuitem {
+  border-radius: 0px;
+  padding: 6px;
+  margin-left: 2px;
+  margin-right: 2px;
+  color: @onSurface;
+}
+
+menu > menuitem:first-child {
+  margin-top: 1px;
+  border-radius: 8px 8px 0px 0px;
+}
+
+menu > menuitem:last-child {
+  margin-bottom: 1px;
+  border-radius: 0px 0px 8px 8px;
+}
+
+menu > menuitem:hover {
+  background-color: mix(@onSurface, @surface, 0.85);
+}
+
+/*
+ * ── applets ───────────────────────────────────────────────────────────
+*/
 
 #applets {
   background-color: @surfaceContainer;
@@ -93,6 +137,10 @@
   padding: 0px;
 }
 
+/*
+ * ── taskbar ───────────────────────────────────────────────────────────
+*/
+
 #taskbar {
   border-radius: 100px;
   font-weight: bold;
@@ -109,12 +157,16 @@
 }
 
 #taskbar > button {
-  padding: 0px 5px;
+  padding: 0px 4px;
   margin: 4px 0px;
-  margin-right: 3px;
   border-radius: 100px;
   border: 0px;
 }
 #taskbar > button:last-child {
   margin-right: 0px;
+}
+
+#progress {
+  color: lighter(@outlineVariant);
+  border: 2px solid @onSecondaryContainer;
 }
