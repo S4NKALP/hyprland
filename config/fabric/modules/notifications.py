@@ -1,6 +1,8 @@
 import gi
 
 gi.require_version("GdkPixbuf", "2.0")
+from gi.repository import GdkPixbuf
+
 from fabric.notifications import (
     Notification,
     NotificationAction,
@@ -13,12 +15,11 @@ from fabric.widgets.button import Button
 from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
-from fabric.widgets.wayland import WaylandWindow
-from gi.repository import GdkPixbuf
+from fabric.widgets.wayland import WaylandWindow as Window
 
 NOTIFICATION_WIDTH = 400
 NOTIFICATION_IMAGE_SIZE = 64
-NOTIFICATION_TIMEOUT = 5 * 1000  # 10 seconds
+NOTIFICATION_TIMEOUT = 5 * 1000  # 5 seconds
 
 
 class ActionButton(Button):
@@ -54,11 +55,9 @@ class NotificationWidget(Box):
         )
 
         self._notification = notification
-
         header_container = Box(spacing=8, orientation="h")
-
         header_container.children = (
-            self.get_icon(notification.app_icon, 16),
+            self.get_icon(notification.app_icon, notification.app_name, 25),
             Label(
                 markup=str(
                     self._notification.summary
@@ -72,6 +71,7 @@ class NotificationWidget(Box):
 
         header_container.pack_end(
             Box(
+                v_align="start",
                 children=(
                     Button(
                         image=Image(
@@ -84,7 +84,7 @@ class NotificationWidget(Box):
                         h_align="end",
                         on_clicked=lambda *_: self._notification.close(),
                     ),
-                )
+                ),
             ),
             False,
             False,
@@ -102,7 +102,7 @@ class NotificationWidget(Box):
                         NOTIFICATION_IMAGE_SIZE,
                         GdkPixbuf.InterpType.BILINEAR,
                     )
-                )
+                ),
             )
 
         body_container.add(
@@ -145,26 +145,40 @@ class NotificationWidget(Box):
             ),
         )
 
-    def get_icon(self, app_icon, size) -> Image:
-        match app_icon:
-            case str(x) if "file://" in x:
-                return Image(
-                    name="notification-icon",
-                    image_file=app_icon[7:],
-                    icon_size=size,
-                )
-            case str(x) if len(x) > 0 and "/" == x[0]:
-                return Image(
-                    name="notification-icon",
-                    image_file=app_icon,
-                    icon_size=size,
-                )
-            case _:
-                return Image(
-                    name="notification-icon",
-                    icon_name=app_icon if app_icon else "dialog-information-symbolic",
-                    icon_size=size,
-                )
+    def get_icon(self, app_icon, app_name, size) -> Image:
+        if isinstance(app_icon, str):
+            if app_icon.startswith("file://") or app_icon.startswith("/"):
+                # Handle both `file://` URLs and absolute paths
+                file_path = app_icon[7:] if app_icon.startswith("file://") else app_icon
+                try:
+                    pixbuf = GdkPixbuf.Pixbuf.new_from_file(file_path)
+                    scaled_pixbuf = pixbuf.scale_simple(
+                        size, size, GdkPixbuf.InterpType.BILINEAR
+                    )
+                    return Image(
+                        name="notification-icon",
+                        pixbuf=scaled_pixbuf,
+                    )
+                except Exception as e:
+                    print(f"Failed to load image {file_path}: {e}")
+                    # Fallback to a default icon if loading fails
+                    return Image(
+                        name="notification-icon",
+                        icon_name="dialog-information-symbolic",
+                        icon_size=size,
+                    )
+
+        # Default for non-file icons (e.g., symbolic names)
+        icon_name = (
+            app_icon
+            if app_icon
+            else (app_name if app_name else "dialog-information-symbolic")
+        )
+        return Image(
+            name="notification-icon",
+            icon_name=icon_name,
+            icon_size=size,
+        )
 
 
 class NotificationRevealer(Revealer):
@@ -195,7 +209,7 @@ class NotificationRevealer(Revealer):
         self.set_reveal_child(False)
 
 
-class NotificationPopup(WaylandWindow):
+class NotificationPopup(Window):
     def __init__(self):
         self._server = Notifications()
         self.notifications = Box(

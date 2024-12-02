@@ -41,3 +41,7 @@
 #notification_action_button button:hover {
   background-color: lighter(@outlineVariant);
 }
+
+#notification-icon {
+  margin-right: 5px;
+}
