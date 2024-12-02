@@ -16,10 +16,6 @@ from fabric.widgets.revealer import Revealer
 from fabric.widgets.wayland import WaylandWindow as Window
 from gi.repository import GdkPixbuf
 
-NOTIFICATION_WIDTH = 400
-NOTIFICATION_IMAGE_SIZE = 64
-NOTIFICATION_TIMEOUT = 5 * 1000  # 5 seconds
-
 
 class ActionButton(Button):
     def __init__(
@@ -46,7 +42,6 @@ class ActionButton(Button):
 class NotificationWidget(Box):
     def __init__(self, notification: Notification, **kwargs):
         super().__init__(
-            size=(NOTIFICATION_WIDTH, -1),
             name="notification",
             spacing=8,
             orientation="v",
@@ -100,9 +95,7 @@ class NotificationWidget(Box):
             body_container.add(
                 Image(
                     pixbuf=image_pixbuf.scale_simple(
-                        NOTIFICATION_IMAGE_SIZE,
-                        NOTIFICATION_IMAGE_SIZE,
-                        GdkPixbuf.InterpType.BILINEAR,
+                        64, 64, GdkPixbuf.InterpType.BILINEAR
                     )
                 ),
             )
@@ -120,7 +113,7 @@ class NotificationWidget(Box):
         actions_container = Box(
             spacing=4,
             orientation="h",
-            name="notification-action-box",
+            name="notification-action-buttons",
             children=[
                 ActionButton(action, i, len(self._notification.actions))
                 for i, action in enumerate(self._notification.actions)
@@ -140,7 +133,7 @@ class NotificationWidget(Box):
                 self.destroy(),
             ),
             invoke_repeater(
-                NOTIFICATION_TIMEOUT,
+                5 * 1000,
                 lambda: self._notification.close("expired"),
                 initial_call=False,
             ),
@@ -161,22 +154,17 @@ class NotificationWidget(Box):
                 except Exception as e:
                     print(f"DEBUG: Failed to load image from {file_path}: {e}")
 
-        # Determine fallback icon name
-        fallback_icon_name = (
-            app_icon
-            if app_icon and not app_icon.startswith(("file://", "/"))
-            else (
-                app_name.strip()
-                if app_name and app_name.strip() not in ["notify-send", ""]
-                else "dialog-information-symbolic"
-            )
-        )
-        print(f"DEBUG: Fallback icon_name={fallback_icon_name}")
+        if app_icon and not app_icon.startswith(("file://", "/")):
+            icon_name = app_icon
+        elif app_name and app_name.strip() not in ["notify-send", ""]:
+            icon_name = app_name.strip()
+        else:
+            icon_name = "dialog-information-symbolic"
+
+        print(f"DEBUG: icon_name={icon_name}")
 
         # Return a symbolic icon as fallback
-        return Image(
-            name="notification-icon", icon_name=fallback_icon_name, icon_size=size
-        )
+        return Image(name="notification-icon", icon_name=icon_name, icon_size=size)
 
 
 class NotificationRevealer(Revealer):
