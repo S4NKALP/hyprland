@@ -85,30 +85,15 @@
   padding: 0px;
 }
 
-#tray image {
-  color: @onSurface;
-}
-
 menu {
   background-color: @surfaceContainer;
 }
 
 menu > menuitem {
-  border-radius: 0px;
-  padding: 6px;
+  border-radius: 12px;
+  padding: 10px;
   margin-left: 2px;
   margin-right: 2px;
-  color: @onSurface;
-}
-
-menu > menuitem:first-child {
-  margin-top: 1px;
-  border-radius: 8px 8px 0px 0px;
-}
-
-menu > menuitem:last-child {
-  margin-bottom: 1px;
-  border-radius: 0px 0px 8px 8px;
 }
 
 menu > menuitem:hover {
@@ -169,4 +154,45 @@ menu > menuitem:hover {
 #progress {
   color: lighter(@outlineVariant);
   border: 2px solid @onSecondaryContainer;
+}
+
+/*
+ * ── system tray ───────────────────────────────────────────────────────
+*/
+
+#system-tray {
+  background-color: @surfaceContainer;
+  border-radius: 100px;
+  padding: 2px 10px 0 10px;
+}
+
+#system-tray > button {
+  margin: 0px;
+  padding: 0px;
+}
+
+#system-tray-menu > menuitem menu,
+#system-tray-menu {
+  background-color: @surfaceContainer;
+  border-radius: 12px;
+  padding: 10px;
+}
+
+#system-tray-menu > menuitem menu > menuitem,
+#system-tray-menu > menuitem {
+  margin: 5px 0px;
+  background-color: @surfaceContainer;
+  padding: 0.3em 0.5em;
+  border-radius: 10px;
+}
+
+#system-tray-menu > menuitem menu > menuitem:disabled,
+#system-tray-menu > menuitem:disabled {
+  background-color: transparent;
+}
+
+#system-tray-menu > menuitem menu > menuitem:hover,
+#system-tray-menu > menuitem:hover,
+#submenu-button:hover {
+  background-color: mix(@onSurface, @surface, 0.85);
 }
