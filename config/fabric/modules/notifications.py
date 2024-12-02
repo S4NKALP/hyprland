@@ -1,6 +1,7 @@
 import gi
 
 gi.require_version("GdkPixbuf", "2.0")
+
 from fabric.notifications import (
     Notification,
     NotificationAction,
@@ -14,7 +15,7 @@ from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.wayland import WaylandWindow as Window
-from gi.repository import GdkPixbuf
+from gi.repository import GdkPixbuf, GLib
 
 
 class ActionButton(Button):
@@ -61,6 +62,7 @@ class NotificationWidget(Box):
                 ),
                 h_align="start",
                 style="font-weight: 900;",
+                ellipsization="end",
             ),
         )
 
@@ -105,6 +107,7 @@ class NotificationWidget(Box):
                 markup=self._notification.body,
                 line_wrap="word-char",
                 v_align="start",
+                ellipsization="end",
                 max_chars_width=40,
                 h_align="start",
             )
