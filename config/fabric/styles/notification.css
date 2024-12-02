@@ -4,14 +4,15 @@
   border-radius: 20px;
   margin-bottom: 12px;
   background-color: @surfaceContainerLow;
+  min-width: 350px;
 }
 
-#notification .summary {
+.notification-header .summary {
   font-size: 0.92rem;
   font-weight: bold;
 }
 
-#notification .body {
+.notification-body .body {
   color: darker(@foreground);
   font-weight: 600;
   font-size: 0.92rem;
@@ -23,22 +24,21 @@
   border-radius: 100px;
 }
 
-#notification_action_button button.start-action {
+#notification-action-button button.start-action {
   margin-left: 0;
 }
 
-#notification_action_button button.end-action {
+#notification-action-button button.end-action {
   margin-right: 0;
 }
 
-#notification_action_button button {
+#notification-action-buttons button {
   padding: 0.6rem;
   font-weight: 600;
-  border-radius: 3rem;
-  background-color: @outlineVariant;
+  border-radius: 100px;
+  background-color: transparent;
 }
-
-#notification_action_button button:hover {
+#notification-action-buttons button:hover {
   background-color: lighter(@outlineVariant);
 }
 
