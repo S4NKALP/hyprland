@@ -5,6 +5,7 @@ from .info import SystemInfo
 from .microphone import MicrophoneIndicator
 from .network import Network
 from .powerprofile import PowerProfile
+from .systray import SystemTray
 from .taskbar import TaskBar
 from .volume import VolumeIndicator
 from .workspace import workspace
