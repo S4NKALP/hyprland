@@ -147,40 +147,35 @@ class NotificationWidget(Box):
         )
 
     def get_icon(self, app_icon, app_name, size) -> Image:
-        print(f"DEBUG: app_icon={app_icon}, app_name={app_name}")
 
+        # Attempt to load file-based icons
         if isinstance(app_icon, str) and app_icon.strip():
             if app_icon.startswith("file://") or app_icon.startswith("/"):
-                # Handle both `file://` URLs and absolute paths
                 file_path = app_icon[7:] if app_icon.startswith("file://") else app_icon
                 try:
                     pixbuf = GdkPixbuf.Pixbuf.new_from_file(file_path)
                     scaled_pixbuf = pixbuf.scale_simple(
                         size, size, GdkPixbuf.InterpType.BILINEAR
                     )
-                    return Image(
-                        name="notification-icon",
-                        pixbuf=scaled_pixbuf,
-                    )
+                    return Image(name="notification-icon", pixbuf=scaled_pixbuf)
                 except Exception as e:
-                    print(f"Failed to load image {file_path}: {e}")
+                    print(f"DEBUG: Failed to load image from {file_path}: {e}")
 
-        # Fallback to default icon
-        fallback_icon_name = "dialog-information-symbolic"
-        if (
+        # Determine fallback icon name
+        fallback_icon_name = (
             app_icon
-            and not app_icon.startswith("file://")
-            and not app_icon.startswith("/")
-        ):
-            fallback_icon_name = app_icon
-        elif app_name and not app_name.strip() in ["notify-send", ""]:
-            fallback_icon_name = app_name.strip()
-
+            if app_icon and not app_icon.startswith(("file://", "/"))
+            else (
+                app_name.strip()
+                if app_name and app_name.strip() not in ["notify-send", ""]
+                else "dialog-information-symbolic"
+            )
+        )
         print(f"DEBUG: Fallback icon_name={fallback_icon_name}")
+
+        # Return a symbolic icon as fallback
         return Image(
-            name="notification-icon",
-            icon_name=fallback_icon_name,
-            icon_size=size,
+            name="notification-icon", icon_name=fallback_icon_name, icon_size=size
         )
 
 
