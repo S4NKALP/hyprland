@@ -1,8 +1,6 @@
 import gi
 
 gi.require_version("GdkPixbuf", "2.0")
-from gi.repository import GdkPixbuf
-
 from fabric.notifications import (
     Notification,
     NotificationAction,
@@ -16,6 +14,7 @@ from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.wayland import WaylandWindow as Window
+from gi.repository import GdkPixbuf
 
 NOTIFICATION_WIDTH = 400
 NOTIFICATION_IMAGE_SIZE = 64
@@ -55,6 +54,7 @@ class NotificationWidget(Box):
         )
 
         self._notification = notification
+
         header_container = Box(spacing=8, orientation="h")
         header_container.children = (
             self.get_icon(notification.app_icon, notification.app_name, 25),
@@ -82,7 +82,9 @@ class NotificationWidget(Box):
                         style_classes="close-button",
                         v_align="center",
                         h_align="end",
-                        on_clicked=lambda *_: self._notification.close(),
+                        on_clicked=lambda *_: self._notification.close(
+                            "dismissed-by-user"
+                        ),
                     ),
                 ),
             ),
@@ -115,21 +117,20 @@ class NotificationWidget(Box):
             )
         )
 
+        actions_container = Box(
+            spacing=4,
+            orientation="h",
+            name="notification-action-box",
+            children=[
+                ActionButton(action, i, len(self._notification.actions))
+                for i, action in enumerate(self._notification.actions)
+            ],
+            h_expand=True,
+        )
+
         self.add(header_container)
         self.add(body_container)
-
-        self.add(
-            Box(
-                spacing=4,
-                orientation="h",
-                name="notification_action_button",
-                children=[
-                    ActionButton(action, i, len(self._notification.actions))
-                    for i, action in enumerate(self._notification.actions)
-                ],
-                h_expand=True,
-            )
-        )
+        self.add(actions_container)
 
         # Destroy this widget once the notification is closed
         self._notification.connect(
@@ -146,7 +147,9 @@ class NotificationWidget(Box):
         )
 
     def get_icon(self, app_icon, app_name, size) -> Image:
-        if isinstance(app_icon, str):
+        print(f"DEBUG: app_icon={app_icon}, app_name={app_name}")
+
+        if isinstance(app_icon, str) and app_icon.strip():
             if app_icon.startswith("file://") or app_icon.startswith("/"):
                 # Handle both `file://` URLs and absolute paths
                 file_path = app_icon[7:] if app_icon.startswith("file://") else app_icon
@@ -161,22 +164,22 @@ class NotificationWidget(Box):
                     )
                 except Exception as e:
                     print(f"Failed to load image {file_path}: {e}")
-                    # Fallback to a default icon if loading fails
-                    return Image(
-                        name="notification-icon",
-                        icon_name="dialog-information-symbolic",
-                        icon_size=size,
-                    )
 
-        # Default for non-file icons (e.g., symbolic names)
-        icon_name = (
+        # Fallback to default icon
+        fallback_icon_name = "dialog-information-symbolic"
+        if (
             app_icon
-            if app_icon
-            else (app_name if app_name else "dialog-information-symbolic")
-        )
+            and not app_icon.startswith("file://")
+            and not app_icon.startswith("/")
+        ):
+            fallback_icon_name = app_icon
+        elif app_name and not app_name.strip() in ["notify-send", ""]:
+            fallback_icon_name = app_name.strip()
+
+        print(f"DEBUG: Fallback icon_name={fallback_icon_name}")
         return Image(
             name="notification-icon",
-            icon_name=icon_name,
+            icon_name=fallback_icon_name,
             icon_size=size,
         )
 
