@@ -1,9 +1,8 @@
 import time
-from typing import Literal
+from typing import ClassVar, Literal
 
 from fabric.audio import Audio
 from fabric.widgets.box import Box
-from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.scale import Scale, ScaleMark
 from fabric.widgets.wayland import WaylandWindow as Window
@@ -15,16 +14,18 @@ from snippets import Animator, MaterialIcon
 class AnimatedScale(Scale):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.animator = Animator(
-            bezier_curve=(0.34, 1.56, 0.64, 1.0),
-            duration=0.8,
-            min_value=self.min_value,
-            max_value=self.value,
-            tick_widget=self,
-            notify_value=lambda p, *_: self.set_value(p.value),
-        )
+        self.animator = None  # Lazily initialized
 
     def animate_value(self, value: float):
+        if not self.animator:
+            self.animator = Animator(
+                bezier_curve=(0.34, 1.56, 0.64, 1.0),
+                duration=0.8,
+                min_value=self.min_value,
+                max_value=self.value,
+                tick_widget=self,
+                notify_value=lambda p, *_: self.set_value(p.value),
+            )
         self.animator.pause()
         self.animator.min_value = self.value
         self.animator.max_value = value
@@ -35,21 +36,8 @@ class BrightnessOSDContainer(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs, orientation="h", spacing=12, name="osd")
         self.brightness_service = Brightness()
-        self.icon = self._create_icon("brightness_7", icon_size="28px")
-        self.scale = self._create_brightness_scale()
-
-        self.add(self.icon)
-        self.add(self.scale)
-        self.update_brightness()
-
-        self.scale.connect("value-changed", lambda *_: self.update_brightness())
-        self.brightness_service.connect("screen", self.on_brightness_changed)
-
-    def _create_icon(self, icon_name: str, icon_size: str) -> Label:
-        return MaterialIcon(icon_name=icon_name, size=icon_size)
-
-    def _create_brightness_scale(self) -> AnimatedScale:
-        return AnimatedScale(
+        self.icon = MaterialIcon(icon_name="brightness_7", size="28px")
+        self.scale = AnimatedScale(
             marks=(ScaleMark(value=i) for i in range(0, 101, 10)),
             value=70,
             min_value=0,
@@ -57,6 +45,13 @@ class BrightnessOSDContainer(Box):
             increments=(1, 1),
             orientation="h",
         )
+
+        self.add(self.icon)
+        self.add(self.scale)
+        self.update_brightness()
+
+        self.scale.connect("value-changed", lambda *_: self.update_brightness())
+        self.brightness_service.connect("screen", self.on_brightness_changed)
 
     def update_brightness(self) -> None:
         current_brightness = self.brightness_service.screen_brightness
@@ -100,28 +95,15 @@ class BrightnessOSDContainer(Box):
 
 
 class AudioOSDContainer(Box):
-    __gsignals__ = {
+    __gsignals__: ClassVar[dict] = {
         "volume-changed": (GObject.SIGNAL_RUN_FIRST, GObject.TYPE_NONE, ()),
     }
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs, orientation="h", spacing=13, name="osd")
         self.audio = Audio()
-        self.icon = self._create_icon("volume_up", icon_size="28px")
-        self.scale = self._create_audio_scale()
-
-        self.add(self.icon)
-        self.add(self.scale)
-        self.sync_with_audio()
-
-        self.scale.connect("value-changed", self.on_volume_changed)
-        self.audio.connect("notify::speaker", self.on_audio_speaker_changed)
-
-    def _create_icon(self, icon_name: str, icon_size: str) -> Label:
-        return MaterialIcon(icon_name=icon_name, size=icon_size)
-
-    def _create_audio_scale(self) -> AnimatedScale:
-        return AnimatedScale(
+        self.icon = MaterialIcon(icon_name="volume_up", size="28px")
+        self.scale = AnimatedScale(
             marks=(ScaleMark(value=i) for i in range(1, 100, 10)),
             value=70,
             min_value=0,
@@ -129,6 +111,13 @@ class AudioOSDContainer(Box):
             increments=(1, 1),
             orientation="h",
         )
+
+        self.add(self.icon)
+        self.add(self.scale)
+        self.sync_with_audio()
+
+        self.scale.connect("value-changed", self.on_volume_changed)
+        self.audio.connect("notify::speaker", self.on_audio_speaker_changed)
 
     def sync_with_audio(self):
         if self.audio.speaker:
