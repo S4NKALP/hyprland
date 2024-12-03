@@ -1,4 +1,5 @@
 from fabric.hyprland.widgets import Language
+from fabric.system_tray.widgets import SystemTray
 from fabric.utils import FormattedString, bulk_replace
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
@@ -13,7 +14,6 @@ from modules.bar.widgets import (
     Network,
     PowerProfile,
     SystemInfo,
-    SystemTray,
     TaskBar,
     VolumeIndicator,
     workspace,
