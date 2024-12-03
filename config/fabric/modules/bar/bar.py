@@ -1,5 +1,4 @@
 from fabric.hyprland.widgets import Language
-from fabric.system_tray.widgets import SystemTray
 from fabric.utils import FormattedString, bulk_replace
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
@@ -9,14 +8,14 @@ from fabric.widgets.wayland import WaylandWindow as Window
 from modules.bar.widgets import (
     BatteryLabel,
     Bluetooth,
-    HardwareUsage,
     IdleIndicator,
     MicrophoneIndicator,
     Network,
     PowerProfile,
+    SystemInfo,
+    SystemTray,
     TaskBar,
     VolumeIndicator,
-    Weather,
     workspace,
 )
 
@@ -54,9 +53,8 @@ class Bar(Window):
         self.microphone = MicrophoneIndicator()
         self.power = PowerProfile()
         self.workspaces = Button(child=workspace, name="workspaces")
-        self.info = HardwareUsage()
+        self.info = SystemInfo()
         self.idle = IdleIndicator()
-        self.weather = Weather("Kohalpur")
         self.applets = Box(
             name="applets",
             spacing=4,
@@ -80,7 +78,6 @@ class Bar(Window):
                 children=[
                     self.workspaces,
                     self.info,
-                    self.weather,
                 ],
             ),
             center_children=Box(

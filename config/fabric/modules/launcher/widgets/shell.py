@@ -3,43 +3,42 @@ import subprocess
 
 from fabric.widgets.button import Button
 from fabric.widgets.label import Label
+from snippets import MaterialIcon
 
 CACHE_DIR = os.getenv(
     "XDG_CACHE_HOME", os.path.join(os.path.expanduser("~"), ".cache", "fabric")
 )
-BINS_PATH = os.path.join(CACHE_DIR, "binaries")
+BINS = os.path.join(CACHE_DIR, "binaries")
 
 
 class ShellCommandManager:
     def __init__(self, launcher):
         self.launcher = launcher
+        self.binaries = set()  # Use a set to store unique binaries
         self.reload_binaries()
 
     def reload_binaries(self):
-        """Reload the binaries from the PATH environment variable."""
         paths = os.getenv("PATH", "").split(":")
-        unique_bins = set()
+        self.binaries = set()
 
         for path in paths:
-            unique_bins.update(self.list_binaries_in_path(path))
+            self.binaries.update(self.list_binaries_in_path(path))
 
-        self.save_binaries_to_cache(unique_bins)
+        # Write unique binaries to the cache file
+        with open(BINS, "w") as f:
+            f.write("\n".join(self.binaries))
 
     def list_binaries_in_path(self, path):
         if not os.path.exists(path):
             return []
         try:
-            return (
-                subprocess.check_output(f"ls {path}", shell=True, text=True)
-                .strip()
-                .splitlines()
-            )
-        except subprocess.CalledProcessError:
+            return [
+                entry
+                for entry in os.listdir(path)
+                if os.access(os.path.join(path, entry), os.X_OK)
+            ]
+        except OSError:
             return []
-
-    def save_binaries_to_cache(self, binaries):
-        with open(BINS_PATH, "w") as f:
-            f.write("\n".join(binaries))
 
     def show_shell_commands(self, viewport, search_query: str):
         if not search_query:
@@ -48,12 +47,10 @@ class ShellCommandManager:
         results = self.query_binaries(search_query)
         self.display_results(viewport, results)
 
-    def query_binaries(self, filter_str):
-        try:
-            with open(BINS_PATH) as f:
-                return [line.strip() for line in f if filter_str in line][:16]
-        except FileNotFoundError:
-            return []
+    def query_binaries(self, filter_str: str):
+        # Use a generator to filter binaries on demand
+        filtered_bins = (cmd for cmd in self.binaries if filter_str in cmd)
+        return list(dict.fromkeys(filtered_bins))[:16]  # Deduplicate and limit to 16
 
     def display_results(self, viewport, results):
         for command in results:
@@ -64,7 +61,7 @@ class ShellCommandManager:
                     h_align="start",
                 ),
                 on_clicked=lambda _, cmd=command: self.execute_command(cmd),
-                name="sh-item",
+                name="launcher-item",
             )
             viewport.add(button)
 
@@ -76,3 +73,6 @@ class ShellCommandManager:
             print(e.output)
         finally:
             self.launcher.set_visible(False)
+
+    def get_shell_buttons(self):
+        return MaterialIcon("terminal")

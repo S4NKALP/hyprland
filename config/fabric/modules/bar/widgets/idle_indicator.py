@@ -1,6 +1,6 @@
+from fabric import Fabricator
 from fabric.utils import exec_shell_command
 from fabric.widgets.box import Box
-from gi.repository import GLib
 from snippets import MaterialIcon
 
 
@@ -10,17 +10,14 @@ class IdleIndicator(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.idle_icon = self.create_idle_icon()
-
         self.check_idle_status()
-
-        GLib.timeout_add(1000, self.check_idle_status)
-
+        Fabricator(interval=1000, poll_from=self.check_idle_status)
         self.children = (self.idle_icon,)
 
     def create_idle_icon(self):
         return MaterialIcon(self.ICON_IDLE, size="16px")
 
-    def check_idle_status(self):
+    def check_idle_status(self, *_):
         try:
             output = exec_shell_command("pidof wayland-idle-inhibitor.py")
             output_str = str(output) if output is not None else ""

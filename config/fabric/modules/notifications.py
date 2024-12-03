@@ -1,29 +1,21 @@
-from typing import cast
-
 import gi
 
 gi.require_version("GdkPixbuf", "2.0")
-from gi.repository import GdkPixbuf
-from loguru import logger
 
-from fabric import Application
 from fabric.notifications import (
     Notification,
     NotificationAction,
     NotificationCloseReason,
     Notifications,
 )
-from fabric.utils import get_relative_path, invoke_repeater
+from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
-from fabric.widgets.wayland import WaylandWindow
-
-NOTIFICATION_WIDTH = 400
-NOTIFICATION_IMAGE_SIZE = 64
-NOTIFICATION_TIMEOUT = 5 * 1000  # 10 seconds
+from fabric.widgets.wayland import WaylandWindow as Window
+from gi.repository import GdkPixbuf, GLib
 
 
 class ActionButton(Button):
@@ -51,7 +43,6 @@ class ActionButton(Button):
 class NotificationWidget(Box):
     def __init__(self, notification: Notification, **kwargs):
         super().__init__(
-            size=(NOTIFICATION_WIDTH, -1),
             name="notification",
             spacing=8,
             orientation="v",
@@ -60,91 +51,82 @@ class NotificationWidget(Box):
 
         self._notification = notification
 
+        header_container = Box(spacing=8, orientation="h")
+        header_container.children = (
+            self.get_icon(notification.app_icon, notification.app_name, 25),
+            Label(
+                markup=str(
+                    self._notification.summary
+                    if self._notification.summary
+                    else notification.app_name
+                ),
+                h_align="start",
+                style="font-weight: 900;",
+                ellipsization="end",
+            ),
+        )
+
+        header_container.pack_end(
+            Box(
+                v_align="start",
+                children=(
+                    Button(
+                        image=Image(
+                            icon_name="close-symbolic",
+                            icon_size=16,
+                            style_classes="close-button",
+                        ),
+                        style_classes="close-button",
+                        v_align="center",
+                        h_align="end",
+                        on_clicked=lambda *_: self._notification.close(
+                            "dismissed-by-user"
+                        ),
+                    ),
+                ),
+            ),
+            False,
+            False,
+            0,
+        )
+
         body_container = Box(spacing=4, orientation="h")
 
         # Use provided image if available, otherwise use "notification-symbolic" icon
-        image = (
-            Image(
-                pixbuf=self._notification.image_pixbuf.scale_simple(
-                    NOTIFICATION_IMAGE_SIZE,
-                    NOTIFICATION_IMAGE_SIZE,
-                    GdkPixbuf.InterpType.BILINEAR,
+        if image_pixbuf := self._notification.image_pixbuf:
+            body_container.add(
+                Image(
+                    pixbuf=image_pixbuf.scale_simple(
+                        64, 64, GdkPixbuf.InterpType.BILINEAR
+                    )
                 ),
-                style="border-radius:100px;",
             )
-            if self._notification.image_pixbuf
-            else Image(
-                icon_name="notification-symbolic",
-                icon_size=40,
-                style="border-radius:100px;",
-            )
-        )
-        body_container.add(image)
 
         body_container.add(
-            Box(
-                spacing=4,
-                orientation="v",
-                children=[
-                    Box(
-                        orientation="h",
-                        children=[
-                            Label(
-                                label=self._notification.summary,
-                                ellipsization="middle",
-                            )
-                            .build()
-                            .add_style_class("summary")
-                            .unwrap(),
-                        ],
-                        h_expand=True,
-                        v_expand=True,
-                    ).build(
-                        lambda box, _: box.pack_end(
-                            Button(
-                                image=Image(
-                                    icon_name="window-close-symbolic",
-                                    icon_size=18,
-                                ),
-                                v_align="center",
-                                h_align="end",
-                                on_clicked=lambda *_: self._notification.close(),
-                            ),
-                            False,
-                            False,
-                            0,
-                        )
-                    ),
-                    Label(
-                        label=self._notification.body,
-                        line_wrap="word-char",
-                        v_align="start",
-                        max_chars_width=40,
-                        h_align="start",
-                    )
-                    .build()
-                    .add_style_class("body")
-                    .unwrap(),
-                ],
-                h_expand=True,
-                v_expand=True,
+            Label(
+                markup=self._notification.body,
+                line_wrap="word-char",
+                v_align="start",
+                ellipsization="end",
+                max_chars_width=40,
+                h_align="start",
             )
         )
 
+        actions_container = Box(
+            spacing=4,
+            orientation="h",
+            name="notification-action-buttons",
+            children=[
+                ActionButton(action, i, len(self._notification.actions))
+                for i, action in enumerate(self._notification.actions)
+            ],
+            h_expand=True,
+        )
+
+        self.add(header_container)
         self.add(body_container)
-
-        self.add(
-            Box(
-                spacing=4,
-                orientation="h",
-                name="notification_action_button",
-                children=[
-                    ActionButton(action, i, len(self._notification.actions))
-                    for i, action in enumerate(self._notification.actions)
-                ],
-                h_expand=True,
-            )
-        )
+        self.add(actions_container)
 
         # Destroy this widget once the notification is closed
         self._notification.connect(
@@ -154,21 +136,48 @@ class NotificationWidget(Box):
                 self.destroy(),
             ),
             invoke_repeater(
-                NOTIFICATION_TIMEOUT,
+                5 * 1000,
                 lambda: self._notification.close("expired"),
                 initial_call=False,
             ),
         )
 
+    def get_icon(self, app_icon, app_name, size) -> Image:
+
+        # Attempt to load file-based icons
+        if isinstance(app_icon, str) and app_icon.strip():
+            if app_icon.startswith("file://") or app_icon.startswith("/"):
+                file_path = app_icon[7:] if app_icon.startswith("file://") else app_icon
+                try:
+                    pixbuf = GdkPixbuf.Pixbuf.new_from_file(file_path)
+                    scaled_pixbuf = pixbuf.scale_simple(
+                        size, size, GdkPixbuf.InterpType.BILINEAR
+                    )
+                    return Image(name="notification-icon", pixbuf=scaled_pixbuf)
+                except Exception as e:
+                    print(f"DEBUG: Failed to load image from {file_path}: {e}")
+
+        if app_icon and not app_icon.startswith(("file://", "/")):
+            icon_name = app_icon
+        elif app_name and app_name.strip() not in ["notify-send", ""]:
+            icon_name = app_name.strip()
+        else:
+            icon_name = "dialog-information-symbolic"
+
+        print(f"DEBUG: icon_name={icon_name}")
+
+        # Return a symbolic icon as fallback
+        return Image(name="notification-icon", icon_name=icon_name, icon_size=size)
+
 
 class NotificationRevealer(Revealer):
     def __init__(self, notification: Notification, **kwargs):
-        self.not_box = NotificationWidget(notification)
+        self.notif_box = NotificationWidget(notification)
         self._notification = notification
         super().__init__(
             child=Box(
                 style="margin: 12px;",
-                children=[self.not_box],
+                children=[self.notif_box],
             ),
             transition_duration=500,
             transition_type="crossfade",
@@ -176,21 +185,20 @@ class NotificationRevealer(Revealer):
 
         self.connect(
             "notify::child-revealed",
-            lambda *args: self.destroy() if not self.get_child_revealed() else None,
+            lambda *_: self.destroy() if not self.get_child_revealed() else None,
         )
 
         self._notification.connect("closed", self.on_resolved)
 
     def on_resolved(
-        self, notification: Notification, closed_reason: NotificationCloseReason
+        self,
+        notification: Notification,
+        reason: NotificationCloseReason,
     ):
-        logger.info(
-            f"Notification {notification.id} resolved with reason: {closed_reason}"
-        )
         self.set_reveal_child(False)
 
 
-class NotificationPopup(WaylandWindow):
+class NotificationPopup(Window):
     def __init__(self):
         self._server = Notifications()
         self.notifications = Box(
