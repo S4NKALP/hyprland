@@ -1,19 +1,19 @@
 from fabric.hyprland.widgets import Language
+from fabric.system_tray.widgets import SystemTray
 from fabric.utils import FormattedString, bulk_replace
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
+from modules.bar.widgets import Bluetooth  # SystemTray,
 from modules.bar.widgets import (
     BatteryLabel,
-    Bluetooth,
     IdleIndicator,
     MicrophoneIndicator,
     Network,
     PowerProfile,
     SystemInfo,
-    SystemTray,
     TaskBar,
     VolumeIndicator,
     workspace,
