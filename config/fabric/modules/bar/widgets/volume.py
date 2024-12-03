@@ -1,5 +1,6 @@
+from fabric import Fabricator
 from fabric.audio.service import Audio
-from fabric.utils import exec_shell_command, invoke_repeater
+from fabric.utils import exec_shell_command
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from snippets import MaterialIcon
@@ -23,7 +24,7 @@ class VolumeIndicator(Box):
         self.volume_icon_button.connect("button-press-event", self.on_button_press)
         self.audio_service.connect("changed", self.update_volume_status)
 
-        invoke_repeater(1000, self.update_volume_status, initial_call=True)
+        Fabricator(interval=1000, poll_from=self.update_volume_status)
         self.children = (self.volume_icon_button,)
 
     def create_volume_icon(self):
@@ -47,7 +48,7 @@ class VolumeIndicator(Box):
     def open_audio_settings(self):
         exec_shell_command("pavucontrol")
 
-    def update_volume_status(self, *args):
+    def update_volume_status(self, *_):
         current_stream = self.audio_service.speaker
         if current_stream:
             self.update_icon(current_stream)
@@ -55,7 +56,6 @@ class VolumeIndicator(Box):
         return True
 
     def update_icon(self, stream):
-        """Update the icon based on the current stream status."""
         if stream.muted:
             icon_name = VOLUME_ICONS["muted"]
             volume_percentage = 0
@@ -71,7 +71,6 @@ class VolumeIndicator(Box):
         self.volume_icon_button.set_tooltip_text(tooltip_text)
 
     def get_volume_icon(self, volume_level):
-        """Determine the appropriate icon based on the volume level."""
         if volume_level == 0:
             return VOLUME_ICONS["low"]
         elif volume_level <= 33:
