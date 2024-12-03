@@ -24,7 +24,7 @@ if __name__ == "__main__":
     launcher.hide()
     osd = OSDContainer()
     notif = NotificationPopup()
-    app = Application("fabric-bar", bar, launcher, osd)
+    app = Application("quickbar", bar, launcher, osd)
     setproctitle.setproctitle("quickbar")
 
     css_file = monitor_file(get_relative_path("styles"))
