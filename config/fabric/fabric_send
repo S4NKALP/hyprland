@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-dbus-send --session --print-reply --dest=org.Fabric.fabric.fabric-bar /org/Fabric/fabric org.Fabric.fabric.Evaluate string:"$1" >/dev/null 2>&1
