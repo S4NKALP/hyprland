@@ -35,7 +35,4 @@ if __name__ == "__main__":
 
     apply_style(app)
 
-    def quit_fabric():
-        app.quit()
-
     app.run()

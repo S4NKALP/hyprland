@@ -21,20 +21,20 @@ class WallpaperManager:
             Path.home() / ".cache" / "fabric" / "thumbnails" / "wallpapers"
         )
         self.thumbnail_dir.mkdir(parents=True, exist_ok=True)
-        self.theme_toggle_button = self.create_theme_toggle_button()
+        self.theme_toggle_button = self._create_theme_toggle_button()
         self._update_button_style()
 
-    def create_theme_toggle_button(self):
-        button = Button(
+    def _create_theme_toggle_button(self):
+        return Button(
             child=MaterialIcon("contrast"),
             v_align="center",
             on_clicked=self.toggle_dark_mode,
         )
-        return button
 
     def toggle_dark_mode(self, *_):
-        command = os.path.expanduser("~/fabric/assets/scripts/dark-theme.sh --toggle")
-        exec_shell_command(command)
+        exec_shell_command(
+            os.path.expanduser("~/fabric/assets/scripts/dark-theme.sh --toggle")
+        )
         self._update_button_style()
 
     def check_dark_mode_state(self):
@@ -44,46 +44,56 @@ class WallpaperManager:
         return result.strip().replace("'", "") == "prefer-dark"
 
     def _update_button_style(self):
+        dark_mode = self.check_dark_mode_state()
         style = (
             "background-color: @surfaceVariant; border-radius:100px; min-height:50px; min-width:50px;"
-            if self.check_dark_mode_state()
+            if dark_mode
             else "background-color: transparent; border-radius:100px;"
         )
         self.theme_toggle_button.set_style(style)
 
     def show_wallpaper_thumbnails(self, viewport, search_term: str = ""):
-        wallpapers = self._get_wallpapers(search_term)
-        self._populate_viewport(viewport, wallpapers)
+        wallpapers = list(self._get_wallpapers(search_term))[:24]
+        if not wallpapers:
+            self._show_no_wallpapers_message(viewport)
+            return
 
-    def _get_wallpapers(self, search_term: str):
-        return [
-            f
-            for f in self.wallpaper_dir.iterdir()
-            if f.is_file()
-            and f.suffix.lower() in self.IMAGE_EXTENSIONS
-            and self._matches_search(f, search_term)
-        ]
+        self._display_thumbnails(viewport, wallpapers)
 
-    def _matches_search(self, file, search_term: str):
-        return not search_term or search_term.lower() in file.name.lower()
+    def _show_no_wallpapers_message(self, viewport):
+        viewport.add(
+            Box(
+                orientation="h",
+                style="padding:20px;",
+                children=[Button(child="No wallpapers found!", v_align="center")],
+            )
+        )
 
-    def _populate_viewport(self, viewport, wallpapers):
-        viewport.children.clear()
+    def _display_thumbnails(self, viewport, wallpapers):
         row = Box(orientation="h", spacing=10, style="margin:5px;")
 
-        for i, wallpaper in enumerate(wallpapers[:24]):  # Limit to 24 wallpapers
+        for index, wallpaper in enumerate(wallpapers, 1):
             thumbnail_path = self._generate_thumbnail(wallpaper)
-            thumbnail_button = self._create_wallpaper_thumbnail(
-                thumbnail_path, wallpaper
-            )
-            row.add(thumbnail_button)
+            row.add(self._create_wallpaper_thumbnail(thumbnail_path, wallpaper))
 
-            if (i + 1) % 6 == 0:
+            if index % 6 == 0:
                 viewport.add(row)
                 row = Box(orientation="h", spacing=10, style="margin:5px;")
 
         if row.children:
             viewport.add(row)
+
+    def _get_wallpapers(self, search_term: str):
+        return (
+            f
+            for f in self.wallpaper_dir.iterdir()
+            if f.is_file()
+            and f.suffix.lower() in self.IMAGE_EXTENSIONS
+            and self._matches_search(f, search_term)
+        )
+
+    def _matches_search(self, file, search_term: str):
+        return not search_term or search_term.lower() in file.name.lower()
 
     def _generate_thumbnail(self, wallpaper_path):
         thumbnail_path = self.thumbnail_dir / wallpaper_path.name
@@ -113,12 +123,13 @@ class WallpaperManager:
         )
 
     def _create_wallpaper_thumbnail(self, thumbnail_path, wallpaper_path):
-        thumbnail_style = self._thumbnail_style(thumbnail_path)
-        thumbnail_box = Box(
-            orientation="h", h_align="center", v_align="center", style=thumbnail_style
-        )
         return Button(
-            child=thumbnail_box,
+            child=Box(
+                orientation="h",
+                h_align="center",
+                v_align="center",
+                style=self._thumbnail_style(thumbnail_path),
+            ),
             h_align="start",
             v_align="center",
             name="wall-item",
@@ -127,7 +138,7 @@ class WallpaperManager:
 
     def _thumbnail_style(self, thumbnail_path):
         return (
-            f"background-image: url('{thumbnail_path }'); "
+            f"background-image: url('{thumbnail_path}'); "
             "min-width: 64px; min-height: 64px; "
             "background-repeat: no-repeat; "
             "background-size: cover; background-position: center;"

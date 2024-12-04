@@ -119,7 +119,7 @@ class ClipboardManager:
     def _add_text_button(self, viewport, item):
         label_button = Button(
             child=Label(
-                label=item["content"][:55],  # Truncate text for display
+                label=item["content"][:35],  # Truncate text for display
                 h_expand=True,
                 v_align="center",
                 h_align="start",
