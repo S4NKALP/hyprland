@@ -1,4 +1,5 @@
 from .animator import Animator
+from .custom_image import CustomImage
 from .functions import (
     get_current_uptime,
     get_profile_picture_path,
@@ -16,4 +17,5 @@ __all__ = [
     "username",
     "IconResolver",
     "get_current_uptime",
+    "CustomImage",
 ]
