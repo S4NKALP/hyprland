@@ -45,3 +45,7 @@
 #notification-icon {
   margin-right: 5px;
 }
+
+.image {
+  border-radius: 30px;
+}

@@ -2,6 +2,8 @@ import gi
 
 gi.require_version("GdkPixbuf", "2.0")
 
+from gi.repository import GdkPixbuf, GLib
+
 from fabric.notifications import (
     Notification,
     NotificationAction,
@@ -15,7 +17,7 @@ from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.wayland import WaylandWindow as Window
-from gi.repository import GdkPixbuf, GLib
+from snippets import CustomImage
 
 
 class ActionButton(Button):
@@ -95,11 +97,16 @@ class NotificationWidget(Box):
         # Use provided image if available, otherwise use "notification-symbolic" icon
         if image_pixbuf := self._notification.image_pixbuf:
             body_container.add(
-                Image(
-                    pixbuf=image_pixbuf.scale_simple(
-                        64, 64, GdkPixbuf.InterpType.BILINEAR
-                    )
-                ),
+                Box(
+                    v_expand=True,
+                    v_align="center",
+                    children=CustomImage(
+                        pixbuf=image_pixbuf.scale_simple(
+                            64, 64, GdkPixbuf.InterpType.BILINEAR
+                        ),
+                        style_classes="image",
+                    ),
+                )
             )
 
         body_container.add(
@@ -143,7 +150,12 @@ class NotificationWidget(Box):
         )
 
     def get_icon(self, app_icon, app_name, size) -> Image:
-
+        # Normalize app_name
+        app_name = (
+            app_name.lower().replace(" ", "-")
+            if isinstance(app_name, str)
+            else app_name
+        )
         # Attempt to load file-based icons
         if isinstance(app_icon, str) and app_icon.strip():
             if app_icon.startswith("file://") or app_icon.startswith("/"):
@@ -163,8 +175,6 @@ class NotificationWidget(Box):
             icon_name = app_name.strip()
         else:
             icon_name = "dialog-information-symbolic"
-
-        print(f"DEBUG: icon_name={icon_name}")
 
         # Return a symbolic icon as fallback
         return Image(name="notification-icon", icon_name=icon_name, icon_size=size)
