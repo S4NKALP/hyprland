@@ -2,7 +2,6 @@ import os
 import subprocess
 
 from fabric import Fabricator
-from fabric.utils import exec_shell_command
 from fabric.widgets.button import Button
 from fabric.widgets.image import Image
 from fabric.widgets.label import Label
@@ -25,7 +24,13 @@ class ClipboardManager:
         )
 
     def get_clip_history(self):
-        exec_shell_command("cliphist list")
+        try:
+            result = subprocess.run(
+                ["cliphist", "list"], capture_output=True, text=True, check=True
+            )
+            return self._parse_clip_history(result.stdout)
+        except subprocess.CalledProcessError:
+            return []
 
     def _parse_clip_history(self, output):
         return [
