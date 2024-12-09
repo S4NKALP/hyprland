@@ -2,6 +2,7 @@ import os
 import subprocess
 
 from fabric import Fabricator
+from fabric.utils import exec_shell_command
 from fabric.widgets.button import Button
 from fabric.widgets.image import Image
 from fabric.widgets.label import Label
@@ -24,13 +25,7 @@ class ClipboardManager:
         )
 
     def get_clip_history(self):
-        try:
-            result = subprocess.run(
-                ["cliphist", "list"], capture_output=True, text=True, check=True
-            )
-            return self._parse_clip_history(result.stdout)
-        except subprocess.CalledProcessError:
-            return []
+        exec_shell_command("cliphist list")
 
     def _parse_clip_history(self, output):
         return [
@@ -41,7 +36,7 @@ class ClipboardManager:
 
     def update_clipboard_history(self):
         new_history = self.get_clip_history()
-        if new_history != self.clipboard_history:
+        if isinstance(new_history, list) and new_history != self.clipboard_history:
             self.clipboard_history = new_history
             self.refresh_ui()
 
@@ -94,7 +89,10 @@ class ClipboardManager:
             self.add_clipboard_item(viewport, item)
 
     def _filter_clip_history(self, query):
+        if not self.clipboard_history:  # Safeguard against None or empty
+            return []
         return [item for item in self.clipboard_history if query in item["content"]]
+        # return [item for item in self.clipboard_history if query in item["content"]]
 
     def add_clipboard_item(self, viewport, item):
         if "png" in item["content"]:
