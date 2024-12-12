@@ -18,10 +18,10 @@ class SystemInfo(Button):
 
     def __init__(self):
         super().__init__(child=self._initialize_content())
-        Fabricator(poll_from=self._refresh_system_info, interval=1000)
+        self.fabricator = Fabricator(poll_from=self._refresh_system_info, interval=1000)
 
     def _initialize_content(self):
-        self.box = Box(orientation="h", name="tray")
+        self.box = Box(orientation="h", name="info")
         self.progress_bars = {}
         self.labels = {}
         self.icons = {}
@@ -42,7 +42,7 @@ class SystemInfo(Button):
 
     def _create_progress_bar(self):
         return CircularProgressBar(
-            name="progress", line_style="round", line_width=1, size=30
+            style_classes="progress", line_style="round", line_width=1, size=30
         )
 
     def _create_label(self):

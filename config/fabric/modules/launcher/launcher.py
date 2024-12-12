@@ -1,5 +1,7 @@
+from fabric import Application
 from fabric.utils import (
     get_desktop_applications,
+    get_relative_path,
     idle_add,
     invoke_repeater,
     remove_handler,
@@ -155,7 +157,7 @@ class Launcher(Window):
                 if handler:
                     handler(query[len(command) :].strip())
                     return
-        self.scrolled_revealer.unreveal()
+
         if query.startswith(":"):
             self.additional_box.set_visible(False)
             self.update_dynamic_button([self.default_button])
@@ -224,21 +226,25 @@ class Launcher(Window):
         self.network_menu.show_wifi_menu(self.viewport)
         dynamic_buttons = self.network_menu.get_wifi_buttons()
         self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
 
     def show_emojis(self, query: str):
         self.emoji_manager.show_emojis(self.get_viewport(), query)
         dynamic_buttons = self.emoji_manager.get_emoji_buttons()
         self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
 
     def show_clipboard_history(self, query: str):
         self.clipboard_manager.show_clipboard_history(self.get_viewport(), query)
         dynamic_buttons = self.clipboard_manager.get_clipboard_buttons()
         self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
 
     def show_powermenu(self, query: str = ""):
         self.power_menu.show_power_menu(self.get_viewport(), query)
         dynamic_buttons = self.power_menu.get_power_buttons()
         self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
 
     def show_shell_commands(self, query: str):
         if not query:
@@ -249,6 +255,7 @@ class Launcher(Window):
         self.shell_command_manager.show_shell_commands(self.get_viewport(), query)
         dynamic_buttons = self.shell_command_manager.get_shell_buttons()
         self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
 
     def show_wallpapers(self, query: str):
         if query == "random":
@@ -257,8 +264,17 @@ class Launcher(Window):
             self.wallpaper_manager.show_wallpaper_thumbnails(self.get_viewport(), query)
         dynamic_buttons = self.wallpaper_manager.get_wallpaper_buttons()
         self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
 
     def show_bluetooth_settings(self, *_):
         self.bluetooth_menu.show_bluetooth_menu(self.viewport)
         dynamic_buttons = self.bluetooth_menu.get_bluetooth_buttons()
         self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
+
+
+# if __name__ == "__main__":
+#     launcher = Launcher()
+#     app = Application("launcher", launcher)
+#     app.set_stylesheet_from_file(get_relative_path("./styles/main.css"))
+#     app.run()
