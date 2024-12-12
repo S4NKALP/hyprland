@@ -1,23 +1,26 @@
-import hashlib
 import os
+import threading
 from pathlib import Path
 
 from fabric.utils import exec_shell_command, exec_shell_command_async
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
-from gi.repository import GdkPixbuf
 from loguru import logger
 from snippets import MaterialIcon
 
 
 class WallpaperManager:
     IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
-    CACHE_DIR = os.path.expanduser("~/.cache/fabric/wall")
+    THUMBNAIL_SIZE = "x64"
+    THUMBNAIL_ASPECT_RATIO = "1:1"
     WALLPAPER_SCRIPT_PATH = os.path.expanduser("~/dotfiles/hypr/scripts/wallpaper.py")
 
     def __init__(self):
         self.wallpaper_dir = Path.home() / "Pictures" / "wallpapers"
-        os.makedirs(self.CACHE_DIR, exist_ok=True)
+        self.thumbnail_dir = (
+            Path.home() / ".cache" / "fabric" / "thumbnails" / "wallpapers"
+        )
+        self.thumbnail_dir.mkdir(parents=True, exist_ok=True)
         self.theme_toggle_button = self._create_theme_toggle_button()
         self._update_button_style()
 
@@ -49,37 +52,6 @@ class WallpaperManager:
         )
         self.theme_toggle_button.set_style(style)
 
-    def get_cache_path(self, file_name: str) -> str:
-        file_hash = hashlib.md5(file_name.encode("utf-8")).hexdigest()
-        return os.path.join(self.CACHE_DIR, f"{file_hash}.png")
-
-    def create_thumbnail(self, image_path: str, thumbnail_size=100):
-        try:
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file(image_path)
-            width, height = pixbuf.get_width(), pixbuf.get_height()
-            if width > height:
-                new_width = thumbnail_size
-                new_height = int(height * (thumbnail_size / width))
-            else:
-                new_height = thumbnail_size
-                new_width = int(width * (thumbnail_size / height))
-            return pixbuf.scale_simple(
-                new_width, new_height, GdkPixbuf.InterpType.BILINEAR
-            )
-        except Exception as e:
-            logger.error(f"Error creating thumbnail for {image_path}: {e}")
-            return None
-
-    def generate_or_load_thumbnail(self, wallpaper_path):
-        """Generate or load a cached thumbnail."""
-        cache_path = self.get_cache_path(wallpaper_path.name)
-
-        if not os.path.exists(cache_path):
-            pixbuf = self.create_thumbnail(str(wallpaper_path))
-            if pixbuf:
-                pixbuf.savev(cache_path, "png", [], [])
-        return cache_path
-
     def show_wallpaper_thumbnails(self, viewport, search_term: str = ""):
         wallpapers = list(self._get_wallpapers(search_term))[:24]
         if not wallpapers:
@@ -101,7 +73,7 @@ class WallpaperManager:
         row = Box(orientation="h", spacing=10, style="margin:5px;")
 
         for index, wallpaper in enumerate(wallpapers, 1):
-            thumbnail_path = self.generate_or_load_thumbnail(wallpaper)
+            thumbnail_path = self._generate_thumbnail(wallpaper)
             row.add(self._create_wallpaper_thumbnail(thumbnail_path, wallpaper))
 
             if index % 6 == 0:
@@ -122,6 +94,33 @@ class WallpaperManager:
 
     def _matches_search(self, file, search_term: str):
         return not search_term or search_term.lower() in file.name.lower()
+
+    def _generate_thumbnail(self, wallpaper_path):
+        thumbnail_path = self.thumbnail_dir / wallpaper_path.name
+        if not thumbnail_path.exists():
+            threading.Thread(
+                target=self._create_thumbnail,
+                args=(wallpaper_path, thumbnail_path),
+                daemon=True,
+            ).start()
+        return thumbnail_path
+
+    def _create_thumbnail(self, wallpaper_path, thumbnail_path):
+        logger.debug(f"Generating thumbnail for {wallpaper_path}")
+        exec_shell_command_async(
+            [
+                "magick",
+                str(wallpaper_path),
+                "-resize",
+                self.THUMBNAIL_SIZE,
+                "-gravity",
+                "Center",
+                "-extent",
+                self.THUMBNAIL_ASPECT_RATIO,
+                str(thumbnail_path),
+            ],
+            lambda *args: logger.debug(args),
+        )
 
     def _create_wallpaper_thumbnail(self, thumbnail_path, wallpaper_path):
         return Button(

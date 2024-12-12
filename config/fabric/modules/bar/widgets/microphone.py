@@ -4,8 +4,6 @@ from snippets import MaterialIcon
 
 
 class MicrophoneIndicator(Box):
-    ICON_MUTED = "mic_off"
-    ICON_UNMUTED = "mic"
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -18,14 +16,14 @@ class MicrophoneIndicator(Box):
         self.children = (self.microphone_icon,)
 
     def create_microphone_icon(self):
-        return MaterialIcon(self.ICON_MUTED, size="16px")
+        return MaterialIcon("mic_off", size="16px")
 
     def update_microphone_status(self, *args):
         current_microphone = self.audio_service.microphone
 
         if current_microphone:
             is_muted = current_microphone.muted
-            icon_name = self.ICON_MUTED if is_muted else self.ICON_UNMUTED
+            icon_name = "mic_off" if is_muted else "mic"
 
             self.microphone_icon.set_label(icon_name)
             self.microphone_icon.set_visible(is_muted)

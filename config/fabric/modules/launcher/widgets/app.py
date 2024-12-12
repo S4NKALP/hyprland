@@ -6,10 +6,10 @@ from fabric.widgets.label import Label
 
 def handle_application_search(launcher, query: str):
     if not query.strip():
-        launcher.scrolled_revealer.unreveal()
         launcher.additional_box.set_visible(True)
         return
 
+    launcher.additional_box.set_visible(False)
     filtered_apps = [
         app
         for app in launcher.all_apps
@@ -28,7 +28,6 @@ def handle_application_search(launcher, query: str):
             bake_application_slot(launcher, app) for app in filtered_apps[:6]
         ]
         launcher.scrolled_revealer.reveal()
-        launcher.additional_box.set_visible(False)
     else:
         launcher.scrolled_revealer.unreveal()
 

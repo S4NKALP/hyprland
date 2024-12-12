@@ -2,8 +2,6 @@ import gi
 
 gi.require_version("GdkPixbuf", "2.0")
 
-from gi.repository import GdkPixbuf, GLib
-
 from fabric.notifications import (
     Notification,
     NotificationAction,
@@ -17,6 +15,7 @@ from fabric.widgets.image import Image
 from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.wayland import WaylandWindow as Window
+from gi.repository import GdkPixbuf
 from snippets import CustomImage
 
 
