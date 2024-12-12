@@ -1,9 +1,9 @@
 from fabric.widgets.label import Label
 
 
-def MaterialIcon(icon_name: str, size: str = "24px", props: dict = None):
+def MaterialIcon(icon_name: str, size: str = "24px", props=None):
     label_props = {
-        "label": icon_name,  # Directly use the provided icon name
+        "label": str(icon_name),  # Directly use the provided icon name
         "name": "material_icon",
         "style": f"font-size: {size}; ",  # Set font family for Material Icons
         "h_align": "center",  # Align horizontally
