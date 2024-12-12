@@ -22,7 +22,7 @@ class BluetoothIndicator(Box):
             self.ICON_ENABLED if self.bluetooth_client.enabled else self.ICON_DISABLED
         )
 
-        new_icon = MaterialIcon(icon_label, size="16px")
+        new_icon = MaterialIcon(icon_label, size=16)
 
         if self.bluetooth_icon:
             self.remove(self.bluetooth_icon)

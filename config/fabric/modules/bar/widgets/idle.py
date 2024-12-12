@@ -14,7 +14,7 @@ class IdleIndicator(Box):
         self.children = [self.idle_icon]
 
     def create_idle_icon(self):
-        return MaterialIcon("schedule", size="16px")
+        return MaterialIcon("schedule", size=16)
 
     def check_idle_status(self, *_):
 
