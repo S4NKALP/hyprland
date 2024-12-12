@@ -30,7 +30,7 @@ class PowerProfileIndicator(Box):
     def update_icon(self, profile):
         icon_name = PROFILE_ICONS.get(profile)
 
-        new_icon = MaterialIcon(icon_name, size="16px") if icon_name else None
+        new_icon = MaterialIcon(icon_name, size=16) if icon_name else None
 
         if self.profile_icon:
             self.remove(self.profile_icon)

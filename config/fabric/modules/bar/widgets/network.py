@@ -25,7 +25,7 @@ class NetworkIndicator(Box):
         return True
 
     def update_icon(self, current_status):
-        self.icon_label = MaterialIcon(current_status, size="16px")
+        self.icon_label = MaterialIcon(current_status, size=16)
         self.children = (self.icon_label,)
 
     def get_network_status(self):

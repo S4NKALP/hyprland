@@ -36,7 +36,7 @@ class BrightnessOSDContainer(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs, orientation="h", spacing=12, name="osd")
         self.brightness_service = Brightness()
-        self.icon = MaterialIcon(icon_name="brightness_7", size="28px")
+        self.icon = MaterialIcon(icon_name="brightness_7", size=28)
         self.scale = AnimatedScale(
             marks=(ScaleMark(value=i) for i in range(0, 101, 10)),
             value=70,
@@ -102,7 +102,7 @@ class AudioOSDContainer(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs, orientation="h", spacing=13, name="osd")
         self.audio = Audio()
-        self.icon = MaterialIcon(icon_name="volume_up", size="28px")
+        self.icon = MaterialIcon(icon_name="volume_up", size=28)
         self.scale = AnimatedScale(
             marks=(ScaleMark(value=i) for i in range(1, 100, 10)),
             value=70,

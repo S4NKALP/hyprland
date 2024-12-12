@@ -16,7 +16,7 @@ class MicrophoneIndicator(Box):
         self.children = (self.microphone_icon,)
 
     def create_microphone_icon(self):
-        return MaterialIcon("mic_off", size="16px")
+        return MaterialIcon("mic_off", size=16)
 
     def update_microphone_status(self, *args):
         current_microphone = self.audio_service.microphone

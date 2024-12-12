@@ -6,7 +6,6 @@ from fabric.widgets.button import Button
 from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
-
 from modules.bar.widgets import (
     BatteryLabel,
     BluetoothIndicator,
@@ -50,7 +49,7 @@ class Bar(Window):
 
         self.recording_indicator = Button(
             name="bar-button",
-            child=MaterialIcon("screen_record", size="16px"),
+            child=MaterialIcon("screen_record", size=16),
             visible=False,
             on_clicked=lambda *_: self.screen_recorder.screencast_stop(),
         )
