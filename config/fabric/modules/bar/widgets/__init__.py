@@ -6,6 +6,5 @@ from .microphone import *
 from .network import *
 from .powerprofile import *
 from .taskbar import *
-from .tray import *
 from .volume import *
 from .workspace import *
