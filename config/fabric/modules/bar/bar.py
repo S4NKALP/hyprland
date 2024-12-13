@@ -1,5 +1,6 @@
 from fabric.hyprland.widgets import Language
-from fabric.system_tray.widgets import SystemTray
+
+# from fabric.system_tray.widgets import SystemTray
 from fabric.utils import FormattedString, bulk_replace
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
@@ -8,23 +9,21 @@ from fabric.widgets.datetime import DateTime
 from fabric.widgets.wayland import WaylandWindow as Window
 from modules.bar.widgets import (
     BatteryLabel,
-    BluetoothIndicator,
+    Bluetooth,
     IdleIndicator,
     MicrophoneIndicator,
-    NetworkIndicator,
-    PowerProfileIndicator,
+    Network,
     SystemInfo,
-    SystemTray,
     TaskBar,
     VolumeIndicator,
     workspace,
 )
-from services import ScreenRecorder
-from snippets import MaterialIcon
 
 
 class Bar(Window):
-    def __init__(self):
+    def __init__(
+        self,
+    ):
         super().__init__(
             layer="top",
             anchor="left bottom right",
@@ -32,8 +31,6 @@ class Bar(Window):
             visible=False,
             all_visible=False,
         )
-        self.screen_recorder = ScreenRecorder()
-        self.workspaces = Button(child=workspace, name="workspaces")
         self.language = Language(
             formatter=FormattedString(
                 "{replace_lang(language)}",
@@ -45,38 +42,23 @@ class Bar(Window):
                 ),
             ),
         )
+
         self.date_time = DateTime(formatters=["%-I:%M 󰧞 %a %d %b"], name="datetime")
-
-        self.recording_indicator = Button(
-            name="bar-button",
-            child=MaterialIcon("screen_record", size=16),
-            visible=False,
-            on_clicked=lambda *_: self.screen_recorder.screencast_stop(),
-        )
-
-        self.screen_recorder.connect(
-            "recording",
-            lambda _, status: self.recording_indicator.set_visible(status),
-        )
-
-        self.battery = BatteryLabel(name="battery")
-        self.volume = VolumeIndicator()
-        self.bluetooth = BluetoothIndicator()
-        self.network = NetworkIndicator()
-        self.microphone = MicrophoneIndicator()
-        self.idle = IdleIndicator()
+        # self.system_tray = SystemTray(name="tray", spacing=4, icon_size=18)
         self.taskbar = TaskBar()
+        self.volume = VolumeIndicator()
+        self.network = Network()
+        self.bluetooth = Bluetooth()
+        self.battery = BatteryLabel(name="battery")
+        self.microphone = MicrophoneIndicator()
+        self.workspaces = Button(child=workspace, name="workspaces")
         self.info = SystemInfo()
-        self.powerindicator = PowerProfileIndicator()
-        self.tray = SystemTray()
-
+        self.idle = IdleIndicator()
         self.applets = Box(
             name="applets",
             spacing=4,
-            orientation="h",
             children=[
                 self.language,
-                self.powerindicator,
                 self.bluetooth,
                 self.network,
                 self.volume,
@@ -100,15 +82,16 @@ class Bar(Window):
                 name="center-container",
                 spacing=8,
                 orientation="h",
-                children=self.taskbar,
+                children=[
+                    self.taskbar,
+                ],
             ),
             end_children=Box(
                 name="end-container",
                 spacing=8,
                 orientation="h",
                 children=[
-                    # self.recording_indicator,
-                    self.tray,
+                    # self.system_tray,
                     self.battery,
                     self.applets,
                     self.date_time,

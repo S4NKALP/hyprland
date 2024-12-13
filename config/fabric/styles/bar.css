@@ -7,10 +7,6 @@
   font-weight: bold;
 }
 
-#corner {
-  background-color: @surface;
-}
-
 /*
  * ── bar moudles ───────────────────────────────────────────────────────
 */
@@ -75,23 +71,33 @@
 }
 
 /*
-* ─── info ──────────────────────────────────────────────────────────────
+ * ── tray ──────────────────────────────────────────────────────────────
 */
 
-#info {
+#tray {
   background-color: @surfaceContainer;
   border-radius: 100px;
   padding: 2px 10px 0px 10px;
 }
 
-#info > button {
+#tray > button {
   margin: 0px;
   padding: 0px;
 }
 
-#info .progress {
-  color: lighter(@outlineVariant);
-  border: 2px solid @onSecondaryContainer;
+menu {
+  background-color: @surfaceContainer;
+}
+
+menu > menuitem {
+  border-radius: 12px;
+  padding: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+menu > menuitem:hover {
+  background-color: mix(@onSurface, @surface, 0.85);
 }
 
 /*
@@ -145,26 +151,31 @@
   margin-right: 0px;
 }
 
-/* systemtray */
+#progress {
+  color: lighter(@outlineVariant);
+  border: 2px solid @onSecondaryContainer;
+}
+
+/*
+ * ── system tray ───────────────────────────────────────────────────────
+*/
 
 #system-tray {
-  padding: 0.125em 0.25em;
   background-color: @surfaceContainer;
   border-radius: 100px;
+  padding: 2px 10px 0 10px;
 }
 
 #system-tray > button {
-  margin: 0 0.1em;
-  padding: 0 0.15em;
-  border-radius: 100px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #system-tray-menu > menuitem menu,
 #system-tray-menu {
   background-color: @surfaceContainer;
-  border-radius: 1em;
+  border-radius: 12px;
   padding: 10px;
-  min-width: 100px;
 }
 
 #system-tray-menu > menuitem menu > menuitem,
@@ -183,5 +194,5 @@
 #system-tray-menu > menuitem menu > menuitem:hover,
 #system-tray-menu > menuitem:hover,
 #submenu-button:hover {
-  background-color: @surface;
+  background-color: mix(@onSurface, @surface, 0.85);
 }
