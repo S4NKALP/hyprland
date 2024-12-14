@@ -1,3 +1,5 @@
+import time
+
 import gi
 
 gi.require_version("GdkPixbuf", "2.0")
@@ -11,12 +13,41 @@ from fabric.notifications import (
 from fabric.utils import invoke_repeater
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
+from fabric.widgets.circularprogressbar import CircularProgressBar
 from fabric.widgets.image import Image
 from fabric.widgets.label import Label
+from fabric.widgets.overlay import Overlay
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.wayland import WaylandWindow as Window
-from gi.repository import GdkPixbuf
-from snippets import CustomImage
+from gi.repository import GdkPixbuf, GLib, GObject
+from snippets import Animator, CustomImage
+
+
+class AnimatedCircularProgressBar(CircularProgressBar):
+
+    def __init__(self, duration=0.6, bezier_curve=(0.34, 1.56, 0.64, 1.0), **kwargs):
+        super().__init__(**kwargs)
+
+        self.animator = (
+            Animator(
+                bezier_curve=bezier_curve,
+                duration=duration,
+                min_value=self.min_value,
+                max_value=self.value,
+                tick_widget=self,
+                notify_value=lambda p, *_: self.set_value(p.value),
+            )
+            .build()
+            .play()
+            .unwrap()
+        )
+
+    def animate_value(self, value: float):
+        self.animator.pause()
+        self.animator.min_value = self.value
+        self.animator.max_value = value
+        self.animator.play()
+        return
 
 
 class ActionButton(Button):
@@ -51,8 +82,23 @@ class NotificationWidget(Box):
         )
 
         self._notification = notification
+        self._timer = None
+        self.anim_parts = 20
+        self.anim_interval = self.get_timeout() / self.anim_parts
+        self.timeout_in_sec = self.get_timeout() / 1000
+        self.time = GLib.DateTime.new_from_unix_local(time.time()).format("%m/%d")
+        self.connect("button-press-event", self.on_button_press)
 
         header_container = Box(spacing=8, orientation="h")
+        self.progress_timeout = AnimatedCircularProgressBar(
+            name="notification-circular-progress-bar",
+            size=30,
+            min_value=0,
+            max_value=1,
+            radius_color=True,
+            value=0,
+        )
+
         header_container.children = (
             self.get_icon(notification.app_icon, notification.app_name, 25),
             Label(
@@ -71,17 +117,17 @@ class NotificationWidget(Box):
             Box(
                 v_align="start",
                 children=(
-                    Button(
-                        image=Image(
-                            icon_name="close-symbolic",
-                            icon_size=16,
+                    Overlay(
+                        child=self.progress_timeout,
+                        overlays=Button(
+                            image=Image(
+                                icon_name="window-close-symbolic",
+                                icon_size=16,
+                            ),
                             style_classes="close-button",
-                        ),
-                        style_classes="close-button",
-                        v_align="center",
-                        h_align="end",
-                        on_clicked=lambda *_: self._notification.close(
-                            "dismissed-by-user"
+                            on_clicked=lambda *_: self._notification.close(
+                                "dismissed-by-user"
+                            ),
                         ),
                     ),
                 ),
@@ -148,6 +194,25 @@ class NotificationWidget(Box):
             ),
         )
 
+        self.start_timer()
+
+    def start_timer(self):
+        self._timer = GObject.timeout_add(200, self.update_progress)
+
+    def update_progress(self):
+        self.progress_timeout.animate_value(
+            self.progress_timeout.value + 1 / self.anim_parts
+        )
+        if self.progress_timeout.value >= self.timeout_in_sec:
+            self.progress_timeout.value = self.timeout_in_sec
+            self.stop_timer()
+        return True  # Continue the timer
+
+    def stop_timer(self):
+        if self._timer:
+            GObject.source_remove(self._timer)
+            self._timer = None
+
     def get_icon(self, app_icon, app_name, size) -> Image:
         # Normalize app_name
         app_name = (
@@ -177,6 +242,15 @@ class NotificationWidget(Box):
 
         # Return a symbolic icon as fallback
         return Image(name="notification-icon", icon_name=icon_name, icon_size=size)
+
+    def on_button_press(self, _, event):
+        if event.button != 1:
+            (self._notification.close("dismissed-by-user"),)
+
+    def get_timeout(self):
+        return (
+            self._notification.timeout if self._notification.timeout != -1 else 5 * 1000
+        )
 
 
 class NotificationRevealer(Revealer):
