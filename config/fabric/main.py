@@ -1,13 +1,13 @@
 import os
 
 import setproctitle
-from fabric import Application
-from fabric.utils import get_relative_path, monitor_file
 from loguru import logger
 
+from fabric import Application
+from fabric.utils import get_relative_path, monitor_file
 from modules.bar.bar import Bar
 from modules.launcher.launcher import Launcher
-from modules.notifications import NotificationPopup
+from modules.notification_popup import NotificationPopup
 from modules.osd import OSDContainer
 from services import ScreenRecorder
 
