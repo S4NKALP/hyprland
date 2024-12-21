@@ -1,23 +1,24 @@
 import hashlib
 import os
-from pathlib import Path
 
 from fabric.utils import exec_shell_command, exec_shell_command_async
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from gi.repository import GdkPixbuf
 from loguru import logger
+
 from snippets import MaterialIcon
 
 
 class WallpaperManager:
     IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
-    CACHE_DIR = os.path.expanduser("~/.cache/fabric/wall")
+    CACHE_DIR = os.path.expanduser("~/.cache/fabric/thumbnails/wallpapers")
     WALLPAPER_SCRIPT_PATH = os.path.expanduser("~/dotfiles/hypr/scripts/wallpaper.py")
 
     def __init__(self):
-        self.wallpaper_dir = Path.home() / "Pictures" / "wallpapers"
+        self.wallpaper_dir = os.path.expanduser("~/Pictures/wallpapers")
         os.makedirs(self.CACHE_DIR, exist_ok=True)
+        self.thumbnails = []
         self.theme_toggle_button = self._create_theme_toggle_button()
         self._update_button_style()
 
@@ -71,11 +72,10 @@ class WallpaperManager:
             return None
 
     def generate_or_load_thumbnail(self, wallpaper_path):
-        """Generate or load a cached thumbnail."""
-        cache_path = self.get_cache_path(wallpaper_path.name)
+        cache_path = self.get_cache_path(os.path.basename(wallpaper_path))
 
         if not os.path.exists(cache_path):
-            pixbuf = self.create_thumbnail(str(wallpaper_path))
+            pixbuf = self.create_thumbnail(wallpaper_path)
             if pixbuf:
                 pixbuf.savev(cache_path, "png", [], [])
         return cache_path
@@ -113,15 +113,23 @@ class WallpaperManager:
 
     def _get_wallpapers(self, search_term: str):
         return (
-            f
-            for f in self.wallpaper_dir.iterdir()
-            if f.is_file()
-            and f.suffix.lower() in self.IMAGE_EXTENSIONS
-            and self._matches_search(f, search_term)
+            os.path.join(self.wallpaper_dir, file_name)
+            for file_name in os.listdir(self.wallpaper_dir)
+            if os.path.isfile(os.path.join(self.wallpaper_dir, file_name))
+            and os.path.splitext(file_name)[1].lower() in self.IMAGE_EXTENSIONS
+            and self._matches_search(file_name, search_term)
         )
 
-    def _matches_search(self, file, search_term: str):
-        return not search_term or search_term.lower() in file.name.lower()
+    def _matches_search(self, file_name, search_term: str):
+        return not search_term or search_term.lower() in file_name.lower()
+
+    def _thumbnail_style(self, thumbnail_path):
+        return (
+            f"background-image: url('{thumbnail_path}'); "
+            "min-width: 64px; min-height: 64px; "
+            "background-repeat: no-repeat; "
+            "background-size: cover; background-position: center;"
+        )
 
     def _create_wallpaper_thumbnail(self, thumbnail_path, wallpaper_path):
         return Button(
@@ -137,19 +145,11 @@ class WallpaperManager:
             on_clicked=lambda _: self._select_wallpaper(wallpaper_path),
         )
 
-    def _thumbnail_style(self, thumbnail_path):
-        return (
-            f"background-image: url('{thumbnail_path}'); "
-            "min-width: 64px; min-height: 64px; "
-            "background-repeat: no-repeat; "
-            "background-size: cover; background-position: center;"
-        )
-
     def _select_wallpaper(self, wallpaper_path):
         self._apply_wallpaper(wallpaper_path)
 
     def _apply_wallpaper(self, wallpaper_path):
-        self._execute_wallpaper_script("--image", str(wallpaper_path))
+        self._execute_wallpaper_script("--image", wallpaper_path)
 
     def apply_wallpaper_random(self):
         self._execute_wallpaper_script("-R")
