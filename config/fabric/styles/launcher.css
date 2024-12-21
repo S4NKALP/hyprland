@@ -144,3 +144,43 @@
   background-color: @surfaceVariant;
   border-radius: 100px;
 }
+
+#calendar calendar {
+  all: unset;
+  font-size: 18px;
+  padding: 5px;
+}
+
+#calendar calendar.button {
+  all: unset;
+  transition: 200ms;
+  border-radius: 10px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+#calendar calendar:selected {
+  box-shadow:
+    inset 0 -7px 0 0 @primary,
+    inset 0 0 0 1px @surfaceVariant;
+  border-radius: 6px;
+}
+
+#calendar calendar.header {
+  background-color: transparent;
+  border: none;
+}
+
+#calendar calendar.highlight {
+  background-color: transparent;
+  color: @onSurface;
+}
+
+#calendar calendar:hover {
+  color: @errorContainer;
+}
+
+#calendar calendar:indeterminate {
+  color: mix(@onSurfaceVariant, transparent, 0.3);
+}

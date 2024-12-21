@@ -34,6 +34,11 @@
       "command": ":p",
       "description": "Shutdown and go sleepy time",
       "handler": "show_powermenu"
+    },
+    {
+      "command": ":cl",
+      "description": "Show the calendar",
+      "handler": "show_calendar"
     }
   ]
 }

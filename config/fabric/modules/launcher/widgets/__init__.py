@@ -1,5 +1,6 @@
 from .app import *
 from .bluetooth import *
+from .calendar import *
 from .clipboard import *
 from .emoji import *
 from .power_menu import *

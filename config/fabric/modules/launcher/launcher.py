@@ -1,7 +1,5 @@
-from fabric import Application
 from fabric.utils import (
     get_desktop_applications,
-    get_relative_path,
     idle_add,
     invoke_repeater,
     remove_handler,
@@ -13,8 +11,10 @@ from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.scrolledwindow import ScrolledWindow
 from fabric.widgets.wayland import WaylandWindow as Window
+
 from modules.launcher.widgets import (
     BluetoothMenu,
+    Calendar,
     ClipboardManager,
     EmojiManager,
     PowerMenu,
@@ -63,6 +63,7 @@ class Launcher(Window):
         self.power_menu = PowerMenu(self)
         self.bluetooth_menu = BluetoothMenu(self)
         self.network_menu = WifiMenu(self)
+        self.calendar_menu = Calendar(self)
 
     def setup_ui(self):
         self.default_button = Button(
@@ -272,9 +273,8 @@ class Launcher(Window):
         self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()
 
-
-# if __name__ == "__main__":
-#     launcher = Launcher()
-#     app = Application("launcher", launcher)
-#     app.set_stylesheet_from_file(get_relative_path("./styles/main.css"))
-#     app.run()
+    def show_calendar(self, *_):
+        self.calendar_menu.show_calendar_menu(self.viewport)
+        dynamic_buttons = self.calendar_menu.get_calendar_buttons()
+        self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
