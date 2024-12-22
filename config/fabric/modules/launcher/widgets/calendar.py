@@ -1,6 +1,7 @@
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
-from snippets import GtkCalendar, MaterialIcon
+from gi.repository import Gtk
+from snippets import MaterialIcon
 
 
 class Calendar:
@@ -16,7 +17,7 @@ class Calendar:
 
         calendar_container = Box(
             name="calendar",
-            children=GtkCalendar(h_expand=True),
+            children=Gtk.Calendar(visible=True, hexpand=True),
         )
 
         viewport.add(calendar_container)
