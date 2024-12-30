@@ -42,7 +42,7 @@ class BluetoothMenu:
         style = (
             "background-color: transparent;"
             if self.client.enabled
-            else "background-color: @surfaceVariant; min-height: 50px; min-width: 50px;"
+            else "background-color: @surfaceVariant; border-radius:100px; min-height: 50px; min-width: 50px;"
         )
         self.bt_button.set_style(style)
 

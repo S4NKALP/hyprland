@@ -114,10 +114,10 @@ async def main():
     wallpaper_engine = settings['wallpaper-engine']
     hyprpaper_tpl = settings['hyprpaper-tpl']
 
-    new_wallpaper = f"{HOME}/dotfiles/wallpapers/lake.png"
+    new_wallpaper = f"{HOME}/Pictures/wallpapers/1.png"
 
     if random:
-        files = [f for f in os.listdir(f"{HOME}/Pictures/wallpapers") if f.endswith(('.png', '.jpg', '.jpeg'))]
+        files = [f for f in os.listdir(f"{HOME}/Pictures/wallpapers/") if f.endswith(('.png', '.jpg', '.jpeg'))]
         if files:
             new_wallpaper = join(f"{HOME}/Pictures/wallpapers", _random.choice(files))
     elif prev:
@@ -192,7 +192,7 @@ async def main():
              if custom_color != "none"
              else None
          )),
-        scheme=GENERATOR.schemes[generation_scheme]
+        scheme_name=generation_scheme
     )
 
     # -----------------------------------------------------

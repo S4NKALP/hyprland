@@ -18,10 +18,10 @@ class SystemInfo(Button):
 
     def __init__(self):
         super().__init__(child=self._initialize_content())
-        Fabricator(poll_from=self._refresh_system_info, interval=1000)
+        self.fabricator = Fabricator(poll_from=self._refresh_system_info, interval=1000)
 
     def _initialize_content(self):
-        self.box = Box(orientation="h", name="tray")
+        self.box = Box(orientation="h", name="info")
         self.progress_bars = {}
         self.labels = {}
         self.icons = {}
@@ -49,7 +49,7 @@ class SystemInfo(Button):
         return Label(style="font-size:14px; margin: 4px;")
 
     def _create_icon(self, icon_name):
-        return MaterialIcon(icon_name, size="16px")
+        return MaterialIcon(icon_name, size=16)
 
     def _refresh_system_info(self, *_):
         usages = self._retrieve_system_data()

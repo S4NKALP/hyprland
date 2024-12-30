@@ -1,8 +1,8 @@
-@import url(../../.cache/material/colors.css);
-@import "launcher.css";
-@import "bar.css";
-@import "notification.css";
-@import "osd.css";
+@import url(/home/sankalp/.cache/material/colors.css);
+@import "./launcher.css";
+@import "./bar.css";
+@import "./notification.css";
+@import "./osd.css";
 
 * {
   all: unset;

@@ -41,7 +41,7 @@ class ClipboardManager:
 
     def update_clipboard_history(self):
         new_history = self.get_clip_history()
-        if new_history != self.clipboard_history:
+        if isinstance(new_history, list) and new_history != self.clipboard_history:
             self.clipboard_history = new_history
             self.refresh_ui()
 
@@ -94,7 +94,10 @@ class ClipboardManager:
             self.add_clipboard_item(viewport, item)
 
     def _filter_clip_history(self, query):
+        if not self.clipboard_history:  # Safeguard against None or empty
+            return []
         return [item for item in self.clipboard_history if query in item["content"]]
+        # return [item for item in self.clipboard_history if query in item["content"]]
 
     def add_clipboard_item(self, viewport, item):
         if "png" in item["content"]:
@@ -119,7 +122,7 @@ class ClipboardManager:
     def _add_text_button(self, viewport, item):
         label_button = Button(
             child=Label(
-                label=item["content"][:55],  # Truncate text for display
+                label=item["content"][:35],  # Truncate text for display
                 h_expand=True,
                 v_align="center",
                 h_align="start",
