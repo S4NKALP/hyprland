@@ -1,40 +1,28 @@
-import argparse
-import hashlib
-import json
 import os
-import pickle
 import random
-import re
 import subprocess
-
-import numpy as np
-from materialyoucolor.dynamiccolor.material_dynamic_colors import (
-    MaterialDynamicColors,
-)  # type: ignore # noqa
-from materialyoucolor.hct import Hct  # type: ignore
-from materialyoucolor.quantize import QuantizeCelebi  # type: ignore
-from materialyoucolor.scheme.dynamic_scheme import DynamicScheme  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_content import SchemeContent  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_expressive import (
-    SchemeExpressive,
-)  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_fidelity import (
-    SchemeFidelity,
-)  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_fruit_salad import (
-    SchemeFruitSalad,
-)  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_monochrome import (
-    SchemeMonochrome,
-)  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_neutral import SchemeNeutral  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_rainbow import SchemeRainbow  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_tonal_spot import (
-    SchemeTonalSpot,
-)  # type: ignore # noqa
-from materialyoucolor.scheme.scheme_vibrant import SchemeVibrant  # type: ignore # noqa
-from materialyoucolor.score.score import Score  # type: ignore
+import json
 from PIL import Image
+import argparse
+from materialyoucolor.quantize import QuantizeCelebi  # type: ignore
+from materialyoucolor.score.score import Score  # type: ignore
+from materialyoucolor.hct import Hct  # type: ignore
+from materialyoucolor.dynamiccolor.material_dynamic_colors import MaterialDynamicColors  # type: ignore # noqa
+from materialyoucolor.scheme.dynamic_scheme import DynamicScheme  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_tonal_spot import SchemeTonalSpot  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_expressive import SchemeExpressive  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_fruit_salad import SchemeFruitSalad  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_monochrome import SchemeMonochrome  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_rainbow import SchemeRainbow  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_vibrant import SchemeVibrant  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_neutral import SchemeNeutral  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_fidelity import SchemeFidelity  # type: ignore # noqa
+from materialyoucolor.scheme.scheme_content import SchemeContent  # type: ignore # noqa
+import hashlib
+import pickle
+import numpy as np
+import re
+
 
 schemes = {
     "tonalSpot": SchemeTonalSpot,

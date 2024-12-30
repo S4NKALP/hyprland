@@ -7,26 +7,16 @@ from gi.repository import Gio, GLib
 from loguru import logger
 
 
+
 class ScreenRecorder(Service):
     @Signal
     def recording(self, value: bool) -> None: ...
 
-    _instance = None
-
-    def __init__(self, **kwargs):
-        if hasattr(self, "_initialized") and self._initialized:
-            return
+    def __init__(self,  **kwargs):
         self.screenshot_path = GLib.get_home_dir() + "/Pictures/Screenshots/"
-        self.screenrecord_path = GLib.get_home_dir() + "/Videos/Screencasting/"
-        self._current_screencast_path = None
+        self.screenrecord_path = GLib.get_home_dir() + "/Videos/Screenrecords/"
 
         super().__init__(**kwargs)
-        self._initialized = True
-
-    def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super(ScreenRecorder, cls).__new__(cls, *args, **kwargs)
-        return cls._instance
 
     def screenshot(self, fullscreen=False, save_copy=True):
         time = datetime.datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
@@ -37,13 +27,13 @@ class ScreenRecorder(Service):
             else ["grimblast", "copy" "screen"]
         )
         if not fullscreen:
-            command[2] = "area"
+            command[3] = "area"
         try:
             subprocess.run(command, check=True)
             self.send_screenshot_notification(
                 file_path=file_path if file_path else None,
             )
-        except Exception as e:
+        except Exception:
             logger.error(f"[SCREENSHOT] Failed to run command: {command}")
 
     def screencast_start(self, fullscreen=False):
@@ -54,6 +44,7 @@ class ScreenRecorder(Service):
             return
         time = datetime.datetime.today().strftime("%Y-%m-%d_%H-%M-%S")
         file_path = self.screenrecord_path + str(time) + ".mp4"
+
         self._current_screencast_path = file_path
         area = "" if fullscreen else f"-g '{exec_shell_command('slurp')}'"
         command = f"wf-recorder --file={file_path} --pixel-format yuv420p {area}"
@@ -61,25 +52,11 @@ class ScreenRecorder(Service):
         self.emit("recording", True)
 
     def screencast_stop(self):
-        if not self.is_recording:
-            logger.error("[SCREENRECORD] No active recording to stop")
-            return
         exec_shell_command_async("killall -INT wf-recorder")
         self.emit("recording", False)
         self.send_screencast_notification(self._current_screencast_path)
 
-    # def screencast_stop(self):
-    #     exec_shell_command_async("killall -INT wf-recorder")
-    #     self.emit("recording", False)
-    #     if hasattr(self, "_current_screencast_path") and self._current_screencast_path:
-    #         self.send_screencast_notification(self._current_screencast_path)
-    #     else:
-    #         logger.error("[SCREENRECORD] No active screencast to stop")
-    #
     def send_screencast_notification(self, file_path):
-        # TODO: Generate a thumbnail
-        # exec_shell_command_async(f"totem-video-thumbnailer {file_path} {FABRIC_CACHE}")
-
         cmd = ["notify-send"]
         cmd.extend(
             [
@@ -161,4 +138,5 @@ class ScreenRecorder(Service):
 
     @Property(bool, "readable", default_value=False)
     def is_recording(self):
-        return False if len(exec_shell_command("pidof wf-recorder")) == 0 else True
+        return len(exec_shell_command("pidof wf-recorder")) != 0
+
