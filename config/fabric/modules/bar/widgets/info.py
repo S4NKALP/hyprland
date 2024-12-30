@@ -42,7 +42,7 @@ class SystemInfo(Button):
 
     def _create_progress_bar(self):
         return CircularProgressBar(
-            style_classes="progress", line_style="round", line_width=1, size=30
+            name="progress", line_style="round", line_width=1, size=30
         )
 
     def _create_label(self):

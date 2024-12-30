@@ -11,7 +11,6 @@ from fabric.widgets.label import Label
 from fabric.widgets.revealer import Revealer
 from fabric.widgets.scrolledwindow import ScrolledWindow
 from fabric.widgets.wayland import WaylandWindow as Window
-
 from modules.launcher.widgets import (
     BluetoothMenu,
     Calendar,
