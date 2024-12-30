@@ -6,12 +6,13 @@ from fabric.widgets.box import Box
 from snippets import MaterialIcon
 
 
-class Network(Box):
+class NetworkIndicator(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.update_interval = 1000
+        self.update_interval = 5000  # Increased interval to 5 seconds
         self.last_status = None
-        Fabricator(
+        self.wifi_strength_cache = None
+        self.fabricator = Fabricator(
             interval=self.update_interval,
             poll_from=self.update_network_status,
         )
@@ -24,7 +25,7 @@ class Network(Box):
         return True
 
     def update_icon(self, current_status):
-        self.icon_label = MaterialIcon(current_status, size="16px")
+        self.icon_label = MaterialIcon(current_status, size=16)
         self.children = (self.icon_label,)
 
     def get_network_status(self):
@@ -36,6 +37,10 @@ class Network(Box):
 
     def get_wifi_strength_icon(self):
         wifi_strength = self.check_wifi_strength()
+        if wifi_strength is not None:
+            self.wifi_strength_cache = wifi_strength  # Cache the result
+        else:
+            wifi_strength = self.wifi_strength_cache  # Use cached value if available
 
         return self.wifi_signal_icon(wifi_strength)
 

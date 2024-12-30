@@ -10,13 +10,13 @@ PROFILE_ICONS = {
 }
 
 
-class PowerProfile(Box):
+class PowerProfileIndicator(Box):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         self.profile_icon = None
 
-        Fabricator(interval=1000, poll_from=self.update_power_profile)
+        self.fabricator = Fabricator(interval=1000, poll_from=self.update_power_profile)
 
     def update_power_profile(self, *_):
         profile = self.get_power_profile()
@@ -30,7 +30,7 @@ class PowerProfile(Box):
     def update_icon(self, profile):
         icon_name = PROFILE_ICONS.get(profile)
 
-        new_icon = MaterialIcon(icon_name, size="16px") if icon_name else None
+        new_icon = MaterialIcon(icon_name, size=16) if icon_name else None
 
         if self.profile_icon:
             self.remove(self.profile_icon)

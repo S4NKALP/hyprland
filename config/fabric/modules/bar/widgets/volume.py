@@ -28,7 +28,7 @@ class VolumeIndicator(Box):
         self.children = (self.volume_icon_button,)
 
     def create_volume_icon(self):
-        icon = MaterialIcon(VOLUME_ICONS["muted"], size="16px")
+        icon = MaterialIcon(VOLUME_ICONS["muted"], size=16)
         button = Button(child=icon)
         button.icon_widget = icon
         return button

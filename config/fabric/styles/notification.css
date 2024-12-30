@@ -18,6 +18,10 @@
   font-size: 0.92rem;
 }
 
+#notification .close-button {
+  border-radius: 100px;
+}
+
 #notification .close-button:hover {
   background: alpha(@foreground, 0.2);
   transition: background 0.15s ease-in-out;
@@ -44,4 +48,13 @@
 
 #notification-icon {
   margin-right: 5px;
+}
+
+.image {
+  border-radius: 30px;
+}
+
+#notification-circular-progress-bar {
+  border: solid 0px @outlineVariant;
+  color: transparent;
 }

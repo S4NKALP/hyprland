@@ -13,6 +13,7 @@ from fabric.widgets.scrolledwindow import ScrolledWindow
 from fabric.widgets.wayland import WaylandWindow as Window
 from modules.launcher.widgets import (
     BluetoothMenu,
+    Calendar,
     ClipboardManager,
     EmojiManager,
     PowerMenu,
@@ -61,6 +62,7 @@ class Launcher(Window):
         self.power_menu = PowerMenu(self)
         self.bluetooth_menu = BluetoothMenu(self)
         self.network_menu = WifiMenu(self)
+        self.calendar_menu = Calendar(self)
 
     def setup_ui(self):
         self.default_button = Button(
@@ -149,7 +151,6 @@ class Launcher(Window):
     def arrange_viewport(self, query: str = ""):
 
         self.get_viewport().children = []
-        dynamic_buttons = []
         for command, handler_name in self.command_map.items():
             if query.startswith(command):
                 handler = getattr(self, handler_name, None)
@@ -268,5 +269,11 @@ class Launcher(Window):
     def show_bluetooth_settings(self, *_):
         self.bluetooth_menu.show_bluetooth_menu(self.viewport)
         dynamic_buttons = self.bluetooth_menu.get_bluetooth_buttons()
+        self.update_dynamic_button(dynamic_buttons)
+        self.scrolled_revealer.reveal()
+
+    def show_calendar(self, *_):
+        self.calendar_menu.show_calendar_menu(self.viewport)
+        dynamic_buttons = self.calendar_menu.get_calendar_buttons()
         self.update_dynamic_button(dynamic_buttons)
         self.scrolled_revealer.reveal()

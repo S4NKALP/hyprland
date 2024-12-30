@@ -5,8 +5,13 @@ from loguru import logger
 
 from fabric import Application
 from fabric.utils import get_relative_path, monitor_file
-from modules import Bar, Launcher, NotificationPopup, OSDContainer
-from services import Brightness, ScreenRecorder
+from modules.bar.bar import Bar
+from modules.launcher.launcher import Launcher
+from modules.notification_popup import NotificationPopup
+from modules.osd import OSDContainer
+from services import ScreenRecorder
+
+logger.disable("fabric.hyprland.widgets")
 
 
 def apply_style(app: Application):
@@ -16,15 +21,18 @@ def apply_style(app: Application):
 
 if __name__ == "__main__":
     sc = ScreenRecorder()
-    brightness = Brightness()
-
-    logger.disable("fabric.hyprland.widgets")
     bar = Bar()
-    launcher = Launcher()
-    launcher.hide()
     osd = OSDContainer()
     notif = NotificationPopup()
-    app = Application("fabric-bar", bar, launcher, osd)
+    launcher = Launcher()
+    launcher.hide()
+
+    app = Application(
+        "quickbar",
+        bar,
+        launcher,
+        osd,
+    )
     setproctitle.setproctitle("quickbar")
 
     css_file = monitor_file(get_relative_path("styles"))
@@ -34,8 +42,5 @@ if __name__ == "__main__":
     _ = color_css_file.connect("changed", lambda *_: apply_style(app))
 
     apply_style(app)
-
-    def quit_fabric():
-        app.quit()
 
     app.run()

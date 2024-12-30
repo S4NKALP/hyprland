@@ -74,7 +74,7 @@ class PowerMenu:
                     orientation="h",
                     spacing=10,
                     children=[
-                        MaterialIcon(option["icon"], size="28px"),
+                        MaterialIcon(option["icon"], size=28),
                         Label(label=option["label"], h_align="start"),
                     ],
                 ),

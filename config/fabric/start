@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-cd ~/dotfiles/fabric/
-
-python main.py
