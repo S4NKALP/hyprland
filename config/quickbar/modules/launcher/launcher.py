@@ -6,6 +6,7 @@ from fabric.widgets.wayland import WaylandWindow as Window
 from gi.repository import Gdk, GLib
 from modules.launcher.widgets import (
     AppLauncher,
+    BluetoothManager,
     Cliphist,
     Emoji,
     PowerMenu,
@@ -29,11 +30,13 @@ class Launcher(Window):
         self.emoji = Emoji()
         self.cliphist = Cliphist()
         self.todo = TodoManager()
+        self.bluetooth = BluetoothManager()
 
         # Initialize viewports as None
         self._emoji_viewport = None
         self._cliphist_viewport = None
         self._todo_viewport = None
+        self._bluetooth_viewport = None
 
         self.stack = Stack(
             name="launcher-content",
@@ -48,6 +51,7 @@ class Launcher(Window):
                 self.emoji,
                 self.cliphist,
                 self.todo,
+                self.bluetooth,
             ],
         )
 
@@ -89,6 +93,8 @@ class Launcher(Window):
     def close(self):
         self.set_keyboard_mode("none")
         self.hide()
+        if self.bluetooth.is_active:
+            self.bluetooth.stop_device_polling()
 
         for widget in [
             self.launcher,
@@ -97,6 +103,7 @@ class Launcher(Window):
             self.emoji,
             self.cliphist,
             self.todo,
+            self.bluetooth,
         ]:
             widget.remove_style_class("open")
 
@@ -120,6 +127,9 @@ class Launcher(Window):
             if widget == self.todo and hasattr(widget, "viewport") and widget.viewport:
                 widget.viewport.hide()
 
+            if widget == self.bluetooth and widget.viewport:
+                widget.viewport.children = []
+
         style_classes = [
             "launcher",
             "wallpapers",
@@ -127,6 +137,7 @@ class Launcher(Window):
             "emoji",
             "cliphist",
             "todo",
+            "bluetooth",
         ]
         for style_class in style_classes:
             if self.stack.get_style_context().has_class(style_class):
@@ -145,6 +156,7 @@ class Launcher(Window):
             "emoji": self.emoji,
             "cliphist": self.cliphist,
             "todo": self.todo,
+            "bluetooth": self.bluetooth,
         }
 
         style_classes = list(widgets.keys())
@@ -192,6 +204,11 @@ class Launcher(Window):
                 self.todo.open_launcher()
                 self.todo.todo_entry.set_text("")
                 self.todo.todo_entry.grab_focus()
+
+            elif widget == "bluetooth":
+                self.bluetooth.open_launcher()
+                self.bluetooth.search_entry.set_text("")
+                self.bluetooth.search_entry.grab_focus()
 
             else:
                 if hasattr(self.wallpapers, "viewport"):

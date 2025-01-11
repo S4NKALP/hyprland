@@ -40,7 +40,9 @@ ttf-font-awesome, otf-font-awesome, ttf-material-symbols-variable-git, ttf-googl
 
 # ToDo
 
-- [ ] Add wifi, bluetooth, shrunner widget
+- [x] Add bluetooth widget
+- [ ] Add shrunner widget
+- [ ] Add wifi widget
 - [ ] Dashboard
 - [ ] Notification panel
 - [ ] Better css
