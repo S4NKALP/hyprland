@@ -18,7 +18,7 @@ class BluetoothManager(Box):
             **kwargs,
         )
 
-        self._arranger_handler: int = 0
+        self._arranger_handler = None
         self.device_manager = DeviceManager(self)
         self.viewport = None
 
@@ -26,8 +26,8 @@ class BluetoothManager(Box):
             name="search-entry",
             placeholder="Search Devices...",
             h_expand=True,
-            notify_text=lambda entry, *_: self.handle_search_input(entry.get_text()),
-            on_activate=lambda entry, *_: self.handle_search_input(entry.get_text()),
+            notify_text=self.handle_search_input,
+            on_activate=self.handle_search_input,
         )
 
         self.header_box = Box(
@@ -40,19 +40,19 @@ class BluetoothManager(Box):
                     name="power-button",
                     child=MaterialIcon("bluetooth"),
                     tooltip_text="Toggle Bluetooth",
-                    on_clicked=lambda *_: self.device_manager.toggle_bluetooth(),
+                    on_clicked=self.device_manager.toggle_bluetooth,
                 ),
                 Button(
                     name="scan-button",
                     child=MaterialIcon("search"),
                     tooltip_text="Scan for Devices",
-                    on_clicked=lambda *_: self.device_manager.toggle_scan(),
+                    on_clicked=self.device_manager.toggle_scan,
                 ),
                 Button(
                     name="close-button",
                     child=MaterialIcon("close"),
                     tooltip_text="Exit",
-                    on_clicked=lambda *_: self.close_launcher(),
+                    on_clicked=self.close_launcher,
                 ),
             ],
         )
@@ -67,17 +67,8 @@ class BluetoothManager(Box):
 
         self.add(self.launcher_box)
 
-        self.is_active = False  # Track whether the Bluetooth section is active
-        self.polling_handler = None  # Track the polling handler
-
-        self.connect("key-press-event", self.on_key_press)
-
-    def on_key_press(self, widget, event):
-        """Handle Escape key press to close the launcher"""
-        if event.keyval == Gdk.KEY_Escape:
-            self.close_launcher()
-            return True  # Stop further processing of the event
-        return False  # Allow normal event processing
+        self.is_active = False
+        self.polling_handler = None
 
     def open_launcher(self):
         if not self.is_active:
@@ -99,36 +90,34 @@ class BluetoothManager(Box):
             self.viewport.show()
             self.search_entry.grab_focus()
 
-            # Start refreshing devices when Bluetooth section is open
             self.start_device_polling()
+        else:
+            self.device_manager.arrange_viewport()
 
     def close_launcher(self):
-        self.is_active = False  # Mark as not active
+        self.is_active = False
         if self.viewport:
-            self.viewport.hide()
-            self.viewport = None  # Reset the viewport reference
+            self.viewport.children = []
+            # self.launcher_box.remove(self.scrolled_window)
+            # self.viewport = None
 
-        # Stop the polling when Bluetooth section is closed
         self.stop_device_polling()
-
         GLib.spawn_command_line_async("fabric-cli exec quickbar 'launcher.close()'")
 
     def handle_search_input(self, text: str):
-        if text.lower() == ":bt":  # Only handle Bluetooth search when ":bt" is input
+        if text.lower() == ":bt":
             self.open_launcher()
         else:
             self.device_manager.arrange_viewport(text)
 
     def start_device_polling(self):
         if not self.polling_handler and self.is_active:
-            print("Starting polling...")
             self.polling_handler = GLib.timeout_add(
                 5000, self.device_manager.refresh_devices
             )
 
     def stop_device_polling(self):
         if self.polling_handler:
-            print("Stopping polling...")
             GLib.source_remove(self.polling_handler)
             self.polling_handler = None
 
