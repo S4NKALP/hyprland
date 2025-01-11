@@ -10,6 +10,7 @@ from modules.launcher.widgets import (
     Cliphist,
     Emoji,
     PowerMenu,
+    Sh,
     TodoManager,
     WallpaperSelector,
 )
@@ -31,12 +32,14 @@ class Launcher(Window):
         self.cliphist = Cliphist()
         self.todo = TodoManager()
         self.bluetooth = BluetoothManager()
+        self.sh = Sh()
 
         # Initialize viewports as None
         self._emoji_viewport = None
         self._cliphist_viewport = None
         self._todo_viewport = None
         self._bluetooth_viewport = None
+        self._sh_viewport = None
 
         self.stack = Stack(
             name="launcher-content",
@@ -52,6 +55,7 @@ class Launcher(Window):
                 self.cliphist,
                 self.todo,
                 self.bluetooth,
+                self.sh,
             ],
         )
 
@@ -104,19 +108,17 @@ class Launcher(Window):
             self.cliphist,
             self.todo,
             self.bluetooth,
+            self.sh,
         ]:
             widget.remove_style_class("open")
 
-            # Handle wallpaper viewport
             if widget == self.wallpapers:
                 self.wallpapers.viewport.hide()
                 self.wallpapers.viewport.set_property("name", None)
 
-            # Handle emoji viewport safely
             if widget == self.emoji and hasattr(widget, "viewport") and widget.viewport:
                 widget.viewport.hide()
 
-            # Handle cliphist viewport safely
             if (
                 widget == self.cliphist
                 and hasattr(widget, "viewport")
@@ -132,6 +134,9 @@ class Launcher(Window):
                 widget.viewport.children = []
                 widget.is_active = False
 
+            if widget == self.sh and widget.viewport:
+                widget.viewport.hide()
+
         style_classes = [
             "launcher",
             "wallpapers",
@@ -140,6 +145,7 @@ class Launcher(Window):
             "cliphist",
             "todo",
             "bluetooth",
+            "sh",
         ]
         for style_class in style_classes:
             if self.stack.get_style_context().has_class(style_class):
@@ -159,6 +165,7 @@ class Launcher(Window):
             "cliphist": self.cliphist,
             "todo": self.todo,
             "bluetooth": self.bluetooth,
+            "sh": self.sh,
         }
 
         style_classes = list(widgets.keys())
@@ -212,6 +219,11 @@ class Launcher(Window):
                 self.bluetooth.search_entry.set_text("")
                 self.bluetooth.search_entry.grab_focus()
                 self.bluetooth.device_manager.arrange_viewport()
+
+            elif widget == "sh":
+                self.sh.open_launcher()
+                self.sh.search_entry.set_text("")
+                self.sh.search_entry.grab_focus()
 
             else:
                 if hasattr(self.wallpapers, "viewport"):

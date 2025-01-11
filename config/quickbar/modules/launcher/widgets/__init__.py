@@ -4,5 +4,6 @@ from .cliphist import *
 from .dashboard import *
 from .emoji import *
 from .power import *
+from .sh import *
 from .todo import *
 from .wallpapers import *
