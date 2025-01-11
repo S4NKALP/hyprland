@@ -11,46 +11,45 @@ $saturation: round(color.channel($primary, "saturation", $space: hsl));
 $lightness: round(color.channel($primary, "lightness", $space: hsl));
 
 * {
-    transition: color 0.2s ease-in-out;
-    transition-property: background-color, color;
+  transition: color 0.2s ease-in-out;
+  transition-property: background-color, color;
 }
 
 .theme-#{$color-scheme} {
-	--main-color: #{$background};
-	--main-alt: #{$surfaceContainerLow};
+  --main-color: #{$background};
+  --main-alt: #{$surfaceContainerLow};
 
-	--message-color: #{$surfaceContainerLowest};
-	--message-color-hover: #{$surfaceContainer};
-	--message-color-alt: #{$surfaceContainer};
-	--attachment-color: #{$background};
+  --message-color: #{$surfaceContainerLowest};
+  --message-color-hover: #{$surfaceContainer};
+  --message-color-alt: #{$surfaceContainer};
+  --attachment-color: #{$background};
 
-	--accent-hue: #{$hue};
-	--accent-saturation: #{$saturation};
-	--accent-lightness: #{$lightness};
-	--accent-text-color: #{$onPrimary};
+  --accent-hue: #{$hue};
+  --accent-saturation: #{$saturation};
+  --accent-lightness: #{$lightness};
+  --accent-text-color: #{$onPrimary};
 
-	--main-textarea-color: #{$surfaceContainerHigh};
-	--main-textarea-color-alt: #{$surfaceContainerHighest};
-	--status-picker-color: #{$surfaceContainerHigh};
+  --main-textarea-color: #{$surfaceContainerHigh};
+  --main-textarea-color-alt: #{$surfaceContainerHighest};
+  --status-picker-color: #{$surfaceContainerHigh};
 
-	--tooltip-color: #{$surfaceContainer};
-	--popout-color: #{$surfaceContainer};
-	--popout-color-alt: #{$surfaceContainerLowest};
-	--popout-header-border: #{$onSurface};
-	--separator-color: #{$outlineVariant};
-	--sidebar-panel-color: #{$surfaceContainerLowest};
-	--server-color: #{$surfaceContainerLow};
+  --tooltip-color: #{$surfaceContainer};
+  --popout-color: #{$surfaceContainer};
+  --popout-color-alt: #{$surfaceContainerLowest};
+  --popout-header-border: #{$onSurface};
+  --separator-color: #{$outlineVariant};
+  --sidebar-panel-color: #{$surfaceContainerLowest};
+  --server-color: #{$surfaceContainerLow};
 }
 
 [class*="botTag_"] svg path {
-	fill: #{$onPrimary};
+  fill: #{$onPrimary};
 }
 
 [class*="repliedTextContent_"] {
-	padding: 0px 5px 0px 5px !important;
+  padding: 0px 5px 0px 5px !important;
 }
 
 [class*="userPopoutOuter_"] {
-	border-radius: 16px !important;
+  border-radius: 16px !important;
 }
-
