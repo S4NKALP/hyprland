@@ -44,7 +44,7 @@ class BluetoothManager(Box):
                 ),
                 Button(
                     name="scan-button",
-                    child=MaterialIcon("search"),
+                    child=MaterialIcon("sync"),
                     tooltip_text="Scan for Devices",
                     on_clicked=self.device_manager.toggle_scan,
                 ),
