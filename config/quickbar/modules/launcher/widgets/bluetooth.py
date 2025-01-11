@@ -98,17 +98,16 @@ class BluetoothManager(Box):
         self.is_active = False
         if self.viewport:
             self.viewport.children = []
-            # self.launcher_box.remove(self.scrolled_window)
-            # self.viewport = None
 
         self.stop_device_polling()
         GLib.spawn_command_line_async("fabric-cli exec quickbar 'launcher.close()'")
 
-    def handle_search_input(self, text: str):
-        if text.lower() == ":bt":
-            self.open_launcher()
-        else:
-            self.device_manager.arrange_viewport(text)
+    def handle_search_input(self, entry, text: str):
+        if isinstance(text, str):
+            if text.lower() == ":bt":
+                self.open_launcher()
+            else:
+                self.device_manager.arrange_viewport(text)
 
     def start_device_polling(self):
         if not self.polling_handler and self.is_active:
