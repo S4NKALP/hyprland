@@ -1,8 +1,14 @@
-@import url(/home/sankalp/.cache/material/colors.css);
-@import "./launcher.css";
+@import url(../../.cache/material/colors.css);
 @import "./bar.css";
 @import "./notification.css";
 @import "./osd.css";
+@import "./launcher.css";
+@import "./launcher/applauncher.css";
+@import "./launcher/wallpapers.css";
+@import "./launcher/powermenu.css";
+@import "./launcher/todo.css";
+@import "./launcher/emoji.css";
+@import "./launcher/cliphist.css";
 
 * {
   all: unset;

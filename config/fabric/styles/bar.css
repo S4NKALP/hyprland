@@ -86,18 +86,23 @@
 }
 
 menu {
+  border: solid 1px @outlineVariant;
+  border-radius: 16px;
   background-color: @surfaceContainer;
+  padding: 6px;
 }
 
 menu > menuitem {
-  border-radius: 12px;
-  padding: 10px;
-  margin-left: 2px;
-  margin-right: 2px;
+  border-radius: 10px;
+  padding: 6px 10px;
 }
 
 menu > menuitem:hover {
   background-color: mix(@onSurface, @surface, 0.85);
+}
+
+menu > menuitem:hover > label {
+  color: @onSurface;
 }
 
 /*
