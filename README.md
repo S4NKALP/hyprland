@@ -1,5 +1,5 @@
 > [!WARNING]
-> This configuration is made by myself, for myself, and with very little concern for other's preferences. This configuration is not meant to be "good", it's just meant to be comfortable for me. Let it also known that this is _VERY_ WIP.
+> This configuration is personal, created specifically for my own preferences and comfort. It is not intended to be universally appealing, but rather customized for my own use. Please note that this project is very much a work in progress (WIP).
 
 <div align = "center">
 
@@ -15,12 +15,12 @@
 
 ## Overview
 
-<h4>This repository contains my personal dotfiles and configuration files. It's currently in an early, experimental phase and may not be suitable for general use.</h4>
+<h4>This repository contains my personal dotfiles and configuration files. It is currently in its alpha stage and primarily intended for personal use. As such, it may not be suitable for general use and could undergo significant changes in the future.</h4>
 
 </div>
 
 > [!NOTE]
-> This repository is in the alpha stage and primarily for personal use. The organization and configurations may change significantly in the future.
+> Please be aware that this repository is in an experimental phase and subject to frequent updates. The structure and configurations may evolve drastically over time.
 
 <img src ="assets/rice.png">
 
