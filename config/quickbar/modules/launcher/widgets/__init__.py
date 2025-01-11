@@ -1,4 +1,5 @@
 from .applauncher import *
+from .bluetooth import *
 from .cliphist import *
 from .dashboard import *
 from .emoji import *
