@@ -9,6 +9,7 @@
 @import "./launcher/todo.css";
 @import "./launcher/emoji.css";
 @import "./launcher/cliphist.css";
+@import "./launcher/bluetooth.css";
 
 * {
   all: unset;
