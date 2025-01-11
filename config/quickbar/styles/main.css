@@ -1,4 +1,4 @@
-@import url(../../../.cache/material/colors.css);
+@import url(../../.cache/material/colors.css);
 @import "./bar.css";
 @import "./notification.css";
 @import "./osd.css";
@@ -10,6 +10,7 @@
 @import "./launcher/emoji.css";
 @import "./launcher/cliphist.css";
 @import "./launcher/bluetooth.css";
+@import "./launcher/sh.css";
 
 * {
   all: unset;
