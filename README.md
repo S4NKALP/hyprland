@@ -45,7 +45,6 @@ ttf-font-awesome, otf-font-awesome, ttf-material-symbols-variable-git, ttf-googl
 - [ ] Notification panel
 - [ ] Better css
 - [ ] Documentation
-- [ ] Window Switcher
 - [ ] maybe calendar with events
 - [ ] Audio and Brightness Controller
 - [ ] New Screenshot
