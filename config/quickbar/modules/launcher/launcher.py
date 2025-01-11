@@ -128,7 +128,9 @@ class Launcher(Window):
                 widget.viewport.hide()
 
             if widget == self.bluetooth and widget.viewport:
+                widget.viewport.hide()
                 widget.viewport.children = []
+                widget.is_active = False
 
         style_classes = [
             "launcher",
@@ -209,6 +211,7 @@ class Launcher(Window):
                 self.bluetooth.open_launcher()
                 self.bluetooth.search_entry.set_text("")
                 self.bluetooth.search_entry.grab_focus()
+                self.bluetooth.device_manager.arrange_viewport()
 
             else:
                 if hasattr(self.wallpapers, "viewport"):
