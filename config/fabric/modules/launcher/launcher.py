@@ -1,279 +1,199 @@
-from fabric.utils import (
-    get_desktop_applications,
-    idle_add,
-    invoke_repeater,
-    remove_handler,
-)
-from fabric.widgets.box import Box
-from fabric.widgets.button import Button
-from fabric.widgets.entry import Entry
-from fabric.widgets.label import Label
-from fabric.widgets.revealer import Revealer
-from fabric.widgets.scrolledwindow import ScrolledWindow
+import os
+
+from fabric.widgets.centerbox import CenterBox
+from fabric.widgets.stack import Stack
 from fabric.widgets.wayland import WaylandWindow as Window
+from gi.repository import Gdk, GLib
 from modules.launcher.widgets import (
-    BluetoothMenu,
-    Calendar,
-    ClipboardManager,
-    EmojiManager,
+    AppLauncher,
+    Cliphist,
+    Emoji,
     PowerMenu,
-    ShellCommandManager,
-    WallpaperManager,
-    WifiMenu,
-    handle_application_search,
-)
-from snippets import (
-    MaterialIcon,
-    get_current_uptime,
-    get_profile_picture_path,
-    read_config,
-    username,
+    TodoManager,
+    WallpaperSelector,
 )
 
 
 class Launcher(Window):
     def __init__(self, **kwargs):
-        self.config = read_config()
         super().__init__(
             layer="top",
             anchor="center",
-            exclusivity="none",
-            keyboard_mode="on-demand",
             visible=False,
             all_visible=False,
-            **kwargs,
         )
-        self.all_apps = get_desktop_applications()
-        self.initialize_managers()
-        self.uptime_label = Label(
-            label=get_current_uptime(), style="margin-left: 60px;"
+
+        self.launcher = AppLauncher()
+        self.wallpapers = WallpaperSelector(os.path.expanduser("~/Pictures/wallpapers"))
+        self.power = PowerMenu()
+        self.emoji = Emoji()
+        self.cliphist = Cliphist()
+        self.todo = TodoManager()
+
+        # Initialize viewports as None
+        self._emoji_viewport = None
+        self._cliphist_viewport = None
+        self._todo_viewport = None
+
+        self.stack = Stack(
+            name="launcher-content",
+            v_expand=True,
+            h_expand=True,
+            transition_type="crossfade",
+            transition_duration=250,
+            children=[
+                self.launcher,
+                self.wallpapers,
+                self.power,
+                self.emoji,
+                self.cliphist,
+                self.todo,
+            ],
         )
-        self.commands = self.config.get("commands", [])
-        self.command_map = self.build_command_map()
-        self.setup_ui()
-        self.connect("key-press-event", self.on_key_press)
-        self.update_uptime_label()
 
-    def initialize_managers(self):
-        self.clipboard_manager = ClipboardManager(self, self.get_viewport())
-        self.emoji_manager = EmojiManager(self)
-        self.shell_command_manager = ShellCommandManager(self)
-        self.wallpaper_manager = WallpaperManager()
-        self.power_menu = PowerMenu(self)
-        self.bluetooth_menu = BluetoothMenu(self)
-        self.network_menu = WifiMenu(self)
-        self.calendar_menu = Calendar(self)
-
-    def setup_ui(self):
-        self.default_button = Button(
-            child=MaterialIcon("grid_view"),
+        self.launcher_box = CenterBox(
+            name="launcher",
+            orientation="h",
             h_align="center",
             v_align="center",
+            start_children=self.stack,
         )
-        self.scrolled_window = self.create_scrolled_window()
-        self.scrolled_revealer = self.create_revealer()
-        self.search_entry = self.create_search_entry()
-        self.additional_box = self.create_additional_box()
-        self.search_box = Box(
-            spacing=10,
-            orientation="h",
-            children=[self.search_entry, self.default_button],
-        )
-        launcher_box = Box(
-            orientation="v",
-            name="launcher",
-            children=[
-                self.search_box,
-                self.additional_box,
-                self.scrolled_revealer,
-            ],
-        )
-        self.add(launcher_box)
+
+        self.add(self.launcher_box)
+        self.setup_widgets()
+
+        self.connect("key-press-event", self.on_key_press)
+        self.connect("delete-event", lambda w, e: self.close())
+
+    def setup_widgets(self):
         self.show_all()
-
-    def create_search_entry(self):
-        entry = Entry(
-            placeholder="Type ':' to list subcommands",
-            h_expand=True,
-            notify_text=lambda entry, *_: self.debounce_search(entry.get_text()),
-        )
-        entry.set_icon_from_icon_name(0, "preferences-system-search-symbolic")
-        return entry
-
-    def create_scrolled_window(self):
-        return ScrolledWindow(
-            style="  transition: min-height 50s cubic-bezier(0.42, 0, 0.58, 1);",
-            child=self.get_viewport(),
-            h_scrollbar_policy="never",
-            v_scrollbar_policy="never",
-        )
-
-    def create_revealer(self):
-        return Revealer(
-            style="  transition: min-height 50s cubic-bezier(0.42, 0, 0.58, 1);",
-            child=self.scrolled_window,
-            transition_type="crossfade",
-        )
-
-    def create_additional_box(self):
-        return Box(
-            orientation="h",
-            spacing=10,
-            children=[
-                Box(
-                    name="profile-pic",
-                    style=f"background-image: url(\"file://{get_profile_picture_path() or ''}\")",
-                ),
-                Label(label=username()),
-                self.uptime_label,
-            ],
-        )
-
-    def get_viewport(self):
-        if not hasattr(self, "viewport"):
-            self.viewport = Box(spacing=10, orientation="v")
-        return self.viewport
-
-    def update_uptime_label(self):
-        self.uptime_label.set_label(get_current_uptime())
-        invoke_repeater(
-            60 * 1000, lambda: self.uptime_label.set_label(get_current_uptime())
-        )
-
-    def build_command_map(self):
-        return {cmd["command"]: cmd["handler"] for cmd in self.commands}
-
-    def debounce_search(self, query: str):
-        if hasattr(self, "_arranger_handler"):
-            remove_handler(self._arranger_handler)
-        self._arranger_handler = idle_add(self.arrange_viewport, query, pin=True)
-
-    def arrange_viewport(self, query: str = ""):
-
-        self.get_viewport().children = []
-        for command, handler_name in self.command_map.items():
-            if query.startswith(command):
-                handler = getattr(self, handler_name, None)
-                if handler:
-                    handler(query[len(command) :].strip())
-                    return
-
-        if query.startswith(":"):
-            self.additional_box.set_visible(False)
-            self.update_dynamic_button([self.default_button])
-            self.show_help(query[1:])
-            self.scrolled_revealer.reveal()
-            return
-        handle_application_search(self, query)
-
-    def update_dynamic_button(self, new_buttons):
-        if not isinstance(new_buttons, list):
-            new_buttons = [new_buttons]
-        for child in self.search_box.children[1:]:
-            self.search_box.remove(child)
-        for new_button in new_buttons:
-            self.search_box.add(new_button)
+        self.hide()
+        self.wallpapers.viewport.hide()
 
     def on_key_press(self, widget, event):
-        from gi.repository import Gdk
-
-        if self.is_visible() and event.keyval == Gdk.KEY_Escape:
-            self.set_visible(False)
+        if event.keyval == Gdk.KEY_Escape:
+            self.close()
             return True
         return False
 
-    def load_commands(self):
-        return {cmd["command"]: cmd["description"] for cmd in self.commands}
+    def on_button_enter(self, widget, event):
+        window = widget.get_window()
+        if window:
+            window.set_cursor(Gdk.Cursor(Gdk.CursorType.HAND2))
 
-    def show_help(self, query: str):
-        filtered_help = [
-            (command, description)
-            for command, description in self.load_commands().items()
-            if query.lower() in command[1:].lower()
+    def on_button_leave(self, widget, event):
+        window = widget.get_window()
+        if window:
+            window.set_cursor(None)
+
+    def close(self):
+        self.set_keyboard_mode("none")
+        self.hide()
+
+        for widget in [
+            self.launcher,
+            self.wallpapers,
+            self.power,
+            self.emoji,
+            self.cliphist,
+            self.todo,
+        ]:
+            widget.remove_style_class("open")
+
+            # Handle wallpaper viewport
+            if widget == self.wallpapers:
+                self.wallpapers.viewport.hide()
+                self.wallpapers.viewport.set_property("name", None)
+
+            # Handle emoji viewport safely
+            if widget == self.emoji and hasattr(widget, "viewport") and widget.viewport:
+                widget.viewport.hide()
+
+            # Handle cliphist viewport safely
+            if (
+                widget == self.cliphist
+                and hasattr(widget, "viewport")
+                and widget.viewport
+            ):
+                widget.viewport.hide()
+
+            if widget == self.todo and hasattr(widget, "viewport") and widget.viewport:
+                widget.viewport.hide()
+
+        style_classes = [
+            "launcher",
+            "wallpapers",
+            "power",
+            "emoji",
+            "cliphist",
+            "todo",
         ]
+        for style_class in style_classes:
+            if self.stack.get_style_context().has_class(style_class):
+                self.stack.get_style_context().remove_class(style_class)
 
-        if not filtered_help:
-            return
-        for command, description in filtered_help:
-            button = Button(
-                child=self.create_help_button_content(command, description),
-                name="launcher-item",
-            )
-            self.get_viewport().add(button)
+        return True
 
-    def create_help_button_content(self, command, description):
-        return Box(
-            orientation="h",
-            spacing=10,
-            children=[
-                Label(label=command, h_expand=True, h_align="start"),
-                Label(
-                    label=description,
-                    h_expand=True,
-                    h_align="end",
-                ),
-            ],
-        )
+    def open(self, widget):
+        self.set_keyboard_mode("exclusive")
+        self.show()
 
-    def toggle(self):
-        self.set_visible(not self.is_visible())
-        if self.is_visible():
-            self.update_dynamic_button(self.default_button)
-            self.search_entry.set_text("")
-            self.search_entry.grab_focus()
+        widgets = {
+            "launcher": self.launcher,
+            "wallpapers": self.wallpapers,
+            "power": self.power,
+            "emoji": self.emoji,
+            "cliphist": self.cliphist,
+            "todo": self.todo,
+        }
 
-    def show_network(self, *_):
-        self.network_menu.show_wifi_menu(self.viewport)
-        dynamic_buttons = self.network_menu.get_wifi_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+        style_classes = list(widgets.keys())
+        for style_class in style_classes:
+            if self.stack.get_style_context().has_class(style_class):
+                self.stack.get_style_context().remove_class(style_class)
 
-    def show_emojis(self, query: str):
-        self.emoji_manager.show_emojis(self.get_viewport(), query)
-        dynamic_buttons = self.emoji_manager.get_emoji_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+        for w in widgets.values():
+            w.remove_style_class("open")
 
-    def show_clipboard_history(self, query: str):
-        self.clipboard_manager.show_clipboard_history(self.get_viewport(), query)
-        dynamic_buttons = self.clipboard_manager.get_clipboard_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+        if widget in widgets:
+            self.stack.get_style_context().add_class(widget)
+            self.stack.set_visible_child(widgets[widget])
+            widgets[widget].add_style_class("open")
 
-    def show_powermenu(self, query: str = ""):
-        self.power_menu.show_power_menu(self.get_viewport(), query)
-        dynamic_buttons = self.power_menu.get_power_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+            if widget == "launcher":
+                self.launcher.open_launcher()
+                self.launcher.search_entry.set_text("")
+                self.launcher.search_entry.grab_focus()
 
-    def show_shell_commands(self, query: str):
-        if not query:
-            dynamic_buttons = self.shell_command_manager.get_shell_buttons()
-            self.update_dynamic_button(dynamic_buttons)
-            self.scrolled_revealer.unreveal()
-            return
-        self.shell_command_manager.show_shell_commands(self.get_viewport(), query)
-        dynamic_buttons = self.shell_command_manager.get_shell_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+            elif widget == "wallpapers":
+                self.wallpapers.search_entry.set_text("")
+                self.wallpapers.search_entry.grab_focus()
+                GLib.timeout_add(
+                    500,
+                    lambda: (
+                        self.wallpapers.viewport.show(),
+                        self.wallpapers.viewport.set_property(
+                            "name", "wallpaper-icons"
+                        ),
+                    ),
+                )
 
-    def show_wallpapers(self, query: str):
-        if query == "random":
-            self.wallpaper_manager.apply_wallpaper_random()
-        else:
-            self.wallpaper_manager.show_wallpaper_thumbnails(self.get_viewport(), query)
-        dynamic_buttons = self.wallpaper_manager.get_wallpaper_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+            elif widget == "emoji":
+                self.emoji.open_launcher()
+                self.emoji.search_entry.set_text("")
+                self.emoji.search_entry.grab_focus()
 
-    def show_bluetooth_settings(self, *_):
-        self.bluetooth_menu.show_bluetooth_menu(self.viewport)
-        dynamic_buttons = self.bluetooth_menu.get_bluetooth_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+            elif widget == "cliphist":
+                self.cliphist.open_launcher()
+                self.cliphist.search_entry.set_text("")
+                self.cliphist.search_entry.grab_focus()
 
-    def show_calendar(self, *_):
-        self.calendar_menu.show_calendar_menu(self.viewport)
-        dynamic_buttons = self.calendar_menu.get_calendar_buttons()
-        self.update_dynamic_button(dynamic_buttons)
-        self.scrolled_revealer.reveal()
+            elif widget == "todo":
+                self.todo.open_launcher()
+                self.todo.todo_entry.set_text("")
+                self.todo.todo_entry.grab_focus()
+
+            else:
+                if hasattr(self.wallpapers, "viewport"):
+                    self.wallpapers.viewport.hide()
+                    self.wallpapers.viewport.set_property("name", None)
