@@ -22,18 +22,30 @@
 > [!NOTE]
 > This repository is in the alpha stage and primarily for personal use. The organization and configurations may change significantly in the future.
 
-### Features
-
-**TODO**
-
-### Showcase:
-
 <img src ="assets/rice.png">
 
-### Installation
+#### Build with **[Fabric](https://github.com/Fabric-Development/fabric)**
 
-**TODO**
+## Packages
 
-### Acknowledgements
+```sh
+python-setproctitle, python-fabric-git, grimblast, wf-recoder, brightnessctl, gnome-bluetooth-3.0 cliphist, python-psutil python-loguru, adw-gtk-theme, power-profile-daemon, python-materialyoucolor-git, python-pywayland, python-pyxdg, python-pillow, python-numpy, python-requests,
+```
 
-**TODO**
+**font**
+
+```sh
+ttf-font-awesome, otf-font-awesome, ttf-material-symbols-variable-git, ttf-google-sans, ttf-opensans, ttf-robot
+```
+
+# ToDo
+
+- [ ] Add wifi, bluetooth, shrunner widget
+- [ ] Dashboard
+- [ ] Notification panel
+- [ ] Better css
+- [ ] Documentation
+- [ ] Window Switcher
+- [ ] maybe calendar with events
+- [ ] Audio and Brightness Controller
+- [ ] New Screenshot
