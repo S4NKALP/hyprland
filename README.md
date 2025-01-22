@@ -19,6 +19,9 @@
 
 </div>
 
+> [!CAUTION]
+> Check [fabric-dev](https://github.com/S4NKALP/hyprland/tree/fabric-dev) branch for latest changes.
+
 > [!NOTE]
 > This repository is in the alpha stage and primarily for personal use. The organization and configurations may change significantly in the future.
 
