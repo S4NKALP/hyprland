@@ -12,11 +12,12 @@
 <img src="https://img.shields.io/github/watchers/S4NKALP/hyprland?style=for-the-badge&logo=bilibili&color=F5E0DC&logoColor=D9E0EE&labelColor=302D41" alt="Codecov coverage">
 <img src="https://img.shields.io/github/repo-size/S4NKALP/hyprland?color=%23DDB6F2&label=SIZE&logo=instatus&style=for-the-badge&logoColor=D9E0EE&labelColor=302D41" alt="GitHub code size">
 </div>
-</div>
 ## Overview
 
 <h5>
 This repository contains my personal dotfiles and configuration files. It is currently in its alpha stage and primarily intended for personal use. As such, it may not be suitable for general use and could undergo significant changes in the future.</h5>
+
+</div>
 
 > [!NOTE]
 > Please be aware that this repository is in an experimental phase and subject to frequent updates. The structure and configurations may evolve drastically over time.
