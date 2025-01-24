@@ -15,9 +15,8 @@
 
 ## Overview
 
-<h4>This repository contains my personal dotfiles and configuration files. It is currently in its alpha stage and primarily intended for personal use. As such, it may not be suitable for general use and could undergo significant changes in the future.</h4>
-
-</div>
+<h5>
+This repository contains my personal dotfiles and configuration files. It is currently in its alpha stage and primarily intended for personal use. As such, it may not be suitable for general use and could undergo significant changes in the future.</h5>
 
 > [!NOTE]
 > Please be aware that this repository is in an experimental phase and subject to frequent updates. The structure and configurations may evolve drastically over time.
