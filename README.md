@@ -48,5 +48,4 @@ ttf-font-awesome, otf-font-awesome, ttf-material-symbols-variable-git, ttf-googl
 - [ ] Improve CSS Styling
 - [ ] Add Documentation
 - [ ] maybe calendar with events
-- [ ] Audio and Brightness Controller
 - [ ] New Screenshot
