@@ -70,7 +70,7 @@ class Emoji(Box):
         self.search_entry.grab_focus()
 
     def close_launcher(self):
-        GLib.spawn_command_line_async("fabric-cli exec karya'launcher.close()'")
+        GLib.spawn_command_line_async("fabric-cli exec modus'launcher.close()'")
 
     def handle_search_input(self, text: str):
         self.emoji_manager.arrange_viewport(text)
@@ -79,7 +79,7 @@ class Emoji(Box):
 class EmojiManager:
     def __init__(self, launcher):
         self.launcher = launcher
-        self.emoji_file_path = os.path.expanduser("~/quickbar/assets/emoji.json")
+        self.emoji_file_path = os.path.expanduser("~/dotfiles/modus/assets/emoji.json")
 
     def load_emojis(self) -> Generator[tuple, None, None]:
         if not os.path.exists(self.emoji_file_path):

@@ -1,0 +1,10 @@
+#device-slot {
+  background-color: @suraceVariant;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+#device-slot:hover,
+#device-slot:focus {
+  background-color: mix(@onSurface, @surface, 0.92);
+}

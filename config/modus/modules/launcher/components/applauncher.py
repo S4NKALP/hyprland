@@ -69,7 +69,7 @@ class AppLauncher(Box):
     def close_launcher(self, *_):
         remove_handler(self._arranger_handler) if self._arranger_handler else None
         self.viewport.children = []
-        GLib.spawn_command_line_async("fabric-cli exec karya 'launcher.close()'")
+        GLib.spawn_command_line_async("fabric-cli exec modus 'launcher.close()'")
 
     def handle_search_input(self, entry, *_):
         text = entry.get_text().strip()
@@ -77,7 +77,7 @@ class AppLauncher(Box):
 
         if text in commands:
             command = commands[text]
-            GLib.spawn_command_line_async(f"fabric-cli exec karya '{command}'")
+            GLib.spawn_command_line_async(f"fabric-cli exec modus '{command}'")
             self.search_entry.set_text("")
         else:
             self.arrange_viewport(text)

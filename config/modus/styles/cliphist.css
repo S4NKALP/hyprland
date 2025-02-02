@@ -1,0 +1,30 @@
+#cliphist-launcher-box button#clip-img-item {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  min-width: 70px;
+  min-height: 70px;
+}
+
+#cliphist-launcher-box button#clip-img-item:hover,
+#cliphist-launcher-box button#clip-img-item:focus {
+  box-shadow: 2px 2px 2px @primary;
+}
+
+#cliphist-launcher-box button#clip-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  padding: 3px;
+}
+
+#cliphist-launcher-box button#clip-item {
+  font-size: 24px;
+}
+
+#cliphist-launcher-box button#clip-item:hover,
+#cliphist-launcher-box button#clip-item:focus {
+  text-shadow: 2px 2px 2px @primary;
+}

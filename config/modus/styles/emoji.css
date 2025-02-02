@@ -1,0 +1,16 @@
+#emoji-launcher-box button#emoji-item {
+  border-radius: 11px;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  padding: 0px;
+}
+
+#emoji-launcher-box button#emoji-item label {
+  font-size: 24px;
+}
+
+#emoji-launcher-box button#emoji-item:hover,
+#emoji-launcher-box button#emoji-item:focus {
+  text-shadow: 2px 2px 2px @primary;
+}

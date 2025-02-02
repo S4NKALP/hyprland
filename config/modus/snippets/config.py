@@ -9,7 +9,7 @@ from loguru import logger
 
 def read_config():
     home_dir = GLib.get_home_dir()
-    config_path = f"{home_dir}/karya/assets/config.json"
+    config_path = f"{home_dir}/dotfiles/modus/assets/config.json"
 
     with open(config_path, "r") as file:
         # Load JSON data into a Python dictionary

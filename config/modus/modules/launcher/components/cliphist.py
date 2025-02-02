@@ -81,7 +81,7 @@ class Cliphist(Box):
     def close_launcher(self):
         """Closes the clipboard history launcher and clears viewport."""
         self.viewport.children = []
-        GLib.spawn_command_line_async("fabric-cli exec karya 'launcher.close()'")
+        GLib.spawn_command_line_async("fabric-cli exec modus 'launcher.close()'")
 
     def handle_search_input(self, text: str):
         """Handles search input to filter clipboard history."""

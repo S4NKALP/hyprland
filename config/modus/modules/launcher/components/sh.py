@@ -127,7 +127,7 @@ class ShellCommandManager:
             viewport.add(button)
 
     def close_menu(self):
-        GLib.spawn_command_line_async("fabric-cli exec karya 'launcher.close()'")
+        GLib.spawn_command_line_async("fabric-cli exec modus 'launcher.close()'")
 
     def execute_command(self, cmd: str):
         try:
