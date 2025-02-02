@@ -1,0 +1,43 @@
+@import url(../../.cache/material/colors.css);
+@import "./bar.css";
+@import "./notification.css";
+@import "./osd.css";
+@import "./launcher.css";
+
+* {
+  all: unset;
+  color: @foreground;
+  font-size: 16px;
+  font-family: "Product Sans", Roboto, "Font Awesome 6 Free", Helvetica, Arial,
+    sans-serif;
+}
+
+/*
+ * ── tooltip ───────────────────────────────────────────────────────────
+*/
+
+tooltip {
+  background-color: @surfaceContainer;
+  border-radius: 11px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+tooltip label {
+  color: @onSurface;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  font-weight: normal;
+}
+
+/*
+ * ── icon ──────────────────────────────────────────────────────────────
+*/
+
+#material_icon,
+#material_icon * {
+  all: unset;
+  font-family: "Material Symbols Outlined", "Material Symbols Sharp";
+}

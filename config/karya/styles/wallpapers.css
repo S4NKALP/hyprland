@@ -1,0 +1,40 @@
+#wallpaper-icons {
+  animation: fade-in 0.25s ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+#wallpaper-icons:selected {
+  background-color: @surfaceBright;
+  border-radius: 8px;
+}
+
+#dropdown-box {
+  background-color: @surface;
+  padding: 8px;
+  border-radius: 16px;
+}
+
+#scheme-dropdown {
+  font-weight: bold;
+}
+
+#scheme-dropdown > * > * {
+  font-weight: bold;
+}
+
+#scheme-dropdown.box button.box.cellview {
+  background-color: @primary;
+}
+
+#scheme-dropdown.box button.box.cellview:selected {
+  background-color: @surfaceBright;
+}
