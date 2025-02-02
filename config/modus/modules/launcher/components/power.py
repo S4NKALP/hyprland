@@ -63,7 +63,7 @@ class PowerMenu(Box):
         self.show_all()
 
     def close_menu(self):
-        GLib.spawn_command_line_async("fabric-cli exec karya 'launcher.close()'")
+        GLib.spawn_command_line_async("fabric-cli exec modus 'launcher.close()'")
 
     def lock(self, *_):
         GLib.spawn_command_line_async("hyprlock --immediate")

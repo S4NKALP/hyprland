@@ -84,6 +84,7 @@ class Launcher(Window):
             self.bluetooth,
             self.sh,
         ]:
+            widget.remove_style_class("open")
             if widget == self.wallpapers:
                 self.wallpapers.viewport.hide()
                 self.wallpapers.viewport.set_property("name", None)
@@ -109,7 +110,7 @@ class Launcher(Window):
             if widget == self.sh and widget.viewport:
                 widget.viewport.hide()
 
-        style_classes = [
+        for style in [
             "launcher",
             "wallpapers",
             "power",
@@ -118,10 +119,8 @@ class Launcher(Window):
             "todo",
             "bluetooth",
             "sh",
-        ]
-        for style_class in style_classes:
-            if self.stack.get_style_context().has_class(style_class):
-                self.stack.get_style_context().remove_class(style_class)
+        ]:
+            self.stack.remove_style_class(style)
 
         self.stack.set_visible_child(self.launcher)
 
@@ -142,17 +141,15 @@ class Launcher(Window):
             "sh": self.sh,
         }
 
-        if widget is None:
-            widget = "launcher"
-
-        style_classes = list(widgets.keys())
-        for style_class in style_classes:
-            if self.stack.get_style_context().has_class(style_class):
-                self.stack.get_style_context().remove_class(style_class)
+        for style in widgets.keys():
+            self.stack.remove_style_class(style)
+        for w in widgets.values():
+            w.remove_style_class("open")
 
         if widget in widgets:
             self.stack.get_style_context().add_class(widget)
             self.stack.set_visible_child(widgets[widget])
+            widgets[widget].add_style_class("open")
 
             if widget == "launcher":
                 self.launcher.open_launcher()

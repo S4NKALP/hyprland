@@ -1,0 +1,24 @@
+#todo-launcher {
+  background-color: @surface;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#todo-item {
+  padding: 8px;
+  border-radius: 4px;
+  background-color: alpha(@surface, 0.8);
+}
+
+#todo-label {
+  color: @primary;
+}
+
+#todo-label-completed {
+  color: alpha(@outlineVariant, 0.5);
+  text-decoration: line-through;
+}
+
+#delete-button {
+  color: @error;
+}

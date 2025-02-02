@@ -48,12 +48,12 @@ if __name__ == "__main__":
     launcher = Launcher()
 
     app = Application(
-        "karya",
+        "modus",
         bar,
         launcher,
         osd,
     )
-    setproctitle.setproctitle("karya")
+    setproctitle.setproctitle("modus")
 
     # Monitor CSS files for changes
     css_file = monitor_file(get_relative_path("styles"))
