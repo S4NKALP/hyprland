@@ -21,6 +21,14 @@
   min-width: 620px;
 }
 
+#launcher-content.bluetooth {
+  min-height: 420px;
+}
+
+#launcher-content {
+  min-width: 420px;
+}
+
 #app-launcher,
 #wallpapers,
 #todo,
@@ -29,6 +37,7 @@
 #cliphist,
 #emoji,
 #powermenu {
+  opacity: 1;
   transition: all 0.25s cubic-bezier(0.5, 0.25, 0, 1);
 }
 
