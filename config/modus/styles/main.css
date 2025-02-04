@@ -1,4 +1,4 @@
-@import url(../../../.cache/material/colors.css);
+@import url(../../.cache/material/colors.css);
 @import "./bar.css";
 @import "./notification.css";
 @import "./osd.css";
@@ -10,6 +10,16 @@
   font-size: 16px;
   font-family: "Product Sans", Roboto, "Font Awesome 6 Free", Helvetica, Arial,
     sans-serif;
+}
+
+#corner {
+  background-color: @surface;
+  border-radius: 0;
+}
+
+#corner-container {
+  min-width: 20px;
+  min-height: 20px;
 }
 
 /*

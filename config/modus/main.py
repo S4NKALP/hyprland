@@ -9,6 +9,7 @@ from modules.bar.bar import Bar
 from modules.launcher.launcher import Launcher
 from modules.notification_popup import NotificationPopup
 from modules.osd import OSDContainer
+from modules.corners import Corners
 from services import sc
 
 for log in [
@@ -43,6 +44,7 @@ if __name__ == "__main__":
     update_main_css()
     sc = sc
     bar = Bar()
+    corners = Corners()
     osd = OSDContainer()
     notif = NotificationPopup()
     launcher = Launcher()
