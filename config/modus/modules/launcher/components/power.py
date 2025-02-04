@@ -19,6 +19,8 @@ class PowerMenu(Box):
             **kwargs,
         )
 
+        self.launcher = kwargs["launcher"]
+
         self.btn_lock = Button(
             name="powermenu-button",
             child=MaterialIcon("lock", 45),
@@ -63,7 +65,7 @@ class PowerMenu(Box):
         self.show_all()
 
     def close_menu(self):
-        GLib.spawn_command_line_async("fabric-cli exec modus 'launcher.close()'")
+        self.launcher.close()
 
     def lock(self, *_):
         GLib.spawn_command_line_async("hyprlock --immediate")

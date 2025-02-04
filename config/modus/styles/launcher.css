@@ -72,11 +72,17 @@
 }
 
 #launcher-app:hover image,
+#launcher-app:active image,
+#launcher-app:selected image,
+#launcher-app.selected image,
 #launcher-app:focus image {
   -gtk-icon-shadow: 2px 2px @primary;
 }
 
 #launcher-app:hover,
+#launcher-app:active,
+#launcher-app.selected,
+#launcher-app:selected,
 #launcher-app:focus {
   text-shadow: 2pt 2pt 2pt @primary;
 }
@@ -243,8 +249,48 @@
  * ── bluetooth ─────────────────────────────────────────────────────────
 */
 
-#device-slot {
-  background-color: @suraceVariant;
-  border-radius: 5px;
-  padding: 8px;
+#bluetooth-device {
+  background-color: @secondaryContainer;
+  border-radius: 16px;
+  padding: 4px;
+  margin-bottom: 4px;
+}
+
+#bluetooth-scan,
+#bluetooth-toggle {
+  background-color: @secondaryContainer;
+  color: @onSecondaryContainer;
+  margin: 11px;
+  margin-left: 0px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 100%;
+}
+
+#bluetooth-scan:hover,
+#bluetooth-toggle:hover {
+  background-color: @surfaceBright;
+}
+
+#bluetooth-scan label,
+#bluetooth-toggle label {
+  font-weight: bold;
+}
+
+#bluetooth-text {
+  font-weight: bold;
+}
+
+#bluetooth-connection {
+  font-size: 20px;
+}
+
+#bluetooth-connect {
+  background-color: @shadow;
+  border-radius: 16px;
+  padding: 8px 16px;
+}
+
+#bluetooth-connect:hover {
+  background-color: @surfaceBright;
 }

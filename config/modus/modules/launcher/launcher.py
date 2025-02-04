@@ -3,7 +3,7 @@ from fabric.widgets.stack import Stack
 from fabric.widgets.wayland import WaylandWindow as Window
 from modules.launcher.components import (
     AppLauncher,
-    BluetoothManager,
+    BluetoothConnections,
     Cliphist,
     Emoji,
     PowerMenu,
@@ -23,14 +23,14 @@ class Launcher(Window):
             **kwargs,
         )
 
-        self.launcher = AppLauncher()
-        self.wallpapers = WallpaperSelector()
-        self.power = PowerMenu()
-        self.emoji = Emoji()
-        self.cliphist = Cliphist()
+        self.launcher = AppLauncher(launcher=self)
+        self.wallpapers = WallpaperSelector(launcher=self)
+        self.power = PowerMenu(launcher=self)
+        self.emoji = Emoji(launcher=self)
+        self.cliphist = Cliphist(launcher=self)
         self.todo = TodoManager()
-        self.bluetooth = BluetoothManager()
-        self.sh = Sh()
+        self.bluetooth = BluetoothConnections()
+        self.sh = Sh(launcher=self)
 
         self.stack = Stack(
             name="launcher-content",
@@ -53,9 +53,8 @@ class Launcher(Window):
         self.launcher_box = CenterBox(
             name="launcher",
             orientation="v",
-            # start_children=self.stack,
+            start_children=self.stack,
         )
-        self.launcher_box.add(self.stack)  # Dynamically add only the stack
 
         self.add(self.launcher_box)
         self.show_all()
@@ -81,23 +80,7 @@ class Launcher(Window):
                 self.wallpapers.viewport.hide()
                 self.wallpapers.viewport.set_property("name", None)
 
-            if widget == self.emoji and hasattr(widget, "viewport") and widget.viewport:
-                widget.viewport.hide()
-
-            if (
-                widget == self.cliphist
-                and hasattr(widget, "viewport")
-                and widget.viewport
-            ):
-                widget.viewport.hide()
-
-            if widget == self.todo and hasattr(widget, "viewport") and widget.viewport:
-                widget.viewport.hide()
-
-            if widget == self.bluetooth and widget.viewport:
-                widget.viewport.hide()
-
-            if widget == self.sh and widget.viewport:
+            if hasattr(widget, "viewport") and widget.viewport:
                 widget.viewport.hide()
 
         for style in [
@@ -139,8 +122,12 @@ class Launcher(Window):
             self.stack.set_visible_child(widgets[widget])
             widgets[widget].show()
 
-            if widget != "launcher":
-                self.launcher.hide()
+            # if widget != "launcher":
+            #     self.launcher.hide()
+
+            if widget != "wallpapers":
+                self.wallpapers.viewport.hide()
+                self.wallpapers.viewport.set_property("name", None)
 
             if widget == "launcher":
                 self.launcher.open_launcher()
@@ -167,12 +154,6 @@ class Launcher(Window):
                 self.todo.open_launcher()
                 self.todo.todo_entry.set_text("")
                 self.todo.todo_entry.grab_focus()
-
-            elif widget == "bluetooth":
-                self.bluetooth.open_launcher()
-                self.bluetooth.search_entry.set_text("")
-                self.bluetooth.search_entry.grab_focus()
-                self.bluetooth.device_manager.arrange_viewport()
 
             elif widget == "sh":
                 self.sh.open_launcher()

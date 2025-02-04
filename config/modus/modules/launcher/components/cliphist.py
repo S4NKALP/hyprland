@@ -25,6 +25,7 @@ class Cliphist(Box):
         self._arranger_handler = 0
         self.cliphist_manager = CliphistManager(self)
         self.viewport = None
+        self.launcher = kwargs["launcher"]
 
         self.search_entry = Entry(
             name="search-entry",
@@ -80,8 +81,7 @@ class Cliphist(Box):
 
     def close_launcher(self):
         """Closes the clipboard history launcher and clears viewport."""
-        self.viewport.children = []
-        GLib.spawn_command_line_async("fabric-cli exec modus 'launcher.close()'")
+        self.launcher.close()
 
     def handle_search_input(self, text: str):
         """Handles search input to filter clipboard history."""

@@ -23,6 +23,7 @@ class Sh(Box):
             **kwargs,
         )
 
+        self.launcher = kwargs["launcher"]
         self._arranger_handler: int = 0
         self.shell_command_manager = ShellCommandManager(self)
         self.viewport = None
@@ -127,7 +128,7 @@ class ShellCommandManager:
             viewport.add(button)
 
     def close_menu(self):
-        GLib.spawn_command_line_async("fabric-cli exec modus 'launcher.close()'")
+        self.launcher.close()
 
     def execute_command(self, cmd: str):
         try:
