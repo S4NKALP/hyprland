@@ -24,13 +24,12 @@ This repository contains my personal dotfiles and configuration files. It is cur
 > Please be aware that this repository is in an experimental phase and subject to frequent updates. The structure and configurations may evolve drastically over time.
 
 <img src ="assets/rice.png">
-
-#### Build with **[Fabric](https://github.com/Fabric-Development/fabric)**
+<p align="center"><sup>A ʜᴀᴄᴋᴀʙʟᴇ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ sʜᴇʟʟ ꜰᴏʀ Hʏᴘʀʟᴀɴᴅ, ᴘᴏᴡᴇʀᴇᴅ ʙʏ <a href="https://github.com/Fabric-Development/fabric/">Fᴀʙʀɪᴄ</a>.</sup></p>
 
 ## Packages
 
 ```sh
-python-setproctitle, python-fabric-git, fabric-cli-git, grimblast, wf-recoder, brightnessctl, gnome-bluetooth-3.0 cliphist, python-psutil python-loguru, adw-gtk-theme, power-profile-daemon, python-materialyoucolor-git, python-pywayland, python-pyxdg, python-pillow, python-numpy, python-requests,
+python-setproctitle, python-fabric-git, fabric-cli-git, grimblast, wf-recoder, brightnessctl, gnome-bluetooth-3.0 cliphist, python-psutil python-loguru, adw-gtk-theme, power-profile-daemon, python-materialyoucolor-git, python-pywayland, python-pyxdg, python-pillow, python-numpy, python-requests, toml, pillow
 ```
 
 **font**
@@ -44,9 +43,9 @@ ttf-font-awesome, otf-font-awesome, ttf-material-symbols-variable-git, ttf-googl
 - [x] Add bluetooth widget
 - [x] Add shrunner widget
 - [ ] Add wifi widget
-- [ ] Add Dashboard widget
 - [ ] Add Notification panel
 - [ ] Improve CSS Styling
 - [ ] Add Documentation
 - [ ] maybe calendar with events
 - [ ] New Screenshot
+- [ ] Power Manager
