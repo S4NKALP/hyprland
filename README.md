@@ -1,9 +1,7 @@
-> [!WARNING]
-> This configuration is personal, created specifically for my own preferences and comfort. It is not intended to be universally appealing, but rather customized for my own use. Please note that this project is very much a work in progress (WIP).
-
 <div align = "center">
 
-<h1><a href="https://github.com/S4NKALP/hyprland">Hyprland</a></h1>
+<h1><a href="https://github.com/S4NKALP/hyprland">Modus</a></h1>
+<p align="center"><sup>A ʜᴀᴄᴋᴀʙʟᴇ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ sʜᴇʟʟ ꜰᴏʀ Hʏᴘʀʟᴀɴᴅ, ᴘᴏᴡᴇʀᴇᴅ ʙʏ <a href="https://github.com/Fabric-Development/fabric/">Fᴀʙʀɪᴄ</a>.</sup></p>
 
 <div align="center"><p>
 <img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/S4NKALP/hyprland?style=for-the-badge&logo=instatus&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41" />
@@ -20,11 +18,13 @@ This repository contains my personal dotfiles and configuration files. It is cur
 
 </div>
 
+> [!WARNING]
+> This configuration is personal, created specifically for my own preferences and comfort. It is not intended to be universally appealing, but rather customized for my own use. Please note that this project is very much a work in progress (WIP).
+
 > [!NOTE]
 > Please be aware that this repository is in an experimental phase and subject to frequent updates. The structure and configurations may evolve drastically over time.
 
 <img src ="assets/rice.png">
-<p align="center"><sup>A ʜᴀᴄᴋᴀʙʟᴇ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ sʜᴇʟʟ ꜰᴏʀ Hʏᴘʀʟᴀɴᴅ, ᴘᴏᴡᴇʀᴇᴅ ʙʏ <a href="https://github.com/Fabric-Development/fabric/">Fᴀʙʀɪᴄ</a>.</sup></p>
 
 ## Packages
 
