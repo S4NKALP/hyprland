@@ -5,6 +5,7 @@
     ":ch": "launcher.open(\"cliphist\")",
     ":td": "launcher.open(\"todo\")",
     ":bt": "launcher.open(\"bluetooth\")",
-    ":sh": "launcher.open(\"sh\")"
+    ":sh": "launcher.open(\"sh\")",
+    ":sh": "launcher.open(\"power\")"
   }
 }
