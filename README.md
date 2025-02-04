@@ -42,7 +42,7 @@ ttf-font-awesome, otf-font-awesome, ttf-material-symbols-variable-git, ttf-googl
 
 - [x] Add bluetooth widget
 - [x] Add shrunner widget
-- [ ] Add wifi widget
+- [ ] Add Network widget
 - [ ] Add Notification panel
 - [ ] Improve CSS Styling
 - [ ] Add Documentation
