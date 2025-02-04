@@ -1,14 +1,16 @@
 import hashlib
 import json
 import os
-
+from PIL import Image
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.entry import Entry
 from fabric.widgets.scrolledwindow import ScrolledWindow
-from gi.repository import GdkPixbuf, GLib, Gtk
+from gi.repository import GdkPixbuf, GLib, Gtk, Gio
 from snippets import MaterialIcon
 from fabric.utils import exec_shell_command, get_relative_path
+import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
 
 
 class WallpaperSelector(Box):
@@ -29,22 +31,16 @@ class WallpaperSelector(Box):
 
     def __init__(self, **kwargs):
         super().__init__(name="wallpapers", spacing=4, orientation="v", **kwargs)
+        self.launcher = kwargs["launcher"]
 
         self.wallpapers_dir = os.path.expanduser("~/Pictures/wallpapers")
         os.makedirs(self.CACHE_DIR, exist_ok=True)
 
         self.files = [f for f in os.listdir(self.wallpapers_dir) if self._is_image(f)]
         self.thumbnails = []
+        self.thumbnail_queue = []
+        self.executor = ThreadPoolExecutor(max_workers=4)  # Shared executor
 
-        self._init_viewport()
-        self._init_search_entry()
-        self._init_scheme_dropdown()
-        self._init_layout()
-
-        self._start_thumbnail_thread()
-        self.show_all()
-
-    def _init_viewport(self):
         self.viewport = Gtk.IconView()
         self.viewport.set_model(Gtk.ListStore(GdkPixbuf.Pixbuf, str))
         self.viewport.set_pixbuf_column(0)
@@ -60,14 +56,12 @@ class WallpaperSelector(Box):
             child=self.viewport,
         )
 
-    def _init_search_entry(self):
         self.search_entry = Entry(
             name="search-entry",
             h_expand=True,
             notify_text=lambda entry, *_: self.arrange_viewport(entry.get_text()),
         )
 
-    def _init_scheme_dropdown(self):
         self.scheme_dropdown = Gtk.ComboBoxText()
         self.scheme_dropdown.set_name("scheme-dropdown")
         self.scheme_dropdown.set_tooltip_text("Select color scheme")
@@ -94,7 +88,6 @@ class WallpaperSelector(Box):
             ],
         )
 
-    def _init_layout(self):
         self.header_box = Box(
             name="header-box",
             spacing=10,
@@ -104,6 +97,45 @@ class WallpaperSelector(Box):
 
         self.add(self.header_box)
         self.add(self.scrolled_window)
+        self._start_thumbnail_thread()
+        self.setup_file_monitor()
+        self.show_all()
+
+    def setup_file_monitor(self):
+        gfile = Gio.File.new_for_path(self.wallpapers_dir)
+        self.file_monitor = gfile.monitor_directory(Gio.FileMonitorFlags.NONE, None)
+        self.file_monitor.connect("changed", self.on_directory_changed)
+
+    def on_directory_changed(self, monitor, file, other_file, event_type):
+        file_name = file.get_basename()
+        if event_type == Gio.FileMonitorEvent.DELETED:
+            if file_name in self.files:
+                self.files.remove(file_name)
+                cache_path = self._get_cache_path(file_name)
+                if os.path.exists(cache_path):
+                    try:
+                        os.remove(cache_path)
+                    except Exception as e:
+                        print(f"Error deleting cache {cache_path}: {e}")
+                self.thumbnails = [(p, n) for p, n in self.thumbnails if n != file_name]
+                GLib.idle_add(self.arrange_viewport, self.search_entry.get_text())
+        elif event_type == Gio.FileMonitorEvent.CREATED:
+            if self._is_image(file_name) and file_name not in self.files:
+                self.files.append(file_name)
+                self.files.sort()
+                self.executor.submit(self._process_file, file_name)
+        elif event_type == Gio.FileMonitorEvent.CHANGED:
+            if self._is_image(file_name) and file_name in self.files:
+                cache_path = self._get_cache_path(file_name)
+                if os.path.exists(cache_path):
+                    try:
+                        os.remove(cache_path)
+                    except Exception as e:
+                        print(f"Error deleting cache for changed file {file_name}: {e}")
+                self.executor.submit(self._process_file, file_name)
+
+    def close_selector(self):
+        self.launcher.close()
 
     def arrange_viewport(self, query: str = ""):
         self.viewport.get_model().clear()
@@ -179,41 +211,40 @@ class WallpaperSelector(Box):
         thread = GLib.Thread.new("thumbnail-loader", self._preload_thumbnails, None)
 
     def _preload_thumbnails(self, _data):
-        for file_name in sorted(self.files):
-            full_path = os.path.join(self.wallpapers_dir, file_name)
-            cache_path = self._get_cache_path(file_name)
+        futures = [
+            self.executor.submit(self._process_file, file_name)
+            for file_name in self.files
+        ]
+        concurrent.futures.wait(futures)
+        GLib.idle_add(self._process_batch)
 
-            if not os.path.exists(cache_path):
-                pixbuf = self._create_thumbnail(full_path)
-                if pixbuf:
-                    pixbuf.savev(cache_path, "png", [], [])
-            else:
+    def _process_file(self, file_name):
+        full_path = os.path.join(self.wallpapers_dir, file_name)
+        cache_path = self._get_cache_path(file_name)
+        if not os.path.exists(cache_path):
+            try:
+                with Image.open(full_path) as img:
+                    img.thumbnail((96, 96), Image.Resampling.BILINEAR)
+                    img.save(cache_path, "PNG")
+            except Exception as e:
+                print(f"Error processing {file_name}: {e}")
+                return
+        self.thumbnail_queue.append((cache_path, file_name))
+        GLib.idle_add(self._process_batch)
+
+    def _process_batch(self):
+        batch = self.thumbnail_queue[:10]
+        del self.thumbnail_queue[:10]
+        for cache_path, file_name in batch:
+            try:
                 pixbuf = GdkPixbuf.Pixbuf.new_from_file(cache_path)
-
-            if pixbuf:
-                GLib.idle_add(self._add_thumbnail_to_view, pixbuf, file_name)
-
-    def _add_thumbnail_to_view(self, pixbuf, file_name):
-        self.thumbnails.append((pixbuf, file_name))
-        self.viewport.get_model().append([pixbuf, file_name])
+                self.thumbnails.append((pixbuf, file_name))
+                self.viewport.get_model().append([pixbuf, file_name])
+            except Exception as e:
+                print(f"Error loading thumbnail {cache_path}: {e}")
+        if self.thumbnail_queue:
+            GLib.idle_add(self._process_batch)
         return False
-
-    def _create_thumbnail(self, image_path: str, thumbnail_size=96):
-        try:
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file(image_path)
-            width, height = pixbuf.get_width(), pixbuf.get_height()
-            if width > height:
-                new_width = thumbnail_size
-                new_height = int(height * (thumbnail_size / width))
-            else:
-                new_height = thumbnail_size
-                new_width = int(width * (thumbnail_size / height))
-            return pixbuf.scale_simple(
-                new_width, new_height, GdkPixbuf.InterpType.BILINEAR
-            )
-        except Exception as e:
-            print(f"Error creating thumbnail for {image_path}: {e}")
-            return None
 
     def _get_cache_path(self, file_name: str) -> str:
         file_hash = hashlib.md5(file_name.encode("utf-8")).hexdigest()

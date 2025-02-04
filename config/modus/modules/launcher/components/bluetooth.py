@@ -1,290 +1,124 @@
-from fabric.bluetooth import BluetoothClient, BluetoothDevice
 from fabric.widgets.box import Box
-from fabric.widgets.button import Button
-from fabric.widgets.entry import Entry
 from fabric.widgets.label import Label
+from fabric.widgets.image import Image
+from fabric.widgets.button import Button
+from fabric.widgets.centerbox import CenterBox
 from fabric.widgets.scrolledwindow import ScrolledWindow
-from gi.repository import GLib
+from fabric.bluetooth import BluetoothClient, BluetoothDevice
 from snippets import MaterialIcon
 
-DEVICE_TYPE_ICONS = {
-    "headset": "headphones",  # Icon for headset devices
-    "headphones": "headphones",  # Icon for audio devices
-    "computer": "computer",  # Icon for computer devices
-    "phone": "smartphone",  # Icon for phone devices
-    "tablet": "tablet",  # Icon for tablet devices
-    "keyboard": "keyboard",  # Icon for keyboard devices
-    "mouse": "mouse",  # Icon for mouse devices
-    "other": "devices",  # Default icon
-}
 
-DEVICE_BATTERY_ICONS = {
-    "full": "battery_full",  # Full battery
-    "medium": "battery_half",  # Medium battery
-    "low": "battery_alert",  # Low battery
-}
+class BluetoothDeviceSlot(CenterBox):
+    def __init__(self, device: BluetoothDevice, **kwargs):
+        super().__init__(name="bluetooth-device", **kwargs)
+        self.device = device
+        self.device.connect("changed", self.on_changed)
+        self.device.connect(
+            "notify::closed", lambda *_: self.device.closed and self.destroy()
+        )
+
+        self.connection_icon = MaterialIcon("bluetooth_disabled", 12)
+        self.connect_button = Button(
+            name="bluetooth-connect",
+            label="Connect",
+            on_clicked=lambda *_: self.device.set_connecting(not self.device.connected),
+        )
+
+        self.start_children = [
+            Box(
+                spacing=8,
+                children=[
+                    Image(icon_name=device.icon_name + "-symbolic", size=32),
+                    Label(label=device.name),
+                    self.connection_icon,
+                ],
+            )
+        ]
+        self.end_children = self.connect_button
+
+        self.device.emit("changed")  # to update display status
+
+    def on_changed(self, *_):
+        self.connection_icon.set_label(
+            "bluetooth" if self.device.connected else "bluetooth_disabled"
+        )
+
+        if self.device.connecting:
+            self.connect_button.set_label(
+                "Connecting..." if not self.device.connecting else "Disconnecting..."
+            )
+        else:
+            self.connect_button.set_label(
+                "Connect" if not self.device.connected else "Disconnect"
+            )
+        return
 
 
-class BluetoothManager(Box):
+class BluetoothConnections(Box):
     def __init__(self, **kwargs):
         super().__init__(
-            name="bluetooth-launcher",
-            all_visible=False,
-            visible=False,
+            name="bluetooth",
+            spacing=8,
+            orientation="vertical",
             **kwargs,
         )
 
-        self._arranger_handler = None
-        self.device_manager = DeviceManager(self)
-        self.viewport = None
+        self.client = BluetoothClient(on_device_added=self.on_device_added)
+        self.toggle_icon = MaterialIcon("bluetooth_disabled")
+        self.scan_icon = MaterialIcon("bluetooth_searching")
 
-        self.search_entry = Entry(
-            name="search-entry",
-            h_expand=True,
-            notify_text=self.handle_search_input,
-            on_activate=self.handle_search_input,
+        self.scan_button = Button(
+            name="bluetooth-scan",
+            child=self.scan_icon,
+            tooltip_text="scan",
+            on_clicked=lambda *_: self.client.toggle_scan(),
         )
-
         self.toggle_button = Button(
-            on_clicked=lambda *_: self.device_manager.bluetooth_client.toggle_power()
+            name="bluetooth-toggle",
+            tooltip_text="bluetooth-toggle",
+            child=self.toggle_icon,
+            on_clicked=lambda *_: self.client.toggle_power(),
         )
 
-        self.device_manager.bluetooth_client.connect(
-            "notify::enabled", self.update_toggle_button
+        self.client.connect(
+            "notify::enabled",
+            lambda *_: self.toggle_icon.set_label(
+                "bluetooth" if self.client.enabled else "bluetooth_disabled"
+            ),
+        )
+        self.client.connect(
+            "notify::scanning",
+            lambda *_: self.scan_icon.set_label(
+                "Stop" if self.client.scanning else "bluetooth_searching"
+            ),
         )
 
-        self.header_box = Box(
-            name="header-box",
-            spacing=10,
-            orientation="h",
-            children=[
-                self.search_entry,
-                self.toggle_button,
-                Button(
-                    child=MaterialIcon("sync"),
-                    on_clicked=lambda *_: self.device_manager.bluetooth_client.toggle_scan(),
-                ),
-            ],
-        )
+        self.paired_box = Box(spacing=2, orientation="vertical")
+        self.available_box = Box(spacing=2, orientation="vertical")
 
-        self.launcher_box = Box(
-            name="bluetooth-launcher-box",
-            spacing=10,
-            orientation="v",
-            h_expand=True,
-            children=[self.header_box],
-        )
+        self.children = [
+            CenterBox(
+                start_children=self.scan_button,
+                center_children=Label(name="bluetooth-text", label="Bluetooth Devices"),
+                end_children=self.toggle_button,
+            ),
+            Label(name="bluetooth-text", label="Paired"),
+            ScrolledWindow(min_content_size=(-1, -1), child=self.paired_box),
+            Label(name="bluetooth-text", label="Available"),
+            ScrolledWindow(min_content_size=(-1, -1), child=self.available_box),
+        ]
 
-        self.add(self.launcher_box)
-
-        # self.is_active = False
-        # self.polling_handler = None
-
-    def update_toggle_button(self, *_):
-        icon_name = (
-            "bluetooth"
-            if self.device_manager.bluetooth_client.enabled
-            else "bluetooth_disabled"
-        )
-        self.toggle_button.children = []
-        self.toggle_button.add(MaterialIcon(icon_name))
-        self.toggle_button.show_all()
-
-    def open_launcher(self):
-        if not self.viewport:
-            self.viewport = Box(name="viewport", spacing=4, orientation="v")
-            self.scrolled_window = ScrolledWindow(
-                name="scrolled-window",
-                spacing=10,
-                h_scrollbar_policy="never",
-                child=self.viewport,
-            )
-            self.launcher_box.add(self.scrolled_window)
-
-        self.viewport.children = []
-        self.device_manager.arrange_viewport()
-
-        self.viewport.show()
-        self.search_entry.grab_focus()
-
-        self.start_device_polling()
-
-    def handle_search_input(self, entry, text: str):
-        if isinstance(text, str):
-            self.device_manager.arrange_viewport(text)
-
-    def start_device_polling(self):
-        GLib.timeout_add(5000, self.device_manager.refresh_devices)
-
-
-class DeviceManager:
-    def __init__(self, launcher):
-        self.launcher = launcher
-        self.bluetooth_client = BluetoothClient(
-            on_device_added=self.on_device_added,
-            on_device_removed=self.on_device_removed,
-        )
-        self._cached_devices = []
-
-    def refresh_devices(self, *_):
-        if not sel.bluetooth_client.enabled:
-            return True
-        if self.launcher.viewport:  # Only refresh devices if Bluetooth section is open
-            self.arrange_viewport()
-        return True
-
-    def toggle_bluetooth(self, *_):
-        self.bluetooth_client.toggle_power()
-        self.arrange_viewport()
+        # to run notify closures thus display the status
+        # without having to wait until an actual change
+        self.client.notify("scanning")
+        self.client.notify("enabled")
 
     def on_device_added(self, client: BluetoothClient, address: str):
-        if device := client.get_device(address):
-            self._cached_devices.append(device)
-            self.refresh_viewport()
-
-    def on_device_removed(self, client: BluetoothClient, address: str):
-        self._cached_devices = [
-            device for device in self._cached_devices if device.address != address
-        ]
-        self.refresh_viewport()
-
-    def refresh_viewport(self):
-        GLib.idle_add(self.arrange_viewport)
-
-    def query_devices(self, query: str = "") -> list:
-        if not self.bluetooth_client.enabled:  # Skip querying if Bluetooth is off
-            return []  # No devices to show when Bluetooth is off
-        devices = []
-        query = query.lower()
-
-        for device in self._cached_devices:
-            name = device.name or "Unknown Device"
-            if query in name.lower():
-                devices.append(device)
-
-        # Sort connected devices first, then unconnected ones based on signal strength
-        return sorted(
-            devices,
-            key=lambda d: (
-                not d.connected,
-                not d.paired,
-                d.rssi if hasattr(d, "rssi") else 0,
-            ),
-        )[:48]
-
-    def get_battery_status(self, device: BluetoothDevice) -> str:
-        if not device.connected:
-            return "not-connected"
-
-        battery_level = device.battery_level if device.battery_level > 0 else None
-        battery_percentage = (
-            device.battery_percentage if device.battery_percentage > 0 else None
-        )
-
-        if battery_level is None and battery_percentage is None:
-            return "low"  # Show low if no battery info is available
-
-        if battery_percentage is not None:
-            if battery_percentage >= 75:
-                return "full"
-            elif battery_percentage >= 30:
-                return "medium"
-            else:
-                return "low"
-
-        # Fallback to battery level if percentage is unavailable
-        if battery_level is not None:
-            if battery_level >= 75:
-                return "full"
-            elif battery_level >= 30:
-                return "medium"
-            else:
-                return "low"
-
-        return "low"
-
-    def connect_device(self, device: BluetoothDevice):
-        device.set_connecting(not device.connected)
-
-    def bake_device_slot(self, device: BluetoothDevice, **kwargs) -> Box:
-        device_type = device.type.lower()  # Ensure device type is in lowercase
-        icon_name = DEVICE_TYPE_ICONS.get(
-            device_type, "devices"
-        )  # Default to 'bluetooth'
-
-        status_icon = MaterialIcon("link" if device.connected else "link_off")
-
-        # Only show battery icon for connected devices
-        if device.connected:
-            battery_status = self.get_battery_status(device)
-            battery_icon = MaterialIcon(
-                DEVICE_BATTERY_ICONS.get(battery_status, "battery_alert")
-            )
-        else:
-            battery_icon = None  # No battery icon for non-connected devices
-
-        device_slot_children = [
-            MaterialIcon(icon_name),
-            Label(
-                label=device.name or "Unknown Device",
-                h_align="start",
-                h_expand=True,
-            ),
-            battery_icon,
-            status_icon,
-            Button(
-                name="connect-button",
-                child=MaterialIcon(
-                    "bluetooth_connected" if device.connected else "bluetooth_searching"
-                ),
-                tooltip_text="Disconnect" if device.connected else "Connect",
-                on_clicked=lambda *_: self.connect_device(device),
-            ),
-        ]
-
-        device_slot_children = [
-            child for child in device_slot_children if child is not None
-        ]
-
-        return Box(
-            name="device-slot",
-            spacing=10,
-            orientation="h",
-            children=device_slot_children,
-        )
-
-    def arrange_viewport(self, query: str = ""):
-        if not self.launcher.viewport:
+        if not (device := client.get_device(address)):
             return
+        slot = BluetoothDeviceSlot(device)
 
-        # If Bluetooth is off, show a message that Bluetooth is off
-        if not self.bluetooth_client.enabled:
-            self.launcher.viewport.children = []  # Clear any existing content
-            self.launcher.viewport.add(
-                Label(
-                    label="Bluetooth is off",  # Display "Bluetooth is off"
-                    h_align="center",
-                )
-            )
-            return
-        self.launcher.viewport.children = []
+        if device.paired:
+            return self.paired_box.add(slot)
+        return self.available_box.add(slot)
 
-        filtered_devices = self.query_devices(query)
-
-        # Show available (unpaired) devices first, followed by paired devices
-        if available_devices := [d for d in filtered_devices if not d.paired]:
-            for device in available_devices:
-                self.launcher.viewport.add(self.bake_device_slot(device))
-
-        if paired_devices := [d for d in filtered_devices if d.paired]:
-            for device in paired_devices:
-                self.launcher.viewport.add(self.bake_device_slot(device))
-
-        if not filtered_devices:
-            self.launcher.viewport.add(
-                Label(
-                    label="No devices found" if not query else "No matching devices",
-                    name="empty-label",
-                    h_align="center",
-                )
-            )

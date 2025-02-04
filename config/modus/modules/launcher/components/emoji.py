@@ -22,6 +22,7 @@ class Emoji(Box):
             **kwargs,
         )
 
+        self.launcher = kwargs["launcher"]
         self._arranger_handler: int = 0
         self.emoji_manager = EmojiManager(self)
         self.viewport = None
@@ -70,7 +71,7 @@ class Emoji(Box):
         self.search_entry.grab_focus()
 
     def close_launcher(self):
-        GLib.spawn_command_line_async("fabric-cli exec modus'launcher.close()'")
+        self.launcher.close()
 
     def handle_search_input(self, text: str):
         self.emoji_manager.arrange_viewport(text)

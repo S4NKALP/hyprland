@@ -27,6 +27,7 @@
   opacity: 0;
   padding: 3px;
   margin-bottom: -52px;
+  transition: all 0.5s cubic-bezier(0.5, 0.25, 0, 1);
 }
 
 /*
