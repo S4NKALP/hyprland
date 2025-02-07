@@ -98,14 +98,19 @@ class BluetoothConnections(Box):
 
         self.children = [
             CenterBox(
+                name="bluetooth-header",
                 start_children=self.scan_button,
                 center_children=Label(name="bluetooth-text", label="Bluetooth Devices"),
                 end_children=self.toggle_button,
             ),
-            Label(name="bluetooth-text", label="Paired"),
-            ScrolledWindow(min_content_size=(-1, -1), child=self.paired_box),
-            Label(name="bluetooth-text", label="Available"),
-            ScrolledWindow(min_content_size=(-1, -1), child=self.available_box),
+            Label(name="bluetooth-section", label="Paired"),
+            ScrolledWindow(
+                name="bluetooth-paired", v_expand=True, child=self.paired_box
+            ),
+            Label(name="bluetooth-section", label="Available"),
+            ScrolledWindow(
+                name="bluetooth-paired", v_expand=True, child=self.available_box
+            ),
         ]
 
         # to run notify closures thus display the status
@@ -121,4 +126,3 @@ class BluetoothConnections(Box):
         if device.paired:
             return self.paired_box.add(slot)
         return self.available_box.add(slot)
-

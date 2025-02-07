@@ -1,7 +1,6 @@
 import os
 import subprocess
 from typing import List
-from gi.repository import GLib
 from fabric.widgets.box import Box
 from fabric.widgets.button import Button
 from fabric.widgets.entry import Entry
@@ -54,7 +53,6 @@ class Sh(Box):
         if not self.viewport:
             self.viewport = Box(name="viewport", spacing=10, orientation="v")
             self.scrolled_window = ScrolledWindow(
-                name="scrolled-window",
                 spacing=10,
                 h_scrollbar_policy="never",
                 v_scrollbar_policy="never",

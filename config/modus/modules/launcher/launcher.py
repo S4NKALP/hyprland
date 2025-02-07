@@ -37,7 +37,7 @@ class Launcher(Window):
             v_expand=True,
             h_expand=True,
             transition_type="crossfade",
-            transition_duration=250,
+            transition_duration=100,
             children=[
                 self.launcher,
                 self.wallpapers,
@@ -121,9 +121,6 @@ class Launcher(Window):
             self.stack.get_style_context().add_class(widget)
             self.stack.set_visible_child(widgets[widget])
             widgets[widget].show()
-
-            # if widget != "launcher":
-            #     self.launcher.hide()
 
             if widget != "wallpapers":
                 self.wallpapers.viewport.hide()
