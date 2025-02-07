@@ -59,16 +59,15 @@ class Cliphist(Box):
 
     def on_button_clicked(self, *_):
         GLib.spawn_command_line_async("cliphist wipe")
+        self.cliphist_manager.update_cliphist_history()
 
     def open_launcher(self):
-        """Opens the clipboard history launcher."""
         if not self.viewport:
             self.viewport = Box(name="viewport", spacing=4, orientation="v")
             self.scrolled_window = ScrolledWindow(
-                name="scrolled-window",
+                name="cliphist-history",
                 spacing=10,
                 h_scrollbar_policy="never",
-                v_scrollbar_policy="never",
                 child=self.viewport,
             )
             self.launcher_box.add(self.scrolled_window)
@@ -80,11 +79,9 @@ class Cliphist(Box):
         self.search_entry.grab_focus()
 
     def close_launcher(self):
-        """Closes the clipboard history launcher and clears viewport."""
         self.launcher.close()
 
     def handle_search_input(self, text: str):
-        """Handles search input to filter clipboard history."""
         self.cliphist_manager.arrange_viewport(text)
 
 
@@ -100,7 +97,6 @@ class CliphistManager:
         )
 
     def get_clip_history(self) -> List[dict]:
-        """Fetches the entire clipboard history from cliphist."""
         try:
             result = subprocess.run(
                 ["cliphist", "list"], capture_output=True, text=True, check=True
@@ -111,7 +107,6 @@ class CliphistManager:
             return []
 
     def _parse_clip_history(self, output: str) -> List[dict]:
-        """Parses the clipboard history output from cliphist."""
         items = []
         for line in output.splitlines():
             if line.strip():
@@ -121,7 +116,6 @@ class CliphistManager:
         return items
 
     def copy_clip(self, clip_id: str):
-        """Copies a clipboard item using cliphist and closes the launcher."""
         try:
             decode_result = subprocess.run(
                 ["cliphist", "decode", clip_id], capture_output=True, check=True
@@ -132,7 +126,6 @@ class CliphistManager:
             print(f"Error copying clip {clip_id}: {e}")
 
     def save_image_file(self, clip_id: str) -> str:
-        """Saves image clips as files in /tmp and returns the file path."""
         output_file = f"/tmp/cliphist-{clip_id}.png"
         os.makedirs("/tmp", exist_ok=True)
 
@@ -150,24 +143,19 @@ class CliphistManager:
             return ""
 
     def query_clips(self, query: str = "") -> List[dict]:
-        """Filters clipboard history based on the search query."""
         history = self.get_clip_history()
 
         if not query.strip():
-            return history[:16]
+            return history
 
-        return [item for item in history if query.lower() in item["content"].lower()][
-            :16
-        ]
+        return [item for item in history if query.lower() in item["content"].lower()]
 
     def bake_clip_slot(self, item: dict) -> Button:
-        """Creates a button slot for each clipboard entry."""
         if "[[ binary data" in item["content"].lower():
             return self._create_image_button(item)
         return self._create_text_button(item)
 
     def _create_image_button(self, item: dict) -> Button:
-        """Creates a button for image clips with a background image."""
         output_file = self.save_image_file(item["id"])
         if output_file and os.path.exists(output_file):
             button = Button(
@@ -184,7 +172,6 @@ class CliphistManager:
         return None
 
     def _create_text_button(self, item: dict) -> Button:
-        """Creates a button for text clips."""
         return Button(
             child=Label(
                 label=item["content"][:55]
@@ -198,13 +185,11 @@ class CliphistManager:
         )
 
     def update_cliphist_history(self):
-        """Updates the clipboard history when a new item is copied."""
         self.cliphist_history = self.get_clip_history()
         if self.launcher.viewport:
             GLib.idle_add(self.arrange_viewport)
 
     def arrange_viewport(self, query: str = ""):
-        """Arranges the viewport based on the search query."""
         if not self.launcher.viewport:
             return
 

@@ -6,7 +6,6 @@ from fabric.widgets.button import Button
 from fabric.widgets.entry import Entry
 from fabric.widgets.label import Label
 from fabric.widgets.scrolledwindow import ScrolledWindow
-from gi.repository import GLib
 from snippets import MaterialIcon
 
 
@@ -60,10 +59,9 @@ class TodoManager(Box):
         if not self.viewport:
             self.viewport = Box(name="viewport", spacing=4, orientation="v")
             self.scrolled_window = ScrolledWindow(
-                name="scrolled-window",
+                name="todo-content",
                 spacing=10,
                 h_scrollbar_policy="never",
-                v_scrollbar_policy="never",
                 child=self.viewport,
             )
             self.launcher_box.add(self.scrolled_window)

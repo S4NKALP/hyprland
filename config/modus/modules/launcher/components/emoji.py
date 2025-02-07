@@ -80,7 +80,7 @@ class Emoji(Box):
 class EmojiManager:
     def __init__(self, launcher):
         self.launcher = launcher
-        self.emoji_file_path = os.path.expanduser("~/dotfiles/modus/assets/emoji.json")
+        self.emoji_file_path = os.path.expanduser("~/modus/assets/emoji.json")
 
     def load_emojis(self) -> Generator[tuple, None, None]:
         if not os.path.exists(self.emoji_file_path):
