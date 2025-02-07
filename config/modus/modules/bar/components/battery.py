@@ -43,7 +43,7 @@ class BatteryLabel(Box):
             self.hide()
             return
 
-        battery_percent = round(battery.percent) if battery else 0.0
+        battery_percent = round(battery.percent)
         battery_label = Label(label=f"{battery_percent}%")
 
         is_charging = battery.power_plugged if battery else False

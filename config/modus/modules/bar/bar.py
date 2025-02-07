@@ -109,6 +109,7 @@ class Bar(Window):
         super().__init__(
             layer="top",
             anchor="left bottom right",
+            # anchor="left top right",
             exclusivity="auto",
             visible=True,
             child=self.bar,
