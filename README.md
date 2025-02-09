@@ -18,8 +18,7 @@ This repository contains my personal dotfiles and configuration files. It is cur
 
 </div>
 
-> [!WARNING]
-> This configuration is personal, created specifically for my own preferences and comfort. It is not intended to be universally appealing, but rather customized for my own use. Please note that this project is very much a work in progress (WIP).
+
 
 > [!NOTE]
 > Please be aware that this repository is in an experimental phase and subject to frequent updates. The structure and configurations may evolve drastically over time.
