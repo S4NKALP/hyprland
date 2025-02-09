@@ -1,9 +1,7 @@
-> [!WARNING]
-> This configuration is made by myself, for myself, and with very little concern for other's preferences. This configuration is not meant to be "good", it's just meant to be comfortable for me. Let it also known that this is _VERY_ WIP.
-
 <div align = "center">
 
-<h1><a href="https://github.com/S4NKALP/hyprland">Hyprland</a></h1>
+<h1><a href="https://github.com/S4NKALP/hyprland">Modus</a></h1>
+<p align="center"><sup>A ʜᴀᴄᴋᴀʙʟᴇ ᴀɴᴅ ᴘᴏᴡᴇʀꜰᴜʟ sʜᴇʟʟ ꜰᴏʀ Hʏᴘʀʟᴀɴᴅ, ᴘᴏᴡᴇʀᴇᴅ ʙʏ <a href="https://github.com/Fabric-Development/fabric/">Fᴀʙʀɪᴄ</a>.</sup></p>
 
 <div align="center"><p>
 <img alt="Commit Activity" src="https://img.shields.io/github/commit-activity/m/S4NKALP/hyprland?style=for-the-badge&logo=instatus&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41" />
@@ -15,28 +13,38 @@
 
 ## Overview
 
-<h4>This repository contains my personal dotfiles and configuration files. It's currently in an early, experimental phase and may not be suitable for general use.</h4>
+<h5>
+This repository contains my personal dotfiles and configuration files. It is currently in its alpha stage and primarily intended for personal use. As such, it may not be suitable for general use and could undergo significant changes in the future.</h5>
 
 </div>
 
-> [!CAUTION]
-> Check [fabric-dev](https://github.com/S4NKALP/hyprland/tree/fabric-dev) branch for latest changes.
+
 
 > [!NOTE]
-> This repository is in the alpha stage and primarily for personal use. The organization and configurations may change significantly in the future.
-
-### Features
-
-**TODO**
-
-### Showcase:
+> Please be aware that this repository is in an experimental phase and subject to frequent updates. The structure and configurations may evolve drastically over time.
 
 <img src ="assets/rice.png">
 
-### Installation
+## Packages
 
-**TODO**
+```sh
+python-setproctitle, python-fabric-git, fabric-cli-git, grimblast, wf-recoder, brightnessctl, gnome-bluetooth-3.0 cliphist, python-psutil python-loguru, adw-gtk-theme, power-profile-daemon, python-materialyoucolor-git, python-pywayland, python-pyxdg, python-pillow, python-numpy, python-requests, python-toml, python-pillow
+```
 
-### Acknowledgements
+**font**
 
-**TODO**
+```sh
+ttf-font-awesome, otf-font-awesome, ttf-material-symbols-variable-git, ttf-google-sans, ttf-opensans, ttf-robot
+```
+
+# ToDo
+
+- [x] Add bluetooth widget
+- [x] Add shrunner widget
+- [ ] Add Network widget
+- [ ] Add Notification panel
+- [ ] Improve CSS Styling
+- [ ] Add Documentation
+- [ ] maybe calendar with events
+- [ ] New Screenshot
+- [ ] Power Manager
