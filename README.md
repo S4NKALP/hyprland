@@ -1,8 +1,7 @@
-<div align = "center">
-
 > [!WARNING]
 > This repository willnot get any update. Check [fabric](https://github.com/S4NKALP/hyprland/tree/fabric) branch for my latest configuration
 
+<div align = "center">
 <h1><a href="https://github.com/S4NKALP/hyprland">Hyprland</a></h1>
 
 <div align="center"><p>
