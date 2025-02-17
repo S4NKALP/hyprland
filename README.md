@@ -16,6 +16,8 @@
 
 <h4>This repository contains my personal dotfiles and configuration files.</h4>
 
+<img src ="assets/rice.png">
+
 > [!NOTE]
 > If you want the bar, check the project [Modus](https://github.com/S4NKALP/Modus)
 
