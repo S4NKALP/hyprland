@@ -1,18 +1,43 @@
+
 ##
 ## PATH & ENV Var
 ##
 
-export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 export PATH="$HOME/.scripts:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export GPG_TTY="${TTY:-$(tty)}"
-export GOROOT="$HOME/.config/go"
+
+# Cargo
+export CARGO_HOME="$HOME/.local/state/cargo"
+export RUSTUP_HOME="$HOME/.local/state/rustup"
+
+# node (npm & yarn)
+export NPM_CONFIG_CACHE="$HOME/.local/state/npm/cache"
+npm config set prefix "$XDG_STATE_HOME/npm/prefix"
+export PATH="$HOME/.local/state/npm/prefix/bin:$PATH"
+
+export YARN_CACHE_FOLDER="$XDG_STATE_HOME/yarn"
+
+#pnpm
+export PNPM_HOME="$XDG_STATE_HOME/pnpm"
+export PNPM_STORE_PATH="$XDG_STATE_HOME/pnpm/store"
+
+#python
+export XDG_CACHE_HOME="$HOME/.cache"  # pip respects this for cache
+
+#docker
+export DOCKER_CONFIG="$XDG_STATE_HOME/docker"
+
+
+
+#Go
+export GOPATH="$XDG_STATE_HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
 
 export SUDO_PROMPT="passwd: "
 export TERMINAL="kitty"
-export BROWSER="firefox"
+export BROWSER="zen-browser"
 export VISUAL="nvim"
 export EDITOR="nvim"
 
