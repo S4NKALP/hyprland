@@ -10,14 +10,6 @@ command = "swww"
 arguments = [ "img", "-t", "outer", "--transition-duration", "1.5", "--transition-step", "255", "--transition-fps", "60", "-f", "Nearest",]
 set = true
 
-[templates.ags]
-input_path = "~/.config/matugen/templates/ags.scss"
-output_path = "~/.config/ags/style/colors.scss"
-
-[templates.foot]
-input_path = "~/.config/matugen/templates/foot.ini"
-output_path = "~/.config/foot/colors.ini"
-
 [templates.gtk3]
 input_path = "~/.config/matugen/templates/gtk.css"
 output_path = "~/.config/gtk-3.0/gtk.css"
@@ -35,12 +27,12 @@ input_path = "~/.config/matugen/templates/qtct-colors.conf"
 output_path = "~/.config/qt6ct/colors/matugen.conf"
 
 [templates.hyprland]
-input_path = "~/Modus/config/matugen/templates/hyprland-colors.conf"
-output_path = "~/Modus/config/hypr/colors.conf"
+input_path = "~/.config/Modus/config/matugen/templates/hyprland-colors.conf"
+output_path = "~/.config/Modus/config/hypr/colors.conf"
 
 [templates.kitty]
 input_path = "~/.config/matugen/templates/kitty-colors.conf"
-output_path = "~/dotfiles/kitty/colors.conf"
+output_path = "~/.config/kitty/colors.conf"
 post_hook = "killall -SIGUSR1 kitty &"
 
 [templates.starship]
@@ -52,17 +44,9 @@ post_hook = "starship init zsh > ~/.zshrc"
 input_path = "~/.config/matugen/templates/telegram-colors.tdesktop-theme"
 output_path = "~/.config/telegram-desktop/themes/material-you.tdesktop-theme"
 
-[templates.spicetify]
-input_path = "~/.config/matugen/templates/spotify-colors.ini"
-output_path = "~/.config/spicetify/Themes/Comfy/color.ini"
-
 [templates.discord]
 input_path = "~/.config/matugen/templates/discord.css"
 output_path = "~/.config/vesktop/themes/quickCss.css"
-
-[templates.vscode]
-input_path = "~/.config/matugen/templates/vscode-color-theme.json"
-output_path = "~/.vscode/extensions/theme-material-you/themes/vscode.json"
 
 [templates.cava]
 input_path = "~/.config/matugen/templates/cava"
@@ -77,19 +61,29 @@ input_path = "~/.config/matugen/templates/zathurarc"
 output_path = "~/.config/zathura/colors"
 
 [templates.modus]
-input_path = "~/Modus/config/matugen/templates/modus.css"
-output_path = "~/Modus/styles/colors.css"
+input_path = "~/.config/Modus/config/matugen/templates/modus.css"
+output_path = "~/.config/Modus/styles/colors.css"
 post_hook = "fabric-cli exec modus 'app.set_css()' &"
-
-[templates.hyprfabricated]
-input_path = "~/Modus/config/matugen/templates/modus.css"
-output_path = "~/.config/hyprfabricated/styles/colors.css"
-post_hook = "fabric-cli exec hyprfabricated 'app.set_css()' &"
 
 [templates.ax-shell]
 input_path = "~/.config/Ax-Shell/config/matugen/templates/ax-shell.css"
 output_path = "~/.config/Ax-Shell/styles/colors.css"
 post_hook = "fabric-cli exec ax-shell 'app.set_css()' &"
+
+[templates.modusv1]
+input_path = "~/Modus/config/matugen/templates/modusv1.css"
+output_path = "~/Modus/styles/colors.css"
+post_hook = "fabric-cli exec modusv1 'app.set_css()' &"
+
+[templates.hyprfabricated]
+input_path = "~/.config/hyprfabricated/config/matugen/templates/hyprfabricated.css"
+output_path = "~/.config/hyprfabricated/styles/colors.css"
+post_hook = "fabric-cli exec hyprfabricated 'app.set_css()' &"
+
+[templates.yz-shell]
+input_path = "~/.config/YZ-Shell/config/matugen/templates/yz-shell.css"
+output_path = "~/.config/YZ-Shell/styles/colors.css"
+post_hook = "fabric-cli exec yz-shell 'app.set_css()' &"
 
 [config.custom_colors.red]
 color = "#FF0000"
