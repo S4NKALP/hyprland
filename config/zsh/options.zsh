@@ -39,7 +39,7 @@ ZSH_HIGHLIGHT_MAXLENGTH=512
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=$color8,bold"
 
 while read -r opt
-do 
+do
   setopt $opt
 done <<-EOF
 AUTOCD
@@ -67,7 +67,7 @@ HIST_REDUCE_BLANKS
 EOF
 
 while read -r opt
-do 
+do
   unsetopt $opt
 done <<-EOF
 FLOWCONTROL
@@ -77,7 +77,7 @@ EQUALS
 EOF
 
 command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
-eval "$(fnm env --use-on-cd)" 
+# eval "$(fnm env --use-on-cd)"
 
 # Set editor default keymap to emacs (`-e`) or vi (`-v`)
 bindkey -e

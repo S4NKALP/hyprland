@@ -1,7 +1,8 @@
-
 ##
 ## PATH & ENV Var
 ##
+
+
 
 export PATH="$PNPM_HOME:$PATH"
 export PATH="$HOME/.scripts:$PATH"
@@ -11,16 +12,21 @@ export PATH="$HOME/.local/bin:$PATH"
 export CARGO_HOME="$HOME/.local/state/cargo"
 export RUSTUP_HOME="$HOME/.local/state/rustup"
 
-# node (npm & yarn)
-export NPM_CONFIG_CACHE="$HOME/.local/state/npm/cache"
-npm config set prefix "$XDG_STATE_HOME/npm/prefix"
-export PATH="$HOME/.local/state/npm/prefix/bin:$PATH"
 
+#npm
+export NPM_CONFIG_CACHE="$XDG_STATE_HOME/npm/cache"
+export PATH="$HOME/.npm-global/bin:$PATH"
+
+
+
+
+# yarn
 export YARN_CACHE_FOLDER="$XDG_STATE_HOME/yarn"
-
-#pnpm
+#
+# # pnpm
 export PNPM_HOME="$XDG_STATE_HOME/pnpm"
 export PNPM_STORE_PATH="$XDG_STATE_HOME/pnpm/store"
+export PATH="$PNPM_HOME:$PATH"
 
 #python
 export XDG_CACHE_HOME="$HOME/.cache"  # pip respects this for cache
@@ -31,7 +37,7 @@ export DOCKER_CONFIG="$XDG_STATE_HOME/docker"
 
 
 #Go
-export GOPATH="$XDG_STATE_HOME/go"
+export GOPATH="$XDG_STATE_HOME/.local/go"
 export PATH="$GOPATH/bin:$PATH"
 
 
@@ -44,7 +50,7 @@ export EDITOR="nvim"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -63,11 +69,12 @@ export XDG_MUSIC_DIR="$HOME/Music"
 export XDG_PICTURES_DIR="$HOME/Pictures"
 export XDG_VIDEOS_DIR="$HOME/Videos"
 
-export GOPATH="$XDG_DATA_HOME/go"
-export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
+export GOPATH="$XDG_DATA_HOME/.local/go"
+export GOMODCACHE="$XDG_CACHE_HOME/.local/go/mod"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export RUSTUP_HOME="XDG_DATA_HOME/rustup"
-export ANDROID_HOME="$XDG_DATA_HOME/android"
+# export ANDROID_HOME="$XDG_DATA_HOME/android"
+export ANDROID_HOME=/opt/android-sdk
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export PYENV_ROOT="$XDG_DATA_HOME/pyenv"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"

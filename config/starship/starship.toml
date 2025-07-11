@@ -1,173 +1,91 @@
+
 add_newline = false
+command_timeout = 1000
+
+format = """
+$character\
+[](fg:white bg:bright-black)\
+[█](fg:bright-black bg:black)\
+$directory\
+[█](fg:bright-black bg:black)\
+[$git_branch\
+$git_state\
+$git_status](bold bg:black fg:white)\
+$fill\
+$cmd_duration\
+[](fg:red bg:black)\
+[ ](fg:black bg:red)\
+$username\
+[](fg:green bg:bright-black)\
+[󰌽 ](fg:green bg:black inverted)\
+$hostname\
+$line_break\
+[‎]()"""
 
 [character]
-error_symbol = "[  ✗](bold red)"
-success_symbol = "[  λ](bold red)"
+format = "$symbol"
+error_symbol = "[█](fg:red bg:black)[ ERROR](fg:red bg:black inverted bold)[](fg:red bg:white)"
+success_symbol = "[█](fg:bright-white bg:black)[ PROMPT](fg:bright-white bg:black inverted bold)[](fg:bright-white bg:white)"
+
+[fill]
+symbol = ' '
+style = 'bg:black'
 
 [package]
 disabled = false
 
 [cmd_duration]
-min_time = 5000
-show_milliseconds = false
+min_time = 1000
+show_milliseconds = true
 disabled = false
-format="[$duration]($style)"
-style="italic blue"
+format="[󰞌 $duration ]($style)"
+style="bold bg:black"
 
 [directory]
 truncation_length = 5
-format = "[$path]($style)[$lock_symbol]($lock_style) "
-style = "bold yellow"
+format = "[󰉋 $path]($style)[$lock_symbol]($lock_style)"
+style = "bold fg:bright-white bg:bright-black"
 read_only = "🔒"
 read_only_style= "bold white"
 
+[username]
+show_always = true
+style_user = "bg:bright-black"
+style_root = "bg:bright-black"
+format = '[ $user ]($style)'
+
 [hostname]
+format = "[ $hostname ]($style)"
 ssh_only = false
 trim_at = ".companyname.com"
 disabled = false
-style = "bold italic green"
-
-
-
-[git_branch]
-symbol = ""
-style = "fg:#a6e3a1 bg:#252a3e"
-format = '[ $symbol $branch(:$remote_branch) ]($style)'
-
+style = "fg:green bg:bright-black"
 
 [git_commit]
 commit_hash_length = 8
 style = "bold white"
 
-[git_status]
-style = "fg:#a6e3a1 bg:#252a3e"
-ahead = "⇡${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-behind = "⇣${count}"
-deleted = "x"
-format = '[$all_status$ahead_behind ]($style)'
-
-
-[aws]
-symbol = " "
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[conda]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[dart]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[c]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[docker_context]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol $context]($style) $path '
-
-[elixir]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[elm]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[golang]
-symbol = "ﳑ"
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[haskell]
-symbol = "λ"
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[java]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[julia]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[lua]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[nim]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[nix_shell]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[nodejs]
-symbol = ""
-style = "fg:#cba6f7 bg:#f00"
-format = '[ $symbol ($version )]($style)'
-
-[perl]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[php]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[python]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[ruby]
-symbol = ""
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[rust]
-symbol = "🦀"
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[swift]
-symbol = "ﯣ"
-style = "fg:#cba6f7 bg:#2c324a"
-format = '[ $symbol ($version )]($style)'
-
-[memory_usage]
-format = "[${ram}( | ${swap})]($style) "
-threshold = 50
-style = "bold dimmed white"
-disabled = true
-
 [status]
 style = "bg:transparent"
 symbol = "💥 "
-# format = '[\[$symbol$status\]]($style) '
 format = '($style)'
 disabled = false
 
+[git_branch]
+format = " 󰘬 $branch"
+style = "bold fg:bright-black bg:black"
 
-[dotnet]
-symbol = "🥅 "
-style = "green"
-heuristic = false
+[git_status]
+format = " $conflicted$untracked$modified$staged$renamed$deleted$ahead_behind$stashed"
+style = "cyan"
+conflicted = ""
+untracked = ""
+modified = ""
+staged = ""
+renamed = ""
+deleted = ""
+stashed = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "cyan"
