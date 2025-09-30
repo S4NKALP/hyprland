@@ -1,91 +1,94 @@
 
 add_newline = false
-command_timeout = 1000
+# Pipes ╰─ ╭─
+# Powerline symbols                                    
+# Wedges 🭧🭒 🭣🭧🭓
+# Random noise 🬖🬥🬔🬗
+# Cool stuff 󰜥   
 
 format = """
-$character\
-[](fg:white bg:bright-black)\
-[█](fg:bright-black bg:black)\
-$directory\
-[█](fg:bright-black bg:black)\
-[$git_branch\
-$git_state\
-$git_status](bold bg:black fg:white)\
-$fill\
-$cmd_duration\
-[](fg:red bg:black)\
-[ ](fg:black bg:red)\
-$username\
-[](fg:green bg:bright-black)\
-[󰌽 ](fg:green bg:black inverted)\
-$hostname\
-$line_break\
-[‎]()"""
+$cmd_duration 󰜥 $directory $git_branch
+$character"""
 
 [character]
-format = "$symbol"
-error_symbol = "[█](fg:red bg:black)[ ERROR](fg:red bg:black inverted bold)[](fg:red bg:white)"
-success_symbol = "[█](fg:bright-white bg:black)[ PROMPT](fg:bright-white bg:black inverted bold)[](fg:bright-white bg:white)"
-
-[fill]
-symbol = ' '
-style = 'bg:black'
+success_symbol = "[   ](bold fg:blue)"
+error_symbol = "[   ](bold fg:red)"
 
 [package]
-disabled = false
-
-[cmd_duration]
-min_time = 1000
-show_milliseconds = true
-disabled = false
-format="[󰞌 $duration ]($style)"
-style="bold bg:black"
-
-[directory]
-truncation_length = 5
-format = "[󰉋 $path]($style)[$lock_symbol]($lock_style)"
-style = "bold fg:bright-white bg:bright-black"
-read_only = "🔒"
-read_only_style= "bold white"
-
-[username]
-show_always = true
-style_user = "bg:bright-black"
-style_root = "bg:bright-black"
-format = '[ $user ]($style)'
-
-[hostname]
-format = "[ $hostname ]($style)"
-ssh_only = false
-trim_at = ".companyname.com"
-disabled = false
-style = "fg:green bg:bright-black"
-
-[git_commit]
-commit_hash_length = 8
-style = "bold white"
-
-[status]
-style = "bg:transparent"
-symbol = "💥 "
-format = '($style)'
-disabled = false
+disabled = true
 
 [git_branch]
-format = " 󰘬 $branch"
-style = "bold fg:bright-black bg:black"
+style = "bg: cyan"
+symbol = "󰘬"
+truncation_length = 12
+truncation_symbol = ""
+format = "󰜥 [](bold fg:cyan)[$symbol $branch(:$remote_branch)](fg:black bg:cyan)[ ](bold fg:cyan)"
 
-[git_status]
-format = " $conflicted$untracked$modified$staged$renamed$deleted$ahead_behind$stashed"
-style = "cyan"
-conflicted = ""
-untracked = ""
-modified = ""
-staged = ""
-renamed = ""
-deleted = ""
-stashed = "≡"
+[git_commit]
+commit_hash_length = 4
+tag_symbol = " "
 
 [git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
-style = "cyan"
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
+
+[git_status]
+conflicted = " 🏳 "
+ahead = " 🏎💨 "
+behind = " 😰 "
+diverged = " 😵 "
+untracked = " 🤷 ‍"
+stashed = " 📦 "
+modified = " 📝 "
+staged = '[++\($count\)](green)'
+renamed = " ✍️ "
+deleted = " 🗑 "
+
+[hostname]
+ssh_only = false
+format =  "[•$hostname](bg:cyan bold fg:black)[](bold fg:cyan)"
+trim_at = ".companyname.com"
+disabled = false
+
+[line_break]
+disabled = false
+
+[memory_usage]
+disabled = true
+threshold = -1
+symbol = " "
+style = "bold dimmed green"
+
+[time]
+disabled = true
+format = '🕙[\[ $time \]]($style) '
+time_format = "%T"
+
+[username]
+style_user = "bold bg:cyan fg:black"
+style_root = "red bold"
+format = "[](bold fg:cyan)[$user]($style)"
+disabled = false
+show_always = true
+
+[directory]
+home_symbol = "  "
+read_only = "  "
+style = "bg:green fg:black"
+truncation_length = 6
+truncation_symbol = " ••/"
+format = '[](bold fg:green)[󰉋 $path]($style)[](bold fg:green)'
+
+
+[directory.substitutions]
+"Desktop" = "  "
+"Documents" = "  "
+"Downloads" = "  "
+"Music" = " 󰎈 "
+"Pictures" = "  "
+"Videos" = "  "
+"GitHub" = " 󰊤 "
+
+[cmd_duration]
+min_time = 0
+format = '[](bold fg:yellow)[󰪢 $duration](bold bg:yellow fg:black)[](bold fg:yellow)'
