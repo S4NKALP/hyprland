@@ -1,4 +1,5 @@
 adw-gtk-theme
+just
 brightnessctl
 btop
 bat
@@ -49,7 +50,6 @@ gh-dash-bin
 mpv
 python-fabric-git
 fabric-cli-git
-glace-git
 github-cli
 otf-monaspace
 ttf-jetbrains-mono-nerd
