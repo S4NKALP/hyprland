@@ -1,3 +1,4 @@
+
 ##
 ## Aliases
 ##
@@ -76,8 +77,28 @@ alias mkgrub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias py='python'
 alias tree='tree -C'
 
-# Activate virtual environment in current directory, otherwise try in the parent.
-alias act='source venv/bin/activate || source ../venv/bin/activate'
+venv() {
+  if [[ -d .venv ]]; then
+    source .venv/bin/activate && echo "Activated existing .venv"
+  else
+    python -m venv .venv && source .venv/bin/activate && echo "Created and activated new .venv"
+  fi
+}
+
+act() {
+  local dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -f "$dir/venv/bin/activate" ]]; then
+      source "$dir/venv/bin/activate" && echo "Activated: $dir/venv"
+      return
+    elif [[ -f "$dir/.venv/bin/activate" ]]; then
+      source "$dir/.venv/bin/activate" && echo "Activated: $dir/.venv"
+      return
+    fi
+    dir="$(dirname "$dir")"
+  done
+  echo "No virtualenv found"
+}
 
 # Wifi management
 alias wifi-gui='nm-connection-editor'
