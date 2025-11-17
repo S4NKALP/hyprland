@@ -51,10 +51,10 @@ mpv
 python-fabric-git
 fabric-cli-git
 github-cli
-otf-monaspace
 ttf-jetbrains-mono-nerd
 ttf-iosevka-nerd
 notofonts-emoji
 ttf-font-awesome
 ttf-nerd-fonts-symbols-common
 ttf-nerd-fonts-symbols-mono
+maplemono-nf-cn-unhinted
