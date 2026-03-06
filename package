@@ -6,6 +6,10 @@ bat
 cava
 fzf
 zsh
+zsh-autosuggestions
+zsh-history-substring-search
+zsh-syntax-highlighting
+fzf-tab-git
 thunar
 thunar-archive-plugin
 thunar-volman
