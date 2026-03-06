@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # DISCLAIMER: this script has been started solely by me (sayan01)
@@ -7,7 +8,7 @@
 # nor is it made in association with anyone else, regardless of
 # their claims.
 
-# Dependencies: mpv youtube-dl fzf rofi/dmenu gnu-grep
+# Dependencies: mpv youtube-dl fzf  gnu-grep
 
 # NOTE:  if you don't have gnu grep, you can replace grep with rg
 
@@ -17,8 +18,8 @@ function usage () {
     printf "    -h        help\n"
     printf "    -c        channels/subscriptions\n"
     printf "    -s query  search\n"
-    printf "    -g / -r   gui mode (rofi/dmenu)\n"
     printf "    -m        music mode (audio only) [dont use with -r]\n"
+    printf "    -a        autoplay mode (play next video automatically)\n"
     printf "  nothing     use defaults (search from prompt)\n"
     printf "\n"
     printf "add channel names to the file %s to show them\n" "$sublistpath"
@@ -42,17 +43,15 @@ if [[ ${#} -eq 0 ]]; then
 fi
 
 # Available flags
-optstring=":s:cgrhm"
+optstring=":s:cgrhma"
 
 defcmd="fzf"
 defaction="s"
-guicmd="rofi -dmenu -i" # uncomment next line for dmenu
-# guicmd="dmenu -i -l 15"
 
 # Defaults
 promptcmd="$defcmd"
 action="$defaction"
-isGui="f"
+autoplay="f"
 query=""
 mpv_options=""
 
@@ -90,13 +89,12 @@ if [[ $useDefaults = "f" ]]; then
                 # Search in subscriptions for a specific channel
                 action="c"
                 query="${OPTARG}" ;;
-            g|r)
-                # Set gui mode to true and change the prompt to gui prompt
-                isGui="t"
-                promptcmd="$guicmd" ;;
-            m)
+                        m)
                 # Make the mpv headless
                 mpv_options+="--no-video" ;;
+            a)
+                # Enable autoplay mode
+                autoplay="t" ;;
             h)
                 # Display help / usage
                 usage ;;
@@ -114,24 +112,12 @@ fi
 if [ -z "$query" ]; then
     # Ask for a channel
     if [[ $action = "c" ]]; then
-        # If in gui mode, use gui prompt
-        if [[ $isGui = "t" ]]; then
-            query=$($promptcmd -p "Channel: " <<< "$sublist")
-            promptcmd="$promptcmd -p Video:"
-        else
-            query=$($promptcmd --print-query <<< "$sublist" | tail -n1)
-        fi
+        query=$($promptcmd --print-query <<< "$sublist" | tail -n1)
         query=$(echo "$query" | awk '{print $1}')
     else
         # Ask for a query
-        # If in gui mode, use gui prompt
-        if [[ $isGui = "t" ]]; then
-            query=$(echo | $promptcmd -p "Search: ")
-            promptcmd="$promptcmd -p Video:"
-        else
-            echo -n "Search: "
-            read -r query
-        fi
+        echo -n "Search: "
+        read -r query
     fi
 fi
 
@@ -162,16 +148,49 @@ if [[ $action = "c" ]]; then
     # URL prefix for videos
     videolink="https://youtu.be/"
 
+    # Convert ids to array for autoplay
+    readarray -t id_array <<< "$ids"
+    current_index=0
+
     # Prompt the results to user infinitely until they exit (escape)
     while true; do
-      choice=$(echo -e "$ids" | cut -d'	' -f2 | $promptcmd) # Don't show id
-      if [ -z "$choice" ]; then exit; fi	# If esc-ed then exit
-      id=$(echo -e "$ids" | grep -Fwm1 "$choice" | cut -d'	' -f1) # Get id of choice
-      echo -e "$choice\t($id)"
+      if [[ $autoplay = "t" ]] && [[ $current_index -gt 0 ]]; then
+        # In autoplay mode, automatically play the next video
+        if [[ $current_index -lt ${#id_array[@]} ]]; then
+          choice=$(echo "${id_array[$current_index]}" | cut -d'	' -f2)
+          id=$(echo "${id_array[$current_index]}" | cut -d'	' -f1)
+          echo -e "Autoplaying: $choice\t($id)"
+        else
+          echo "End of playlist reached"
+          exit
+        fi
+      else
+        # Manual selection mode
+        choice=$(echo -e "$ids" | cut -d'	' -f2 | $promptcmd) # Don't show id
+        if [ -z "$choice" ]; then exit; fi	# If esc-ed then exit
+        id=$(echo -e "$ids" | grep -Fwm1 "$choice" | cut -d'	' -f1) # Get id of choice
+        echo -e "$choice\t($id)"
+        # Find the index of selected video for autoplay continuation
+        for i in "${!id_array[@]}"; do
+          if [[ "${id_array[$i]}" == "$id"* ]]; then
+            current_index=$i
+            break
+          fi
+        done
+      fi
+
       case $id in
-          ???????????) mpv "$videolink$id" "$mpv_options" --ytdl-format="$ytdlformats";;
+          ???????????)
+            mpv "$videolink$id" $mpv_options --ytdl-format="$ytdlformats"
+            current_index=$((current_index + 1))
+            ;;
           *) exit ;;
       esac
+
+      # If not in autoplay mode, continue prompting
+      if [[ $autoplay = "f" ]]; then
+        continue
+      fi
     done
 else
     # If in search, show query result vids
@@ -197,18 +216,55 @@ else
     # URL prefix for videos and playlists
     videolink="https://youtu.be/"
     playlink="https://youtube.com/playlist?list="
+
+    # Convert ids to array for autoplay
+    readarray -t id_array <<< "$(echo -e "$ids")"
+    current_index=0
+
     # Prompt the results to user infinitely until they exit (escape)
     while true; do
-        choice=$(echo -e "$ids" | cut -d'	' -f2 | $promptcmd) # Don't show id
-        if [ -z "$choice" ]; then exit; fi	# If esc-ed then exit
-        id=$(echo -e "$ids" | grep -Fwm1 "$choice" | cut -d'	' -f1) # Get id of choice
-        echo -e "$choice\t($id)"
+        if [[ $autoplay = "t" ]] && [[ $current_index -gt 0 ]]; then
+          # In autoplay mode, automatically play the next video
+          if [[ $current_index -lt ${#id_array[@]} ]]; then
+            choice=$(echo "${id_array[$current_index]}" | cut -d'	' -f2)
+            id=$(echo "${id_array[$current_index]}" | cut -d'	' -f1)
+            echo -e "Autoplaying: $choice\t($id)"
+          else
+            echo "End of playlist reached"
+            exit
+          fi
+        else
+          # Manual selection mode
+          choice=$(echo -e "$ids" | cut -d'	' -f2 | $promptcmd) # Don't show id
+          if [ -z "$choice" ]; then exit; fi	# If esc-ed then exit
+          id=$(echo -e "$ids" | grep -Fwm1 "$choice" | cut -d'	' -f1) # Get id of choice
+          echo -e "$choice\t($id)"
+          # Find the index of selected video for autoplay continuation
+          for i in "${!id_array[@]}"; do
+            if [[ "${id_array[$i]}" == "$id"* ]]; then
+              current_index=$i
+              break
+            fi
+          done
+        fi
+
         case $id in
             # 11 digit id = video
-            ???????????) mpv "$videolink$id" $mpv_options --ytdl-format="$ytdlformats";;
+            ???????????)
+              mpv "$videolink$id" $mpv_options --ytdl-format="$ytdlformats"
+              current_index=$((current_index + 1))
+              ;;
             # 34 digit id = playlist
-            ??????????????????????????????????) mpv "$playlink$id" $mpv_options --ytdl-format="$ytdlformats";;
+            ??????????????????????????????????)
+              mpv "$playlink$id" $mpv_options --ytdl-format="$ytdlformats"
+              current_index=$((current_index + 1))
+              ;;
             *) exit ;;
         esac
+
+        # If not in autoplay mode, continue prompting
+        if [[ $autoplay = "f" ]]; then
+          continue
+        fi
     done
 fi
