@@ -1,3 +1,4 @@
+
 [[ $- != *i* ]] && return
 
 #  ┬  ┬┌─┐┬─┐┌─┐
@@ -20,7 +21,7 @@ fi
 #  │  │ │├─┤ ││  ├┤ ││││ ┬││││├┤
 #  ┴─┘└─┘┴ ┴─┴┘  └─┘┘└┘└─┘┴┘└┘└─┘
 autoload -Uz compinit
-
+setopt extendedglob
 local zcompdump="$HOME/.config/zsh/zcompdump"
 
 if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
@@ -98,7 +99,7 @@ setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
 #   │ ├─┤├┤   ├─┘├┬┘│ ││││├─┘ │
 #   ┴ ┴ ┴└─┘  ┴  ┴└─└─┘┴ ┴┴   ┴
 
-export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship.toml"
+export STARSHIP_CONFIG="$HOME/.config/starship.toml"
 eval "$(starship init zsh)"
 
 
