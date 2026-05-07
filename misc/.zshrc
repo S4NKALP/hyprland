@@ -1,233 +1,332 @@
-
 [[ $- != *i* ]] && return
 
-#  ┬  ┬┌─┐┬─┐┌─┐
-#  └┐┌┘├─┤├┬┘└─┐
-#   └┘ ┴ ┴┴└─└─┘
+# =============================================================================
+# ENVIRONMENT
+# =============================================================================
 
-export EDITOR='nvim'
-export VISUAL="${EDITOR}"
-export BROWSER='zen-browser'
-export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
-export SUDO_PROMPT="Deploying root access for %u. Password pls: "
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
+export BROWSER="zen-browser"
+export TERMINAL="kitty"
+
 export BAT_THEME="base16"
+export SUDO_PROMPT="Deploying root access for %u. Password pls: "
 
-if [ -d "$HOME/.local/bin" ] ;
-  then PATH="$HOME/.local/bin:$PATH"
-fi
+export HISTORY_IGNORE="(ls|ll|la|pwd|exit|history|cd|cd -|cd ..)"
 
+# Android SDK
+export ANDROID_HOME="$HOME/Android/Sdk"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
 
-#  ┬  ┌─┐┌─┐┌┬┐  ┌─┐┌┐┌┌─┐┬┌┐┌┌─┐
-#  │  │ │├─┤ ││  ├┤ ││││ ┬││││├┤
-#  ┴─┘└─┘┴ ┴─┴┘  └─┘┘└┘└─┘┴┘└┘└─┘
+# =============================================================================
+# PATH
+# =============================================================================
+
+typeset -U path PATH
+
+path=(
+  "$HOME/.local/bin"
+  "$ANDROID_HOME/emulator"
+  "$ANDROID_HOME/platform-tools"
+  "$ANDROID_HOME/tools"
+  "$ANDROID_HOME/tools/bin"
+  $path
+)
+
+export PATH
+
+# =============================================================================
+# ZSH OPTIONS
+# =============================================================================
+
+setopt AUTO_CD
+setopt AUTO_LIST
+setopt AUTO_MENU
+setopt AUTO_PUSHD
+setopt COMPLETE_IN_WORD
+setopt EXTENDED_GLOB
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_SAVE_NO_DUPS
+setopt INC_APPEND_HISTORY
+setopt INTERACTIVE_COMMENTS
+setopt LIST_PACKED
+setopt MENU_COMPLETE
+setopt NO_BEEP
+setopt NO_CLOBBER
+setopt PROMPT_SUBST
+setopt PUSHD_IGNORE_DUPS
+setopt SHARE_HISTORY
+
+# =============================================================================
+# HISTORY
+# =============================================================================
+
+HISTFILE="$HOME/.config/zsh/zhistory"
+HISTSIZE=100000
+SAVEHIST=100000
+
+# =============================================================================
+# COMPLETION
+# =============================================================================
+
 autoload -Uz compinit
-setopt extendedglob
-local zcompdump="$HOME/.config/zsh/zcompdump"
-
-if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
-    compinit -i -d "$zcompdump"
-else
-    compinit -C -d "$zcompdump"
-fi
-
-if [[ ! -f "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ]]; then
-    zcompile -U "$zcompdump"
-fi
-
-
 autoload -Uz add-zsh-hook
 autoload -Uz vcs_info
-precmd () { vcs_info }
+
+zmodload zsh/complist
+
+mkdir -p "$HOME/.cache/zsh"
+
+local zcompdump="$HOME/.cache/zsh/zcompdump"
+
+if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
+  compinit -d "$zcompdump"
+else
+  compinit -C -d "$zcompdump"
+fi
+
+# Compile completion dump
+if [[ -s "$zcompdump" ]]; then
+  zcompile "$zcompdump"
+fi
+
+# Completion styles
+zstyle ':completion:*' menu select
+
+zstyle ':completion:*' matcher-list \
+  'm:{a-z}={A-Z}' \
+  '+r:|[._-]=* r:|=*' \
+  '+l:|=*'
+
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:descriptions' format '[%d]'
+
 _comp_options+=(globdots)
 
-zstyle ':completion:*' menu select
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list \
-		'm:{a-zA-Z}={A-Za-z}' \
-		'+r:|[._-]=* r:|=*' \
-		'+l:|=*'
-zstyle ':vcs_info:*' formats ' %B%s-[%F{magenta}%f %F{yellow}%b%f]-'
-zstyle ':fzf-tab:*' fzf-flags --style=full --height=90% --pointer '>' \
-                --color 'pointer:green:bold,bg+:-1:,fg+:green:bold,info:blue:bold,marker:yellow:bold,hl:gray:bold,hl+:yellow:bold' \
-                --input-label ' Search ' --color 'input-border:blue,input-label:blue:bold' \
-                --list-label ' Results ' --color 'list-border:green,list-label:green:bold' \
-                --preview-label ' Preview ' --color 'preview-border:magenta,preview-label:magenta:bold'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --icons=always --color=always -a $realpath'
-zstyle ':fzf-tab:complete:eza:*' fzf-preview 'eza -1 --icons=always --color=always -a $realpath'
-zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --theme=base16 $realpath'
+# =============================================================================
+# FZF TAB
+# =============================================================================
+
+zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
 zstyle ':fzf-tab:*' accept-line enter
 
-#  ┬ ┬┌─┐┬┌┬┐┬┌┐┌┌─┐  ┌┬┐┌─┐┌┬┐┌─┐
-#  │││├─┤│ │ │││││ ┬   │││ │ │ └─┐
-#  └┴┘┴ ┴┴ ┴ ┴┘└┘└─┘  ─┴┘└─┘ ┴ └─┘
-expand-or-complete-with-dots() {
-  echo -n "\e[31m…\e[0m"
-  zle expand-or-complete
-  zle redisplay
+zstyle ':fzf-tab:*' fzf-flags \
+  --height=90% \
+  --layout=reverse \
+  --border \
+  --pointer='>' \
+  --marker='*' \
+  --preview-window='right:60%' \
+  --color='pointer:green:bold' \
+  --color='marker:yellow:bold' \
+  --color='hl:blue:bold' \
+  --color='hl+:magenta:bold'
+
+zstyle ':fzf-tab:complete:cd:*' fzf-preview \
+  'eza --icons --color=always -1 -a $realpath'
+
+zstyle ':fzf-tab:complete:eza:*' fzf-preview \
+  'eza --icons --color=always -1 -a $realpath'
+
+zstyle ':fzf-tab:complete:bat:*' fzf-preview \
+  'bat --color=always --style=numbers --theme=base16 $realpath'
+
+# =============================================================================
+# VCS
+# =============================================================================
+
+precmd() {
+  vcs_info
 }
-zle -N expand-or-complete-with-dots
-bindkey "^I" expand-or-complete-with-dots
 
-#  ┬ ┬┬┌─┐┌┬┐┌─┐┬─┐┬ ┬
-#  ├─┤│└─┐ │ │ │├┬┘└┬┘
-#  ┴ ┴┴└─┘ ┴ └─┘┴└─ ┴
-HISTFILE=~/.config/zsh/zhistory
-HISTSIZE=10000
-SAVEHIST=10000
-HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' formats \
+  ' %B%F{magenta} %b%f'
 
-#  ┌─┐┌─┐┬ ┬  ┌─┐┌─┐┌─┐┬    ┌─┐┌─┐┌┬┐┬┌─┐┌┐┌┌─┐
-#  ┌─┘└─┐├─┤  │  │ ││ ││    │ │├─┘ │ ││ ││││└─┐
-#  └─┘└─┘┴ ┴  └─┘└─┘└─┘┴─┘  └─┘┴   ┴ ┴└─┘┘└┘└─┘
-setopt AUTOCD              # change directory just by typing its name
-setopt PROMPT_SUBST        # enable command substitution in prompt
-setopt MENU_COMPLETE       # Automatically highlight first element of completion menu
-setopt LIST_PACKED		   # The completion menu takes less space.
-setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
-setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
-
-#  ┌┬┐┬ ┬┌─┐  ┌─┐┬─┐┌─┐┌┬┐┌─┐┌┬┐
-#   │ ├─┤├┤   ├─┘├┬┘│ ││││├─┘ │
-#   ┴ ┴ ┴└─┘  ┴  ┴└─└─┘┴ ┴┴   ┴
+# =============================================================================
+# STARSHIP
+# =============================================================================
 
 export STARSHIP_CONFIG="$HOME/.config/starship.toml"
-eval "$(starship init zsh)"
 
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
 
-#  ┌─┐┬  ┬ ┬┌─┐┬┌┐┌┌─┐
-#  ├─┘│  │ ││ ┬││││└─┐
-#  ┴  ┴─┘└─┘└─┘┴┘└┘└─┘
-source /usr/share/zsh/plugins/fzf-tab-git/fzf-tab.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+# =============================================================================
+# PLUGINS
+# =============================================================================
+
+plugins=(
+  /usr/share/zsh/plugins/fzf-tab-git/fzf-tab.zsh
+  /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+)
+
+for plugin in "${plugins[@]}"; do
+  [[ -f "$plugin" ]] && source "$plugin"
+done
+
+# =============================================================================
+# KEYBINDINGS
+# =============================================================================
 
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
 bindkey '^[[3~' delete-char
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
 
-#  ┌─┐┬ ┬┌─┐┌┐┌┌─┐┌─┐  ┌┬┐┌─┐┬─┐┌┬┐┬┌┐┌┌─┐┬  ┌─┐  ┌┬┐┬┌┬┐┬  ┌─┐
-#  │  ├─┤├─┤││││ ┬├┤    │ ├┤ ├┬┘│││││││├─┤│  └─┐   │ │ │ │  ├┤
-#  └─┘┴ ┴┴ ┴┘└┘└─┘└─┘   ┴ └─┘┴└─┴ ┴┴┘└┘┴ ┴┴─┘└─┘   ┴ ┴ ┴ ┴─┘└─┘
-function xterm_title_precmd () {
-	print -Pn -- '\e]2;%n@%m %~\a'
-	[[ "$TERM" == 'screen'* ]] && print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-}\e\\'
+# Better tab animation
+expand-or-complete-with-dots() {
+  echo -n "\e[90m…\e[0m"
+  zle expand-or-complete
+  zle redisplay
 }
 
-function xterm_title_preexec () {
-	print -Pn -- '\e]2;%n@%m %~ %# ' && print -n -- "${(q)1}\a"
-	[[ "$TERM" == 'screen'* ]] && { print -Pn -- '\e_\005{g}%n\005{-}@\005{m}%m\005{-} \005{B}%~\005{-} %# ' && print -n -- "${(q)1}\e\\"; }
+zle -N expand-or-complete-with-dots
+bindkey '^I' expand-or-complete-with-dots
+
+# =============================================================================
+# TERMINAL TITLE
+# =============================================================================
+
+function set-title-precmd() {
+  print -Pn -- "\e]2;%n@%m:%~\a"
 }
 
-if [[ "$TERM" == (kitty*|alacritty*|tmux*|screen*|xterm*) ]]; then
-	add-zsh-hook -Uz precmd xterm_title_precmd
-	add-zsh-hook -Uz preexec xterm_title_preexec
-fi
+function set-title-preexec() {
+  print -Pn -- "\e]2;${1:q}\a"
+}
 
-#  ┌─┐┬  ┬┌─┐┌─┐
-#  ├─┤│  │├─┤└─┐
-#  ┴ ┴┴─┘┴┴ ┴└─┘
+case "$TERM" in
+  kitty*|alacritty*|tmux*|screen*|xterm*)
+    add-zsh-hook precmd set-title-precmd
+    add-zsh-hook preexec set-title-preexec
+    ;;
+esac
 
-alias vim='$EDITOR'
-alias vi='$EDITOR'
-alias code='$EDITOR'
-alias edit='vim'              # Edit files with vim
+# =============================================================================
+# ALIASES
+# =============================================================================
 
-alias ls="eza --color=auto --icons"
-alias l="ls -l"
-alias ll="ls -a"
-alias lla="ls -la"
-alias lt="ls --tree"
+# Editor
+alias vim="$EDITOR"
+alias vi="$EDITOR"
+alias code="$EDITOR"
 
-#pacman unlock
-alias unlock="sudo rm /var/lib/pacman/db.lck"
-alias rmpacmanlock="sudo rm /var/lib/pacman/db.lck"
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
 
-# aur helper
-alias i="paru -S"
-alias r="paru -Rns"
-alias u="paru -Syu"
-alias s="paru -Ss"
-alias Q="paru -Q"
-
-#cache clean
-alias clean="paru -Scc"
-
-# pacman or pm
-alias pacman='sudo pacman --color auto'
-alias update='sudo pacman -Syyu'
-alias upgrade='paru -Syyu'
-
-#add new fonts
-alias update-fc='sudo fc-cache -fv'
-
-#switch between bash and zsh
-alias tobash="sudo chsh $USER -s /bin/bash && echo 'Now log out.'"
-alias tozsh="sudo chsh $USER -s /bin/zsh && echo 'Now log out.'"
-alias tofish="sudo chsh $USER -s /bin/fish && echo 'Now log out.'"
-
-#fix obvious typo's
+# Clear / Exit
 alias c="clear"
 alias q="exit"
 alias :q="exit"
-alias mtar='tar -zcvf' # mtar <archive_compress>
-alias utar='tar -zxvf' # utar <archive_decompress> <file_list>
-alias z='zip -r' # z <archive_compress> <file_list>
-alias uz='unzip' # uz <archive_decompress> -d <dir>
-alias sr='source ~/.config/zsh/env.zsh'
-alias ..="cd .."
-alias mkdir="mkdir -p"
-alias cat="bat --color always --plain"
-alias grep='grep --color=auto'
-alias mv='mv -v'
-alias cp='cp -vr'
-alias rm='rm -vr'
 
+# File management
+alias ls="eza --icons --group-directories-first"
+alias l="ls -lh"
+alias la="ls -lah"
+alias lt="ls --tree"
 
-#clean caches
-alias cleanram="sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'"
+alias cat="bat --paging=never --style=plain"
+alias grep="grep --color=auto"
 
-#grub update
-alias mkgrub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -Iv"
 
-# other
-alias tree='tree -C'
+alias mkdir="mkdir -pv"
 
-# virtual env
+# Archives
+alias mtar="tar -czvf"
+alias utar="tar -xzvf"
+
+alias z="zip -r"
+alias uz="unzip"
+
+# Pacman / Paru
+alias pacman="sudo pacman --color auto"
+
+alias i="paru -S"
+alias r="paru -Rns"
+alias s="paru -Ss"
+alias u="paru -Syu"
+
+alias update="paru -Syu"
+alias clean="paru -Scc"
+
+# Docker
+alias docker-start="sudo systemctl start docker"
+alias docker-stop="sudo systemctl stop docker"
+
+# Misc
+alias tree="tree -C"
+alias sr="source ~/.config/zsh/env.zsh"
+
+alias mkgrub="sudo grub-mkconfig -o /boot/grub/grub.cfg"
+
+# =============================================================================
+# PYTHON / VENV
+# =============================================================================
+
 venv() {
-  if [[ -d .venv ]]; then
-    source .venv/bin/activate && echo "Activated existing .venv"
-  else
-    python -m venv .venv && source .venv/bin/activate && echo "Created and activated new .venv"
+  local env_dir=".venv"
+
+  if [[ ! -d "$env_dir" ]]; then
+    python -m venv "$env_dir"
+    echo "Created virtual environment"
   fi
+
+  source "$env_dir/bin/activate"
+  echo "Activated: $env_dir"
 }
 
 act() {
   local dir="$PWD"
+
   while [[ "$dir" != "/" ]]; do
-    if [[ -f "$dir/venv/bin/activate" ]]; then
-      source "$dir/venv/bin/activate" && echo "Activated: $dir/venv"
-      return
-    elif [[ -f "$dir/.venv/bin/activate" ]]; then
-      source "$dir/.venv/bin/activate" && echo "Activated: $dir/.venv"
-      return
-    fi
+    for env in ".venv" "venv"; do
+      if [[ -f "$dir/$env/bin/activate" ]]; then
+        source "$dir/$env/bin/activate"
+        echo "Activated: $dir/$env"
+        return
+      fi
+    done
+
     dir="$(dirname "$dir")"
   done
-  echo "No virtualenv found"
+
+  echo "No virtual environment found"
 }
 
-# git Aliases
-alias commit="git add . && git commit -m"
-alias push="git push"
+# =============================================================================
+# GIT
+# =============================================================================
+
+alias gs="git status"
+alias ga="git add ."
+alias gc="git commit -m"
+alias gp="git push"
+alias gl="git pull"
+
+# =============================================================================
+# EXTRA
+# =============================================================================
+
+# Auto correct minor typos
+ENABLE_CORRECTION="true"
+
+# Better word movement
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
+
