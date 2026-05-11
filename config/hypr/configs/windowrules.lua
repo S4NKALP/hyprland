@@ -92,7 +92,10 @@ local simple_rules = {
 		center = true,
 		size = "(monitor_w*0.35) (monitor_h*0.35)",
 	},
-	{ match = { class = "(codium|codium-url-handler|VSCodium)", title = "negative:(.*codium.*|.*VSCodium.*)" }, float = true },
+	{
+		match = { class = "(codium|codium-url-handler|VSCodium)", title = "negative:(.*codium.*|.*VSCodium.*)" },
+		float = true,
+	},
 	{ match = { class = "^(com.heroicgameslauncher.hgl)$", title = "negative:(Heroic Games Launcher)" }, float = true },
 	{ match = { class = "^([Ss]team)$", title = "negative:^([Ss]team)$" }, float = true },
 	{
@@ -204,13 +207,6 @@ local special_rules = {
 		float = true,
 		center = true,
 		size = "(monitor_w*0.6) (monitor_h*0.65)",
-	},
-	{
-		name = "Floating Terminal",
-		match = { title = "^(float_kitty)$" },
-		float = true,
-		center = true,
-		size = "(monitor_w*0.6) (monitor_h*0.6)",
 	},
 }
 
