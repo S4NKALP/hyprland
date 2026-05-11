@@ -1,0 +1,4 @@
+[submodule "config/config/Modus"]
+	path = config/config/Modus
+	url = git@github.com:S4NKALP/Modus.git
+	branch = mine
