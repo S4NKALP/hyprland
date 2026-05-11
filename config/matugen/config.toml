@@ -31,8 +31,8 @@ input_path = "~/.config/matugen/templates/qtct-colors.conf"
 output_path = "~/.config/qt6ct/colors/matugen.conf"
 
 [templates.hyprland]
-input_path = "~/mine/config/matugen/templates/hyprland-colors.conf"
-output_path = "~/mine/config/hypr/colors.conf"
+input_path = "~/.config/Modus/config/matugen/templates/hyprland-colors.lua"
+output_path = "~/.config/Modus/config/hypr/colors.lua"
 
 [templates.kitty]
 input_path = "~/.config/matugen/templates/kitty-colors.conf"
@@ -46,10 +46,6 @@ output_path = "~/.config/telegram-desktop/themes/material-you.tdesktop-theme"
 [templates.discord]
 input_path = "~/.config/matugen/templates/discord.css"
 output_path = "~/.config/vesktop/themes/quickCss.css"
-
-[templates.cava]
-input_path = "~/.config/matugen/templates/cava"
-output_path = "~/.config/cava/config"
 
 [templates.yazi]
 input_path = "~/.config/matugen/templates/colors-yazi.toml"
@@ -65,8 +61,8 @@ output_path = "~/.config/Modus/styles/colors.css"
 post_hook = "fabric-cli exec modus 'app.set_css()' &"
 
 [templates.modus1]
-input_path = "~/mine/config/matugen/templates/modus.css"
-output_path = "~/mine/styles/colors.css"
+input_path = "~/Projects/dev/new-modus/config/matugen/templates/modus.css"
+output_path = "~/Projects/dev/new-modus/src/shared/styles/colors.css"
 post_hook = "fabric-cli exec modus1 'app.set_css()' &"
 
 [config.custom_colors.red]
