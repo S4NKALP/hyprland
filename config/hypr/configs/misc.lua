@@ -31,6 +31,11 @@ hl.config({
 		numlock_by_default = true,
 	},
 
+	cursor = {
+		inactive_timeout = 5,
+		enable_hyprcursor = false,
+	},
+
 	dwindle = {
 		preserve_split = true,
 		smart_resizing = true,
@@ -56,13 +61,26 @@ hl.config({
 	},
 
 	scrolling = {
-		column_width = 0.50,
+		explicit_column_widths = "0.5, 0.6, 1.0",
+		column_width = 0.6,
 		fullscreen_on_one_column = true,
 		direction = "right",
+		follow_min_visible = 1,
+		-- focus_fit_method = 0,
 		follow_focus = true,
+	},
+
+	xwayland = {
+		enabled = true,
+		force_zero_scaling = true,
 	},
 
 	debug = {
 		disable_logs = false,
+	},
+
+	ecosystem = {
+		no_update_news = true,
+		no_donation_nag = true,
 	},
 })

@@ -49,11 +49,9 @@ hl.bind("ALT + SHIFT + A", hl.dsp.focus({ workspace = "e-1" }))
 -- Scrolling / Layout
 hl.bind("ALT + D", hl.dsp.layout("move +col"))
 hl.bind("ALT + A", hl.dsp.layout("move -col"))
-hl.bind(mainMod .. " + SHIFT + period", hl.dsp.layout("movewindowto r"))
-hl.bind(mainMod .. " + SHIFT + comma", hl.dsp.layout("movewindowto l"))
-hl.bind(mainMod .. " + SHIFT + up", hl.dsp.layout("movewindowto u"))
-hl.bind(mainMod .. " + SHIFT + down", hl.dsp.layout("movewindowto d"))
+hl.bind(mainMod .. " + SHIFT + period", hl.dsp.layout("swapcol r"))
 hl.bind(mainMod .. " + SHIFT + comma", hl.dsp.layout("swapcol l"))
+
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
