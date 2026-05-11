@@ -330,3 +330,4 @@ ENABLE_CORRECTION="true"
 # Better word movement
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
+# alias nvw='NVIM_APPNAME=nvim-new nvim'
