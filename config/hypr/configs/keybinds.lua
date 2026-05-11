@@ -15,11 +15,47 @@ local function layout_bind(bind_table)
 	end
 end
 
+local layouts = { "scrolling", "dwindle", "monocle" }
+
+-- Cycles through layouts for the current workspace
+local function cycle_layout(dir)
+	return function()
+		local ws = hl.get_active_workspace()
+		local i = 1
+		for idx, l in ipairs(layouts) do
+			if l == ws.tiled_layout then
+				i = idx
+				break
+			end
+		end
+		local target = layouts[(dir == "prev" and (i - 2) % #layouts or i % #layouts) + 1]
+
+		if hl.workspace_rule then
+			hl.workspace_rule({ workspace = tostring(ws.id), layout = target })
+		end
+
+		local display_name = target:sub(1, 1):upper() .. target:sub(2)
+		hl.dispatch(
+			hl.dsp.exec_cmd(
+				string.format(
+					"notify-send -u low -t 1200 -a 'Hyprland' -i 'preferences-desktop-display' 'Workspace %s' 'Layout: %s'",
+					ws.name,
+					display_name
+				)
+			)
+		)
+	end
+end
+
 -- apps launch
-hl.bind(mainMod .. " + return", hl.dsp.exec_cmd("uwsm app -- " .. terminal))
-hl.bind("ALT + SHIFT + return", hl.dsp.exec_cmd("uwsm app -- " .. terminal), { float = true })
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("uwsm app -- " .. terminal))
+hl.bind("ALT + SHIFT + Return", hl.dsp.exec_cmd("uwsm app -- " .. terminal, { float = true }))
 hl.bind("ALT + E", hl.dsp.exec_cmd("uwsm app -- " .. file_manager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("uwsm app -- " .. browser))
+
+-- Cycle Layout in Specific workspace
+hl.bind(mainMod .. " + Tab", cycle_layout("next"))
+hl.bind(mainMod .. " + SHIFT + Tab", cycle_layout("prev"))
 
 -- Increases / Decreases active window by x, y relatively
 hl.bind("ALT + SHIFT + Z", hl.dsp.window.resize({ x = -80, y = -75, relative = true }))
@@ -131,4 +167,3 @@ for key, cmd in pairs({
 }) do
 	hl.bind("XF86" .. key, hl.dsp.exec_cmd("playerctl " .. cmd), { locked = true })
 end
-

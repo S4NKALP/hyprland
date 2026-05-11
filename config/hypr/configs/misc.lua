@@ -1,5 +1,3 @@
--- Misc
-
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 hl.gesture({ fingers = 3, direction = "vertical", action = "workspace" })
 hl.gesture({ fingers = 4, direction = "down", action = "float" })
@@ -9,7 +7,7 @@ hl.config({
 		kb_layout = us,
 		kb_variant = "",
 		kb_model = "",
-		kb_options = "",
+		-- kb_options = "caps:swapescape",
 		kb_rules = "",
 		repeat_rate = 50,
 		repeat_delay = 300,
@@ -38,36 +36,20 @@ hl.config({
 
 	dwindle = {
 		preserve_split = true,
-		smart_resizing = true,
-		use_active_for_splits = true,
-		smart_split = false,
-		default_split_ratio = 1.0,
-		split_bias = 0,
-		precise_mouse_move = false,
-		special_scale_factor = 0.8,
+		special_scale_factor = 0.95,
 	},
 
 	master = {
-		new_status = "slave",
-		new_on_top = false,
-		new_on_active = "none",
-		orientation = "left",
-		mfact = 0.55,
-		slave_count_for_center_master = 2,
-		center_master_fallback = "left",
-		smart_resizing = true,
-		drop_at_cursor = true,
-		always_keep_position = false,
+		new_on_top = true,
+		new_status = "master",
+		special_scale_factor = 0.95,
 	},
 
 	scrolling = {
 		explicit_column_widths = "0.5, 0.6, 1.0",
 		column_width = 0.6,
-		fullscreen_on_one_column = true,
-		direction = "right",
 		follow_min_visible = 1,
 		-- focus_fit_method = 0,
-		follow_focus = true,
 	},
 
 	xwayland = {
