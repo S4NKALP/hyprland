@@ -7,8 +7,8 @@ local browser = "zen-browser"
 
 local mainMod = "SUPER"
 
-hl.bind(mainMod .. " + SHIFT + C", hl.dsp.window.close())
-hl.bind(mainMod .. " + C", hl.dsp.window.kill())
+hl.bind(mainMod .. " + C", hl.dsp.window.close())
+hl.bind(mainMod .. " + SHIFT + C", hl.dsp.window.kill())
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + F", function()
 	hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
@@ -16,11 +16,17 @@ hl.bind(mainMod .. " + F", function()
 end)
 
 -- Testing
-hl.bind("ALT + F12", hl.dsp.exec_cmd("notify-send 'Test notification' \"Here's a really long message to test truncation and wrapping\\nYou can middle click or flick this notification to dismiss it!\" -a 'terminal' -A \"Test1=I got it!\" -A \"Test2=Another action\""))
+hl.bind(
+	"ALT + F12",
+	hl.dsp.exec_cmd(
+		'notify-send \'Test notification\' "Here\'s a really long message to test truncation and wrapping\\nYou can middle click or flick this notification to dismiss it!" -a \'terminal\' -A "Test1=I got it!" -A "Test2=Another action"'
+	)
+)
 hl.bind("ALT + Equal", hl.dsp.exec_cmd("notify-send 'hmm' ${SLURP_ARGS}"))
 
-local message_cmd = "notify-send \"Hello\" \"FIRE IN THE HOLE‼️🗣️🔥🕳️\" -i \"/home/sankalp/.face.icon\" -A \"🗣️\" -A \"🔥\" -A \"🕳️\" -a \"Source Code\""
-hl.bind(mainMod .."+ ALT + N", hl.dsp.exec_cmd(message_cmd))
+local message_cmd =
+	'notify-send "Hello" "FIRE IN THE HOLE‼️🗣️🔥🕳️" -i "/home/sankalp/.face.icon" -A "🗣️" -A "🔥" -A "🕳️" -a "Source Code"'
+hl.bind(mainMod .. "+ ALT + N", hl.dsp.exec_cmd(message_cmd))
 
 hl.bind(mainMod .. " + return", hl.dsp.exec_cmd(terminal))
 hl.bind("ALT + SHIFT + return", hl.dsp.exec_cmd(terminal .. " --title float_kitty --single-instance"))
