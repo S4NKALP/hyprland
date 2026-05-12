@@ -1,4 +1,4 @@
-local function apply_window_rule(rule)
+local function apply_rule(rule)
 	if hl.window_rule then
 		hl.window_rule(rule)
 	end
@@ -16,7 +16,6 @@ local tags = {
 		"^([Tt]horium-browser|[Cc]achy-browser)$",
 		"^(zen-alpha|zen|zen-browser)$",
 	},
-	notif = { "^(swaync-control-center|swaync-notification-window|swaync-client|class)$" },
 	terminal = { "^(ghostty|wezterm|Alacritty|kitty|Kitty)$" },
 	email = {
 		"^([Tt]hunderbird|org.mozilla.Thunderbird)$",
@@ -41,7 +40,6 @@ local tags = {
 	games = { "^(gamescope)$", "^(steam_app_\\d+)$" },
 	gamestore = { "^([Ss]team)$", "^(com.heroicgameslauncher.hgl)$" },
 	["file-manager"] = { "^([Tt]hunar|org.gnome.Nautilus|[Pp]cmanfm-qt)$", "^(app.drey.Warp)$" },
-	wallpaper = { "^([Ww]aytrogen)$" },
 	multimedia = { "^([Aa]udacious)$" },
 	multimedia_video = { "^([Mm]pv|vlc)$" },
 	settings = {
@@ -53,7 +51,6 @@ local tags = {
 		"^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$",
 		"^(qt5ct|qt6ct|[Yy]ad|nwg-look)$",
 		"^(org.kde.polkit-kde-authentication-agent-1)$",
-		"^([Rr]ofi)$",
 		"^(btrfs-assistant)$",
 		"^(timeshift-gtk)$",
 	},
@@ -66,31 +63,33 @@ local tags = {
 
 for tag, patterns in pairs(tags) do
 	for _, pattern in ipairs(patterns) do
-		apply_window_rule({ match = { class = pattern }, tag = "+" .. tag })
+		apply_rule({ match = { class = pattern }, tag = "+" .. tag })
 	end
 end
 
--- Manual Tags/Rules
-apply_window_rule({ match = { xdg_tag = "^(proton-game)$" }, tag = "+games" })
-apply_window_rule({ match = { title = "^([Ll]utris)$" }, tag = "+gamestore" })
-apply_window_rule({ match = { title = "^(ROG Control)$" }, tag = "+settings" })
-apply_window_rule({ match = { title = "(Kvantum Manager)" }, tag = "+settings" })
-apply_window_rule({ match = { class = "(xdg-desktop-portal-gtk)" }, tag = "+settings" })
+-- Manual Tags
+apply_rule({ match = { xdg_tag = "^(proton-game)$" }, tag = "+games" })
+apply_rule({ match = { title = "^([Ll]utris)$" }, tag = "+gamestore" })
+apply_rule({ match = { title = "(Kvantum Manager)" }, tag = "+settings" })
+apply_rule({ match = { class = "(xdg-desktop-portal-gtk)" }, tag = "+settings" })
 
--- 3. Floating, Centered, and Sized Rules
-local simple_rules = {
-	{ match = { class = "([Zz]oom|onedriver|onedriver-launcher)" }, float = true },
-	{ match = { class = "^(mpv|com.github.rafostar.Clapper)$" }, float = true },
-	{ match = { class = "^([Qq]alculate-gtk)$" }, float = true },
-	{ match = { title = "^(Authentication Required)$" }, float = true, center = true },
+-- 2. Size Presets
+local size = {
+	tiny = "(monitor_w*0.2) (monitor_h*0.2)",
+	auth = "(monitor_w*0.35) (monitor_h*0.35)",
+	calc = "(monitor_w*0.55) (monitor_h*0.45)",
+	mid = "(monitor_w*0.6) (monitor_h*0.6)",
+	wide = "(monitor_w*0.6) (monitor_h*0.65)",
+	tall = "(monitor_w*0.6) (monitor_h*0.7)",
+	large = "(monitor_w*0.7) (monitor_h*0.6)",
+}
+
+-- 3. Behavioral Rules
+local window_rules = {
+	-- Floating Only
 	{
-		match = {
-			class = "^(xfce-polkit|mate-polkit|polkit-mate-authentication-agent-1)$",
-			title = "^(Authentication required|Authentication Required)$",
-		},
+		match = { class = "^([Zz]oom|onedriver|onedriver-launcher|mpv|com.github.rafostar.Clapper|[Qq]alculate-gtk)$" },
 		float = true,
-		center = true,
-		size = "(monitor_w*0.35) (monitor_h*0.35)",
 	},
 	{
 		match = { class = "(codium|codium-url-handler|VSCodium)", title = "negative:(.*codium.*|.*VSCodium.*)" },
@@ -98,40 +97,32 @@ local simple_rules = {
 	},
 	{ match = { class = "^(com.heroicgameslauncher.hgl)$", title = "negative:(Heroic Games Launcher)" }, float = true },
 	{ match = { class = "^([Ss]team)$", title = "negative:^([Ss]team)$" }, float = true },
+	{ match = { class = "([Tt]hunar)", title = "negative:(.*[Tt]hunar.*)" }, float = true, center = true },
+
+	-- Floating + Centered
+	{ match = { title = "^(Authentication Required)$" }, float = true, center = true },
+	{ match = { class = "^(hyprland-donate-screen)$" }, float = true, center = true },
+
+	-- Floating + Centered + Sized
 	{
-		match = { title = "^(Add Folder to Workspace)$" },
+		match = {
+			class = "^(xfce-polkit|mate-polkit|polkit-mate-authentication-agent-1)$",
+			title = "^(Authentication required|Authentication Required)$",
+		},
 		float = true,
 		center = true,
-		size = "(monitor_w*0.7) (monitor_h*0.6)",
+		size = size.auth,
 	},
-	{ match = { title = "^(Save As)$" }, float = true, center = true, size = "(monitor_w*0.7) (monitor_h*0.6)" },
-	{ match = { initial_title = "(Open Files)" }, float = true, size = "(monitor_w*0.7) (monitor_h*0.6)" },
-	{ match = { class = "^(yad)$" }, float = true, center = true, size = "(monitor_w*0.2) (monitor_h*0.2)" },
-	{ match = { class = "^(hyprland-donate-screen)$" }, float = true, center = true },
-	{ match = { class = "^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$" }, center = true },
-	{ match = { class = "^([Ww]hatsapp-for-linux|ZapZap|com.rtosta.zapzap)$" }, center = true },
-	{ match = { class = "^(nm-connection-editor)$" }, center = true },
-	{ match = { class = "^(nm-applet)$", title = "^(Wi-Fi Network Authentication Required)$" }, center = true },
-	{ match = { fullscreen = true }, idle_inhibit = "fullscreen" },
-	{ match = { fullscreen = 1 }, idle_inhibit = "fullscreen" },
-	{ match = { class = ".*" }, idle_inhibit = "fullscreen" },
-	{ match = { title = ".*" }, idle_inhibit = "fullscreen" },
-	{ match = { class = "^(gedit|org.gnome.TextEditor|mousepad)$" }, opacity = "0.8 0.7" },
-	{ match = { class = "^(deluge)$" }, opacity = "0.9 0.8" },
-	{ match = { class = "^(seahorse)$" }, opacity = "0.9 0.8" },
-	{ match = { class = "^(jetbrains-.*)$" }, no_initial_focus = true },
-	{ match = { title = "^(wind.*)$" }, no_initial_focus = true },
-	{ match = { class = "^([Tt]hunar)$" }, workspace = 4 },
-}
+	{ match = { title = "^(Add Folder to Workspace|Save As)$" }, float = true, center = true, size = size.large },
+	{ match = { initial_title = "(Open Files)" }, float = true, size = size.large },
+	{ match = { class = "^(yad)$" }, float = true, center = true, size = size.tiny },
+	{ match = { class = "^(nvidia-settings|Bitwarden|hyprpwcenter)$" }, float = true, center = true, size = size.mid },
+	{ match = { class = "^(com.github.wwmm.easyeffects)$" }, float = true, center = true, size = size.wide },
+	{ match = { class = "^([Ff]erdium)$" }, float = true, center = true, size = size.tall },
+	{ match = { class = "(org.gnome.Calculator|qalculate-gtk)" }, float = true, center = true, size = size.calc },
 
-for _, rule in ipairs(simple_rules) do
-	apply_window_rule(rule)
-end
-
--- 4. Named/Complex Rules
-local special_rules = {
+	-- Picture-in-Picture
 	{
-		name = "Picture-in-Picture",
 		match = { title = "^[Pp]icture-in-[Pp]icture$" },
 		float = true,
 		move = "72% 7%",
@@ -140,86 +131,30 @@ local special_rules = {
 		keep_aspect_ratio = true,
 		size = "(monitor_w*0.3) (monitor_h*0.3)",
 	},
-	{
-		name = "NVIDIA Settings",
-		match = {
-			class = "^(nvidia-settings)$",
-			title = "^(NVIDIA Settings)$",
-			initial_class = "^(nvidia-settings)$",
-			initial_title = "^(NVIDIA Settings)$",
-		},
-		float = true,
-		center = true,
-		size = "(monitor_w*0.6) (monitor_h*0.6)",
-	},
-	{
-		name = "Ferdium",
-		match = { class = "^([Ff]erdium)$" },
-		float = true,
-		center = true,
-		size = "(monitor_w*0.6) (monitor_h*0.7)",
-	},
-	{
-		name = "Calculators",
-		match = { class = "(org.gnome.Calculator|qalculate-gtk)" },
-		float = true,
-		center = true,
-		size = "(monitor_w*0.55) (monitor_h*0.45)",
-	},
-	{
-		name = "Thunar Dialogs",
-		match = { class = "([Tt]hunar)", title = "negative:(.*[Tt]hunar.*)" },
-		float = true,
-		center = true,
-	},
-	{
-		name = "Bitwarden",
-		match = {
-			class = "^(Bitwarden)$",
-			title = "^(Bitwarden)$",
-			initial_class = "^(Bitwarden)$",
-			initial_title = "^(Bitwarden)$",
-		},
-		float = true,
-		center = true,
-		size = "(monitor_w*0.6) (monitor_h*0.6)",
-	},
-	{
-		name = "hyprland audio panel",
-		match = {
-			class = "^(hyprpwcenter)$",
-			title = "^(Pipewire Control Center)$",
-			initial_class = "^(hyprpwcenter)$",
-			initial_title = "^(Pipewire Control Center)$",
-		},
-		float = true,
-		center = true,
-		size = "(monitor_w*0.6) (monitor_h*0.6)",
-	},
-	{
-		name = "EasyEffects",
-		match = {
-			class = "^(com.github.wwmm.easyeffects)$",
-			title = "^(Easy Effects)$",
-			initial_class = "^(com.github.wwmm.easyeffects)$",
-			initial_title = "^(Easy Effects)$",
-		},
-		float = true,
-		center = true,
-		size = "(monitor_w*0.6) (monitor_h*0.65)",
-	},
+
+	-- Just Centered
+	{ match = { class = "^(pavucontrol|org.pulseaudio.pavucontrol|com.saivert.pwvucontrol)$" }, center = true },
+	{ match = { class = "^([Ww]hatsapp-for-linux|ZapZap|com.rtosta.zapzap)$" }, center = true },
+	{ match = { class = "^(nm-connection-editor)$" }, center = true },
+	{ match = { class = "^(nm-applet)$", title = "^(Wi-Fi Network Authentication Required)$" }, center = true },
+
+	-- Focus & Workspace
+	{ match = { title = "^(wind.*)$" }, no_initial_focus = true },
+	{ match = { class = "^([Tt]hunar)$" }, workspace = 4 },
+	{ match = { tag = "browser" }, workspace = 3 },
+
+	-- Idle Inhibit
+	{ match = { fullscreen = true }, idle_inhibit = "fullscreen" },
+	{ match = { class = ".*" }, idle_inhibit = "fullscreen" }, -- covers all windows when fullscreen
 }
 
-for _, rule in ipairs(special_rules) do
-	apply_window_rule(rule)
+for _, rule in ipairs(window_rules) do
+	apply_rule(rule)
 end
 
--- 5. Layer Rules
+-- 4. Layer Rules
 local layer_rules = {
-	{ match = { namespace = "hyprpicker" }, no_anim = true },
-	{ match = { namespace = "selection" }, no_anim = true },
-	{ match = { namespace = "noanim" }, no_anim = true },
-	{ match = { namespace = "fabric" }, no_anim = true },
+	{ match = { namespace = "^(hyprpicker|selection|noanim|fabric)$" }, no_anim = true },
 	{ match = { namespace = "gtk-layer-shell" }, ignore_alpha = 0 },
 }
 
