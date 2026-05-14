@@ -143,32 +143,6 @@ end
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Audio keys
-local fabricSend = "uwsm app -- fabric-cli exec modus "
-for key, cmd in pairs({
-	AudioRaiseVolume = "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
-	AudioLowerVolume = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
-	AudioMute = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-	AudioMicMute = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
-}) do
-	hl.bind(
-		"XF86" .. key,
-		hl.dsp.exec_cmd(cmd .. " && " .. fabricSend .. '"osd_show_audio()"'),
-		{ locked = true, repeating = true }
-	)
-end
-
--- brightness
-hl.bind(
-	"XF86MonBrightnessUp",
-	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+ && " .. fabricSend .. '"osd_show_brightness()"'),
-	{ locked = true, repeating = true }
-)
-hl.bind(
-	"XF86MonBrightnessDown",
-	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%- && " .. fabricSend .. '"osd_show_brightness()"'),
-	{ locked = true, repeating = true }
-)
 hl.bind("xf86Sleep", hl.dsp.exec_cmd("systemctl suspend"), { locked = true })
 
 -- Playerctl
