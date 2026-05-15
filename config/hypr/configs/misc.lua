@@ -30,8 +30,9 @@ hl.config({
 	},
 
 	cursor = {
-		inactive_timeout = 5,
+		sync_gsettings_theme = true,
 		enable_hyprcursor = false,
+		no_hardware_cursors = 0,
 	},
 
 	dwindle = {
@@ -55,10 +56,13 @@ hl.config({
 	xwayland = {
 		enabled = true,
 		force_zero_scaling = true,
+		use_nearest_neighbor = true,
 	},
 
 	debug = {
+		damage_tracking = 2,
 		disable_logs = false,
+		disable_time = true,
 	},
 
 	ecosystem = {

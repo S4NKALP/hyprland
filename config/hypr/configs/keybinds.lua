@@ -134,9 +134,9 @@ end
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 9 do
-	hl.bind(mainMod .. "+" .. i, hl.dsp.focus({ workspace = i }))
+	hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
 	hl.bind("ALT + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, follow = false }))
-	hl.bind(mainMod .. "+ SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+	hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Move/resize windows with SUPER + LMB/RMB and dragging

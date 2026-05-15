@@ -9,7 +9,12 @@ hl.config({
 	misc = {
 		force_default_wallpaper = 0,
 		disable_hyprland_logo = true,
+		enable_swallow = true,
+		swallow_regex = "^(kitty|zen-browser)$",
 		vrr = 2,
+		animate_manual_resizes = false,
+		mouse_move_focuses_monitor = true,
+		disable_splash_rendering = true,
 	},
 
 	gestures = {
