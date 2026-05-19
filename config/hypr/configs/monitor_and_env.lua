@@ -11,6 +11,7 @@ hl.monitor({
 
 for key, val in pairs({
 	XCURSOR_SIZE = "6",
+	GDK_CURRENT_DESKTOP = "wayland",
 	CLUTTER_BACKEND = "wayland",
 	GDK_BACKEND = "wayland,x11,*",
 	QT_QPA_PLATFORM = "wayland;xcb",

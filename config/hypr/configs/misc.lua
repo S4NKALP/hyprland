@@ -35,6 +35,10 @@ hl.config({
 		no_hardware_cursors = 0,
 	},
 
+	binds = {
+		allow_workspace_cycles = true,
+	},
+
 	dwindle = {
 		preserve_split = true,
 		special_scale_factor = 0.95,

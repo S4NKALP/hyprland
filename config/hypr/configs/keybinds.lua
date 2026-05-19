@@ -52,7 +52,7 @@ hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd("uwsm app -- " .. terminal))
 hl.bind("ALT + SHIFT + Return", hl.dsp.exec_cmd("uwsm app -- " .. terminal, { float = true }))
 hl.bind("ALT + E", hl.dsp.exec_cmd("uwsm app -- " .. file_manager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("uwsm app -- " .. browser))
-
+hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("grimblast save screen"))
 -- Cycle Layout in Specific workspace
 hl.bind(mainMod .. " + Tab", cycle_layout("next"))
 hl.bind(mainMod .. " + SHIFT + Tab", cycle_layout("prev"))
