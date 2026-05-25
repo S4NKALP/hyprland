@@ -331,3 +331,4 @@ ENABLE_CORRECTION="true"
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 
 # alias nvw='NVIM_APPNAME=nvim-new nvim'
+export OLLAMA_HOST=http://127.0.0.1:11434
