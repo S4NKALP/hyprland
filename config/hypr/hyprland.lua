@@ -7,4 +7,3 @@ require("configs.startup_apps")
 require("configs.misc")
 
 dofile("/home/sankalp/.config/Modus/config/hypr/modus.lua")
-

@@ -131,12 +131,14 @@ for key, val in pairs({
 	hl.bind("ALT + SHIFT + " .. key, hl.dsp.window.resize({ x = val[2], y = val[3], relative = true })) -- Resize
 end
 
--- Switch workspaces with mainMod + [0-9]
--- Move active window to a workspace with mainMod + SHIFT + [0-9]
-for i = 1, 9 do
-	hl.bind(mainMod .. " + " .. i, hl.dsp.focus({ workspace = i }))
-	hl.bind("ALT + SHIFT + " .. i, hl.dsp.window.move({ workspace = i, follow = false }))
-	hl.bind(mainMod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+-- Switch workspaces with mainMod + [0-10]
+-- Move active window to a workspace with mainMod + SHIFT + [0-10]
+local workspaces = 10
+for i = 1, workspaces do
+	local key = i % 10
+	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+	hl.bind("ALT + SHIFT + " .. key, hl.dsp.window.move({ workspace = i, follow = false }))
+	hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
 -- Move/resize windows with SUPER + LMB/RMB and dragging
