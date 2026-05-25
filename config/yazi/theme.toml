@@ -1,35 +1,35 @@
 [manager]
-cwd = { fg = "#b4ccbd", bold=true}
+cwd = { fg = "#e7beae", bold=true}
 
-hovered         = { fg = "#aaf2cb", bg = "#005236" }
+hovered         = { fg = "#ffdbcd", bg = "#71361b" }
 preview_hovered = { underline = true, bold=true }
 
 
 [status]
 separator_open  = ""
 separator_close = ""
-separator_style = { fg = "#aaf2cb", bg = "#005236" }
+separator_style = { fg = "#ffdbcd", bg = "#71361b" }
 
 # Mode
-mode_normal = { fg = "#003824",   bg = "#8ed5b0", bold = true }
-mode_select = { fg = "#20352a", bg = "#b4ccbd", bold = true }
-mode_unset  = { fg = "#063543",  bg = "#a5cdde", bold = true }
+mode_normal = { fg = "#552107",   bg = "#ffb597", bold = true }
+mode_select = { fg = "#442a1f", bg = "#e7beae", bold = true }
+mode_unset  = { fg = "#373106",  bg = "#d3c78f", bold = true }
 
 [which]
-mask            = { bg = "#1b211d" }
-cand            = { fg = "#8ed5b0" }
-desc            = { fg = "#b4ccbd" }
+mask            = { bg = "#271e1a" }
+cand            = { fg = "#ffb597" }
+desc            = { fg = "#e7beae" }
 separator       = "  "
-separator_style = { fg = "#a5cdde" }
+separator_style = { fg = "#d3c78f" }
 
 [filetype]
 rules = [
 	# Images
-	{ mime = "image/*", fg = "#b4ccbd" },
+	{ mime = "image/*", fg = "#e7beae" },
 
 	# Videos
-	{ mime = "video/*", fg = "#a5cdde" },
-	{ mime = "audio/*", fg = "#a5cdde" },
+	{ mime = "video/*", fg = "#d3c78f" },
+	{ mime = "audio/*", fg = "#d3c78f" },
 
 	# Archives
 	{ mime = "application/zip",             fg = "#ffb4ab" },
@@ -41,6 +41,6 @@ rules = [
 	{ mime = "application/x-rar",           fg = "#ffb4ab" },
 
 	# Fallback
-	{ name = "*", fg = "#8ed5b0", bold=true },
-	{ name = "*/", fg = "#b4ccbd", bold=true }
+	{ name = "*", fg = "#ffb597", bold=true },
+	{ name = "*/", fg = "#e7beae", bold=true }
 ]
