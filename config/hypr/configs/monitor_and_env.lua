@@ -23,6 +23,7 @@ end)
 
 for key, val in pairs({
 	XCURSOR_SIZE = "6",
+	XCURSOR_THEME = "Bibata-Modern-Ice",
 	GDK_CURRENT_DESKTOP = "wayland",
 	CLUTTER_BACKEND = "wayland",
 	GDK_BACKEND = "wayland,x11,*",
