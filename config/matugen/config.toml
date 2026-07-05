@@ -6,7 +6,7 @@ kitty = true
 gtk_theme = true
 
 [config.wallpaper]
-command = "swww"
+command = "awww"
 arguments = [ "img", "-t", "fade", "--transition-duration", "0.5", "--transition-step", "255", "--transition-fps", "60", "-f", "Nearest",]
 set = true
 
@@ -61,8 +61,8 @@ output_path = "~/.config/Modus/styles/colors.css"
 post_hook = "fabric-cli exec modus 'app.set_css()' &"
 
 [templates.modus1]
-input_path = "~/Projects/dev/new-modus/config/matugen/templates/modus.css"
-output_path = "~/Projects/dev/new-modus/src/shared/styles/colors.css"
+input_path = "~/Projects/dev/Modus/config/matugen/templates/modus.css"
+output_path = "~/Projects/dev/Modus/src/styles/colors.css"
 post_hook = "fabric-cli exec modus1 'app.set_css()' &"
 
 [config.custom_colors.red]
