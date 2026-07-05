@@ -218,8 +218,7 @@ alias ping='ping -c 10'
 alias less='less -R'
 alias cat="bat --paging=never --style=plain"
 alias grep="grep --color=auto"
-alias tree="tree -C"
-
+alias tree='eza --tree --icons'
 
 # Archives
 alias mktar='tar -cvf'
@@ -244,11 +243,15 @@ docker-clean() {
 alias dockerstart="sudo systemctl start docker"
 alias dockerstop="sudo systemctl stop docker"
 alias dockerrestart='sudo systemctl restart docker'
-alias dockerstatus='systemctl status docker'
+alias dockerstatus='systemctl --no-pager status docker'
 alias dockerenable='sudo systemctl enable --now docker'
 
 # Extract
 extract() {
+    if (( $# == 0 )); then
+        echo "Usage: extract <archive> [archive...]"
+        return 1
+    fi
 	for archive in "$@"; do
 		if [ -f "$archive" ]; then
 			case $archive in
@@ -263,6 +266,8 @@ extract() {
 			*.zip) unzip "$archive" ;;
 			*.Z) uncompress "$archive" ;;
 			*.7z) 7z x "$archive" ;;
+            *.tar.xz) tar xvJf "$archive" ;;
+            *.xz) unxz "$archive" ;;
 			*) echo "don't know how to extract '$archive'..." ;;
 			esac
 		else
@@ -288,15 +293,16 @@ update() {
 }
 
 clean() {
-    if command -v paru >/dev/null 2>&1; then
-        paru -Scc "$@"
-    elif command -v yay >/dev/null 2>&1; then
-        yay -Scc "$@"
+    if command -v paru >/dev/null; then
+        paru -Scc
+        paru -c
+    elif command -v yay >/dev/null; then
+        yay -Scc
+        yay -c
     else
-        sudo pacman -Scc "$@"
+        sudo pacman -Scc
     fi
 }
-
 
 # Network
 alias whatismyip="whatsmyip"
@@ -353,16 +359,6 @@ act() {
 }
 
 # Package Manager
-if command -v fzf >/dev/null 2>&1; then
-    if command -v yay >/dev/null 2>&1; then
-        alias yayf="yay -Slq | fzf --multi --preview 'yay -Sii {1}' --preview-window=down:75% | xargs -ro yay -S"
-    fi
-
-    if command -v paru >/dev/null 2>&1; then
-        alias paruf="paru -Slq | fzf --multi --preview 'paru -Sii {1}' --preview-window=down:75% | xargs -ro paru -S"
-    fi
-
-    if command -v pacman >/dev/null 2>&1; then
-        alias pacf="pacman -Slq | fzf --multi --preview 'pacman -Si {1}' --preview-window=down:75% | xargs -ro sudo pacman -S"
-    fi
-fi
+alias yayf='yay -Slq | fzf --multi --preview "yay -Sii {1}" --preview-window=down:75% | xargs -r yay -S'
+alias paruf='paru -Slq | fzf --multi --preview "paru -Sii {1}" --preview-window=down:75% | xargs -r paru -S'
+alias pacf='pacman -Slq | fzf --multi --preview "pacman -Si {1}" --preview-window=down:75% | xargs -r sudo pacman -S'
