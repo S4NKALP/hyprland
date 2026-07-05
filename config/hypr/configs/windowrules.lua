@@ -156,6 +156,16 @@ end
 local layer_rules = {
 	{ match = { namespace = "^(hyprpicker|selection|noanim|fabric)$" }, no_anim = true },
 	{ match = { namespace = "gtk-layer-shell" }, ignore_alpha = 0 },
+	{
+		name = "modus",
+		match = {
+			namespace = "^lock$|^modus-.*",
+		},
+		blur = true,
+		no_anim = true,
+		ignore_alpha = 0,
+		blur_popups = true,
+	},
 }
 
 for _, rule in ipairs(layer_rules) do

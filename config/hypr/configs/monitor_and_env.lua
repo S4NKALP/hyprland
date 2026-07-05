@@ -38,6 +38,8 @@ for key, val in pairs({
 	ELECTRON_OZONE_PLATFORM_HINT = "auto",
 	ELECTRON_ARGS = "--enable-features=UseOzonePlatform --ozone-platform=wayland",
 
+	GTK_USE_PORTAL = "1",
+
 	-- nvidia
 	GBM_BACKEND = "nvidia-drm",
 	__GLX_VENDOR_LIBRARY_NAME = "nvidia",
