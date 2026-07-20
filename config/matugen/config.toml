@@ -30,10 +30,6 @@ output_path = "~/.config/qt5ct/colors/matugen.conf"
 input_path = "~/.config/matugen/templates/qtct-colors.conf"
 output_path = "~/.config/qt6ct/colors/matugen.conf"
 
-[templates.hyprland]
-input_path = "~/.config/Modus/config/matugen/templates/hyprland-colors.lua"
-output_path = "~/.config/Modus/config/hypr/colors.lua"
-
 [templates.kitty]
 input_path = "~/.config/matugen/templates/kitty-colors.conf"
 output_path = "~/.config/kitty/colors.conf"
@@ -54,16 +50,6 @@ output_path = "~/.config/yazi/theme.toml"
 [templates.zathura]
 input_path = "~/.config/matugen/templates/zathurarc"
 output_path = "~/.config/zathura/colors"
-
-[templates.modus]
-input_path = "~/.config/Modus/config/matugen/templates/modus.css"
-output_path = "~/.config/Modus/styles/colors.css"
-post_hook = "fabric-cli exec modus 'app.set_css()' &"
-
-[templates.modus1]
-input_path = "~/Projects/dev/Modus/config/matugen/templates/modus.css"
-output_path = "~/Projects/dev/Modus/src/styles/colors.css"
-post_hook = "fabric-cli exec modus1 'app.set_css()' &"
 
 [config.custom_colors.red]
 color = "#FF0000"
@@ -92,3 +78,12 @@ blend = true
 [config.custom_colors.white]
 color = "#FFFFFF"
 blend = true
+
+[templates.modus]
+input_path = "~/.config/Modus/config/matugen/templates/modus.css"
+output_path = "~/.config/Modus/src/styles/colors.css"
+post_hook = "fabric-cli exec modus 'app.set_css()' &"
+
+[templates.hyprland]
+input_path = "~/.config/Modus/config/matugen/templates/hyprland-colors.lua"
+output_path = "~/.config/Modus/config/matugen/colors.lua"

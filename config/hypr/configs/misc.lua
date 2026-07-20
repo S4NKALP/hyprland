@@ -7,7 +7,7 @@ hl.config({
 		kb_layout = us,
 		kb_variant = "",
 		kb_model = "",
-		-- kb_options = "caps:swapescape",
+		kb_options = "ctrl:swapcaps",
 		kb_rules = "",
 		repeat_rate = 50,
 		repeat_delay = 300,
@@ -15,7 +15,7 @@ hl.config({
 
 		follow_mouse = 1,
 
-		sensitivity = 0.2,
+		sensitivity = 0.8,
 		accel_profile = "flat",
 
 		touchpad = {

@@ -13,7 +13,8 @@ export BAT_THEME="base16"
 
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_SDK_ROOT="$ANDROID_HOME"
-
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
 typeset -U path PATH
 
 path=(
@@ -216,7 +217,7 @@ alias mkdir='mkdir -p'
 alias ps='ps auxf'
 alias ping='ping -c 10'
 alias less='less -R'
-alias cat="bat --paging=never --style=plain"
+# alias cat="bat --paging=never --style=plain"
 alias grep="grep --color=auto"
 alias tree='eza --tree --icons'
 
@@ -362,3 +363,4 @@ act() {
 alias yayf='yay -Slq | fzf --multi --preview "yay -Sii {1}" --preview-window=down:75% | xargs -r yay -S'
 alias paruf='paru -Slq | fzf --multi --preview "paru -Sii {1}" --preview-window=down:75% | xargs -r paru -S'
 alias pacf='pacman -Slq | fzf --multi --preview "pacman -Si {1}" --preview-window=down:75% | xargs -r sudo pacman -S'
+

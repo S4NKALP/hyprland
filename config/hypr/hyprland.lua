@@ -6,4 +6,5 @@ require("configs.windowrules")
 require("configs.startup_apps")
 require("configs.misc")
 
+-- Modus configuration
 dofile("/home/sankalp/.config/Modus/config/hypr/modus.lua")

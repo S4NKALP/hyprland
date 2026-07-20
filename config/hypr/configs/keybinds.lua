@@ -71,7 +71,6 @@ hl.bind(mainMod .. " + F", function()
 	hl.dispatch(hl.dsp.window.center())
 end)
 
-hl.bind(mainMod .. " + CTRL + L", hl.dsp.exec_cmd("pidof hyprlock || hyprlock -q")) -- hyprlock
 hl.bind(mainMod .. " + CTRL + P", hl.dsp.exec_cmd("systemctl poweroff")) -- poweroff
 hl.bind(mainMod .. " + CTRL + R", hl.dsp.exec_cmd("systemctl reboot")) -- reboot
 
@@ -155,4 +154,12 @@ for key, cmd in pairs({
 	AudioPrev = "previous",
 }) do
 	hl.bind("XF86" .. key, hl.dsp.exec_cmd("playerctl " .. cmd), { locked = true })
+end
+
+for key, cmd in pairs({
+	["ALT + F12"] = 'notify-send \'Test notification\' "Here\'s a really long message to test truncation and wrapping\\nYou can middle click or flick this notification to dismiss it!" -a \'terminal\' -A "Test1=I got it!" -A "Test2=Another action"',
+	["ALT + Equal"] = "notify-send 'hmm' ${SLURP_ARGS}",
+	["SHIFT + ALT + N"] = 'notify-send "Hello" "FIRE IN THE HOLE‼️🗣️🔥🕳️" -i "/home/sankalp/.face.icon" -A "🗣️" -A "🔥" -A "🕳️" -a "Source Code"',
+}) do
+	hl.bind(key, hl.dsp.exec_cmd(cmd))
 end

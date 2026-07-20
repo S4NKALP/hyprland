@@ -88,7 +88,9 @@ local size = {
 local window_rules = {
 	-- Floating Only
 	{
-		match = { class = "^([Zz]oom|onedriver|onedriver-launcher|mpv|com.github.rafostar.Clapper|[Qq]alculate-gtk)$" },
+		match = {
+			class = "^([Zz]oom|onedriver|onedriver-launcher|mpv|com.github.rafostar.Clapper|[Qq]alculate-gtk|qemu-system-.*|Emulator)$",
+		},
 		float = true,
 	},
 	{

@@ -36,7 +36,7 @@ for key, val in pairs({
 	QT_SCALE_FACTOR = "1",
 	MOZ_ENABLE_WAYLAND = "1",
 	ELECTRON_OZONE_PLATFORM_HINT = "auto",
-	ELECTRON_ARGS = "--enable-features=UseOzonePlatform --ozone-platform=wayland",
+	ELECTRON_ARGS = "--ozone-platform=wayland",
 
 	GTK_USE_PORTAL = "1",
 
