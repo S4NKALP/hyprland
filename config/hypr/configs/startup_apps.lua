@@ -4,9 +4,9 @@ hl.on("hyprland.start", function()
 	local cmds = {
 		"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP",
 		-- GTK_MODULES is set at Modus runtime by _setup_environment() in globalmenu.py
-		"gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice",
-		"hyprctl setcursor Bibata-Modern-Ice 6",
-		"/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
+		"gsettings set org.gnome.desktop.interface cursor-theme MacTahoe",
+		"hyprctl setcursor MacTahoe 6",
+		-- "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
 		"udiskie",
 	}
 
