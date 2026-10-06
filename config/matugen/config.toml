@@ -84,6 +84,17 @@ input_path = "~/.config/Modus/config/matugen/templates/modus.css"
 output_path = "~/.config/Modus/src/styles/colors.css"
 post_hook = "fabric-cli exec modus 'app.set_css()' &"
 
+[templates.shell]
+input_path = "~/.config/Modus/config/matugen/templates/modus.css"
+output_path = "~/Projects/shell/src/styles/colors.css"
+post_hook = "fabric-cli exec pill 'app.set_css()' &"
+
+# [templates.forma]
+# input_path = "~/Projects/pill/forma/config/matugen/templates/forma.css"
+# output_path = "~/Projects/pill/forma/styles/dynamic_colors.css"
+# post_hook = "fabric-cli exec forma 'set_css()' &"
+
+
 [templates.hyprland]
 input_path = "~/.config/Modus/config/matugen/templates/hyprland-colors.lua"
 output_path = "~/.config/Modus/config/matugen/colors.lua"

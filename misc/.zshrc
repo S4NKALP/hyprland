@@ -364,3 +364,6 @@ alias yayf='yay -Slq | fzf --multi --preview "yay -Sii {1}" --preview-window=dow
 alias paruf='paru -Slq | fzf --multi --preview "paru -Sii {1}" --preview-window=down:75% | xargs -r paru -S'
 alias pacf='pacman -Slq | fzf --multi --preview "pacman -Si {1}" --preview-window=down:75% | xargs -r sudo pacman -S'
 
+
+# opencode
+export PATH=/home/sankalp/.opencode/bin:$PATH
