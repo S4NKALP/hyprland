@@ -46,13 +46,9 @@ python-pipx
 uv
 starship
 vesktop
-rnote
-proton-vpn-gtk-app
 lazygit
-visual-studio-code-bin
 gh-dash-bin
 mpv
-python-fabric-git
 fabric-cli-git
 github-cli
 ttf-jetbrains-mono-nerd
@@ -64,3 +60,4 @@ ttf-nerd-fonts-symbols-mono
 maplemono-nf-cn-unhinted
 seahorse
 gnome-keyring
+git-delta

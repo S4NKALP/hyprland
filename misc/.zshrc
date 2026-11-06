@@ -16,7 +16,7 @@ export ANDROID_SDK_ROOT="$ANDROID_HOME"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 typeset -U path PATH
-
+export PATH="$HOME/.local/bin:$PATH"
 path=(
   "$HOME/.local/bin"
   "$ANDROID_HOME/emulator"

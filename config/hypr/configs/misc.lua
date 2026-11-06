@@ -41,13 +41,13 @@ hl.config({
 
 	dwindle = {
 		preserve_split = true,
-		special_scale_factor = 0.95,
+		-- special_scale_factor = 0.95,
 	},
 
 	master = {
 		new_on_top = true,
 		new_status = "master",
-		special_scale_factor = 0.95,
+		-- special_scale_factor = 0.95,
 	},
 
 	scrolling = {
